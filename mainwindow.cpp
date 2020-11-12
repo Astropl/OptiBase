@@ -2,6 +2,7 @@
 #include "DataBase/checkfiles.h"
 #include "DataBase/maindb.h"
 #include "ui_mainwindow.h"
+#include "baza.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -29,6 +30,9 @@ void MainWindow::InitDB()
 void MainWindow::on_pushButton_clicked()
 {
     //Baza
+    Baza *baza=new Baza(this);
+    baza->show();
+
 }
 
 void MainWindow::on_pushButton_7_clicked()

@@ -18,15 +18,23 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     DataBase/checkfiles.cpp \
     DataBase/maindb.cpp \
+    Kontrahent/kontrahentinfo.cpp \
+    Timery/timedate.cpp \
+    baza.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     DataBase/checkfiles.h \
     DataBase/maindb.h \
+    Kontrahent/kontrahentinfo.h \
+    Timery/timedate.h \
+    baza.h \
     mainwindow.h
 
 FORMS += \
+    Kontrahent/kontrahentinfo.ui \
+    baza.ui \
     mainwindow.ui
 
 # Default rules for deployment.
