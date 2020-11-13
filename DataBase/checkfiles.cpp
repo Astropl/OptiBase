@@ -221,7 +221,17 @@ void CheckFiles::initCheckFlagsInModelUrzadzenia()
 }
 void CheckFiles::initCheckFlagsProducent()
 {
-    //TODO: Zrobic
+
+        file.open(file16.toStdString());
+    if (file.good() == false) {
+        cout << "Brak pliku" << endl;
+        file.open(file16.toStdString(), ios::app);
+    } else {
+        // cout << "Plik jest" << endl;
+    }
+    file << "0" << endl;
+    file.close();
+    //    cout << "Plik Check Flags In Produckt Jest." << endl;
 }
 void CheckFiles::initCheckFlagsInProducentUrzadzenia()
 {
@@ -339,4 +349,50 @@ int CheckFiles::checkFlagsKraj(int checkFlagsVarriableKraj) //int checkFlagsVarr
 
     file.close();
     //return 0;
+}
+int CheckFiles::checkFlagsProducent(int checkFlagsVarriableProducent)
+{
+    //cout << " W CheckFiles1: CheckFlagsProducent" << endl;
+
+    file.open(file16.toStdString(),
+              ios::in); //ios::app dopisuje a ios::trunc zawartos usunieta i zastąpiona nową.
+    string linia;       // Wczytuje  tutuaj flage do Wczytywania miast
+
+    int nr_lini = 1;
+    while (getline(file, linia)) {
+        //cout << linia << endl;
+        if (linia == "0") {
+            //cout << "Linia równa się 0" << endl;
+            return 0;
+        } else if (linia == "1") {
+            //cout << "Linia równa się 1" << endl;
+            return 1;
+        }
+        nr_lini++;
+    }
+
+    file.close();
+}
+int CheckFiles::checkFlagsModel(int checkFlagsVarriableModel)
+{
+    //cout << " W CheckFiles1: CheckFlagsProducent" << endl;
+
+    file.open(file16.toStdString(),
+              ios::in); //ios::app dopisuje a ios::trunc zawartos usunieta i zastąpiona nową.
+    string linia;       // Wczytuje  tutuaj flage do Wczytywania miast
+
+    int nr_lini = 1;
+    while (getline(file, linia)) {
+        //cout << linia << endl;
+        if (linia == "0") {
+            //cout << "Linia równa się 0" << endl;
+            return 0;
+        } else if (linia == "1") {
+            //cout << "Linia równa się 1" << endl;
+            return 1;
+        }
+        nr_lini++;
+    }
+
+    file.close();
 }

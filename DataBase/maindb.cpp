@@ -29,7 +29,7 @@ void MainDb::DatabaseConnect()
     const QString DRIVER("QSQLITE");
     if (QSqlDatabase::isDriverAvailable(DRIVER)) {
         QSqlDatabase db = QSqlDatabase::addDatabase(DRIVER);
-        db.setDatabaseName("C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/DataBase/1001.db");
+        db.setDatabaseName("C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/DataBase/1003.db");
         qWarning(" Powstała baza");
 
         if (db.open()) {

@@ -18,8 +18,24 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     DataBase/checkfiles.cpp \
     DataBase/maindb.cpp \
+    Info/info.cpp \
+    Kontrahent/kontrahent.cpp \
+    Kontrahent/kontrahentdodajkraj.cpp \
+    Kontrahent/kontrahentdodajmiasto.cpp \
+    Kontrahent/kontrahentdodajwojewodztwo.cpp \
     Kontrahent/kontrahentinfo.cpp \
+    Kontrahent/kontrahentinfododajwpis.cpp \
+    Kontrahent/kontrahentlista.cpp \
+    Kontrahent/kontrahentshow.cpp \
+    Kontrahent/tableviewlistakontrahentow.cpp \
     Timery/timedate.cpp \
+    Urzadzenia/urzadzenia.cpp \
+    Urzadzenia/urzadzeniadodajmodel.cpp \
+    Urzadzenia/urzadzeniadodajnrseryjny.cpp \
+    Urzadzenia/urzadzeniadodajproducenta.cpp \
+    Urzadzenia/urzadzenialista.cpp \
+    Urzadzenia/urzadzenialistakontrahent.cpp \
+    Ustawienia/ustawienia.cpp \
     baza.cpp \
     main.cpp \
     mainwindow.cpp
@@ -27,13 +43,44 @@ SOURCES += \
 HEADERS += \
     DataBase/checkfiles.h \
     DataBase/maindb.h \
+    Info/info.h \
+    Kontrahent/kontrahent.h \
+    Kontrahent/kontrahentdodajkraj.h \
+    Kontrahent/kontrahentdodajmiasto.h \
+    Kontrahent/kontrahentdodajwojewodztwo.h \
     Kontrahent/kontrahentinfo.h \
+    Kontrahent/kontrahentinfododajwpis.h \
+    Kontrahent/kontrahentlista.h \
+    Kontrahent/kontrahentshow.h \
+    Kontrahent/tableviewlistakontrahentow.h \
     Timery/timedate.h \
+    Urzadzenia/urzadzenia.h \
+    Urzadzenia/urzadzeniadodajmodel.h \
+    Urzadzenia/urzadzeniadodajnrseryjny.h \
+    Urzadzenia/urzadzeniadodajproducenta.h \
+    Urzadzenia/urzadzenialista.h \
+    Urzadzenia/urzadzenialistakontrahent.h \
+    Ustawienia/ustawienia.h \
     baza.h \
     mainwindow.h
 
 FORMS += \
+    Info/info.ui \
+    Kontrahent/kontrahent.ui \
+    Kontrahent/kontrahentdodajkraj.ui \
+    Kontrahent/kontrahentdodajmiasto.ui \
+    Kontrahent/kontrahentdodajwojewodztwo.ui \
     Kontrahent/kontrahentinfo.ui \
+    Kontrahent/kontrahentinfododajwpis.ui \
+    Kontrahent/kontrahentlista.ui \
+    Kontrahent/kontrahentshow.ui \
+    Urzadzenia/urzadzenia.ui \
+    Urzadzenia/urzadzeniadodajmodel.ui \
+    Urzadzenia/urzadzeniadodajnrseryjny.ui \
+    Urzadzenia/urzadzeniadodajproducenta.ui \
+    Urzadzenia/urzadzenialista.ui \
+    Urzadzenia/urzadzenialistakontrahent.ui \
+    Ustawienia/ustawienia.ui \
     baza.ui \
     mainwindow.ui
 
