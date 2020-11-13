@@ -16,6 +16,7 @@
 #include <direct.h>
 #include <fstream>
 #include <iostream>
+#include <QAction>
 #include <QApplication>
 #include <QMainWindow>
 
@@ -24,6 +25,10 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    //ui->QMainWindow-> (setWindowTitle("OptiBase v.1"));
+
+    initWindow();
+
     CheckIsFileExist();
     InitDB();
 }
@@ -32,6 +37,58 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+void MainWindow::initWindow()
+{
+    setWindowTitle("OptiBase v 1.0");
+
+    QAction *fileSave = new QAction(("&Zapisz"), this);
+    QAction *fileEksport = new QAction(("&Eksport"), this);
+   // QAction *fileseparator = new QAction(("----------"), this);
+    QAction *fileWyjscie = new QAction(("&Wyjście"), this);
+
+     QAction *editKopiuj = new QAction(("&Kopiuj"), this);
+     QAction *editWklej = new QAction(("&Wklej"), this);
+
+     QAction *infoOProgramie = new QAction(("&O Programie"), this);
+     QAction *infoOAutorze = new QAction(("O &Autorze"), this);
+     QAction *infoLog = new QAction(("&Log"), this);
+
+     QAction *settingsOption = new QAction(("&Opcje"), this);
+
+    auto mainfile = menuBar()->addMenu("Plik");
+    auto mainEdycja = menuBar()->addMenu("Edycja");
+    auto mainInfo = menuBar()->addMenu("Informacje");
+    auto mainSettings = menuBar()->addMenu("Ustawienia");
+
+    mainfile->addAction(fileSave);
+    mainfile->addAction(fileEksport);
+
+    mainfile->addSeparator();
+    mainfile->addAction(fileWyjscie);
+
+    mainEdycja->addAction(editKopiuj);
+    mainEdycja->addAction(editWklej);
+    mainInfo->addAction(infoOProgramie);
+    mainInfo->addAction(infoOAutorze);
+    mainInfo->addAction(infoLog);
+
+    mainSettings->addAction(settingsOption);
+
+    //connect(settingsOption, &QAction::triggered,this, SLOT (openInfo()));
+    connect(settingsOption, SIGNAL(triggered()), this, SLOT (openSettings()));
+    connect(infoOProgramie, SIGNAL(triggered()), this, SLOT (openInfo()));
+}
+void MainWindow::openInfo()
+{
+    Info *info = new Info(this);
+    info->show();
+}
+void MainWindow::openSettings()
+{
+    Ustawienia *ustaw = new Ustawienia(this);
+        ustaw->show();
+}
+
 void MainWindow::CheckIsFileExist()
 {
     CheckFiles *checkFiles = new CheckFiles(this);
@@ -83,13 +140,14 @@ void MainWindow::on_pushButton_4_clicked()
     destroy();
 }
 
-
-
 void MainWindow::on_pushButton_2_clicked() {}
 void MainWindow::on_pushButton_3_clicked() {}
-void MainWindow::on_actionO_programie_triggered(){}
+void MainWindow::on_actionO_programie_triggered() {}
 
-void MainWindow::on_actionOpcje_triggered(){}
+void MainWindow::on_actionOpcje_triggered() {}
 
-
-
+void MainWindow::on_pushButton_9_clicked()
+{QString zapytanie ="";
+    MainDb *mainDb = new MainDb(this);
+    mainDb->ZapytanieTestowe(zapytanie);
+}

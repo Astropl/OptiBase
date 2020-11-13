@@ -1,17 +1,25 @@
 #ifndef MAINDB_H
 #define MAINDB_H
 
+#include <QMainWindow>
 #include <QObject>
 #include <QWidget>
-#include <QMainWindow>
-class MainDb: public QMainWindow
+class MainDb : public QMainWindow
 {
 public:
-   explicit MainDb(QWidget *parent = nullptr);
+    explicit MainDb(QWidget *parent = nullptr);
     void init();
     void DatabaseConnect();
     void DatabaseInit();
     void DatabasePopulate();
+
+    void dBMiasta();
+    void dBWojewodztwa();
+    void dBKraj();
+    void dBKontrahent();
+    void dBProducent();
+    void dBModel();
+    void ZapytanieTestowe(QString Zapytanie);
 };
 
 #endif // MAINDB_H
