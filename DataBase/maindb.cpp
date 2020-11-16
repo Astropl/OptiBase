@@ -6,6 +6,7 @@
 #include <QSqlDriver>
 #include <QSqlError>
 #include <QSqlQuery>
+#include <QSqlRecord>
 
 using namespace std;
 
@@ -21,27 +22,105 @@ void MainDb::init()
     DatabaseInit();
     DatabasePopulate();
 }
-void MainDb::ZapytanieTestowe(QString zapytanie)
+QString MainDb::ZapytanieTestowe(QString zapytanie)
 
 {
     //TODO: Stworzyc zapytanie i go wyswietlic
 
     //Proste testowe zapytanie
     cout<<"Jestem w Main DB proste zapytanie"<<endl;
-    //zapytanie . query.exec("SELECT ");
-    //zapytanie = QSqlQuery query(
-       // "SELECT * FROM kontrahenci");
+    QSqlQuery query;
+    query.prepare("SELECT miasto FROM miasta");
 
-//    if (!query.isActive())
-//        qWarning() << " MainWindow::DatabaseInit - ERROR: " << query.lastError().text();
+    if (!query.exec())
+        qWarning()<<"Error w zapytaniu"<<query.lastError().text();
+    if(query.first())
+    { zapytanie=query.value(0).toString();}
+    else
+    { zapytanie = "Dane nie znalezione";}
+    cout<<"Zapytanie w mainDB odpowiedz: "+ zapytanie.toStdString() <<endl;
+   // zapytanie
+    return zapytanie;
+
 }
+QString MainDb::addProducent(QString daneProducent)
+
+{
+    //TODO: dodoac do Bazy producenta
+QSqlQuery query;
+    qWarning()<<("Dodoaje do bazy "+ daneProducent);
+    if (!query.exec("INSERT INTO producenci (producent) VALUES('"+daneProducent+"')"))
+        qWarning() << "MainDB::Dodoanie Producenta - ERROR: " << query.lastError().text();
+    return 0;
+}
+QString MainDb::pobierzProducenta(QString daneProducent)
+
+{
+    //TODO: pobrac z Bazy producenta
+    QSqlQuery query;
+
+
+    cout<<"Jestem w Main DB proste zapytanie"<<endl;
+
+    query.prepare("SELECT producent FROM producenci");
+
+    if (!query.exec())
+        qWarning()<<"Error w zapytaniu"<<query.lastError().text();
+    if(query.first())
+    { daneProducent=query.value(0).toString();}
+    else
+    { daneProducent = "Dane nie znalezione";}
+    cout<<"Zapytanie w mainDB odpowiedz: "+ daneProducent.toStdString() <<endl;
+    // zapytanie
+
+    return daneProducent;
+}
+int MainDb::pobierzProducentaiD(int daneProducentId)
+
+{
+    int idName=0;
+    //TODO: pobrac z Bazy producenta
+    QSqlQuery query;
+    QString testName;
+
+    //cout<<"Jestem w Main DB proste zapytanie"<<endl;
+
+//    query.exec("SELECT COUNT(*) FROM producenci");
+query.exec("SELECT * FROM producenci");
+    idName = query.record().indexOf("producent");
+    //daneProducentId = daneProducentId.toInt();
+    while (query.next())
+    {testName = query.value(idName).toInt();
+        qWarning() <<testName;
+        daneProducentId++;
+    }
+    cout<<"Ilosc urzadzenz  bazy damych Producenci: "+daneProducentId<<endl;
+    //idName = query.record()
+    //while (query.next())
+//    {
+//        QString name = query.value(idName).toString();
+//        qDebug() << name;
+//    }
+//    if (!query.exec())
+//        qWarning()<<"Error w zapytaniu"<<query.lastError().text();
+//    if(query.first())
+//    { daneProducentId=query.value(0).toString();}
+//    else
+//    { daneProducentId = "Dane nie znalezione";}
+//    cout<<"Zapytanie w mainDB odpowiedz: "+ daneProducentId.toStdString() <<endl;
+//    // zapytanie
+
+    return daneProducentId ;
+}
+
+
 void MainDb::DatabaseConnect()
 {
     qWarning("Database Connect");
     const QString DRIVER("QSQLITE");
     if (QSqlDatabase::isDriverAvailable(DRIVER)) {
         QSqlDatabase db = QSqlDatabase::addDatabase(DRIVER);
-        db.setDatabaseName("C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/DataBase/1003.db");
+        db.setDatabaseName("C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/DataBase/2020.11.16.db");
         qWarning(" Powstała baza");
 
         if (db.open()) {

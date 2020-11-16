@@ -103,7 +103,7 @@ void Baza::wczytajDane()
     //    model->setItem(iloscWierszy, 1, dodajItem); // Dodoaje item i od razu wiersz.
 
     //Wczytuje kontrahentow z pliku
-
+//TODO: Wczytaj kontrahentow z DB "kontrahenci"
     QString tempUrzadz;
     QString tempUrzadz1;
     string linia3;

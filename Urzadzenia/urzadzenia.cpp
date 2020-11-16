@@ -1,6 +1,7 @@
 #include "urzadzenia.h"
 
 #include "DataBase/checkfiles.h"
+#include "DataBase/maindb.h"
 #include "Timery/timedate.h"
 #include "Ustawienia/ustawienia.h"
 #include "mainwindow.h"
@@ -59,7 +60,8 @@ Urzadzenia::Urzadzenia(QWidget *parent)
     QString file15 = "C:/Defaults/Pliki/15.CheckFlagsInWojewodztwoKontrahentShow.txt";
 
     howMuchDevice();
-
+    initMenuUrzadzenia();
+    wypelnijProducenta();
     //Wczytuje modele z pliku
     plikUrzadzenia.open(file8.toStdString(), ios::in);
     if (plikUrzadzenia.good() == false) {
@@ -69,40 +71,45 @@ Urzadzenia::Urzadzenia(QWidget *parent)
     string linia;
     int nr_lini = 1;
     while (getline(plikUrzadzenia, linia)) {
+        //TODO: tutaj musze pobrać dane z bazy modeli
+
         ui->comboBox_2->addItem(linia.c_str());
         //cout << linia.c_str() << endl;
         nr_lini++;
     }
 
     plikUrzadzenia.close();
+
     // wczytuj pliki z producenta
-    plikUrzadzenia.open(file7.toStdString(), ios::in);
-    if (plikUrzadzenia.good() == false) {
-        cout << "Plik nie istnieje !!!!!";
-        //exit(0);
-    }
-    string linia1;
-    int nr_lini1 = 1;
-    while (getline(plikUrzadzenia, linia1)) {
-        ui->comboBox->addItem(linia1.c_str());
-        //cout << linia1.c_str() << endl;
-        nr_lini1++;
-    }
-    plikUrzadzenia.close();
+    //    plikUrzadzenia.open(file7.toStdString(), ios::in);
+    //    if (plikUrzadzenia.good() == false) {
+    //        cout << "Plik nie istnieje !!!!!";
+    //        //exit(0);
+    //    }
+    //    string linia1;
+    //    int nr_lini1 = 1;
+    //    while (getline(plikUrzadzenia, linia1)) {
+    //        ui->comboBox->addItem(linia1.c_str());
+    //        //cout << linia1.c_str() << endl;
+    //        nr_lini1++;
+    //    }
+    //    plikUrzadzenia.close();
+
+
     //wczytaj numery seryjne z pliku
-    plikUrzadzenia.open(file9.toStdString(), ios::in);
-    if (plikUrzadzenia.good() == false) {
-        cout << "Plik nie istnieje !!!!!";
-        //exit(0);
-    }
-    string linia2;
-    int nr_lini2 = 1;
-    while (getline(plikUrzadzenia, linia2)) {
-        ui->comboBox_3->addItem(linia2.c_str());
-        //cout << linia2.c_str() << endl;
-        nr_lini2++;
-    }
-    plikUrzadzenia.close();
+//    plikUrzadzenia.open(file9.toStdString(), ios::in);
+//    if (plikUrzadzenia.good() == false) {
+//        cout << "Plik nie istnieje !!!!!";
+//        //exit(0);
+//    }
+//    string linia2;
+//    int nr_lini2 = 1;
+//    while (getline(plikUrzadzenia, linia2)) {
+//        ui->comboBox_3->addItem(linia2.c_str());
+//        //cout << linia2.c_str() << endl;
+//        nr_lini2++;
+//    }
+//    plikUrzadzenia.close();
 
     countriesListModel = new QStringListModel(this);
 
@@ -118,6 +125,72 @@ Urzadzenia::Urzadzenia(QWidget *parent)
     ui->BtnUrzaZapisz->setEnabled(false);
 }
 
+void Urzadzenia::wypelnijProducenta()
+{
+    QString pobierzProducenta = "";
+    int pobierzProducentaId = 0;
+    MainDb *mainDb = new MainDb(this);
+    pobierzProducentaId = mainDb->pobierzProducentaiD(pobierzProducentaId);
+    for (int i = 0; i <= pobierzProducentaId; i++) {
+        pobierzProducenta = mainDb->pobierzProducenta(pobierzProducenta);
+        ui->comboBox->addItem((pobierzProducenta));
+    }
+
+
+}
+void Urzadzenia::initMenuUrzadzenia()
+{
+    //tworze menu kontektowe
+    setWindowTitle("OptiBase v 1.0:Urządzenia");
+
+    //    QAction *fileSave = new QAction(("&Zapisz"), this);
+    //    QAction *fileEksport = new QAction(("&Eksport"), this);
+    // QAction *fileseparator = new QAction(("----------"), this);
+    QAction *fileWyjscie = new QAction(("&Wyjście"), this);
+
+    QAction *edycjaDodajProducenta = new QAction(("Dodaj Producenta"), this);
+    QAction *edycjaDodajModel = new QAction(("Dodaj Model"), this);
+
+    //    QAction *editKopiuj = new QAction(("&Kopiuj"), this);
+    //    QAction *editWklej = new QAction(("&Wklej"), this);
+
+    QAction *infoOProgramie = new QAction(("&O Programie"), this);
+    QAction *infoOAutorze = new QAction(("O &Autorze"), this);
+    QAction *infoLog = new QAction(("&Log"), this);
+
+    QAction *settingsOption = new QAction(("&Opcje"), this);
+
+    auto mainfile = menuBar()->addMenu("Plik");
+    auto mainEdycja = menuBar()->addMenu("Edycja");
+    auto mainInfo = menuBar()->addMenu("Informacje");
+    auto mainSettings = menuBar()->addMenu("Ustawienia");
+
+    //    mainfile->addAction(fileSave);
+    //    mainfile->addAction(fileEksport);
+
+    mainfile->addSeparator();
+    mainfile->addAction(fileWyjscie);
+
+    mainEdycja->addAction(edycjaDodajProducenta);
+    mainEdycja->addAction(edycjaDodajModel);
+
+    //    mainEdycja->addAction(editKopiuj);
+    //    mainEdycja->addAction(editWklej);
+    mainInfo->addAction(infoOProgramie);
+    mainInfo->addAction(infoOAutorze);
+    mainInfo->addAction(infoLog);
+
+    mainSettings->addAction(settingsOption);
+
+    //connect(settingsOption, &QAction::triggered,this, SLOT (openInfo()));
+    connect(settingsOption, SIGNAL(triggered()), this, SLOT(openSettings()));
+    connect(infoOProgramie, SIGNAL(triggered()), this, SLOT(openInfo()));
+    connect(edycjaDodajProducenta,
+            SIGNAL(triggered()),
+            this,
+            SLOT(on_actionDodaj_Producenta_triggered()));
+    connect(edycjaDodajModel, SIGNAL(triggered()), this, SLOT(on_actionDodaj_Model_triggered()));
+}
 void Urzadzenia::howMuchDevice()
 {
     QString file3 = "C:/Defaults/Pliki/3.Urzadzenie.txt";
@@ -142,8 +215,6 @@ void Urzadzenia::howMuchDevice()
     plikUrzadzenia.close();
     //iloscUrzadzen ++;
     cout << "ilosc Urzadzen z nastepnym: " << iloscUrzadzen + 1 << endl;
-
-
 
     ui->lineEditNumber->setText(QString::number(iloscUrzadzen + 1));
 }
@@ -293,7 +364,7 @@ void Urzadzenia::on_pushButton_clicked()
         QString nrSeryjnyZLini = ui->lineEditNrSeryjny->text();
         if (nrSeryjnyZLini == nrSeryjny) {
             IsNrSeryjnySame = true;
-            i=ui->comboBox_3->count();
+            i = ui->comboBox_3->count();
             break;
         } else {
             IsNrSeryjnySame = false;
@@ -323,7 +394,6 @@ void Urzadzenia::on_pushButton_clicked()
         ui->label_4->setText("Producent: " + ui->comboBox->currentText());
         ui->label_6->setText("Model: " + ui->comboBox_2->currentText());
         ui->label_7->setText("Numer Seryjny: " + ui->lineEditNrSeryjny->text());
-
     }
     //plikUrzadzenia.close();
 }
@@ -347,7 +417,8 @@ void Urzadzenia::on_comboBox_highlighted(const QString)
         QStringList listaProducent = QStringList();
 
         ui->comboBox->clear();
-        wczytajProducenta();
+        //wczytajProducenta();
+        wypelnijProducenta();
         int ostatniindex = ui->comboBox->count() - 1;
         for (int iZmienna = 0; iZmienna <= ostatniindex; iZmienna++) {
             listaProducent.push_back(ui->comboBox->itemText(iZmienna).toUtf8());
@@ -364,24 +435,24 @@ void Urzadzenia::on_comboBox_highlighted(const QString)
 }
 
 void Urzadzenia::wczytajProducenta()
-{
-    QString file7 = "C:/Defaults/Pliki/7.ZapisProducenta.txt";
-    fstream plikKontrahent;
-    //Wczytuje miasta z pliku
-    plikKontrahent.open(file7.toStdString(), ios::in);
-    if (plikKontrahent.good() == false) {
-        cout << "Plik nie istnieje !!!!!";
-        //exit(0);
-    }
-    string linia;
-    int nr_lini = 1;
-    while (getline(plikKontrahent, linia)) {
-        ui->comboBox->addItem(linia.c_str());
-        cout << linia.c_str() << endl;
-        nr_lini++;
-    }
+{wypelnijProducenta();
+//    QString file7 = "C:/Defaults/Pliki/7.ZapisProducenta.txt";
+//    fstream plikKontrahent;
+//    //Wczytuje miasta z pliku
+//    plikKontrahent.open(file7.toStdString(), ios::in);
+//    if (plikKontrahent.good() == false) {
+//        cout << "Plik nie istnieje !!!!!";
+//        //exit(0);
+//    }
+//    string linia;
+//    int nr_lini = 1;
+//    while (getline(plikKontrahent, linia)) {
+//        ui->comboBox->addItem(linia.c_str());
+//        cout << linia.c_str() << endl;
+//        nr_lini++;
+//    }
 
-    plikKontrahent.close();
+//    plikKontrahent.close();
 }
 void Urzadzenia::wczytajModel()
 {
@@ -433,4 +504,14 @@ void Urzadzenia::on_comboBox_2_highlighted(const QString)
     checkFlags << "0" << endl;
     checkFlags.close();
     ui->pushButton->setEnabled(true);
+}
+void Urzadzenia::openInfo()
+{
+    Info *info = new Info(this);
+    info->show();
+}
+void Urzadzenia::openSettings()
+{
+    Ustawienia *ustaw = new Ustawienia(this);
+    ustaw->show();
 }

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <QFile>
 #include <QMessageBox>
+#include <DataBase/maindb.h>
 
 using namespace std;
 
@@ -54,6 +55,15 @@ UrzadzeniaDodajProducenta::~UrzadzeniaDodajProducenta()
 
 void UrzadzeniaDodajProducenta::on_pushButton_2_clicked()
 {
+    //TODO: dodoac do Bazy
+    QString daneProducent="";
+
+    //daneProducent=
+    MainDb *mainDb = new MainDb (this);
+    mainDb -> addProducent (daneProducent);
+
+
+
     QString file7 = "C:/Defaults/Pliki/7.ZapisProducenta.txt";
     // Zapisz i zamknij
     cout << "Zapisuje i wychodze z okienka" << endl;
@@ -64,8 +74,11 @@ void UrzadzeniaDodajProducenta::on_pushButton_2_clicked()
     iloscElementowWcombo = ui->comboBoxDodajProdcuenta->count();
     for (int i = 0; i <= iloscElementowWcombo - 1; i++) {
         //  petla wczytująca liste z combo
+        daneProducent = ui->comboBoxDodajProdcuenta->itemText(i);
         cout << iloscElementowWcombo << endl;
-        plikProducent << ui->comboBoxDodajProdcuenta->itemText(i).toStdString() << endl;
+        //plikProducent << ui->comboBoxDodajProdcuenta->itemText(i).toStdString() << endl;
+        //plikProducent << daneProducent.toStdString() << endl;
+        mainDb -> addProducent (daneProducent);
     }
     plikProducent.close();
     destroy();

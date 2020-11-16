@@ -45,6 +45,11 @@ private slots:
     void wczytajModel();
     void on_comboBox_highlighted(const QString);
     void on_comboBox_2_highlighted(const QString);
+    void initMenuUrzadzenia();
+    void openInfo();
+    void wypelnijProducenta();
+    void openSettings();
+
 
 private:
     Ui::Urzadzenia *ui;

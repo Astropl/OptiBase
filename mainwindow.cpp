@@ -20,6 +20,8 @@
 #include <QApplication>
 #include <QMainWindow>
 
+
+using namespace std;
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -149,5 +151,7 @@ void MainWindow::on_actionOpcje_triggered() {}
 void MainWindow::on_pushButton_9_clicked()
 {QString zapytanie ="";
     MainDb *mainDb = new MainDb(this);
-    mainDb->ZapytanieTestowe(zapytanie);
+    zapytanie = mainDb->ZapytanieTestowe(zapytanie);
+     cout<<"Zapytanie w main glownym odpowiedz: "+ zapytanie.toStdString() <<endl;
+    ui->comboBox->addItem(zapytanie);
 }
