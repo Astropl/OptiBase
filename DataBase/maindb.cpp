@@ -1,4 +1,5 @@
 #include "maindb.h"
+#include "Urzadzenia/urzadzenia.h"
 #include <iostream>
 #include <QDebug>
 #include <QMainWindow>
@@ -10,14 +11,16 @@
 
 using namespace std;
 
+QSqlRecord idName;
+
 MainDb::MainDb(QWidget *parent)
     : QMainWindow(parent)
 {
-    cout << "Jestem w construktorze Init mainDB" << endl;
+    //cout << "Jestem w construktorze Init mainDB" << endl;
 }
 void MainDb::init()
-{
-    cout << "Jestem w Init mainDB" << endl;
+{ //Urzadzenia *urzadz = new Urzadzenia(this);
+    //cout << "Jestem w Init mainDB" << endl;
     DatabaseConnect();
     DatabaseInit();
     DatabasePopulate();
@@ -28,91 +31,71 @@ QString MainDb::ZapytanieTestowe(QString zapytanie)
     //TODO: Stworzyc zapytanie i go wyswietlic
 
     //Proste testowe zapytanie
-    cout<<"Jestem w Main DB proste zapytanie"<<endl;
+    //cout << "Jestem w Main DB proste zapytanie" << endl;
     QSqlQuery query;
     query.prepare("SELECT miasto FROM miasta");
 
     if (!query.exec())
-        qWarning()<<"Error w zapytaniu"<<query.lastError().text();
-    if(query.first())
-    { zapytanie=query.value(0).toString();}
-    else
-    { zapytanie = "Dane nie znalezione";}
-    cout<<"Zapytanie w mainDB odpowiedz: "+ zapytanie.toStdString() <<endl;
-   // zapytanie
+        qWarning() << "Error w zapytaniu" << query.lastError().text();
+    if (query.first()) {
+        zapytanie = query.value(0).toString();
+    } else {
+        zapytanie = "Dane nie znalezione";
+    }
+    //cout << "Zapytanie w mainDB odpowiedz: " + zapytanie.toStdString() << endl;
+    // zapytanie
     return zapytanie;
-
 }
 QString MainDb::addProducent(QString daneProducent)
 
 {
     //TODO: dodoac do Bazy producenta
-QSqlQuery query;
-    qWarning()<<("Dodoaje do bazy "+ daneProducent);
-    if (!query.exec("INSERT INTO producenci (producent) VALUES('"+daneProducent+"')"))
+    QSqlQuery query;
+    qWarning() << ("Dodoaje do bazy " + daneProducent);
+    if (!query.exec("INSERT INTO producenci (producent) VALUES('" + daneProducent + "')"))
         qWarning() << "MainDB::Dodoanie Producenta - ERROR: " << query.lastError().text();
     return 0;
 }
-QString MainDb::pobierzProducenta(QString daneProducent)
+QString MainDb::pobierzProducenta(QString daneProducent, int i)
 
 {
-    //TODO: pobrac z Bazy producenta
-    QSqlQuery query;
+        QSqlQuery query;
+        QString testName;
+        qWarning()<< "Pobrana ilosc producentow z ::Urzadzenia::" <<i;
 
+        QString inti = QString::number(i);
 
-    cout<<"Jestem w Main DB proste zapytanie"<<endl;
-
-    query.prepare("SELECT producent FROM producenci");
-
-    if (!query.exec())
-        qWarning()<<"Error w zapytaniu"<<query.lastError().text();
-    if(query.first())
-    { daneProducent=query.value(0).toString();}
-    else
-    { daneProducent = "Dane nie znalezione";}
-    cout<<"Zapytanie w mainDB odpowiedz: "+ daneProducent.toStdString() <<endl;
-    // zapytanie
-
-    return daneProducent;
+QString name;
+        if (query.exec("SELECT * FROM producenci where id ="+inti)) {
+            while (query.next()) {
+                qWarning() << query.value(1).toString();
+                name = query.value(1).toString();
+                            }
+            qWarning() <<"udalo sie? : pozniej "<<name;
+            return name;
+        }
 }
 int MainDb::pobierzProducentaiD(int daneProducentId)
 
 {
-    int idName=0;
+    qWarning() << "Jestem w MainDB->pobierz Id.";
+    QString testName;
+    int rows = 0;
     //TODO: pobrac z Bazy producenta
     QSqlQuery query;
-    QString testName;
 
-    //cout<<"Jestem w Main DB proste zapytanie"<<endl;
 
-//    query.exec("SELECT COUNT(*) FROM producenci");
-query.exec("SELECT * FROM producenci");
-    idName = query.record().indexOf("producent");
-    //daneProducentId = daneProducentId.toInt();
-    while (query.next())
-    {testName = query.value(idName).toInt();
-        qWarning() <<testName;
-        daneProducentId++;
+
+    if (query.exec("SELECT * FROM producenci")) {
+        while (query.next()) {
+            qWarning() << query.value(1).toString();
+            rows++;
+        }
+        qWarning() << "row to: " << rows;
     }
-    cout<<"Ilosc urzadzenz  bazy damych Producenci: "+daneProducentId<<endl;
-    //idName = query.record()
-    //while (query.next())
-//    {
-//        QString name = query.value(idName).toString();
-//        qDebug() << name;
-//    }
-//    if (!query.exec())
-//        qWarning()<<"Error w zapytaniu"<<query.lastError().text();
-//    if(query.first())
-//    { daneProducentId=query.value(0).toString();}
-//    else
-//    { daneProducentId = "Dane nie znalezione";}
-//    cout<<"Zapytanie w mainDB odpowiedz: "+ daneProducentId.toStdString() <<endl;
-//    // zapytanie
-
-    return daneProducentId ;
+    qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
+    return rows;
 }
-
 
 void MainDb::DatabaseConnect()
 {
@@ -120,7 +103,8 @@ void MainDb::DatabaseConnect()
     const QString DRIVER("QSQLITE");
     if (QSqlDatabase::isDriverAvailable(DRIVER)) {
         QSqlDatabase db = QSqlDatabase::addDatabase(DRIVER);
-        db.setDatabaseName("C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/DataBase/2020.11.16.db");
+        db.setDatabaseName(
+            "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/DataBase/2020.11.17.db");
         qWarning(" Powstała baza");
 
         if (db.open()) {
@@ -155,7 +139,6 @@ void MainDb::DatabasePopulate()
     QSqlQuery query;
 }
 
-
 void MainDb::dBProducent()
 {
     qWarning("Tworzenie tabeli Producent ");
@@ -164,9 +147,11 @@ void MainDb::dBProducent()
 
     if (!query.isActive())
         qWarning() << " Tworzenie Tabeli - ERROR: " << query.lastError().text();
-
-    if (!query.exec("INSERT INTO producenci (producent) VALUES('Selvas')"))
-        qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
+//NOTE:: dodoaje dwa przykładowe wpisy Producenci
+//    if (!query.exec("INSERT INTO producenci (producent) VALUES('Selvas')"))
+//        qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
+//    if (!query.exec("INSERT INTO producenci (producent) VALUES('Jawon')"))
+//        qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
 }
 void MainDb::dBModel()
 {
@@ -180,8 +165,6 @@ void MainDb::dBModel()
     if (!query.exec("INSERT INTO modele (model) VALUES('IOI 353')"))
         qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
 }
-
-
 
 void MainDb::dBKontrahent()
 {

@@ -20,7 +20,6 @@
 #include <QApplication>
 #include <QMainWindow>
 
-
 using namespace std;
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -45,17 +44,17 @@ void MainWindow::initWindow()
 
     QAction *fileSave = new QAction(("&Zapisz"), this);
     QAction *fileEksport = new QAction(("&Eksport"), this);
-   // QAction *fileseparator = new QAction(("----------"), this);
+    // QAction *fileseparator = new QAction(("----------"), this);
     QAction *fileWyjscie = new QAction(("&Wyjście"), this);
 
-     QAction *editKopiuj = new QAction(("&Kopiuj"), this);
-     QAction *editWklej = new QAction(("&Wklej"), this);
+    QAction *editKopiuj = new QAction(("&Kopiuj"), this);
+    QAction *editWklej = new QAction(("&Wklej"), this);
 
-     QAction *infoOProgramie = new QAction(("&O Programie"), this);
-     QAction *infoOAutorze = new QAction(("O &Autorze"), this);
-     QAction *infoLog = new QAction(("&Log"), this);
+    QAction *infoOProgramie = new QAction(("&O Programie"), this);
+    QAction *infoOAutorze = new QAction(("O &Autorze"), this);
+    QAction *infoLog = new QAction(("&Log"), this);
 
-     QAction *settingsOption = new QAction(("&Opcje"), this);
+    QAction *settingsOption = new QAction(("&Opcje"), this);
 
     auto mainfile = menuBar()->addMenu("Plik");
     auto mainEdycja = menuBar()->addMenu("Edycja");
@@ -77,8 +76,8 @@ void MainWindow::initWindow()
     mainSettings->addAction(settingsOption);
 
     //connect(settingsOption, &QAction::triggered,this, SLOT (openInfo()));
-    connect(settingsOption, SIGNAL(triggered()), this, SLOT (openSettings()));
-    connect(infoOProgramie, SIGNAL(triggered()), this, SLOT (openInfo()));
+    connect(settingsOption, SIGNAL(triggered()), this, SLOT(on_actionOpcje_triggered()));
+    connect(infoOProgramie, SIGNAL(triggered()), this, SLOT(on_actionO_programie_triggered()));
 }
 void MainWindow::openInfo()
 {
@@ -88,7 +87,7 @@ void MainWindow::openInfo()
 void MainWindow::openSettings()
 {
     Ustawienia *ustaw = new Ustawienia(this);
-        ustaw->show();
+    ustaw->show();
 }
 
 void MainWindow::CheckIsFileExist()
@@ -142,16 +141,29 @@ void MainWindow::on_pushButton_4_clicked()
     destroy();
 }
 
-void MainWindow::on_pushButton_2_clicked() {}
-void MainWindow::on_pushButton_3_clicked() {}
-void MainWindow::on_actionO_programie_triggered() {}
+void MainWindow::on_pushButton_2_clicked()
+{ //TODO: Zrobic
+}
+void MainWindow::on_pushButton_3_clicked()
+{ //TODO: Zrobic
+}
+void MainWindow::on_actionO_programie_triggered()
+{
+    Info *info = new Info(this);
+    info->show();
+}
 
-void MainWindow::on_actionOpcje_triggered() {}
+void MainWindow::on_actionOpcje_triggered()
+{
+    Ustawienia *ustaw = new Ustawienia(this);
+    ustaw->show();
+}
 
 void MainWindow::on_pushButton_9_clicked()
-{QString zapytanie ="";
+{
+    QString zapytanie = "";
     MainDb *mainDb = new MainDb(this);
     zapytanie = mainDb->ZapytanieTestowe(zapytanie);
-     cout<<"Zapytanie w main glownym odpowiedz: "+ zapytanie.toStdString() <<endl;
+    //cout << "Zapytanie w main glownym odpowiedz: " + zapytanie.toStdString() << endl;
     ui->comboBox->addItem(zapytanie);
 }

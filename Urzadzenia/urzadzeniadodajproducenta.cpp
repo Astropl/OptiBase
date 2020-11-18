@@ -2,6 +2,7 @@
 #include "ui_urzadzeniadodajproducenta.h"
 #include <fstream>
 #include <iostream>
+#include <QDebug>
 #include <QFile>
 #include <QMessageBox>
 #include <DataBase/maindb.h>
@@ -32,20 +33,34 @@ UrzadzeniaDodajProducenta::UrzadzeniaDodajProducenta(QWidget *parent)
     QString file14 = "C:/Defaults/Pliki/14.CheckFlagsInMiastoKontrahentShow.txt";
     QString file15 = "C:/Defaults/Pliki/15.CheckFlagsInWojewodztwoKontrahentShow.txt";
 
-    plikProducent.open(file7.toStdString(), ios::in);
 
-    if (plikProducent.good() == false) {
-        cout << "Plik nie istnieje !!!!!";
-        //return(0);
+    //TODO:: Wczytac producenta z bazy danych MainB
+    int producentId=0;
+    QString QStringPobierzProducenta;
+    MainDb *mainDb = new MainDb (this);
+   producentId = mainDb->pobierzProducentaiD(producentId);
+    QStringPobierzProducenta = mainDb->pobierzProducenta(QStringPobierzProducenta,producentId);
+
+    for (int i = 1; i <= producentId; i++) {
+        QStringPobierzProducenta = mainDb->pobierzProducenta(QStringPobierzProducenta, i);
+        ui->comboBoxDodajProdcuenta->addItem(QStringPobierzProducenta);
+        qDebug() << QStringPobierzProducenta;
     }
-    string linia;
-    int nr_lini = 1;
-    while (getline(plikProducent, linia)) {
-        ui->comboBoxDodajProdcuenta->addItem(linia.c_str());
-        cout << linia.c_str() << endl;
-        nr_lini++;
-    }
-    plikProducent.close();
+
+//    plikProducent.open(file7.toStdString(), ios::in);
+
+//    if (plikProducent.good() == false) {
+//        cout << "Plik nie istnieje !!!!!";
+//        //return(0);
+//    }
+//    string linia;
+//    int nr_lini = 1;
+//    while (getline(plikProducent, linia)) {
+//        ui->comboBoxDodajProdcuenta->addItem(linia.c_str());
+//        cout << linia.c_str() << endl;
+//        nr_lini++;
+//    }
+//    plikProducent.close();
 }
 
 UrzadzeniaDodajProducenta::~UrzadzeniaDodajProducenta()
@@ -60,27 +75,39 @@ void UrzadzeniaDodajProducenta::on_pushButton_2_clicked()
 
     //daneProducent=
     MainDb *mainDb = new MainDb (this);
-    mainDb -> addProducent (daneProducent);
 
-
-
-    QString file7 = "C:/Defaults/Pliki/7.ZapisProducenta.txt";
-    // Zapisz i zamknij
-    cout << "Zapisuje i wychodze z okienka" << endl;
-    // musze zapisać do pliku
-    plikProducent.open(file7.toStdString(), ios::out | ios::trunc); //ios::app);
-    // musze teraz zrobic petle i zapisac itemy z comboboxa
     int iloscElementowWcombo;
-    iloscElementowWcombo = ui->comboBoxDodajProdcuenta->count();
-    for (int i = 0; i <= iloscElementowWcombo - 1; i++) {
-        //  petla wczytująca liste z combo
-        daneProducent = ui->comboBoxDodajProdcuenta->itemText(i);
-        cout << iloscElementowWcombo << endl;
-        //plikProducent << ui->comboBoxDodajProdcuenta->itemText(i).toStdString() << endl;
-        //plikProducent << daneProducent.toStdString() << endl;
-        mainDb -> addProducent (daneProducent);
-    }
-    plikProducent.close();
+        iloscElementowWcombo = ui->comboBoxDodajProdcuenta->count();
+
+        for (int i = 0; i <= iloscElementowWcombo - 1; i++) {
+            //        //  petla wczytująca liste z combo
+                    daneProducent = ui->comboBoxDodajProdcuenta->itemText(i);
+            //        cout << iloscElementowWcombo << endl;
+            //        //plikProducent << ui->comboBoxDodajProdcuenta->itemText(i).toStdString() << endl;
+            //        //plikProducent << daneProducent.toStdString() << endl;
+                    mainDb -> addProducent (daneProducent);
+                }
+   // mainDb -> addProducent (daneProducent);
+
+
+
+//    QString file7 = "C:/Defaults/Pliki/7.ZapisProducenta.txt";
+//    // Zapisz i zamknij
+//    cout << "Zapisuje i wychodze z okienka" << endl;
+//    // musze zapisać do pliku
+//    plikProducent.open(file7.toStdString(), ios::out | ios::trunc); //ios::app);
+//    // musze teraz zrobic petle i zapisac itemy z comboboxa
+//    int iloscElementowWcombo;
+//    iloscElementowWcombo = ui->comboBoxDodajProdcuenta->count();
+//    for (int i = 0; i <= iloscElementowWcombo - 1; i++) {
+//        //  petla wczytująca liste z combo
+//        daneProducent = ui->comboBoxDodajProdcuenta->itemText(i);
+//        cout << iloscElementowWcombo << endl;
+//        //plikProducent << ui->comboBoxDodajProdcuenta->itemText(i).toStdString() << endl;
+//        //plikProducent << daneProducent.toStdString() << endl;
+//        mainDb -> addProducent (daneProducent);
+//    }
+//    plikProducent.close();
     destroy();
 }
 

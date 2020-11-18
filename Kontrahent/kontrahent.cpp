@@ -97,7 +97,7 @@ void Kontrahent::howMuchKontrahent()
         iloscKontrahentow++;
 
         //ui->comboBoxWczytajMiasta->addItem(linia.c_str());
-        cout << linia.c_str() << endl;
+        //cout << linia.c_str() << endl;
         nr_lini++;
     }
     iloscKontrahentow = iloscKontrahentow / 14;
@@ -155,7 +155,7 @@ void Kontrahent::wczytajKraj()
     int nr_lini = 1;
     while (getline(plikKontrahent, linia)) {
         ui->comboBoxWczytajKraj->addItem(linia.c_str());
-        cout << linia.c_str() << endl;
+        //cout << linia.c_str() << endl;
         nr_lini++;
     }
 
@@ -177,7 +177,7 @@ void Kontrahent::wczytajMiasta()
     int nr_lini = 1;
     while (getline(plikKontrahent, linia)) {
         ui->comboBoxWczytajMiasta->addItem(linia.c_str());
-        cout << linia.c_str() << endl;
+        //cout << linia.c_str() << endl;
         nr_lini++;
     }
 
@@ -196,7 +196,7 @@ void Kontrahent::wczytajWojewodztwa()
     int nr_lini = 1;
     while (getline(plikKontrahent, linia)) {
         ui->comboBoxWczytajWojewodztwa->addItem(linia.c_str());
-        cout << linia.c_str() << endl;
+        //cout << linia.c_str() << endl;
         nr_lini++;
     }
 
@@ -263,7 +263,7 @@ void Kontrahent::on_pushButton_clicked()
 
     for (int i = 0; i <= iloscElementowWcombo - 1; i++) {
         //  petla wczytująca liste z combo
-        cout << iloscElementowWcombo << endl;
+        //cout << iloscElementowWcombo << endl;
     }
     plikKontrahent.close();
     ui->lineEditWczytajNumer->setText(QString::number(iloscKontrahentow));
@@ -280,21 +280,21 @@ void Kontrahent::on_pushButton_2_clicked()
 void Kontrahent::on_actionDodaj_Miasto_triggered()
 {
     // Kontarhaent Dodaj miasto // kontrahentdodajmiasto.
-    cout << "Dodoaje miasto zkontrahenta" << endl;
+    //cout << "Dodoaje miasto zkontrahenta" << endl;
     KontrahentDodajMiasto *kontrDodMiasto = new KontrahentDodajMiasto(this);
     kontrDodMiasto->show();
 }
 
 void Kontrahent::on_actionDodaj_Wojew_dztwo_triggered()
 {
-    cout << "Dodoaje wojewdoztwo z kontrahenta" << endl;
+    //cout << "Dodoaje wojewdoztwo z kontrahenta" << endl;
     KontrahentDodajWojewodztwo *kontrDodWoje = new KontrahentDodajWojewodztwo(this);
     kontrDodWoje->show();
 }
 
 void Kontrahent::on_actionDodaj_Kraj_triggered()
 {
-    cout << "Dodoaje Kraje z kontrahenta" << endl;
+    //cout << "Dodoaje Kraje z kontrahenta" << endl;
     KontrahentDodajKraj *kontrDodKraj = new KontrahentDodajKraj(this);
     kontrDodKraj->show();
 }
@@ -314,10 +314,10 @@ void Kontrahent::on_comboBoxWczytajMiasta_highlighted(const QString) //(const QS
 {
     QString file10 = "C:/Defaults/Pliki/10.CheckFlagsInMiasto.txt";
     CheckFiles *checkFiles = new CheckFiles(this);
-    cout << "Otrzymanie highland przycisku wczytaj Miasta" << endl;
+    //cout << "Otrzymanie highland przycisku wczytaj Miasta" << endl;
     checkFlagsVarriableMiasto = checkFiles->checkFlagsMiasto(checkFlagsVarriableMiasto);
     if (checkFlagsVarriableMiasto != 0) {
-        cout << "textHighlighted" << endl;
+        //cout << "textHighlighted" << endl;
         QStringList listaMiast = QStringList();
 
         ui->comboBoxWczytajMiasta->clear();
@@ -350,11 +350,11 @@ void Kontrahent::on_comboBoxWczytajWojewodztwa_highlighted(const QString) //cons
     QString file2 = "C:/Defaults/Pliki/2.Kontrahent.txt";
     QString file12 = "C:/Defaults/Pliki/12.CheckFlagsInWojewodztwa.txt";
     CheckFiles *checkFiles = new CheckFiles(this);
-    cout << " Otrzymanie highland przycisku wczytaj wojewdóztwo" << endl;
+   // cout << " Otrzymanie highland przycisku wczytaj wojewdóztwo" << endl;
     checkFlagsVarriableWojewodztwo = checkFiles->checkFlagsWojewodztwa(
         checkFlagsVarriableWojewodztwo);
     if (checkFlagsVarriableWojewodztwo != 0) {
-        cout << "Higladned w Przycisk wczyta Wojewodztwa" << endl;
+       // cout << "Higladned w Przycisk wczyta Wojewodztwa" << endl;
         QStringList listaWojewodztw = QStringList();
 
         ui->comboBoxWczytajWojewodztwa->clear();
@@ -378,10 +378,10 @@ void Kontrahent::on_comboBoxWczytajKraj_highlighted(const QString) //const QStri
 {
     QString file11 = "C:/Defaults/Pliki/11.CheckFlagsInKraj.txt";
     CheckFiles *checkFiles = new CheckFiles(this);
-    cout << " Otrzymanie highland przycisku wczytaj wojewdóztwo" << endl;
+   // cout << " Otrzymanie highland przycisku wczytaj wojewdóztwo" << endl;
     checkFlagsVarriableKraj = checkFiles->checkFlagsKraj(checkFlagsVarriableKraj);
     if (checkFlagsVarriableKraj != 0) {
-        cout << "Higladned w Przycisk wczyta Kraj" << endl;
+       // cout << "Higladned w Przycisk wczyta Kraj" << endl;
         QStringList listaKraj = QStringList();
 
         ui->comboBoxWczytajKraj->clear();

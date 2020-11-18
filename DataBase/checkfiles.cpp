@@ -26,8 +26,8 @@ QString file17 = "C:/Defaults/Pliki/17.CheckFlagsInModelUrzadzenia.txt";
 
 CheckFiles::CheckFiles(QWidget *parent)
     : QMainWindow(parent)
-{cout <<"Jestem w contstr"<<endl;}
-
+{//cout <<"Jestem w contstr"<<endl;}
+}
 void CheckFiles::initMkDir()
 {
     mkdir("C:/Defaults");

@@ -22,7 +22,7 @@ public:
     QString ZapytanieTestowe(QString Zapytanie);
     //void addProducent();
     QString addProducent(QString daneProducent);
-    QString pobierzProducenta(QString daneProducent);
+    QString pobierzProducenta(QString daneProducent, int i);
     int pobierzProducentaiD(int daneProducentId);
 };
 

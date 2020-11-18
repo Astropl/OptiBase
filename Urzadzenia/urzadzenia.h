@@ -26,6 +26,9 @@ public:
 public slots:
 
     void myfunctiontimer();
+    QString zMainDb(QString testName);
+ void wypelnijProducenta();
+
 
 private slots:
     void on_BtnUrzaZapisz_clicked();
@@ -47,11 +50,12 @@ private slots:
     void on_comboBox_2_highlighted(const QString);
     void initMenuUrzadzenia();
     void openInfo();
-    void wypelnijProducenta();
+
     void openSettings();
 
 
-private:
+
+public:
     Ui::Urzadzenia *ui;
     QTimer *timer;
 };

@@ -17,6 +17,7 @@
 #include <stdio.h>
 #include <QString>
 #include <QTimer>
+#include <QDebug>
 
 using namespace std;
 
@@ -24,13 +25,15 @@ string stringLabela4 = ("Producent: , Model: , Nr. Seryjny: ");
 QString zaznaczono;
 fstream plikUrzadzenia;
 int iloscUrzadzen = 0;
+QString QStringPobierzProducenta = "";
 
 int checkFlagsVariableProducent = 0;
 int checkFlagsVariableModel = 0;
-
+int pobierzProducentaId = 0;
 Urzadzenia::Urzadzenia(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::Urzadzenia)
+
 {
     ui->setupUi(this);
     ui->comboBox->addItem("");
@@ -95,21 +98,20 @@ Urzadzenia::Urzadzenia(QWidget *parent)
     //    }
     //    plikUrzadzenia.close();
 
-
     //wczytaj numery seryjne z pliku
-//    plikUrzadzenia.open(file9.toStdString(), ios::in);
-//    if (plikUrzadzenia.good() == false) {
-//        cout << "Plik nie istnieje !!!!!";
-//        //exit(0);
-//    }
-//    string linia2;
-//    int nr_lini2 = 1;
-//    while (getline(plikUrzadzenia, linia2)) {
-//        ui->comboBox_3->addItem(linia2.c_str());
-//        //cout << linia2.c_str() << endl;
-//        nr_lini2++;
-//    }
-//    plikUrzadzenia.close();
+    //    plikUrzadzenia.open(file9.toStdString(), ios::in);
+    //    if (plikUrzadzenia.good() == false) {
+    //        cout << "Plik nie istnieje !!!!!";
+    //        //exit(0);
+    //    }
+    //    string linia2;
+    //    int nr_lini2 = 1;
+    //    while (getline(plikUrzadzenia, linia2)) {
+    //        ui->comboBox_3->addItem(linia2.c_str());
+    //        //cout << linia2.c_str() << endl;
+    //        nr_lini2++;
+    //    }
+    //    plikUrzadzenia.close();
 
     countriesListModel = new QStringListModel(this);
 
@@ -126,17 +128,24 @@ Urzadzenia::Urzadzenia(QWidget *parent)
 }
 
 void Urzadzenia::wypelnijProducenta()
-{
-    QString pobierzProducenta = "";
-    int pobierzProducentaId = 0;
+{qWarning() <<"Jestem w Wypenij Producenta.";
+    //MainDb *mainDb =
     MainDb *mainDb = new MainDb(this);
+    qWarning() <<"Lece do MainDB->pobierz Id.";
     pobierzProducentaId = mainDb->pobierzProducentaiD(pobierzProducentaId);
-    for (int i = 0; i <= pobierzProducentaId; i++) {
-        pobierzProducenta = mainDb->pobierzProducenta(pobierzProducenta);
-        ui->comboBox->addItem((pobierzProducenta));
+    qWarning() <<"Urzadzenia:: mam ilosc producentów z bazy danych:"<< pobierzProducentaId;
+    for (int i = 1; i <= pobierzProducentaId; i++) {
+        QStringPobierzProducenta = mainDb->pobierzProducenta(QStringPobierzProducenta, i);
+        ui->comboBox->addItem(QStringPobierzProducenta);
+        qDebug() << QStringPobierzProducenta;
     }
+}
+QString Urzadzenia::zMainDb(QString testName)
+{ //MainDb *mainDb = new MainDb(this);
 
-
+    //pobierzProducenta = mainDb->pobierzProducenta(pobierzProducenta);
+    ui->comboBox->addItem(testName);
+    return 0;
 }
 void Urzadzenia::initMenuUrzadzenia()
 {
@@ -204,17 +213,17 @@ void Urzadzenia::howMuchDevice()
     int nr_lini = 0;
     while (getline(plikUrzadzenia, linia)) {
         iloscUrzadzen++;
-        cout << linia.c_str() << endl;
+        //cout << linia.c_str() << endl;
         nr_lini++;
     }
 
-    cout << "ilosc Urzadzen wczytanych stringów: " << iloscUrzadzen << endl;
+    //cout << "ilosc Urzadzen wczytanych stringów: " << iloscUrzadzen << endl;
     iloscUrzadzen = (iloscUrzadzen / 5); //5 to ilosc wierszy dla urzadzenia
-    cout << "ilosc Urzadzen po 5: " << iloscUrzadzen << endl;
+    //cout << "ilosc Urzadzen po 5: " << iloscUrzadzen << endl;
     ui->LblNumberAnaliz->setText(QString::number(iloscUrzadzen));
     plikUrzadzenia.close();
     //iloscUrzadzen ++;
-    cout << "ilosc Urzadzen z nastepnym: " << iloscUrzadzen + 1 << endl;
+   // cout << "ilosc Urzadzen z nastepnym: " << iloscUrzadzen + 1 << endl;
 
     ui->lineEditNumber->setText(QString::number(iloscUrzadzen + 1));
 }
@@ -343,7 +352,7 @@ void Urzadzenia::on_pushButton_clicked()
     // Sprawdzić czysą takie same numery seryjne juz zapisany i dodawanay
     //-------------------
     QString file3 = "C:/Defaults/Pliki/3.Urzadzenie.txt";
-    cout << "Dodoaj i sprawdz czy jest taki numer seryjny" << endl;
+    //cout << "Dodoaj i sprawdz czy jest taki numer seryjny" << endl;
 
     plikUrzadzenia.open(file3.toStdString(), ios::in);
     string linia = "";
@@ -352,7 +361,7 @@ void Urzadzenia::on_pushButton_clicked()
         //iloscUrzadzen++;
         ui->comboBox_3->addItem(linia.c_str());
 
-        cout << linia.c_str() << endl;
+        //cout << linia.c_str() << endl;
         nr_lini++;
     }
     linia = "";
@@ -371,7 +380,7 @@ void Urzadzenia::on_pushButton_clicked()
         }
     }
     if (IsNrSeryjnySame == true) {
-        cout << "Jest taki numer" << endl;
+       // cout << "Jest taki numer" << endl;
         QMessageBox::information(this,
                                  "Ostrzeżenie",
                                  "Analizator o takim numerze seryjnym już jest w bazie");
@@ -413,7 +422,7 @@ void Urzadzenia::on_comboBox_highlighted(const QString)
     checkFlagsVariableProducent = checkFiles->checkFlagsProducent(checkFlagsVariableProducent);
 
     if (checkFlagsVariableProducent != 0) {
-        cout << "textHighlighted" << endl;
+        cout << "textHighlighted odwiezam producenta" << endl;
         QStringList listaProducent = QStringList();
 
         ui->comboBox->clear();
@@ -435,24 +444,25 @@ void Urzadzenia::on_comboBox_highlighted(const QString)
 }
 
 void Urzadzenia::wczytajProducenta()
-{wypelnijProducenta();
-//    QString file7 = "C:/Defaults/Pliki/7.ZapisProducenta.txt";
-//    fstream plikKontrahent;
-//    //Wczytuje miasta z pliku
-//    plikKontrahent.open(file7.toStdString(), ios::in);
-//    if (plikKontrahent.good() == false) {
-//        cout << "Plik nie istnieje !!!!!";
-//        //exit(0);
-//    }
-//    string linia;
-//    int nr_lini = 1;
-//    while (getline(plikKontrahent, linia)) {
-//        ui->comboBox->addItem(linia.c_str());
-//        cout << linia.c_str() << endl;
-//        nr_lini++;
-//    }
+{
+    wypelnijProducenta();
+    //    QString file7 = "C:/Defaults/Pliki/7.ZapisProducenta.txt";
+    //    fstream plikKontrahent;
+    //    //Wczytuje miasta z pliku
+    //    plikKontrahent.open(file7.toStdString(), ios::in);
+    //    if (plikKontrahent.good() == false) {
+    //        cout << "Plik nie istnieje !!!!!";
+    //        //exit(0);
+    //    }
+    //    string linia;
+    //    int nr_lini = 1;
+    //    while (getline(plikKontrahent, linia)) {
+    //        ui->comboBox->addItem(linia.c_str());
+    //        cout << linia.c_str() << endl;
+    //        nr_lini++;
+    //    }
 
-//    plikKontrahent.close();
+    //    plikKontrahent.close();
 }
 void Urzadzenia::wczytajModel()
 {
