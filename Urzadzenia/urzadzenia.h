@@ -28,7 +28,7 @@ public slots:
     void myfunctiontimer();
     QString zMainDb(QString testName);
  void wypelnijProducenta();
-
+void wypelnijModel();
 
 private slots:
     void on_BtnUrzaZapisz_clicked();

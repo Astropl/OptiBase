@@ -4,16 +4,18 @@
 #include "ui_ustawienia.h"
 #include <ctime>
 #include <direct.h> //biblio do stworzenia katalogu poprzez mkdir
-#include <direct.h>
 #include <fstream>
 #include <iostream>
 #include <iterator> // do obliczenia rozmiaru tablicy FN
 #include <windows.h>
+#include <QDebug>
+#include <QFile>
 #include <QMessageBox>
 
 using namespace std;
 QString aktHour;
-fstream fileUstawienia, fileUstawienia1;
+QFile plik; /*=("C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/DataBase/2020.11.17.db");*/
+fstream fileUstawienia, fileUstawienia1, fileUstawieniaDB1, fileUstawieniaDB2;
 Ustawienia::Ustawienia(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::Ustawienia)
@@ -65,56 +67,71 @@ QString Ustawienia::pobierzDate(QString aktHour)
 void Ustawienia::on_pushButton_clicked()
 {
     string stringFile = "Backup/";
+    qWarning() << "stringFile:" << stringFile.c_str();
     string patchBasic = "C:/Defaults/Pliki/";
-
-    string tableOfstrings[17] = {"1.DB.txt",
-                                 "2.Kontrahent.txt",
-                                 "3.Urzadzenie.txt",
-                                 "4.ZapisKraj.txt",
-                                 "5.ZapisMiasta.txt",
-                                 "6.ZapisWojewodztwa.txt",
-                                 "7.ZapisProducenta.txt",
-                                 "8.ZapisModel.txt",
-                                 "9.ZapisNrSeryjny.txt",
-                                 "10.CheckFlagsInMiasto.txt",
-                                 "11.CheckFlagsInKraj.txt",
-                                 "12.CheckFlagsInWojewodztwa.txt",
-                                 "13.CheckFlagsInKrajKontrahentShow.txt",
-                                 "14.CheckFlagsInMiastoKontrahentShow.txt",
-                                 "15.CheckFlagsInWojewodztwoKontrahentShow.txt",
-                                 "16.CheckFlagsInProducentUrzadzenia.txt",
-                                 "17.CheckFlagsInModelUrzadzenia.txt"};
+    qWarning() << "patchBasic:" << patchBasic.c_str();
+    string patchBasicDB = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/DataBase/";
+    qWarning() << "patchBasicDB:" << patchBasicDB.c_str();
+    string nameOfDB = "2020.11.17.db";
+    QString QnameOfDB = "2020.11.17.db";
+    QString QnameOfDB1 = "2020.11.17a.db";
+    qWarning() << "nameOfDB:" << nameOfDB.c_str();
 
     QString aktHours = pobierzDate(aktHour);
+    qWarning() << "aktHours:" << aktHours;
     ui->lblData->setText(aktHours);
     // Kopia danych plików
+
     string aktHours1 = aktHours.toStdString();
+    qWarning() << "aktHours1:" << aktHours1.c_str();
     string aktHours2 = patchBasic + stringFile + aktHours1 + "/";
+    qWarning() << "aktHours2:" << aktHours2.c_str();
+    string patchBasicDBBackup = patchBasicDB + stringFile;
+    qWarning() << "patchBasicDBBackup:" << patchBasicDBBackup.c_str();
+    string aktHoursDB = patchBasicDB + stringFile + aktHours1 + "/";
+    qWarning() << "aktHoursDB:" << aktHoursDB.c_str();
 
     _mkdir(aktHours2.c_str());
+    qWarning() << "1. Stworyłem katalog: " << aktHours2.c_str();
+    _mkdir(patchBasicDBBackup.c_str());
+    qWarning() << "2. Stworyłem katalog: " << patchBasicDBBackup.c_str();
 
-    int sizeOfTable = 17;                 //Podać ręcznie
-    for (int i = 0; i < sizeOfTable; i++) // int i = 0; i < sizeOfTable-1; i++
+    _mkdir(aktHoursDB.c_str());
+    qWarning() << "3. Stworyłem katalog: " << aktHoursDB.c_str();
+
+    string patchExt = patchBasicDB + nameOfDB;
+    qWarning() << "patchExt: " << patchExt.c_str();
+    string patchDest = aktHoursDB + nameOfDB;
+    string patchExt1 = patchBasicDB + nameOfDB + "1";
+    qWarning() << "patchDest: " << patchDest.c_str();
+    QString source ("patchExt");
+    QFile source1 ("patchExt");
+   // QString Qsource = QString::toStdString(source);
+    QString dest ("patchExt1");
+    if (plik.exists("patchExt1"))
+
     {
-        fileUstawienia.open(patchBasic + tableOfstrings[i], ios::in);
-        fileUstawienia1.open(aktHours2 + tableOfstrings[i], ios::out);
-        string linia;
+        qWarning("Plik wystepuje: usuwam");
+        //plik.remove("patchExt1");
+        //QFile::remove("patchExt1");
+    } else {
+        //        plik.copy("patchExt" , "patchExt1");
+        if (plik.rename("C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/DataBase/" + QnameOfDB, "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/DataBase/" + QnameOfDB1))
+        {qDebug() << "success";}
+        else
+        {qDebug() << "failed";
+            if (!source1.copy("patchExt1"))
+            {
+                qWarning()<<"BłąD: "<<source1.error();
+            }
 
-        int nr_lini = 1;
-        while (getline(fileUstawienia, linia)) {
-            ui->comboBox->addItem(linia.c_str());
-            fileUstawienia1 << linia.c_str() << endl;
-            cout << linia.c_str() << endl;
-            nr_lini++;
         }
-        ui->comboBox->clear();
-
-        fileUstawienia.close();
-        fileUstawienia1.close();
+        //QFile::copy("patchExt" , "patchExt1");
+        qWarning() << "Tworze backup z :" << patchExt.c_str() << "na " << patchExt1.c_str();
     }
-    //    QMessageBox msgBox;
-    //    msgBox.setText("Kopia Bazy Danych zrobiona");
+
     cout << "Zapisano: " + aktHours2 << endl;
+    cout << "Zapisano: " + aktHoursDB << endl;
     QMessageBox::information(this, "Ostrzeżenie", "Kopia Bazy Danych zrobiona.");
 }
 

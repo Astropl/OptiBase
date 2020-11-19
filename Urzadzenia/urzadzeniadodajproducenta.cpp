@@ -17,6 +17,7 @@ UrzadzeniaDodajProducenta::UrzadzeniaDodajProducenta(QWidget *parent)
 {
     ui->setupUi(this);
     //ui->setTitle->
+    setWindowTitle("Urządzenia::Dodaj Producenta");
     QString file1 = "C:/Defaults/Pliki/1.DB.txt";
     QString file2 = "C:/Defaults/Pliki/2.Kontrahent.txt";
     QString file3 = "C:/Defaults/Pliki/3.Urzadzenie.txt";
@@ -47,20 +48,7 @@ UrzadzeniaDodajProducenta::UrzadzeniaDodajProducenta(QWidget *parent)
         qDebug() << QStringPobierzProducenta;
     }
 
-//    plikProducent.open(file7.toStdString(), ios::in);
 
-//    if (plikProducent.good() == false) {
-//        cout << "Plik nie istnieje !!!!!";
-//        //return(0);
-//    }
-//    string linia;
-//    int nr_lini = 1;
-//    while (getline(plikProducent, linia)) {
-//        ui->comboBoxDodajProdcuenta->addItem(linia.c_str());
-//        cout << linia.c_str() << endl;
-//        nr_lini++;
-//    }
-//    plikProducent.close();
 }
 
 UrzadzeniaDodajProducenta::~UrzadzeniaDodajProducenta()

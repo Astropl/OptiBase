@@ -26,10 +26,11 @@ QString zaznaczono;
 fstream plikUrzadzenia;
 int iloscUrzadzen = 0;
 QString QStringPobierzProducenta = "";
-
+QString QStringPobierzModel ="";
 int checkFlagsVariableProducent = 0;
 int checkFlagsVariableModel = 0;
 int pobierzProducentaId = 0;
+int pobierzModelId = 0;
 Urzadzenia::Urzadzenia(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::Urzadzenia)
@@ -65,23 +66,25 @@ Urzadzenia::Urzadzenia(QWidget *parent)
     howMuchDevice();
     initMenuUrzadzenia();
     wypelnijProducenta();
-    //Wczytuje modele z pliku
-    plikUrzadzenia.open(file8.toStdString(), ios::in);
-    if (plikUrzadzenia.good() == false) {
-        cout << "Plik nie istnieje !!!!!";
-        //exit(0);
-    }
-    string linia;
-    int nr_lini = 1;
-    while (getline(plikUrzadzenia, linia)) {
-        //TODO: tutaj musze pobrać dane z bazy modeli
+    wypelnijModel();
 
-        ui->comboBox_2->addItem(linia.c_str());
-        //cout << linia.c_str() << endl;
-        nr_lini++;
-    }
+//    //Wczytuje modele z pliku
+//    plikUrzadzenia.open(file8.toStdString(), ios::in);
+//    if (plikUrzadzenia.good() == false) {
+//        cout << "Plik nie istnieje !!!!!";
+//        //exit(0);
+//    }
+//    string linia;
+//    int nr_lini = 1;
+//    while (getline(plikUrzadzenia, linia)) {
+//        //TODO: tutaj musze pobrać dane z bazy modeli
 
-    plikUrzadzenia.close();
+//        ui->comboBox_2->addItem(linia.c_str());
+//        //cout << linia.c_str() << endl;
+//        nr_lini++;
+//    }
+
+//    plikUrzadzenia.close();
 
     // wczytuj pliki z producenta
     //    plikUrzadzenia.open(file7.toStdString(), ios::in);
@@ -127,6 +130,26 @@ Urzadzenia::Urzadzenia(QWidget *parent)
     ui->BtnUrzaZapisz->setEnabled(false);
 }
 
+void Urzadzenia::wypelnijModel()
+{qWarning() <<"Jestem w Wypenij Model.";
+    //MainDb *mainDb =
+    MainDb *mainDb = new MainDb(this);
+    qWarning() <<"Lece do MainDB->pobierz Id.";
+    pobierzModelId = mainDb->pobierzModeliD(pobierzModelId);
+    qWarning() <<"Urzadzenia:: mam ilosc modeli z bazy danych:"<< pobierzModelId;
+    for (int i = 1; i <= pobierzModelId; i++) {
+        QStringPobierzModel = mainDb->pobierzModel(QStringPobierzModel, i);
+        ui->comboBox_2->addItem(QStringPobierzModel);
+        qDebug() << QStringPobierzModel;
+    }
+}
+QString Urzadzenia::zMainDb(QString testName)
+{ //MainDb *mainDb = new MainDb(this);
+
+    //pobierzProducenta = mainDb->pobierzProducenta(pobierzProducenta);
+    ui->comboBox->addItem(testName);
+    return 0;
+}
 void Urzadzenia::wypelnijProducenta()
 {qWarning() <<"Jestem w Wypenij Producenta.";
     //MainDb *mainDb =
@@ -140,13 +163,13 @@ void Urzadzenia::wypelnijProducenta()
         qDebug() << QStringPobierzProducenta;
     }
 }
-QString Urzadzenia::zMainDb(QString testName)
-{ //MainDb *mainDb = new MainDb(this);
+//QString Urzadzenia::zMainDb(QString testName)
+//{ //MainDb *mainDb = new MainDb(this);
 
-    //pobierzProducenta = mainDb->pobierzProducenta(pobierzProducenta);
-    ui->comboBox->addItem(testName);
-    return 0;
-}
+//    //pobierzProducenta = mainDb->pobierzProducenta(pobierzProducenta);
+//    ui->comboBox->addItem(testName);
+//    return 0;
+//}
 void Urzadzenia::initMenuUrzadzenia()
 {
     //tworze menu kontektowe
@@ -353,6 +376,11 @@ void Urzadzenia::on_pushButton_clicked()
     //-------------------
     QString file3 = "C:/Defaults/Pliki/3.Urzadzenie.txt";
     //cout << "Dodoaj i sprawdz czy jest taki numer seryjny" << endl;
+//TODO::Wczytaj z Bazy i Dodoaj i sprawdz czy jest taki numer seryjny
+
+
+
+
 
     plikUrzadzenia.open(file3.toStdString(), ios::in);
     string linia = "";
@@ -465,24 +493,24 @@ void Urzadzenia::wczytajProducenta()
     //    plikKontrahent.close();
 }
 void Urzadzenia::wczytajModel()
-{
-    QString file8 = "C:/Defaults/Pliki/8.ZapisModel.txt";
-    fstream plikKontrahent;
+{wypelnijModel();
+//    QString file8 = "C:/Defaults/Pliki/8.ZapisModel.txt";
+//    fstream plikKontrahent;
 
-    plikKontrahent.open(file8.toStdString(), ios::in);
-    if (plikKontrahent.good() == false) {
-        cout << "Plik nie istnieje !!!!!";
-        //exit(0);
-    }
-    string linia;
-    int nr_lini = 1;
-    while (getline(plikKontrahent, linia)) {
-        ui->comboBox_2->addItem(linia.c_str());
-        cout << linia.c_str() << endl;
-        nr_lini++;
-    }
+//    plikKontrahent.open(file8.toStdString(), ios::in);
+//    if (plikKontrahent.good() == false) {
+//        cout << "Plik nie istnieje !!!!!";
+//        //exit(0);
+//    }
+//    string linia;
+//    int nr_lini = 1;
+//    while (getline(plikKontrahent, linia)) {
+//        ui->comboBox_2->addItem(linia.c_str());
+//        cout << linia.c_str() << endl;
+//        nr_lini++;
+//    }
 
-    plikKontrahent.close();
+//    plikKontrahent.close();
 }
 void Urzadzenia::on_comboBox_2_highlighted(const QString)
 {
@@ -495,11 +523,12 @@ void Urzadzenia::on_comboBox_2_highlighted(const QString)
     checkFlagsVariableModel = checkFiles->checkFlagsModel(checkFlagsVariableModel);
 
     if (checkFlagsVariableModel != 0) {
-        cout << "textHighlighted" << endl;
+        cout << "textHighlighted odswierzam /model" << endl;
         QStringList listaModel = QStringList();
 
         ui->comboBox_2->clear();
-        wczytajModel();
+        //wczytajModel();
+        wypelnijModel();
         int ostatniindex = ui->comboBox_2->count() - 1;
         for (int iZmienna = 0; iZmienna <= ostatniindex; iZmienna++) {
             listaModel.push_back(ui->comboBox_2->itemText(iZmienna).toUtf8());

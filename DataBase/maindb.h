@@ -19,11 +19,15 @@ public:
     void dBKontrahent();
     void dBProducent();
     void dBModel();
+    void dBUrzadzenia();
     QString ZapytanieTestowe(QString Zapytanie);
     //void addProducent();
     QString addProducent(QString daneProducent);
     QString pobierzProducenta(QString daneProducent, int i);
     int pobierzProducentaiD(int daneProducentId);
+    QString addModel(QString daneModel);
+    QString pobierzModel(QString daneModel, int i);
+    int pobierzModeliD(int daneModelId);
 };
 
 #endif // MAINDB_H
