@@ -714,6 +714,45 @@
      <string>Miasto:</string>
     </property>
    </widget>
+   <zorder>scrollArea_3</zorder>
+   <zorder>pushButton_2</zorder>
+   <zorder>lineEditWczytajUlica</zorder>
+   <zorder>comboBoxWczytajMiasta</zorder>
+   <zorder>scrollArea_6</zorder>
+   <zorder>comboBoxPomoc</zorder>
+   <zorder>lineEditWczytajEmail</zorder>
+   <zorder>lineEditWczytajTelefon</zorder>
+   <zorder>scrollArea_5</zorder>
+   <zorder>scrollArea_4</zorder>
+   <zorder>scrollArea_8</zorder>
+   <zorder>scrollArea_7</zorder>
+   <zorder>lineEditWczytajNazwa_1</zorder>
+   <zorder>pushButton</zorder>
+   <zorder>lineEditWczytajNumer</zorder>
+   <zorder>lineEditWczytajUrl</zorder>
+   <zorder>scrollArea_2</zorder>
+   <zorder>lineEditWczytajNrDomu</zorder>
+   <zorder>lineEditWczytajKraj</zorder>
+   <zorder>scrollArea</zorder>
+   <zorder>lineEditWczytajKodPocztowy</zorder>
+   <zorder>lineEditWczytajTelefonDod</zorder>
+   <zorder>label</zorder>
+   <zorder>labelDaty</zorder>
+   <zorder>label_10</zorder>
+   <zorder>label_11</zorder>
+   <zorder>label_12</zorder>
+   <zorder>label_16</zorder>
+   <zorder>label_2</zorder>
+   <zorder>label_3</zorder>
+   <zorder>label_4</zorder>
+   <zorder>label_5</zorder>
+   <zorder>label_6</zorder>
+   <zorder>label_7</zorder>
+   <zorder>label_8</zorder>
+   <zorder>label_9</zorder>
+   <zorder>lineEditWczytajImie</zorder>
+   <zorder>lineEditWczytajNazwisko</zorder>
+   <zorder>comboBoxWczytajWojewodztwa</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

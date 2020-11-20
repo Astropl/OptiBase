@@ -15,6 +15,9 @@ public:
     explicit KontrahentDodajKraj(QWidget *parent = nullptr);
     ~KontrahentDodajKraj();
 
+public slots:
+    void loadKraj();
+
 private slots:
     void on_pushButton_2_clicked();
 

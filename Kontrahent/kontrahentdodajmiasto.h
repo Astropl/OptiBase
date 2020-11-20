@@ -14,6 +14,13 @@ class KontrahentDodajMiasto : public QMainWindow
 public:
     explicit KontrahentDodajMiasto(QWidget *parent = nullptr);
     ~KontrahentDodajMiasto();
+public slots:
+
+    void loadMiasto();
+
+
+
+
 
 private slots:
     void on_pushButton_clicked();

@@ -32,9 +32,10 @@ private slots:
 
     void on_actionDodaj_Miasto_triggered();
 
-    void on_actionDodaj_Wojew_dztwo_triggered();
+    void on_actionDodaj_Wojewodztwo_triggered();
     void on_actionDodaj_Kraj_triggered();
     void on_actionOpcje_triggered();
+
     //void on_lineEditWczytajNazwa_1_editingFinished();
 
     void on_lineEditWczytajNazwa_1_textChanged(const QString); //(const QString &arg1)
@@ -56,7 +57,7 @@ private slots:
     void on_comboBoxWczytajKraj_activated(const QString);
 
     void on_pushButton_3_clicked();
-
+    void initMenuKontrahent();
 private:
     Ui::Kontrahent *ui;
     QTimer *timer;

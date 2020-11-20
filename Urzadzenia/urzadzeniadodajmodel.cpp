@@ -113,12 +113,6 @@ void UrzadzeniaDodajModel::on_pushButton_2_clicked()
         mainDb -> addModel (daneModel);
     }
 
-
-
-
-
-
-
 //    QString file8 = "C:/Defaults/Pliki/8.ZapisModel.txt";
 //    cout << "Zapisuje i wychodze z okienka" << endl;
 //    // musze zapisać do pliku

@@ -1,5 +1,6 @@
 #include "kontrahentdodajmiasto.h"
 #include "ui_kontrahentdodajmiasto.h"
+#include "DataBase/maindb.h"
 #include <fstream>
 #include <iostream>
 #include <QApplication>
@@ -34,21 +35,10 @@ KontrahentDodajMiasto::KontrahentDodajMiasto(QWidget *parent)
     QString file15 = "C:/Defaults/Pliki/15.CheckFlagsInWojewodztwoKontrahentShow.txt";
     //---------------------------------------------------------
 
-    plikOdczytDodajMiasto.open(file5.toStdString(), ios::in);
-    if (plikOdczytDodajMiasto.good() == false) {
-        cout << "Plik nie istnieje !!!!!";
-        //exit(0);
-    }
-    string linia;
+    loadMiasto();
+    ui->pushButton->setEnabled(false); // Przycisk Zapisz
 
-    int nr_lini = 1;
-    while (getline(plikOdczytDodajMiasto, linia)) {
-        ui->comboBoxDodajMiasto->addItem(linia.c_str());
-        //cout << linia.c_str() << endl;
-        nr_lini++;
-    }
 
-    plikOdczytDodajMiasto.close();
 }
 
 KontrahentDodajMiasto::~KontrahentDodajMiasto()
@@ -56,24 +46,44 @@ KontrahentDodajMiasto::~KontrahentDodajMiasto()
     delete ui;
 }
 
+
+void KontrahentDodajMiasto::loadMiasto()
+    {
+        //Wczytac liste miast z MainDB i dodoac ją do comboBoxDodajKra
+        MainDb *mainDb = new MainDb (this);
+        QString QStringpobierzMiasto;
+        int pobierzMiastoId=0;
+        pobierzMiastoId = mainDb->pobierzMiastoiD(pobierzMiastoId);
+        for (int i = 1; i <= pobierzMiastoId; i++) {
+            QStringpobierzMiasto = mainDb->pobierzMiasto(QStringpobierzMiasto, i);
+            ui->comboBoxDodajMiasto ->addItem(QStringpobierzMiasto);
+            qDebug() << QStringpobierzMiasto;
+        }
+
+    }
 void KontrahentDodajMiasto::on_pushButton_clicked() //zapisz
 {
     fstream checkFlagsinMiasta;
     QString file10 = "C:/Defaults/Pliki/10.CheckFlagsInMiasto.txt";
-    QString file5 = "C:/Defaults/Pliki/5.ZapisMiasta.txt";
+    //QString file5 = "C:/Defaults/Pliki/5.ZapisMiasta.txt";
     cout << "Zapisuje " << endl;
     // musze zapisać do pliku
-    plikOdczytDodajMiasto
-        .open(file5.toStdString(),
-              ios::out
-                  | ios::trunc); //ios::app dopisuje a ios::trunc zawartos usunieta i zastąpiona nową.
+//    plikOdczytDodajMiasto
+//        .open(file5.toStdString(),
+//              ios::out
+//                  | ios::trunc); //ios::app dopisuje a ios::trunc zawartos usunieta i zastąpiona nową.
+
+    MainDb *mainDb = new MainDb(this);
+    QString daneMiasto="";
 
     int iloscElementowWcombo;
 
     iloscElementowWcombo = ui->comboBoxDodajMiasto->count();
     for (int i = 0; i <= iloscElementowWcombo - 1; i++) {
         cout << iloscElementowWcombo << endl;
-        plikOdczytDodajMiasto << ui->comboBoxDodajMiasto->itemText(i).toStdString() << endl;
+        daneMiasto=ui->comboBoxDodajMiasto->itemText(i);
+        //plikOdczytDodajMiasto << ui->comboBoxDodajMiasto->itemText(i).toStdString() << endl;
+        mainDb->addMiasto(daneMiasto)  ;
     }
     plikOdczytDodajMiasto.close();
     //
@@ -135,6 +145,8 @@ void KontrahentDodajMiasto::on_pushButton_2_clicked() //dodoaj do comboboxa
     }
     ui->comboBoxDodajMiasto->setDuplicatesEnabled(false); // ustawiam aby nie było duplikatów
     ui->lineEditDodajMiasto->setText("");
+    ui->pushButton->setEnabled(true); // Przycisk Zapisz
+    ui->pushButton_2->setEnabled(false); // Przycisk Dodaj
 }
 
 void KontrahentDodajMiasto::on_comboBoxDodajMiasto_activated(const QString)
@@ -147,6 +159,8 @@ void KontrahentDodajMiasto::on_pushButton_3_clicked() //usuń item
     //Usuń zaznaczony item
 
     ui->comboBoxDodajMiasto->removeItem(ui->comboBoxDodajMiasto->currentIndex());
+    ui->pushButton->setEnabled(true);
+    //TODO: usun z bazy
 }
 
 void KontrahentDodajMiasto::on_pushButton_4_clicked() // zamknij bez zapisywania

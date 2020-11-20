@@ -15,6 +15,9 @@ public:
     explicit KontrahentDodajWojewodztwo(QWidget *parent = nullptr);
     ~KontrahentDodajWojewodztwo();
 
+public slots:
+    void loadWojewodztwo();
+
 private slots:
     void on_pushButton_clicked();
     void on_pushButton_2_clicked();

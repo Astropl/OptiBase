@@ -81,6 +81,111 @@ QString MainDb::addModel(QString daneModel)
         qWarning() << "MainDB::Dodoanie Modelu - ERROR: " << query.lastError().text();
     return 0;
 }
+QString MainDb::addKraj(QString daneKraj)
+
+{
+    //TODO: dodoac do Bazy producenta
+    QSqlQuery query;
+    qWarning() << ("Dodoaje do bazy " + daneKraj);
+    if (!query.exec("INSERT INTO panstwa (panstwo) VALUES('" + daneKraj + "')"))
+        qWarning() << "MainDB::Dodoanie Modelu - ERROR: " << query.lastError().text();
+    return 0;
+}
+QString MainDb::addWojewodztwo(QString daneWojewodztwo)
+
+{
+    //TODO: dodoac do Bazy producenta
+    QSqlQuery query;
+    qWarning() << ("Dodoaje do bazy " + daneWojewodztwo);
+    if (!query.exec("INSERT INTO wojewodztwa (wojewodztwo) VALUES('" + daneWojewodztwo + "')"))
+        qWarning() << "MainDB::Dodoanie Modelu - ERROR: " << query.lastError().text();
+    return 0;
+}
+QString MainDb::addMiasto(QString daneMiasto)
+
+{
+    //TODO: dodoac do Bazy producenta
+    QSqlQuery query;
+    qWarning() << ("Dodoaje do bazy " + daneMiasto);
+    if (!query.exec("INSERT INTO miasta (miasto) VALUES('" + daneMiasto + "')"))
+        qWarning() << "MainDB::Dodoanie Modelu - ERROR: " << query.lastError().text();
+    return 0;
+}
+QString MainDb::pobierzKraj(QString daneModel, int i)
+{
+    QSqlQuery query;
+    QString testName;
+    qWarning() << "Pobrana ilosc Kraji z ::Państwa::" << i;
+
+    QString inti = QString::number(i);
+
+    QString name;
+    if (query.exec("SELECT * FROM panstwa where id =" + inti)) {
+        while (query.next()) {
+            qWarning() << query.value(1).toString();
+            name = query.value(1).toString();
+        }
+        qWarning() << "udalo sie? : pozniej " << name;
+        return name;
+    }
+}
+int MainDb::pobierzKrajId(int pobierzKrajId)
+
+{
+    qWarning() << "Jestem w MainDB->pobierz Id.";
+    QString testName;
+    int rows = 0;
+    //TODO: pobrac z Bazy Modeli
+    QSqlQuery query;
+
+    if (query.exec("SELECT * FROM panstwa")) {
+        while (query.next()) {
+            qWarning() << query.value(1).toString();
+            rows++;
+        }
+        qWarning() << "row to: " << rows;
+    }
+    qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
+    return rows;
+}
+
+QString MainDb::pobierzWojewodztwo(QString daneModel, int i)
+{
+    QSqlQuery query;
+    QString testName;
+    qWarning() << "Pobrana ilosc Kraji z ::Państwa::" << i;
+
+    QString inti = QString::number(i);
+    QString name;
+    if (query.exec("SELECT * FROM wojewodztwa where id =" + inti)) {
+        while (query.next()) {
+            qWarning() << query.value(1).toString();
+            name = query.value(1).toString();
+        }
+        qWarning() << "udalo sie? : pozniej " << name;
+        return name;
+    }
+}
+int MainDb::pobierzWojewodztwoId(int pobierzWojewodztwoId)
+
+{
+    qWarning() << "Jestem w MainDB->pobierz Id.";
+    QString testName;
+    int rows = 0;
+    //TODO: pobrac z Bazy Modeli
+    QSqlQuery query;
+
+    if (query.exec("SELECT * FROM wojewodztwa")) {
+        while (query.next()) {
+            qWarning() << query.value(1).toString();
+            rows++;
+        }
+        qWarning() << "row to: " << rows;
+    }
+    qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
+    return rows;
+}
+
 
 QString MainDb::pobierzModel(QString daneModel, int i)
 
@@ -93,25 +198,6 @@ QString MainDb::pobierzModel(QString daneModel, int i)
 
     QString name;
     if (query.exec("SELECT * FROM modele where id =" + inti)) {
-        while (query.next()) {
-            qWarning() << query.value(1).toString();
-            name = query.value(1).toString();
-        }
-        qWarning() << "udalo sie? : pozniej " << name;
-        return name;
-    }
-}
-QString MainDb::pobierzProducenta(QString daneProducent, int i)
-
-{
-    QSqlQuery query;
-    QString testName;
-    qWarning() << "Pobrana ilosc producentow z ::Urzadzenia::" << i;
-
-    QString inti = QString::number(i);
-
-    QString name;
-    if (query.exec("SELECT * FROM producenci where id =" + inti)) {
         while (query.next()) {
             qWarning() << query.value(1).toString();
             name = query.value(1).toString();
@@ -140,6 +226,46 @@ int MainDb::pobierzModeliD(int daneModelId)
     qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
     return rows;
 }
+QString MainDb::pobierzMiasto(QString daneModel, int i)
+
+{
+    QSqlQuery query;
+    QString testName;
+    qWarning() << "Pobrana ilosc miasta z ::kontrahenta::" << i;
+
+    QString inti = QString::number(i);
+
+    QString name;
+    if (query.exec("SELECT * FROM miasta where id =" + inti)) {
+        while (query.next()) {
+            qWarning() << query.value(1).toString();
+            name = query.value(1).toString();
+        }
+        qWarning() << "udalo sie? : pozniej " << name;
+        return name;
+    }
+}
+
+int MainDb::pobierzMiastoiD(int daneModelId)
+
+{
+    qWarning() << "Jestem w MainDB->pobierz Id.";
+    QString testName;
+    int rows = 0;
+    //TODO: pobrac z Bazy Modeli
+    QSqlQuery query;
+
+    if (query.exec("SELECT * FROM miasta")) {
+        while (query.next()) {
+            qWarning() << query.value(1).toString();
+            rows++;
+        }
+        qWarning() << "row to: " << rows;
+    }
+    qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
+    return rows;
+}
+
 int MainDb::pobierzProducentaiD(int daneProducentId)
 
 {
@@ -158,6 +284,25 @@ int MainDb::pobierzProducentaiD(int daneProducentId)
     }
     qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
     return rows;
+}
+QString MainDb::pobierzProducenta(QString daneProducent, int i)
+
+{
+    QSqlQuery query;
+    QString testName;
+    qWarning() << "Pobrana ilosc producentow z ::Urzadzenia::" << i;
+
+    QString inti = QString::number(i);
+
+    QString name;
+    if (query.exec("SELECT * FROM producenci where id =" + inti)) {
+        while (query.next()) {
+            qWarning() << query.value(1).toString();
+            name = query.value(1).toString();
+        }
+        qWarning() << "udalo sie? : pozniej " << name;
+        return name;
+    }
 }
 
 void MainDb::DatabaseConnect()
@@ -291,15 +436,17 @@ void MainDb::dBWojewodztwa()
         qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
 }
 void MainDb::dBKraj()
-{
+{QSqlQuery query;
     qWarning("Tworzenie tabeli Kraj ");
-    QSqlQuery query(
+    query.exec(
         "CREATE TABLE IF NOT EXISTS panstwa  (id INTEGER PRIMARY KEY, panstwo TEXT UNIQUE )");
 
     if (!query.isActive())
         qWarning() << " Tworzenie Tabeli - ERROR: " << query.lastError().text();
 
     if (!query.exec("INSERT INTO panstwa (panstwo) VALUES('Polska')"))
+        qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
+    if (!query.exec("INSERT INTO panstwa (panstwo) VALUES('Nuemcy')"))
         qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
 }
 

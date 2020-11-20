@@ -1,11 +1,13 @@
 #include "kontrahentdodajwojewodztwo.h"
 #include "ui_kontrahentdodajwojewodztwo.h"
+#include "DataBase/maindb.h"
 #include <fstream>
 #include <iostream>
 #include <QApplication>
 #include <QFile>
 #include <QMessageBox>
 #include <QtWidgets>
+#include <QDebug>
 
 using namespace std;
 
@@ -34,36 +36,56 @@ KontrahentDodajWojewodztwo::KontrahentDodajWojewodztwo(QWidget *parent)
     cout << "Wczytac itemy z pliku" << endl;
 
     //---------------------------------------------------------
+    loadWojewodztwo();
+ui->pushButton->setEnabled(false); // Przycisk Zapisz
 
-    plikOdczytDodajWojewodztwa.open(file6.toStdString(), ios::in);
-    if (plikOdczytDodajWojewodztwa.good() == false) {
-        cout << "Plik nie istnieje !!!!!";
-        //exit(0);
-    }
-    string linia;
-    int nr_lini = 1;
-    while (getline(plikOdczytDodajWojewodztwa, linia)) {
-        ui->comboBoxDodajWojewodztwa->addItem(linia.c_str());
-        cout << linia.c_str() << endl;
-        nr_lini++;
-    }
-    plikOdczytDodajWojewodztwa.close();
-    //ui->comboBoxDodajMiasto->sor
+//    plikOdczytDodajWojewodztwa.open(file6.toStdString(), ios::in);
+//    if (plikOdczytDodajWojewodztwa.good() == false) {
+//        cout << "Plik nie istnieje !!!!!";
+//        //exit(0);
+//    }
+//    string linia;
+//    int nr_lini = 1;
+//    while (getline(plikOdczytDodajWojewodztwa, linia)) {
+//        ui->comboBoxDodajWojewodztwa->addItem(linia.c_str());
+//        cout << linia.c_str() << endl;
+//        nr_lini++;
+//    }
+//    plikOdczytDodajWojewodztwa.close();
+//    //ui->comboBoxDodajMiasto->sor
 }
 
 KontrahentDodajWojewodztwo::~KontrahentDodajWojewodztwo()
 {
     delete ui;
 }
+void KontrahentDodajWojewodztwo::loadWojewodztwo()
+
+{
+    //Wczytac liste wojewdoztw z MainDB i dodoac ją do comboBoxDodajWojewdoztwo
+    MainDb *mainDb = new MainDb (this);
+    QString QStringpobierzWojewodztwo;
+    int pobierzWojewodztwoId=0;
+    pobierzWojewodztwoId = mainDb->pobierzWojewodztwoId(pobierzWojewodztwoId);
+    for (int i = 1; i <= pobierzWojewodztwoId; i++) {
+         QStringpobierzWojewodztwo = mainDb->pobierzWojewodztwo(QStringpobierzWojewodztwo, i);
+        ui->comboBoxDodajWojewodztwa ->addItem( QStringpobierzWojewodztwo);
+        qDebug() <<  QStringpobierzWojewodztwo;
+    }
+
+}
+
 
 void KontrahentDodajWojewodztwo::on_pushButton_clicked()
-{
+{//zapisz
+    MainDb *mainDb = new MainDb(this);
+    QString daneWojewodztwo="";
     fstream checkflagsInWojewodztwo;
     QString file12 = "C:/Defaults/Pliki/12.CheckFlagsInWojewodztwa.txt";
-    QString file6 = "C:/Defaults/Pliki/6.ZapisWojewodztwa.txt";
+    //QString file6 = "C:/Defaults/Pliki/6.ZapisWojewodztwa.txt";
     cout << "Button Zapisz. Zapisuje i wychodze z okienka" << endl;
     // musze zapisać do pliku
-    plikOdczytDodajWojewodztwa.open(file6.toStdString(), ios::out | ios::trunc);
+    //plikOdczytDodajWojewodztwa.open(file6.toStdString(), ios::out | ios::trunc);
 
     // musze teraz zrobic petle i zapisac itemy z comboboxa
     int iloscElementowWcombo;
@@ -72,10 +94,11 @@ void KontrahentDodajWojewodztwo::on_pushButton_clicked()
     for (int i = 0; i <= iloscElementowWcombo - 1; i++) {
         //  petla wczytująca liste z combo
         cout << iloscElementowWcombo << endl;
-        plikOdczytDodajWojewodztwa << ui->comboBoxDodajWojewodztwa->itemText(i).toStdString()
-                                   << endl;
+        //plikOdczytDodajWojewodztwa << ui->comboBoxDodajWojewodztwa->itemText(i).toStdString()<< endl
+        daneWojewodztwo = ui->comboBoxDodajWojewodztwa->itemText(i);
+         mainDb->addWojewodztwo(daneWojewodztwo)  ;                          ;
     }
-    plikOdczytDodajWojewodztwa.close();
+    //plikOdczytDodajWojewodztwa.close();
     checkflagsInWojewodztwo
         .open(file12.toStdString(),
               ios::in
@@ -84,6 +107,7 @@ void KontrahentDodajWojewodztwo::on_pushButton_clicked()
     checkflagsInWojewodztwo.close();
     //ui->Jak zrobic aby comboxy na urzadzeniach się odswiezały
     //ui->comboBoxDodajMiasto->rep
+    ui->pushButton->setEnabled(false); // Przycisk Zapisz
 }
 
 void KontrahentDodajWojewodztwo::on_pushButton_2_clicked()
@@ -130,6 +154,8 @@ void KontrahentDodajWojewodztwo::on_pushButton_2_clicked()
         ui->comboBoxDodajWojewodztwa->setDuplicatesEnabled(
             false); // ustawiam aby nie było duplikatów
         ui->lineEditDodajWojewodztwa->setText("");
+        ui->pushButton->setEnabled(true); // Przycisk Zapisz
+        ui->pushButton_2->setEnabled(false); // Przycisk Dodaj
     }
 }
 //Info do Gita
@@ -140,6 +166,7 @@ void KontrahentDodajWojewodztwo::on_pushButton_3_clicked()
     //Usuń zaznaczony item
 
     ui->comboBoxDodajWojewodztwa->removeItem(ui->comboBoxDodajWojewodztwa->currentIndex());
+  ui->pushButton->setEnabled(true);
 }
 
 void KontrahentDodajWojewodztwo::on_pushButton_4_clicked()

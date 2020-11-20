@@ -172,7 +172,7 @@ void Urzadzenia::wypelnijProducenta()
 //}
 void Urzadzenia::initMenuUrzadzenia()
 {
-    //tworze menu kontektowe
+    //tworze menu kontekstowe
     setWindowTitle("OptiBase v 1.0:Urządzenia");
 
     //    QAction *fileSave = new QAction(("&Zapisz"), this);
@@ -370,8 +370,9 @@ void Urzadzenia::on_actionInformacja_triggered()
 }
 //Info do Gita
 void Urzadzenia::on_pushButton_clicked()
-{ MainDb *mainDb = new MainDb(this);
+{
     // DODAJ urzadzena do Comboboxa
+    MainDb *mainDb = new MainDb(this);
  QString nrSeryjnyZLiniText = ui->lineEditNrSeryjny->text();
  QString nrSeryjnyZLini="";
  int nrSeryjnyZLiniId=0;
@@ -381,12 +382,12 @@ void Urzadzenia::on_pushButton_clicked()
     //-------------------
     //QString file3 = "C:/Defaults/Pliki/3.Urzadzenie.txt";
     //cout << "Dodoaj i sprawdz czy jest taki numer seryjny" << endl;
-//TODO::Wczytaj z Bazy i Dodoaj i sprawdz czy jest taki numer seryjny
+//Wczytaj z Bazy i Dodoaj i sprawdz czy jest taki numer seryjny
 
 
 
 
-//TODO:: Sprawdzić w bazie czy jest taki numer seryjny
+//Sprawdzić w bazie czy jest taki numer seryjny
 
     nrSeryjnyZLiniId= mainDb->isNumerSeryjnyTheSameId (nrSeryjnyZLiniId);
 
@@ -399,25 +400,22 @@ void Urzadzenia::on_pushButton_clicked()
 
     }
 
+    //Najpierw sprawdzam czy linia z numerem seryjnym nie jest pusta
+
+    if (nrSeryjnyZLiniText=="")
+    {
+         QMessageBox::information(this, "Ostrzeżenie", "Nie możesz pozostawić pustego numeru seryjnego.");
+
+    }
+    else
+    {
 
 
-//    plikUrzadzenia.open(file3.toStdString(), ios::in);
-//    string linia = "";
-//    int nr_lini = 0;
-//    while (getline(plikUrzadzenia, linia)) {
-//        //iloscUrzadzen++;
-//        ui->comboBox_3->addItem(linia.c_str());
 
-//        //cout << linia.c_str() << endl;
-//        nr_lini++;
-//    }
-//    linia = "";
-//    plikUrzadzenia.close();
-    //plikUrzadzenia.open(file3.toStdString(), ios::out| ios::app);
     bool IsNrSeryjnySame;
     for (int i = 0; i <= ui->comboBox_3->count() - 1; i++) {
         QString nrSeryjny = ui->comboBox_3->itemText(i);
-        //QString nrSeryjnyZLini = ui->lineEditNrSeryjny->text();
+
         if (nrSeryjnyZLiniText == nrSeryjny) {
             IsNrSeryjnySame = true;
             i = ui->comboBox_3->count();
@@ -427,7 +425,7 @@ void Urzadzenia::on_pushButton_clicked()
         }
     }
     if (IsNrSeryjnySame == true) {
-       // cout << "Jest taki numer" << endl;
+
         QMessageBox::information(this,
                                  "Ostrzeżenie",
                                  "Analizator o takim numerze seryjnym już jest w bazie");
@@ -467,8 +465,8 @@ void Urzadzenia::on_pushButton_clicked()
 
 
 
-    }
-    //plikUrzadzenia.close();
+    }}
+
 }
 void Urzadzenia::on_actionOpcje_triggered()
 {
@@ -510,43 +508,11 @@ void Urzadzenia::on_comboBox_highlighted(const QString)
 void Urzadzenia::wczytajProducenta()
 {
     wypelnijProducenta();
-    //    QString file7 = "C:/Defaults/Pliki/7.ZapisProducenta.txt";
-    //    fstream plikKontrahent;
-    //    //Wczytuje miasta z pliku
-    //    plikKontrahent.open(file7.toStdString(), ios::in);
-    //    if (plikKontrahent.good() == false) {
-    //        cout << "Plik nie istnieje !!!!!";
-    //        //exit(0);
-    //    }
-    //    string linia;
-    //    int nr_lini = 1;
-    //    while (getline(plikKontrahent, linia)) {
-    //        ui->comboBox->addItem(linia.c_str());
-    //        cout << linia.c_str() << endl;
-    //        nr_lini++;
-    //    }
 
-    //    plikKontrahent.close();
 }
 void Urzadzenia::wczytajModel()
 {wypelnijModel();
-//    QString file8 = "C:/Defaults/Pliki/8.ZapisModel.txt";
-//    fstream plikKontrahent;
 
-//    plikKontrahent.open(file8.toStdString(), ios::in);
-//    if (plikKontrahent.good() == false) {
-//        cout << "Plik nie istnieje !!!!!";
-//        //exit(0);
-//    }
-//    string linia;
-//    int nr_lini = 1;
-//    while (getline(plikKontrahent, linia)) {
-//        ui->comboBox_2->addItem(linia.c_str());
-//        cout << linia.c_str() << endl;
-//        nr_lini++;
-//    }
-
-//    plikKontrahent.close();
 }
 void Urzadzenia::on_comboBox_2_highlighted(const QString)
 {
