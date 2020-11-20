@@ -45,6 +45,22 @@ QString MainDb::ZapytanieTestowe(QString zapytanie)
 
     return zapytanie;
 }
+QString MainDb::addUrzadzenia(QString daneProducent,QString daneModel,QString daneNrSeryjny)
+{
+    //Zapisuje do bazy Urzadzenia
+
+
+    QSqlQuery query;
+    qWarning() << ("Dodoaje do bazy " + daneModel);
+    if (!query.exec("INSERT INTO urzadzenia (urzadzenia_producent_id, urzadzenia_model_id, numerSeryjny) VALUES('" + daneProducent + "','" + daneModel + "','" + daneNrSeryjny + "' )"))
+    {qWarning() << "MainDB::Dodoanie Urzadzenia - ERROR: " << query.lastError().text();}
+    else
+    {
+        qWarning() << "MainDB::Dodoanie Urzadzenia - Udane: " << query.lastError().text();
+    }
+    return 0;
+
+}
 QString MainDb::addProducent(QString daneProducent)
 
 {
@@ -191,18 +207,20 @@ void MainDb::dBUrzadzenia()
     QSqlQuery query;
     query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
     qWarning("Tworzenie tabeli Urzadzenia ");
-    query.exec("CREATE TABLE IF NOT EXISTS urzadzenia  (id INTEGER PRIMARY KEY, urzadzenia_producent_id TEXT, "
-               "urzadzenia_model_id TEXT, numerSeryjny TEXT UNIQUE, FOREIGN KEY (urzadzenia_producent_id) REFERENCES producenci(producent),FOREIGN KEY (urzadzenia_model_id) REFERENCES modele(model))");
+    query.exec("CREATE TABLE IF NOT EXISTS urzadzenia  (id INTEGER PRIMARY KEY, "
+               "urzadzenia_producent_id TEXT, "
+               "urzadzenia_model_id TEXT, numerSeryjny TEXT UNIQUE, FOREIGN KEY "
+               "(urzadzenia_producent_id) REFERENCES producenci(producent),FOREIGN KEY "
+               "(urzadzenia_model_id) REFERENCES modele(model))");
     if (!query.isActive())
         qWarning() << "1. Tworzenie Tabeli - ERROR: " << query.lastError().text();
 
-    if (!query.exec("INSERT INTO urzadzenia (urzadzenia_producent_id , urzadzenia_model_id, numerSeryjny) VALUES('Jawon', 'IOI-353', 'AP00034232-324222')"))
+    if (!query.exec("INSERT INTO urzadzenia (urzadzenia_producent_id , urzadzenia_model_id, "
+                    "numerSeryjny) VALUES('Jawon', 'IOI-353', 'AP00034232-324222')"))
         qWarning() << "2. MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
-    //    if (!query.exec("INSERT INTO producenci (urzadzenia_producent_id) VALUES('Jawon')"))
-    //        qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
 
-    if (!query.exec(
-            "INSERT INTO urzadzenia (urzadzenia_producent_id , urzadzenia_model_id, numerSeryjny) VALUES('Selvas', 'BC-380', 'AP4222')"))
+    if (!query.exec("INSERT INTO urzadzenia (urzadzenia_producent_id , urzadzenia_model_id, "
+                    "numerSeryjny) VALUES('Selvas', 'BC-380', 'AP4222')"))
         qWarning() << "3. MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
 }
 
@@ -215,7 +233,6 @@ void MainDb::dBProducent()
     if (!query.isActive())
         qWarning() << " Tworzenie Tabeli - ERROR: " << query.lastError().text();
     //NOTE:: dodoaje dwa przykładowe wpisy Producenci
-
 }
 void MainDb::dBModel()
 {
@@ -284,4 +301,49 @@ void MainDb::dBKraj()
 
     if (!query.exec("INSERT INTO panstwa (panstwo) VALUES('Polska')"))
         qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
+}
+
+QString MainDb::isNumerSeryjnyTheSame(QString nrSeryjnyZLini,int i)
+{
+
+    QSqlQuery query;
+    QString testName;
+    qWarning() << "Pobrana ilosc Urzadzen z ::Urzadzenia::" << i;
+
+    QString inti = QString::number(i);
+
+    QString name;
+    if (query.exec("SELECT * FROM urzadzenia where id =" + inti)) {
+        while (query.next()) {
+            qWarning() <<inti<<" pobrany: " <<query.value(3).toString();
+            name = query.value(3).toString();
+        }
+        qWarning() << "udalo sie? : pozniej " << name;
+        return name;
+    }
+
+}
+int MainDb::isNumerSeryjnyTheSameId(int nrSeryjnyZLini)
+{
+    qWarning()<<"Jestem w MainDB::isNumerSeryjnyTheSameId";
+    qWarning()<<"Przekazany Numer seryjny wprowadzany"<<nrSeryjnyZLini;
+
+
+    //TODO: Wczytac z bazy urzadzenia same numery seryjne
+
+
+    QString testName;
+    int rows = 0;
+    //TODO: pobrac z Bazy Urzadzeń same numery seryjne
+    QSqlQuery query;
+
+    if (query.exec("SELECT * FROM urzadzenia")) {
+        while (query.next()) {
+            qWarning() << query.value(1).toString();
+            rows++;
+        }
+        qWarning() << "row to: " << rows;
+    }
+    qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
+    return rows;
 }

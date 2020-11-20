@@ -244,7 +244,7 @@ MainDb *mainDb = new MainDb (this);
 
 deviceCount = mainDb ->isNumerSeryjnyTheSameId(deviceCount);
     //cout << "ilosc Urzadzen wczytanych stringów: " << iloscUrzadzen << endl;
-    //deviceCount = (deviceCount / 5); //5 to ilosc wierszy dla urzadzenia
+    deviceCount = (deviceCount / 5); //5 to ilosc wierszy dla urzadzenia
     //cout << "ilosc Urzadzen po 5: " << iloscUrzadzen << endl;
     ui->LblNumberAnaliz->setText(QString::number(deviceCount));
     //plikUrzadzenia.close();

@@ -43,7 +43,7 @@ UrzadzeniaDodajModel::UrzadzeniaDodajModel(QWidget *parent)
     QString QStringPobierzModel;
     MainDb *mainDb = new MainDb (this);
     modelId = mainDb->pobierzModeliD(modelId);
-    QStringPobierzModel = mainDb->pobierzModel(QStringPobierzModel,modelId);
+    //QStringPobierzModel = mainDb->pobierzModel(QStringPobierzModel,modelId);
 
     for (int i = 1; i <= modelId; i++) {
         QStringPobierzModel = mainDb->pobierzModel(QStringPobierzModel, i);

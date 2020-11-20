@@ -28,6 +28,9 @@ public:
     QString addModel(QString daneModel);
     QString pobierzModel(QString daneModel, int i);
     int pobierzModeliD(int daneModelId);
+    QString isNumerSeryjnyTheSame(QString nrSeryjnyZLini, int i);
+    int isNumerSeryjnyTheSameId(int nrSeryjnyZLini);
+    QString addUrzadzenia(QString daneProducent,QString daneModel,QString daneNrSeryjny);
 };
 
 #endif // MAINDB_H
