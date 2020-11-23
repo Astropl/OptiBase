@@ -428,6 +428,28 @@ przypomnienia:</string>
      </rect>
     </property>
    </widget>
+   <zorder>label_9</zorder>
+   <zorder>label_13</zorder>
+   <zorder>label</zorder>
+   <zorder>label_7</zorder>
+   <zorder>textEdit</zorder>
+   <zorder>label_5</zorder>
+   <zorder>label_3</zorder>
+   <zorder>label_10</zorder>
+   <zorder>checkBox</zorder>
+   <zorder>label_6</zorder>
+   <zorder>pushButton_2</zorder>
+   <zorder>pushButton</zorder>
+   <zorder>label_4</zorder>
+   <zorder>label_2</zorder>
+   <zorder>label_12</zorder>
+   <zorder>label_8</zorder>
+   <zorder>scrollArea_8</zorder>
+   <zorder>label_11</zorder>
+   <zorder>comboBox</zorder>
+   <zorder>lineEdit</zorder>
+   <zorder>textEdit_2</zorder>
+   <zorder>labelDaty</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

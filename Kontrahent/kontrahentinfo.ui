@@ -1019,6 +1019,14 @@
      <string>Dodaj wpis</string>
     </property>
    </widget>
+   <zorder>groupBox_2</zorder>
+   <zorder>groupBox</zorder>
+   <zorder>pushButton</zorder>
+   <zorder>tableView</zorder>
+   <zorder>pushButton_3</zorder>
+   <zorder>scrollArea_8</zorder>
+   <zorder>pushButton_2</zorder>
+   <zorder>labelDaty</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

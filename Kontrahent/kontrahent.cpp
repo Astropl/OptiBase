@@ -1,5 +1,4 @@
 #include "kontrahent.h"
-#include "ui_kontrahent.h"
 #include "DataBase/checkfiles.h"
 #include "DataBase/maindb.h"
 #include "Info/info.h"
@@ -11,6 +10,7 @@
 #include "kontrahentshow.h"
 #include "mainwindow.h"
 #include "time.h"
+#include "ui_kontrahent.h"
 #include <ctime>
 #include <fstream>
 #include <iostream>
@@ -94,7 +94,7 @@ void Kontrahent::initMenuKontrahent()
 
     QAction *edycjaDodajKraj = new QAction(("Dodaj Kraj"), this);
     QAction *edycjaDodajWojewodztwo = new QAction(("Dodaj Województwo"), this);
-       QAction *edycjaDodajMiasto = new QAction(("Dodaj Miasto"), this);
+    QAction *edycjaDodajMiasto = new QAction(("Dodaj Miasto"), this);
     //    QAction *editKopiuj = new QAction(("&Kopiuj"), this);
     //    QAction *editWklej = new QAction(("&Wklej"), this);
 
@@ -117,7 +117,7 @@ void Kontrahent::initMenuKontrahent()
 
     mainEdycja->addAction(edycjaDodajKraj);
     mainEdycja->addAction(edycjaDodajWojewodztwo);
-     mainEdycja->addAction(edycjaDodajMiasto);
+    mainEdycja->addAction(edycjaDodajMiasto);
 
     //    mainEdycja->addAction(editKopiuj);
     //    mainEdycja->addAction(editWklej);
@@ -130,38 +130,23 @@ void Kontrahent::initMenuKontrahent()
     //connect(settingsOption, &QAction::triggered,this, SLOT (openInfo()));
     connect(settingsOption, SIGNAL(triggered()), this, SLOT(openSettings()));
     connect(infoOProgramie, SIGNAL(triggered()), this, SLOT(openInfo()));
-    connect(edycjaDodajKraj,
+    connect(edycjaDodajKraj, SIGNAL(triggered()), this, SLOT(on_actionDodaj_Kraj_triggered()));
+    connect(edycjaDodajWojewodztwo,
             SIGNAL(triggered()),
             this,
-            SLOT(on_actionDodaj_Kraj_triggered()));
-    connect(edycjaDodajWojewodztwo, SIGNAL(triggered()), this, SLOT(on_actionDodaj_Wojewodztwo_triggered()));
+            SLOT(on_actionDodaj_Wojewodztwo_triggered()));
     connect(edycjaDodajMiasto, SIGNAL(triggered()), this, SLOT(on_actionDodaj_Miasto_triggered()));
 }
 void Kontrahent::howMuchKontrahent()
 {
-    QString file1 = "C:/Defaults/Pliki/2.Kontrahent.txt";
+    MainDb *mainDb = new MainDb(this);
+     int daneKontrahentId = 0, pobierzKontrahent = 0;
 
-    plikKontrahent.open(file1.toStdString(), ios::in); //plik kontrahent
-        //plikKontrahent.open("C:/Defaults/Pliki/2.Kontrahent.txt", ios::in); //plik kontrahent
-    if (plikKontrahent.good() == false) {
-        cout << "Plik nie istnieje !!!!!";
-        //exit(0);
-    }
-    string linia;
-    int nr_lini = 1;
-    while (getline(plikKontrahent, linia)) {
-        iloscKontrahentow++;
-
-        //ui->comboBoxWczytajMiasta->addItem(linia.c_str());
-        //cout << linia.c_str() << endl;
-        nr_lini++;
-    }
-    iloscKontrahentow = iloscKontrahentow / 14;
-    ui->label_16->setText(QString::number(iloscKontrahentow));
-    plikKontrahent.close();
-
-    iloscKontrahentow++;
-    ui->lineEditWczytajNumer->setText(QString::number(iloscKontrahentow));
+    daneKontrahentId=mainDb->pobierzKontrahentaId(pobierzKontrahent);
+    //pobierzKontrahentId = mainDb->pobierzKontrahentaId(pobierzKontrahent);
+    ui->label_16->setText(QString::number( daneKontrahentId));
+     daneKontrahentId++;
+    ui->lineEditWczytajNumer->setText(QString::number( daneKontrahentId));
 }
 
 void Kontrahent::myfunctiontimer()
@@ -200,40 +185,40 @@ void Kontrahent::myfunctiontimer()
 
 void Kontrahent::wczytajKraj()
 {
-    MainDb *mainDb = new MainDb (this);
+    MainDb *mainDb = new MainDb(this);
     QString QStringpobierzKraj;
-    int pobierzKrajId=0;
+    int pobierzKrajId = 0;
     pobierzKrajId = mainDb->pobierzKrajId(pobierzKrajId);
     for (int i = 1; i <= pobierzKrajId; i++) {
         QStringpobierzKraj = mainDb->pobierzKraj(QStringpobierzKraj, i);
-        ui->comboBoxWczytajKraj ->addItem(QStringpobierzKraj);
+        ui->comboBoxWczytajKraj->addItem(QStringpobierzKraj);
         qDebug() << QStringpobierzKraj;
     }
 
-//    //Wczytuje Kraje z pliku
-//    QString file4 = "C:/Defaults/Pliki/4.ZapisKraj.txt";
-//    plikKontrahent.open(file4.toStdString(), ios::in);
-//    if (plikKontrahent.good() == false) {
-//        cout << "Plik nie istnieje !!!!!";
-//        //exit(0);
-//    }
-//    string linia;
-//    int nr_lini = 1;
-//    while (getline(plikKontrahent, linia)) {
-//        ui->comboBoxWczytajKraj->addItem(linia.c_str());
-//        //cout << linia.c_str() << endl;
-//        nr_lini++;
-//    }
+    //    //Wczytuje Kraje z pliku
+    //    QString file4 = "C:/Defaults/Pliki/4.ZapisKraj.txt";
+    //    plikKontrahent.open(file4.toStdString(), ios::in);
+    //    if (plikKontrahent.good() == false) {
+    //        cout << "Plik nie istnieje !!!!!";
+    //        //exit(0);
+    //    }
+    //    string linia;
+    //    int nr_lini = 1;
+    //    while (getline(plikKontrahent, linia)) {
+    //        ui->comboBoxWczytajKraj->addItem(linia.c_str());
+    //        //cout << linia.c_str() << endl;
+    //        nr_lini++;
+    //    }
 
-//    plikKontrahent.close();
-//    ui->comboBoxWczytajKraj->currentIndex();
+    //    plikKontrahent.close();
+    //    ui->comboBoxWczytajKraj->currentIndex();
 }
 
 void Kontrahent::wczytajMiasta()
 {
-    MainDb *mainDb = new MainDb (this);
+    MainDb *mainDb = new MainDb(this);
     QString QStringpobierzMiasto;
-    int pobierzMiastoId=0;
+    int pobierzMiastoId = 0;
     pobierzMiastoId = mainDb->pobierzMiastoiD(pobierzMiastoId);
     for (int i = 1; i <= pobierzMiastoId; i++) {
         QStringpobierzMiasto = mainDb->pobierzMiasto(QStringpobierzMiasto, i);
@@ -241,62 +226,63 @@ void Kontrahent::wczytajMiasta()
         qDebug() << QStringpobierzMiasto;
     }
 
-//    QString file5 = "C:/Defaults/Pliki/5.ZapisMiasta.txt";
+    //    QString file5 = "C:/Defaults/Pliki/5.ZapisMiasta.txt";
 
-//    //Wczytuje miasta z pliku
-//    plikKontrahent.open(file5.toStdString(), ios::in);
-//    if (plikKontrahent.good() == false) {
-//        cout << "Plik nie istnieje !!!!!";
-//        //exit(0);
-//    }
-//    string linia;
-//    int nr_lini = 1;
-//    while (getline(plikKontrahent, linia)) {
-//        ui->comboBoxWczytajMiasta->addItem(linia.c_str());
-//        //cout << linia.c_str() << endl;
-//        nr_lini++;
-//    }
+    //    //Wczytuje miasta z pliku
+    //    plikKontrahent.open(file5.toStdString(), ios::in);
+    //    if (plikKontrahent.good() == false) {
+    //        cout << "Plik nie istnieje !!!!!";
+    //        //exit(0);
+    //    }
+    //    string linia;
+    //    int nr_lini = 1;
+    //    while (getline(plikKontrahent, linia)) {
+    //        ui->comboBoxWczytajMiasta->addItem(linia.c_str());
+    //        //cout << linia.c_str() << endl;
+    //        nr_lini++;
+    //    }
 
-//    plikKontrahent.close();
+    //    plikKontrahent.close();
 }
 void Kontrahent::wczytajWojewodztwa()
 {
-    MainDb *mainDb = new MainDb (this);
+    MainDb *mainDb = new MainDb(this);
     QString QStringpobierzWojewodztwo;
-    int pobierzWojewodztwoId=0;
+    int pobierzWojewodztwoId = 0;
     pobierzWojewodztwoId = mainDb->pobierzWojewodztwoId(pobierzWojewodztwoId);
     for (int i = 1; i <= pobierzWojewodztwoId; i++) {
         QStringpobierzWojewodztwo = mainDb->pobierzWojewodztwo(QStringpobierzWojewodztwo, i);
-        ui->comboBoxWczytajWojewodztwa ->addItem( QStringpobierzWojewodztwo);
-        qDebug() <<  QStringpobierzWojewodztwo;
+        ui->comboBoxWczytajWojewodztwa->addItem(QStringpobierzWojewodztwo);
+        qDebug() << QStringpobierzWojewodztwo;
     }
 
-//    QString file6 = "C:/Defaults/Pliki/6.ZapisWojewodztwa.txt";
-//    //Wczytuje miasta z pliku
-//    plikKontrahent.open(file6.toStdString(), ios::in);
-//    if (plikKontrahent.good() == false) {
-//        cout << "Plik nie istnieje !!!!!";
-//        //exit(0);
-//    }
-//    string linia;
-//    int nr_lini = 1;
-//    while (getline(plikKontrahent, linia)) {
-//        ui->comboBoxWczytajWojewodztwa->addItem(linia.c_str());
-//        //cout << linia.c_str() << endl;
-//        nr_lini++;
-//    }
+    //    QString file6 = "C:/Defaults/Pliki/6.ZapisWojewodztwa.txt";
+    //    //Wczytuje miasta z pliku
+    //    plikKontrahent.open(file6.toStdString(), ios::in);
+    //    if (plikKontrahent.good() == false) {
+    //        cout << "Plik nie istnieje !!!!!";
+    //        //exit(0);
+    //    }
+    //    string linia;
+    //    int nr_lini = 1;
+    //    while (getline(plikKontrahent, linia)) {
+    //        ui->comboBoxWczytajWojewodztwa->addItem(linia.c_str());
+    //        //cout << linia.c_str() << endl;
+    //        nr_lini++;
+    //    }
 
-//    plikKontrahent.close();
+    //    plikKontrahent.close();
 }
 
-void Kontrahent::on_pushButton_clicked()
+void Kontrahent::on_pushButton_clicked()//zapisz
 {
-    QString file2 = "C:/Defaults/Pliki/2.Kontrahent.txt";
+    MainDb *mainDb = new MainDb(this);
+    //QString file2 = "C:/Defaults/Pliki/2.Kontrahent.txt";
     string kontrahent;
     //Zapisz
     cout << "Zapisuje" << endl;
 
-    plikKontrahent.open(file2.toStdString(), ios::out | ios::app);
+    //plikKontrahent.open(file2.toStdString(), ios::out | ios::app);
 
     // musze teraz zrobic petle i zapisac itemy z comboboxa
     int iloscElementowWcombo;
@@ -320,8 +306,23 @@ void Kontrahent::on_pushButton_clicked()
     ui->comboBoxPomoc->addItem(ui->lineEditWczytajTelefonDod->text());
     ui->comboBoxPomoc->addItem(ui->lineEditWczytajEmail->text());
     ui->comboBoxPomoc->addItem(ui->lineEditWczytajUrl->text());
+    QString l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11, l12, l13;
+    l1 = ui->lineEditWczytajNazwa_1->text();
+    l2 = ui->lineEditWczytajImie->text();
+    l3 = ui->lineEditWczytajNazwisko->text();
+    l4 = ui->comboBoxWczytajKraj->currentText();
+    l5 = ui->comboBoxWczytajMiasta->currentText();
+    l6 = ui->comboBoxWczytajWojewodztwa->currentText();
+    l7 = ui->lineEditWczytajKodPocztowy->text();
+    l8 = ui->lineEditWczytajUlica->text();
+    l9 = ui->lineEditWczytajNrDomu->text();
+    l10 = ui->lineEditWczytajTelefon->text();
+    l11 = ui->lineEditWczytajTelefonDod->text();
+    l12 = ui->lineEditWczytajEmail->text();
+    l13 = ui->lineEditWczytajUrl->text();
 
     //plikKontrahent<<ui->
+    mainDb->addKontrahent(l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11, l12, l13);
 
     //plikKontrahent << ui->lineEditWczytajNumer->text().toStdString() << endl;
     plikKontrahent << (dodajNapis1).toStdString() << endl;
@@ -355,12 +356,12 @@ void Kontrahent::on_pushButton_clicked()
     ui->lineEditWczytajNumer->setText(QString::number(iloscKontrahentow));
 }
 
-void Kontrahent::on_pushButton_2_clicked()
+void Kontrahent::on_pushButton_2_clicked()//exit
 {
-//    //Wyjdz
-//    cout << "Wychodze z Kontrahentów" << endl;
-//    timer->stop();
-//    destroy();
+        //Wyjdz
+        cout << "Wychodze z Kontrahentów" << endl;
+        timer->stop();
+        destroy();
 }
 
 void Kontrahent::on_actionDodaj_Miasto_triggered()
@@ -423,24 +424,16 @@ void Kontrahent::on_comboBoxWczytajMiasta_highlighted(const QString) //(const QS
     checkFlags.close();
 }
 
-//Info do Gita
-//void Kontrahent::on_comboBoxWczytajMiasta_activated(const QString) //(const QString &arg1)
-//{
-//    cout << "Aktywacja przycisku wczytaj Miasta" << endl;
-//}
-
-//void Kontrahent::on_comboBoxWczytajMiasta_textHighlighted(const QString) {}
-
 void Kontrahent::on_comboBoxWczytajWojewodztwa_highlighted(const QString) //const QString &arg1
 {
     QString file2 = "C:/Defaults/Pliki/2.Kontrahent.txt";
     QString file12 = "C:/Defaults/Pliki/12.CheckFlagsInWojewodztwa.txt";
     CheckFiles *checkFiles = new CheckFiles(this);
-   // cout << " Otrzymanie highland przycisku wczytaj wojewdóztwo" << endl;
+    // cout << " Otrzymanie highland przycisku wczytaj wojewdóztwo" << endl;
     checkFlagsVarriableWojewodztwo = checkFiles->checkFlagsWojewodztwa(
         checkFlagsVarriableWojewodztwo);
     if (checkFlagsVarriableWojewodztwo != 0) {
-       // cout << "Higladned w Przycisk wczyta Wojewodztwa" << endl;
+        // cout << "Higladned w Przycisk wczyta Wojewodztwa" << endl;
         QStringList listaWojewodztw = QStringList();
 
         ui->comboBoxWczytajWojewodztwa->clear();
@@ -464,10 +457,10 @@ void Kontrahent::on_comboBoxWczytajKraj_highlighted(const QString) //const QStri
 {
     QString file11 = "C:/Defaults/Pliki/11.CheckFlagsInKraj.txt";
     CheckFiles *checkFiles = new CheckFiles(this);
-   // cout << " Otrzymanie highland przycisku wczytaj wojewdóztwo" << endl;
+    // cout << " Otrzymanie highland przycisku wczytaj wojewdóztwo" << endl;
     checkFlagsVarriableKraj = checkFiles->checkFlagsKraj(checkFlagsVarriableKraj);
     if (checkFlagsVarriableKraj != 0) {
-       // cout << "Higladned w Przycisk wczyta Kraj" << endl;
+        // cout << "Higladned w Przycisk wczyta Kraj" << endl;
         QStringList listaKraj = QStringList();
 
         ui->comboBoxWczytajKraj->clear();
@@ -487,7 +480,8 @@ void Kontrahent::on_comboBoxWczytajKraj_highlighted(const QString) //const QStri
     checkFlags.close();
 }
 
-void Kontrahent::on_comboBoxWczytajKraj_activated(const QString) {
+void Kontrahent::on_comboBoxWczytajKraj_activated(const QString)
+{
     //wczytaj kraj
 }
 
@@ -496,10 +490,10 @@ void Kontrahent::on_actionOpcje_triggered()
     Ustawienia *ustaw = new Ustawienia(this);
     ustaw->show();
 }
-void Kontrahent::on_pushButton_3_clicked()
-{
-    //Wyjdz
-    cout << "Wychodze z Kontrahentów" << endl;
-    timer->stop();
-    destroy();
-}
+//void Kontrahent::on_pushButton_3_clicked()
+//{
+//    //Wyjdz
+//    cout << "Wychodze z Kontrahentów" << endl;
+//    timer->stop();
+//    destroy();
+//}

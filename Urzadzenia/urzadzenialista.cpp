@@ -1,5 +1,7 @@
 #include "urzadzenialista.h"
+#include "DataBase/maindb.h"
 #include "Timery/timedate.h"
+#include "Ustawienia/ustawienia.h"
 #include "ui_urzadzenialista.h"
 #include "urzadzenialistakontrahent.h"
 #include <Info/info.h>
@@ -43,7 +45,7 @@ UrzadzeniaLista::UrzadzeniaLista(QWidget *parent)
     QString file13 = "C:/Defaults/Pliki/13.CheckFlagsInKrajKontrahentShow.txt";
     QString file14 = "C:/Defaults/Pliki/14.CheckFlagsInMiastoKontrahentShow.txt";
     QString file15 = "C:/Defaults/Pliki/15.CheckFlagsInWojewodztwoKontrahentShow.txt";
-
+    initMenuUrzadzeniaLista();
     wczytajDane();
 }
 
@@ -51,12 +53,66 @@ UrzadzeniaLista::~UrzadzeniaLista()
 {
     delete ui;
 }
+void UrzadzeniaLista::initMenuUrzadzeniaLista()
+{
+    //tworze menu kontekstowe
+    setWindowTitle("OptiBase v 1.0:Urządzenia - Lista");
 
+    //    QAction *fileSave = new QAction(("&Zapisz"), this);
+    //    QAction *fileEksport = new QAction(("&Eksport"), this);
+    // QAction *fileseparator = new QAction(("----------"), this);
+    QAction *fileWyjscie = new QAction(("&Wyjście"), this);
+
+    //    QAction *edycjaDodajProducenta = new QAction(("Dodaj Producenta"), this);
+    //    QAction *edycjaDodajModel = new QAction(("Dodaj Model"), this);
+
+    //    QAction *editKopiuj = new QAction(("&Kopiuj"), this);
+    //    QAction *editWklej = new QAction(("&Wklej"), this);
+
+    QAction *infoOProgramie = new QAction(("&O Programie"), this);
+    QAction *infoOAutorze = new QAction(("O &Autorze"), this);
+    QAction *infoLog = new QAction(("&Log"), this);
+
+    QAction *settingsOption = new QAction(("&Opcje"), this);
+
+    auto mainfile = menuBar()->addMenu("Plik");
+    auto mainEdycja = menuBar()->addMenu("Edycja");
+    auto mainInfo = menuBar()->addMenu("Informacje");
+    auto mainSettings = menuBar()->addMenu("Ustawienia");
+
+    //    mainfile->addAction(fileSave);
+    //    mainfile->addAction(fileEksport);
+
+    mainfile->addSeparator();
+    mainfile->addAction(fileWyjscie);
+
+    //    mainEdycja->addAction(edycjaDodajProducenta);
+    //    mainEdycja->addAction(edycjaDodajModel);
+
+    //    mainEdycja->addAction(editKopiuj);
+    //    mainEdycja->addAction(editWklej);
+    mainInfo->addAction(infoOProgramie);
+    mainInfo->addAction(infoOAutorze);
+    mainInfo->addAction(infoLog);
+
+    mainSettings->addAction(settingsOption);
+
+    //connect(settingsOption, &QAction::triggered,this, SLOT (openInfo()));
+    connect(settingsOption, SIGNAL(triggered()), this, SLOT(openSettings()));
+    connect(infoOProgramie, SIGNAL(triggered()), this, SLOT(openInfo()));
+    //    connect(edycjaDodajProducenta,
+    //            SIGNAL(triggered()),
+    //            this,
+    //            SLOT(on_actionDodaj_Producenta_triggered()));
+    //    connect(edycjaDodajModel, SIGNAL(triggered()), this, SLOT(on_actionDodaj_Model_triggered()));
+}
 void UrzadzeniaLista::wczytajDane()
 {
-    QString file1 = "C:/Defaults/Pliki/1.DB.txt";
+    MainDb *mainDb = new MainDb(this);
+
+    // QString file1 = "C:/Defaults/Pliki/1.DB.txt";
     //QString file2 = "C:/Defaults/Pliki/2.Kontrahent.txt";
-    QString file3 = "C:/Defaults/Pliki/3.Urzadzenie.txt";
+    //QString file3 = "C:/Defaults/Pliki/3.Urzadzenie.txt";
     model = new QStandardItemModel(1, 5, this);
     ui->tableView->setModel(model);
     //QModelIndex *index;
@@ -84,77 +140,26 @@ void UrzadzeniaLista::wczytajDane()
     //---------------------------------------------------------------
     //ui->tableView->setColumnHidden(0,true); //Ukrywam kolumne z LP
     //---------------------------------------------------------------
-    QStandardItem *dodajItem = new QStandardItem("Jakies cos");
-    fileUrzadzeniaLista.open(file3.toStdString(), ios::in);
-    //fileUrzadzeniaLista2.open(file2.toStdString(), ios::in);
-    if (fileUrzadzeniaLista.good() == false) {
-        cout << "Plik nie istnieje !!!!!";
-        //exit(0);
-    }
-    string linia;
-    int row = 0;
-    int nr_lini = 0; // zmiana z int nr_lini = 1;
-    while (getline(fileUrzadzeniaLista, linia)) {
-        dodajItem = new QStandardItem(linia.c_str());
+    QStandardItem *dodajItem = new QStandardItem();
 
-        model->setItem(row, nr_lini, dodajItem); //row, nr_lini - 2, dodajItem
+    int pobierzUrzId = 0;
 
-        cout << linia.c_str() << endl;
-        nr_lini++;
-        //     if (nr_lini == 3) {
-        //         nr_lini++;
-        //     }
-        if (nr_lini > 4) {
-            row = row + 1;
-            nr_lini = 0;
-        }
+    QString pobierzUrz = "";
+
+    pobierzUrzId = mainDb->pobierzUrzadzeniaId(pobierzUrzId);
+    for (int i = 1; i <= pobierzUrzId; i++) {
+
+        for (int d = 0; d <= 4; d++) {
+            pobierzUrz = mainDb->pobierzUrzadzenia(pobierzUrz, i, d);
+            dodajItem = new QStandardItem(pobierzUrz);
+            model->setItem(i-1, d, dodajItem);
+
+
     }
 
-    // tutuaj wczytuje kontrahentow przypisanych do konkretnych urządzen.
-    row = 0;
-    nr_lini = 0;
-    while (getline(fileUrzadzeniaLista, linia)) {
-        dodajItem = new QStandardItem(linia.c_str());
-
-        model->setItem(row, nr_lini, dodajItem); //row, nr_lini - 2, dodajItem
-
-        cout << linia.c_str() << endl;
-        nr_lini++;
-        //     if (nr_lini == 3) {
-        //         nr_lini++;
-        //     }
-        if (nr_lini > 3) {
-            row = row + 1;
-            nr_lini = 0;
-        }
     }
 
-    // tutuaj musze dodoac pierwsza kolumne z kontrahenra
 
-    // if(fileUrzadzeniaLista2.good()==false)
-    // {
-    //     cout << "Plik nie istnieje !!!!!";
-    //     //exit(0);
-    // }
-    // linia="";
-    // row = 0;
-    // nr_lini = 4; // zmiana z int nr_lini = 1;
-    // while (getline(fileUrzadzeniaLista2, linia)) {
-    //     dodajItem = new QStandardItem(linia.c_str());
-
-    //     {
-    //         model->setItem(row, nr_lini, dodajItem); //row, nr_lini - 2, dodajItem
-    //     }
-
-    //     cout << linia.c_str() << endl;
-    //     nr_lini++;
-    //     if (nr_lini > 3) {
-    //         row = row + 1;
-    //         nr_lini = 4;
-    //     }
-    // }
-
-    fileUrzadzeniaLista.close();
 
     int rowDoSize = model->rowCount();
     for (int i = 0; i <= rowDoSize; i++) {
@@ -313,4 +318,14 @@ void UrzadzeniaLista::on_pushButton_6_clicked()
 
         urzkl->show();
     }
+}
+void UrzadzeniaLista::openInfo()
+{
+    Info *info = new Info(this);
+    info->show();
+}
+void UrzadzeniaLista::openSettings()
+{
+    Ustawienia *ustaw = new Ustawienia(this);
+    ustaw->show();
 }

@@ -68,54 +68,6 @@ Urzadzenia::Urzadzenia(QWidget *parent)
     wypelnijProducenta();
     wypelnijModel();
 
-//    //Wczytuje modele z pliku
-//    plikUrzadzenia.open(file8.toStdString(), ios::in);
-//    if (plikUrzadzenia.good() == false) {
-//        cout << "Plik nie istnieje !!!!!";
-//        //exit(0);
-//    }
-//    string linia;
-//    int nr_lini = 1;
-//    while (getline(plikUrzadzenia, linia)) {
-//        //TODO: tutaj musze pobrać dane z bazy modeli
-
-//        ui->comboBox_2->addItem(linia.c_str());
-//        //cout << linia.c_str() << endl;
-//        nr_lini++;
-//    }
-
-//    plikUrzadzenia.close();
-
-    // wczytuj pliki z producenta
-    //    plikUrzadzenia.open(file7.toStdString(), ios::in);
-    //    if (plikUrzadzenia.good() == false) {
-    //        cout << "Plik nie istnieje !!!!!";
-    //        //exit(0);
-    //    }
-    //    string linia1;
-    //    int nr_lini1 = 1;
-    //    while (getline(plikUrzadzenia, linia1)) {
-    //        ui->comboBox->addItem(linia1.c_str());
-    //        //cout << linia1.c_str() << endl;
-    //        nr_lini1++;
-    //    }
-    //    plikUrzadzenia.close();
-
-    //wczytaj numery seryjne z pliku
-    //    plikUrzadzenia.open(file9.toStdString(), ios::in);
-    //    if (plikUrzadzenia.good() == false) {
-    //        cout << "Plik nie istnieje !!!!!";
-    //        //exit(0);
-    //    }
-    //    string linia2;
-    //    int nr_lini2 = 1;
-    //    while (getline(plikUrzadzenia, linia2)) {
-    //        ui->comboBox_3->addItem(linia2.c_str());
-    //        //cout << linia2.c_str() << endl;
-    //        nr_lini2++;
-    //    }
-    //    plikUrzadzenia.close();
-
     countriesListModel = new QStringListModel(this);
 
     ui->countriesList->setModel(countriesListModel);
@@ -163,13 +115,7 @@ void Urzadzenia::wypelnijProducenta()
         qDebug() << QStringPobierzProducenta;
     }
 }
-//QString Urzadzenia::zMainDb(QString testName)
-//{ //MainDb *mainDb = new MainDb(this);
 
-//    //pobierzProducenta = mainDb->pobierzProducenta(pobierzProducenta);
-//    ui->comboBox->addItem(testName);
-//    return 0;
-//}
 void Urzadzenia::initMenuUrzadzenia()
 {
     //tworze menu kontekstowe
@@ -369,12 +315,13 @@ void Urzadzenia::on_actionInformacja_triggered()
     info->show();
 }
 //Info do Gita
-void Urzadzenia::on_pushButton_clicked()
+void Urzadzenia::on_pushButton_clicked()// DODAJ urzadzena do Comboboxa
 {
-    // DODAJ urzadzena do Comboboxa
+
     MainDb *mainDb = new MainDb(this);
  QString nrSeryjnyZLiniText = ui->lineEditNrSeryjny->text();
  QString nrSeryjnyZLini="";
+ QString przypisany ="";
  int nrSeryjnyZLiniId=0;
     ui->comboBox_3->clear();
     // Dodaj do comboBoxa
@@ -412,7 +359,7 @@ void Urzadzenia::on_pushButton_clicked()
 
 
 
-    bool IsNrSeryjnySame;
+    bool IsNrSeryjnySame=false;
     for (int i = 0; i <= ui->comboBox_3->count() - 1; i++) {
         QString nrSeryjny = ui->comboBox_3->itemText(i);
 
@@ -457,7 +404,7 @@ void Urzadzenia::on_pushButton_clicked()
         { daneProducent = ui->comboBox_4->itemText(i);
             daneModel = ui->comboBox_4->itemText(i+1);
             daneNrSeryjny = ui->comboBox_4->itemText(i+2);
-             mainDb->addUrzadzenia(daneProducent, daneModel, daneNrSeryjny);
+             mainDb->addUrzadzenia(daneProducent, daneModel, daneNrSeryjny, przypisany);
         }
 
 

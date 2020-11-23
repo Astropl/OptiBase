@@ -21,6 +21,9 @@ public slots:
     void wczytajDane();
     void iloscWierszy();
     void myfunctiontimer();
+    void initMenuUrzadzeniaLista();
+    void openSettings();
+    void openInfo();
 
 private slots:
     void on_pushButton_clicked();
