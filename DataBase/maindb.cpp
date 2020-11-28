@@ -63,31 +63,38 @@ QString MainDb::addKontrahent(QString l1,
     //Zapisuje do bazy Urzadzenia
 
     QSqlQuery query;
-    qWarning() << ("Dodoaje do bazy " + l1 + " , "  + l2 + " , " + l3 + " , " + l4
-                   + " , " + l6 + " , " + l5 + " , " + l7 + " , " + l8 + " , " + l9 + " , " + l10
-                   + " , " + l11 + " , " + l12 + " , " + l13);
-    if (!query.exec("INSERT INTO kontrahenci (nazwaFirmy, imie , nazwisko , kontrahent_panstwo_id , kontrahent_wojewodztwo_id , kontrahent_miasto_id , kodPocztowy , ulica , nrDomu , telefon , telefonPrywatny , adresEmail , stronaUrl) VALUES('" + l1 + "','"+l2+ "','"+l3+ "','"+l4+ "','"+l6+ "','"+l5+ "','"+l7+ "','"+l8+ "','"+l9+ "','"+l10+ "','"+l11+ "','"+l12+ "','"+l13 +"')"))
+    qWarning() << ("Dodoaje do bazy " + l1 + " , " + l2 + " , " + l3 + " , " + l4 + " , " + l6
+                   + " , " + l5 + " , " + l7 + " , " + l8 + " , " + l9 + " , " + l10 + " , " + l11
+                   + " , " + l12 + " , " + l13);
+    if (!query.exec("INSERT INTO kontrahenci (nazwaFirmy, imie , nazwisko , kontrahent_panstwo_id "
+                    ", kontrahent_wojewodztwo_id , kontrahent_miasto_id , kodPocztowy , ulica , "
+                    "nrDomu , telefon , telefonPrywatny , adresEmail , stronaUrl) VALUES('"
+                    + l1 + "','" + l2 + "','" + l3 + "','" + l4 + "','" + l6 + "','" + l5 + "','"
+                    + l7 + "','" + l8 + "','" + l9 + "','" + l10 + "','" + l11 + "','" + l12 + "','"
+                    + l13 + "')"))
 
-{
-        qWarning() << "MainDB::Dodoanie Urzadzenia - ERROR: " << query.lastError().text();
-}
-    else
     {
+        qWarning() << "MainDB::Dodoanie Urzadzenia - ERROR: " << query.lastError().text();
+    } else {
         qWarning() << "MainDB::Dodoanie Kontrahenci - Udane: " << query.lastError().text();
     }
     return 0;
 }
 void MainDb::dBKontrahent()
 {
+    QSqlQuery query;
+    query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
     qWarning("Tworzenie tabeli Kontrahent ");
-    QSqlQuery query("CREATE TABLE IF NOT EXISTS kontrahenci  (id INTEGER PRIMARY KEY, nazwaFirmy "
-                    "TEXT UNIQUE, imie TEXT, nazwisko TEXT, kontrahent_panstwo_id TEXT, "
-                    "kontrahent_wojewodztwo_id TEXT, kontrahent_miasto_id TEXT, kodPocztowy TEXT, "
-                    "ulica TEXT, nrDomu INTEGER, telefon TEXT, "
-                    "telefonPrywatny TEXT, adresEmail TEXT, stronaUrl TEXT, FOREIGN KEY "
-                    "(kontrahent_panstwo_id) REFERENCES panstwa(panstwo), FOREIGN KEY "
-                    "(kontrahent_wojewodztwo_id) REFERENCES wojewodztwa (wojewodztwo), FOREIGN KEY "
-                    "(kontrahent_miasto_id) REFERENCES miasta (miasto))");
+    query.exec("CREATE TABLE IF NOT EXISTS kontrahenci  (id INTEGER PRIMARY KEY, nazwaFirmy "
+               "TEXT UNIQUE, imie TEXT, nazwisko TEXT, kontrahent_panstwo_id TEXT, "
+               "kontrahent_wojewodztwo_id TEXT, kontrahent_miasto_id TEXT, kodPocztowy TEXT, "
+               "ulica TEXT, nrDomu INTEGER, telefon TEXT, "
+               "telefonPrywatny TEXT, adresEmail TEXT, stronaUrl TEXT, urzadzenia_numer_seryjny TEXT, FOREIGN KEY "
+               "(kontrahent_panstwo_id) REFERENCES panstwa(panstwo), FOREIGN KEY "
+               "(kontrahent_wojewodztwo_id) REFERENCES wojewodztwa (wojewodztwo), "
+               "FOREIGN KEY "
+               "(kontrahent_miasto_id) REFERENCES miasta (miasto), "
+               "FOREIGN KEY (urzadzenia_numer_seryjny ) REFERENCES urzadzenia (numerSeryjny)  )");
 
     if (!query.isActive())
         qWarning() << " Tworzenie Tabeli - ERROR: " << query.lastError().text();
@@ -104,7 +111,7 @@ QString MainDb::pobierzUrzadzenia(QString daneUrzadzenia, int i, int d)
 {
     QSqlQuery query;
     QString testName;
-    qWarning() << "Pobrana ilosc Urzadzenia z ::Uradzernia::Lista" << i   + d;
+    qWarning() << "Pobrana ilosc Urzadzenia z ::Uradzernia::Lista" << i + d;
 
     QString inti = QString::number(i);
 
@@ -114,18 +121,19 @@ QString MainDb::pobierzUrzadzenia(QString daneUrzadzenia, int i, int d)
             qWarning() << query.value(d).toString();
             name = query.value(d).toString();
         }
+        daneUrzadzenia = name;
         qWarning() << "udalo sie? : pozniej " << name;
         return name;
     }
-
+    return 0;
 }
 int MainDb::pobierzUrzadzeniaId(int daneUrzadzeniaId)
 {
+    QSqlQuery query;
     qWarning() << "Jestem w MainDB->pobierz Id.";
     QString testName;
     int rows = 0;
     //TODO: pobrac z Bazy Modeli
-    QSqlQuery query;
 
     if (query.exec("SELECT * FROM urzadzenia")) {
         while (query.next()) {
@@ -138,7 +146,7 @@ int MainDb::pobierzUrzadzeniaId(int daneUrzadzeniaId)
     daneUrzadzeniaId = rows;
     return rows;
 }
-QString MainDb::pobierzKontrahenta(QString daneKontrahent, int i)
+QString MainDb::pobierzKontrahenta(QString daneKontrahent, int i, int d)
 {
     QSqlQuery query;
     QString testName;
@@ -147,23 +155,63 @@ QString MainDb::pobierzKontrahenta(QString daneKontrahent, int i)
     QString inti = QString::number(i);
 
     QString name;
+    daneKontrahent = name;
     if (query.exec("SELECT * FROM kontrahenci where id =" + inti)) {
         while (query.next()) {
-            qWarning() << query.value(1).toString();
-            name = query.value(1).toString();
+            qWarning() << query.value(d).toString();
+            name = query.value(d).toString();
         }
         qWarning() << "udalo sie? : pozniej " << name;
         return name;
     }
-
+    return 0;
 }
 int MainDb::pobierzKontrahentaId(int daneKontrahentId)
 {
+    QSqlQuery query;
     qWarning() << "Jestem w MainDB->pobierz Id.";
     QString testName;
     int rows = 0;
     //TODO: pobrac z Bazy Modeli
+
+    if (query.exec("SELECT * FROM kontrahenci")) {
+        while (query.next()) {
+            qWarning() << query.value(1).toString();
+            rows++;
+        }
+        qWarning() << "row to: " << rows;
+    }
+    qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
+    daneKontrahentId = rows;
+    return rows;
+}
+QString MainDb::pobierzKontrahentaZNrSeryjnym(QString daneKontrahent, int i, int d)
+{
     QSqlQuery query;
+    QString testName;
+    qWarning() << "Pobrana ilosc Kontrahenci z ::KontrahenciPaństwa::" << i;
+
+    QString inti = QString::number(i);
+
+    QString name;
+    daneKontrahent = name;
+    if (query.exec("SELECT * FROM kontrahenci where id =" + inti)) {
+        while (query.next()) {
+            qWarning() << query.value(d).toString();
+            name = query.value(d).toString();
+        }
+        qWarning() << "udalo sie? : pozniej " << name;
+        return name;
+    }
+    return 0;
+}
+int MainDb::pobierzKontrahentaZNrSeryjnymId(int daneKontrahentId)
+{
+    QSqlQuery query;
+    qWarning() << "Jestem w MainDB->pobierz Id.";
+    QString testName;
+    int rows = 0;
+    //TODO: pobrac z Bazy Modeli
 
     if (query.exec("SELECT * FROM kontrahenci")) {
         while (query.next()) {
@@ -177,15 +225,52 @@ int MainDb::pobierzKontrahentaId(int daneKontrahentId)
     return rows;
 }
 
-QString MainDb::addUrzadzenia(QString daneProducent, QString daneModel, QString daneNrSeryjny, QString przypisany)
+QString MainDb::addUrzadzeniaUpdate(QString daneNrSeryjny, QString daneUnicueName)
+{
+    //Zapisuje do bazy Urzadzenia
+//TODO: Tutuaj dodoac update do Kontrahenci i pobrac unikalny kontrahent i dodoac numer seryjny
+    QSqlQuery query;
+    query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
+    qWarning() << ("Dodoaje do bazy " + daneNrSeryjny);
+    QString przypisany = "TAK";
+    /*if (!query.exec("INSERT INTO urzadzenia (numerSeryjny, przypisany) VALUES('"
+                    + daneNrSeryjny +"','" + przypisany + "' )")) {
+        qWarning() << "MainDB::Dodoanie Urzadzenia - ERROR: " <<*/
+    if (!query.exec("UPDATE urzadzenia SET przypisany = '" + przypisany + "' WHERE numerSeryjny ='"
+                    + daneNrSeryjny + "' "))
+
+    {
+        qWarning() << "MainDB::Update Urzadzenia - ERROR: " << query.lastError().text();
+    } else {
+        qWarning() << "MainDB::Update Urzadzenia - Udane: " << query.lastError().text();
+    }
+    //..............
+    if (!query.exec("UPDATE kontrahenci SET urzadzenia_numer_seryjny = '" + daneNrSeryjny + "' WHERE nazwaFirmy ='"
+                    + daneUnicueName + "' "))
+
+    {
+        qWarning() << "MainDB::Update Kontrahenci z numerem seryjnym - ERROR: " << query.lastError().text();
+    } else {
+        qWarning() << "MainDB::Update Kontrahenci z numerem seryjnym - Udane: " << query.lastError().text();
+    }
+
+
+    return 0;
+}
+QString MainDb::addUrzadzenia(QString daneProducent,
+                              QString daneModel,
+                              QString daneNrSeryjny,
+                              QString przypisany)
 {
     //Zapisuje do bazy Urzadzenia
 
     QSqlQuery query;
+    query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
     qWarning() << ("Dodoaje do bazy " + daneModel);
     if (!query.exec("INSERT INTO urzadzenia (urzadzenia_producent_id, urzadzenia_model_id, "
                     "numerSeryjny, przypisany) VALUES('"
-                    + daneProducent + "','" + daneModel + "','" + daneNrSeryjny +"','" + przypisany + "' )")) {
+                    + daneProducent + "','" + daneModel + "','" + daneNrSeryjny + "','" + przypisany
+                    + "' )")) {
         qWarning() << "MainDB::Dodoanie Urzadzenia - ERROR: " << query.lastError().text();
     } else {
         qWarning() << "MainDB::Dodoanie Urzadzenia - Udane: " << query.lastError().text();
@@ -197,6 +282,7 @@ QString MainDb::addProducent(QString daneProducent)
 {
     //TODO: dodoac do Bazy producenta
     QSqlQuery query;
+    query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
     qWarning() << ("Dodoaje do bazy " + daneProducent);
     if (!query.exec("INSERT INTO producenci (producent) VALUES('" + daneProducent + "')"))
         qWarning() << "MainDB::Dodoanie Producenta - ERROR: " << query.lastError().text();
@@ -207,6 +293,7 @@ QString MainDb::addModel(QString daneModel)
 {
     //TODO: dodoac do Bazy producenta
     QSqlQuery query;
+    query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
     qWarning() << ("Dodoaje do bazy " + daneModel);
     if (!query.exec("INSERT INTO modele (model) VALUES('" + daneModel + "')"))
         qWarning() << "MainDB::Dodoanie Modelu - ERROR: " << query.lastError().text();
@@ -217,6 +304,7 @@ QString MainDb::addKraj(QString daneKraj)
 {
     //TODO: dodoac do Bazy producenta
     QSqlQuery query;
+    query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
     qWarning() << ("Dodoaje do bazy " + daneKraj);
     if (!query.exec("INSERT INTO panstwa (panstwo) VALUES('" + daneKraj + "')"))
         qWarning() << "MainDB::Dodoanie Modelu - ERROR: " << query.lastError().text();
@@ -227,6 +315,7 @@ QString MainDb::addWojewodztwo(QString daneWojewodztwo)
 {
     //TODO: dodoac do Bazy producenta
     QSqlQuery query;
+    query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
     qWarning() << ("Dodoaje do bazy " + daneWojewodztwo);
     if (!query.exec("INSERT INTO wojewodztwa (wojewodztwo) VALUES('" + daneWojewodztwo + "')"))
         qWarning() << "MainDB::Dodoanie Modelu - ERROR: " << query.lastError().text();
@@ -237,6 +326,7 @@ QString MainDb::addMiasto(QString daneMiasto)
 {
     //TODO: dodoac do Bazy producenta
     QSqlQuery query;
+    query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
     qWarning() << ("Dodoaje do bazy " + daneMiasto);
     if (!query.exec("INSERT INTO miasta (miasto) VALUES('" + daneMiasto + "')"))
         qWarning() << "MainDB::Dodoanie Modelu - ERROR: " << query.lastError().text();
@@ -245,12 +335,14 @@ QString MainDb::addMiasto(QString daneMiasto)
 QString MainDb::pobierzKraj(QString daneModel, int i)
 {
     QSqlQuery query;
+    query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
     QString testName;
     qWarning() << "Pobrana ilosc Kraji z ::Państwa::" << i;
 
     QString inti = QString::number(i);
 
     QString name;
+    daneModel = name;
     if (query.exec("SELECT * FROM panstwa where id =" + inti)) {
         while (query.next()) {
             qWarning() << query.value(1).toString();
@@ -259,15 +351,16 @@ QString MainDb::pobierzKraj(QString daneModel, int i)
         qWarning() << "udalo sie? : pozniej " << name;
         return name;
     }
+    return 0;
 }
 int MainDb::pobierzKrajId(int pobierzKrajId)
 
 {
+    QSqlQuery query;
     qWarning() << "Jestem w MainDB->pobierz Id.";
     QString testName;
     int rows = 0;
     //TODO: pobrac z Bazy Modeli
-    QSqlQuery query;
 
     if (query.exec("SELECT * FROM panstwa")) {
         while (query.next()) {
@@ -277,13 +370,14 @@ int MainDb::pobierzKrajId(int pobierzKrajId)
         qWarning() << "row to: " << rows;
     }
     qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
+    pobierzKrajId = rows;
     return rows;
 }
 
 QString MainDb::pobierzWojewodztwo(QString daneModel, int i)
 {
     QSqlQuery query;
-    QString testName;
+    QString testName = daneModel;
     qWarning() << "Pobrana ilosc Kraji z ::Państwa::" << i;
 
     QString inti = QString::number(i);
@@ -296,15 +390,17 @@ QString MainDb::pobierzWojewodztwo(QString daneModel, int i)
         qWarning() << "udalo sie? : pozniej " << name;
         return name;
     }
+    return 0;
 }
 int MainDb::pobierzWojewodztwoId(int pobierzWojewodztwoId)
 
 {
+    QSqlQuery query;
     qWarning() << "Jestem w MainDB->pobierz Id.";
     QString testName;
     int rows = 0;
+    pobierzWojewodztwoId = rows;
     //TODO: pobrac z Bazy Modeli
-    QSqlQuery query;
 
     if (query.exec("SELECT * FROM wojewodztwa")) {
         while (query.next()) {
@@ -335,16 +431,18 @@ QString MainDb::pobierzModel(QString daneModel, int i)
         qWarning() << "udalo sie? : pozniej " << name;
         return name;
     }
+    return 0;
 }
 
 int MainDb::pobierzModeliD(int daneModelId)
 
 {
+    QSqlQuery query;
     qWarning() << "Jestem w MainDB->pobierz Id.";
     QString testName;
     int rows = 0;
+    daneModelId = rows;
     //TODO: pobrac z Bazy Modeli
-    QSqlQuery query;
 
     if (query.exec("SELECT * FROM modele")) {
         while (query.next()) {
@@ -374,16 +472,17 @@ QString MainDb::pobierzMiasto(QString daneModel, int i)
         qWarning() << "udalo sie? : pozniej " << name;
         return name;
     }
+    return 0;
 }
 
 int MainDb::pobierzMiastoiD(int daneModelId)
 
 {
+    QSqlQuery query;
     qWarning() << "Jestem w MainDB->pobierz Id.";
     QString testName;
     int rows = 0;
     //TODO: pobrac z Bazy Modeli
-    QSqlQuery query;
 
     if (query.exec("SELECT * FROM miasta")) {
         while (query.next()) {
@@ -393,17 +492,18 @@ int MainDb::pobierzMiastoiD(int daneModelId)
         qWarning() << "row to: " << rows;
     }
     qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
+    daneModelId = rows;
     return rows;
 }
 
 int MainDb::pobierzProducentaiD(int daneProducentId)
 
 {
+    QSqlQuery query;
     qWarning() << "Jestem w MainDB->pobierz Id.";
     QString testName;
     int rows = 0;
     //TODO: pobrac z Bazy producenta
-    QSqlQuery query;
 
     if (query.exec("SELECT * FROM producenci")) {
         while (query.next()) {
@@ -412,6 +512,7 @@ int MainDb::pobierzProducentaiD(int daneProducentId)
         }
         qWarning() << "row to: " << rows;
     }
+    daneProducentId =rows;
     qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
     return rows;
 }
@@ -427,13 +528,58 @@ QString MainDb::pobierzProducenta(QString daneProducent, int i)
     QString name;
     if (query.exec("SELECT * FROM producenci where id =" + inti)) {
         while (query.next()) {
-            qWarning() << query.value(1).toString();
+            qWarning() <<"Producent : "<< query.value(1).toString();
             name = query.value(1).toString();
+        }
+        //daneProducent = name;
+        qWarning() << "udalo sie? : pozniej " << name;
+        return name;
+    }
+    return 0;
+}
+
+
+int MainDb::pobierzUrzKontiD(int daneProducentId)
+
+{
+    QSqlQuery query;
+    qWarning() << "Jestem w MainDB->pobierz Id.";
+    QString testName;
+    int rows = 0;
+    //TODO: pobrac z Bazy producenta
+
+    if (query.exec("SELECT * FROM producenci")) {
+        while (query.next()) {
+            qWarning() << query.value(1).toString();
+            rows++;
+        }
+        qWarning() << "row to: " << rows;
+    }
+    qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
+    return rows;
+}
+QString MainDb::pobierzUrzKont(QString daneProducent, int i, int d)
+
+{
+    QSqlQuery query;
+    QString testName;
+    qWarning() << "Pobrana ilosc producentow z ::Urzadzenia::" << i;
+
+    QString inti = QString::number(i);
+
+    QString name;
+    if (query.exec("SELECT * FROM producenci where id =" + inti)) {
+        while (query.next()) {
+            qWarning() << query.value(d).toString();
+            name = query.value(d).toString();
         }
         qWarning() << "udalo sie? : pozniej " << name;
         return name;
     }
+    return 0;
 }
+
+
 
 void MainDb::DatabaseConnect()
 {
@@ -458,10 +604,10 @@ void MainDb::DatabaseConnect()
 void MainDb::DatabaseInit()
 {
     qWarning("Database init ");
-    QSqlQuery query("CREATE TABLE IF NOT EXISTS people  (id INTEGER PRIMARY KEY, name TEXT)");
+    //    QSqlQuery query("CREATE TABLE IF NOT EXISTS people  (id INTEGER PRIMARY KEY, name TEXT)");
 
-    if (!query.isActive())
-        qWarning() << " MainWindow::DatabaseInit - ERROR: " << query.lastError().text();
+    //    if (!query.isActive())
+    //        qWarning() << " MainWindow::DatabaseInit - ERROR: " << query.lastError().text();
 }
 void MainDb::DatabasePopulate()
 {
@@ -470,10 +616,11 @@ void MainDb::DatabasePopulate()
     dBMiasta();
     dBWojewodztwa();
     dBKraj();
-    dBKontrahent();
     dBProducent();
     dBModel();
     dBUrzadzenia();
+    dBKontrahent();
+    dBBaza();
 
     //QSqlQuery query;
 }
@@ -482,22 +629,31 @@ void MainDb::dBUrzadzenia()
     QSqlQuery query;
     query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
     qWarning("Tworzenie tabeli Urzadzenia ");
-    query.exec("CREATE TABLE IF NOT EXISTS urzadzenia  (id INTEGER PRIMARY KEY, urzadzenia_producent_id TEXT, urzadzenia_model_id TEXT, numerSeryjny TEXT UNIQUE, przypisany TEXT, FOREIGN KEY (urzadzenia_producent_id) REFERENCES producenci(producent),FOREIGN KEY (urzadzenia_model_id) REFERENCES modele(model))");
+    query.exec("CREATE TABLE IF NOT EXISTS urzadzenia  (id INTEGER PRIMARY KEY, "
+               "urzadzenia_producent_id TEXT,"
+               "urzadzenia_model_id TEXT, "
+               "numerSeryjny TEXT UNIQUE, "
+               "przypisany TEXT, FOREIGN KEY (urzadzenia_producent_id) REFERENCES "
+               "producenci(producent),"
+               "FOREIGN KEY (urzadzenia_model_id) REFERENCES modele(model))");
     if (!query.isActive())
         qWarning() << "1. Tworzenie Tabeli - ERROR: " << query.lastError().text();
 
-//    if (!query.exec("INSERT INTO urzadzenia (urzadzenia_producent_id , urzadzenia_model_id, "
-//                    "numerSeryjny) VALUES('Jawon', 'IOI-353', 'AP00034232-324222')"))
-//        qWarning() << "2. MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
+    //    if (!query.exec("INSERT INTO urzadzenia (urzadzenia_producent_id , urzadzenia_model_id, "
+    //                    "numerSeryjny) VALUES('Jawon', 'IOI-353', 'AP00034232-324222')"))
+    //        qWarning() << "2. MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
 
-//    if (!query.exec("INSERT INTO urzadzenia (urzadzenia_producent_id , urzadzenia_model_id, "
-//                    "numerSeryjny) VALUES('Selvas', 'BC-380', 'AP4222')"))
-//        qWarning() << "3. MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
+    //    if (!query.exec("INSERT INTO urzadzenia (urzadzenia_producent_id , urzadzenia_model_id, "
+    //                    "numerSeryjny) VALUES('Selvas', 'BC-380', 'AP4222')"))
+    //        qWarning() << "3. MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
 }
 void MainDb::dBProducent()
 {
+    QSqlQuery query;
+    query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
     qWarning("Tworzenie tabeli Producent ");
-    QSqlQuery query(
+
+    query.exec(
         "CREATE TABLE IF NOT EXISTS producenci  (id INTEGER PRIMARY KEY, producent TEXT UNIQUE )");
 
     if (!query.isActive())
@@ -506,45 +662,86 @@ void MainDb::dBProducent()
 }
 void MainDb::dBModel()
 {
+    QSqlQuery query;
+    query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
     qWarning("Tworzenie tabeli Model Urzadzenia ");
-    QSqlQuery query(
-        "CREATE TABLE IF NOT EXISTS modele  (id INTEGER PRIMARY KEY, model TEXT UNIQUE )");
+    query.exec("CREATE TABLE IF NOT EXISTS modele  (id INTEGER PRIMARY KEY, model TEXT UNIQUE )");
 
     //NOTE:: dodoaje dwa przykładowe wpisy Modeli
-    //    if (!query.isActive())
-    //        qWarning() << " Tworzenie Tabeli - ERROR: " << query.lastError().text();
+    if (!query.isActive())
+        qWarning() << " Tworzenie Tabeli - ERROR: " << query.lastError().text();
 
     //    if (!query.exec("INSERT INTO modele (model) VALUES('IOI 353')"))
     //        qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
+    query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
 }
 
 void MainDb::dBMiasta()
 {
+    QSqlQuery query;
+    query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
     qWarning("Tworzenie tabeli Miasta ");
-    QSqlQuery query(
-        "CREATE TABLE IF NOT EXISTS miasta  (id INTEGER PRIMARY KEY, miasto TEXT UNIQUE )");
+    query.exec("CREATE TABLE IF NOT EXISTS miasta  (id INTEGER PRIMARY KEY, miasto TEXT UNIQUE )");
 
     if (!query.isActive())
         qWarning() << " Tworzenie Tabeli - ERROR: " << query.lastError().text();
-
+    query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
     if (!query.exec("INSERT INTO miasta (miasto) VALUES('Warszawa')"))
         qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
 }
 void MainDb::dBWojewodztwa()
 {
+    QSqlQuery query;
+    query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
     qWarning("Tworzenie tabeli Wojewdztwa ");
-    QSqlQuery query("CREATE TABLE IF NOT EXISTS wojewodztwa  (id INTEGER PRIMARY KEY, wojewodztwo "
-                    "TEXT UNIQUE )");
+    query.exec("CREATE TABLE IF NOT EXISTS wojewodztwa  (id INTEGER PRIMARY KEY, wojewodztwo "
+               "TEXT UNIQUE )");
 
     if (!query.isActive())
         qWarning() << " Tworzenie Tabeli - ERROR: " << query.lastError().text();
-
+    query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
     if (!query.exec("INSERT INTO wojewodztwa (wojewodztwo) VALUES('Zachodniopomorskie')"))
         qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
+}
+void MainDb::dBBaza()
+{
+    QSqlQuery query;
+    query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
+    //qWarning("Tworzenie tabeli Urzadzenia ");
+    qWarning("Tworzenie tabeli Głownej Bazy ");
+    query.exec("CREATE TABLE IF NOT EXISTS dbbaza  (id INTEGER PRIMARY KEY, "
+               "dbbaza_urzadzenia_id TEXT, "
+               "dbbaza_kontrahent_id TEXT, "
+               "FOREIGN KEY (dbbaza_urzadzenia_id) REFERENCES urzadzenia(id),"
+               "FOREIGN KEY (dbbaza_kontrahent_id) REFERENCES kontrahenci(id))");
+
+    //    query.exec(
+    //        "CREATE TABLE IF NOT EXISTS dbbaza  (id INTEGER PRIMARY KEY, "
+    //        "dbbaza_urzadzenia_producent_id TEXT, "
+    //        "dbbaza_urzadzenia_model_id TEXT, "
+    //        "dbbaza_urzadzenia_numerSeryjny TEXT UNIQUE, "
+    //        "dbbaza_urzadzenia_przypisany TEXT, "
+    //        "testowa TEXT, "
+    //        "FOREIGN KEY (dbbaza_urzadzenia_producent_id) REFERENCES "
+    //        "urzadzenia(urzadzenia_producent_id),"
+    //        "FOREIGN KEY (dbbaza_urzadzenia_model_id) REFERENCES urzadzenia(urzadzenia_model_id),"
+    //        "FOREIGN KEY (dbbaza_urzadzenia_numerSeryjny) REFERENCES urzadzenia(numerSeryjny),"
+    //        "FOREIGN KEY (dbbaza_urzadzenia_przypisany) REFERENCES urzadzenia(przypisany))");
+
+    if (!query.isActive())
+        qWarning() << " Tworzenie Tabeli DB - ERROR: " << query.lastError().text();
+
+    if (!query.exec("INSERT INTO dbbaza (dbbaza_urzadzenia_id, dbbaza_kontrahent_id ) VALUES(2, 1)"))
+        qWarning() << "MainWindow::DatabasePopulate Tabela DB- ERROR: " << query.lastError().text();
+
+
+    //    if (!query.exec("INSERT INTO panstwa (panstwo) VALUES('Nuemcy')"))
+    //        qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
 }
 void MainDb::dBKraj()
 {
     QSqlQuery query;
+    query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
     qWarning("Tworzenie tabeli Kraj ");
     query.exec(
         "CREATE TABLE IF NOT EXISTS panstwa  (id INTEGER PRIMARY KEY, panstwo TEXT UNIQUE )");
@@ -561,7 +758,7 @@ void MainDb::dBKraj()
 QString MainDb::isNumerSeryjnyTheSame(QString nrSeryjnyZLini, int i)
 {
     QSqlQuery query;
-    QString testName;
+    QString testName = nrSeryjnyZLini;
     qWarning() << "Pobrana ilosc Urzadzen z ::Urzadzenia::" << i;
 
     QString inti = QString::number(i);
@@ -575,6 +772,7 @@ QString MainDb::isNumerSeryjnyTheSame(QString nrSeryjnyZLini, int i)
         qWarning() << "udalo sie? : pozniej " << name;
         return name;
     }
+    return 0;
 }
 int MainDb::isNumerSeryjnyTheSameId(int nrSeryjnyZLini)
 {

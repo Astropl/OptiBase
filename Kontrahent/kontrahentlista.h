@@ -24,7 +24,7 @@ public slots:
     void wczytajDane();
     void myfunctiontimer();
     void iloscWierszy();
-
+    void initMenuKontrahentLista();
 private slots:
     void on_pushButton_2_clicked();
     void on_tableView_activated(const QModelIndex);

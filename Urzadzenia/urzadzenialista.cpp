@@ -76,7 +76,7 @@ void UrzadzeniaLista::initMenuUrzadzeniaLista()
     QAction *settingsOption = new QAction(("&Opcje"), this);
 
     auto mainfile = menuBar()->addMenu("Plik");
-    auto mainEdycja = menuBar()->addMenu("Edycja");
+   // auto mainEdycja = menuBar()->addMenu("Edycja");
     auto mainInfo = menuBar()->addMenu("Informacje");
     auto mainSettings = menuBar()->addMenu("Ustawienia");
 
@@ -148,18 +148,12 @@ void UrzadzeniaLista::wczytajDane()
 
     pobierzUrzId = mainDb->pobierzUrzadzeniaId(pobierzUrzId);
     for (int i = 1; i <= pobierzUrzId; i++) {
-
         for (int d = 0; d <= 4; d++) {
             pobierzUrz = mainDb->pobierzUrzadzenia(pobierzUrz, i, d);
             dodajItem = new QStandardItem(pobierzUrz);
-            model->setItem(i-1, d, dodajItem);
-
-
+            model->setItem(i - 1, d, dodajItem);
+        }
     }
-
-    }
-
-
 
     int rowDoSize = model->rowCount();
     for (int i = 0; i <= rowDoSize; i++) {

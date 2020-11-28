@@ -1,7 +1,8 @@
 #include "urzadzenialistakontrahent.h"
 #include "Timery/timedate.h"
 #include "ui_urzadzenialistakontrahent.h"
-#include <Info/info.h>
+#include "Info/info.h"
+#include "DataBase/maindb.h"
 #include <fstream>
 #include <iostream>
 #include <QTableView>
@@ -38,7 +39,7 @@ UrzadzeniaListaKontrahent::UrzadzeniaListaKontrahent(QWidget *parent)
     QString file13 = "C:/Defaults/Pliki/13.CheckFlagsInKrajKontrahentShow.txt";
     QString file14 = "C:/Defaults/Pliki/14.CheckFlagsInMiastoKontrahentShow.txt";
     QString file15 = "C:/Defaults/Pliki/15.CheckFlagsInWojewodztwoKontrahentShow.txt";
-
+ initMenuUrzadzeniaListaKontrahent();
     wczytajDane();
 
     ui->pushButton_3->setEnabled(false);
@@ -49,9 +50,62 @@ UrzadzeniaListaKontrahent::~UrzadzeniaListaKontrahent()
 {
     delete ui;
 }
-void UrzadzeniaListaKontrahent::on_pushButton_clicked()
+void UrzadzeniaListaKontrahent::initMenuUrzadzeniaListaKontrahent()
 {
-    // Przypisz
+    //tworze menu kontekstowe
+    setWindowTitle("OptiBase v 1.0:Urządzenia - Lista Przypisz Kontrahenta");
+
+    //    QAction *fileSave = new QAction(("&Zapisz"), this);
+    //    QAction *fileEksport = new QAction(("&Eksport"), this);
+    // QAction *fileseparator = new QAction(("----------"), this);
+    QAction *fileWyjscie = new QAction(("&Wyjście"), this);
+
+    //    QAction *edycjaDodajProducenta = new QAction(("Dodaj Producenta"), this);
+    //    QAction *edycjaDodajModel = new QAction(("Dodaj Model"), this);
+
+    //    QAction *editKopiuj = new QAction(("&Kopiuj"), this);
+    //    QAction *editWklej = new QAction(("&Wklej"), this);
+
+    QAction *infoOProgramie = new QAction(("&O Programie"), this);
+    QAction *infoOAutorze = new QAction(("O &Autorze"), this);
+    QAction *infoLog = new QAction(("&Log"), this);
+
+    QAction *settingsOption = new QAction(("&Opcje"), this);
+
+    auto mainfile = menuBar()->addMenu("Plik");
+    //auto mainEdycja = menuBar()->addMenu("Edycja");
+    auto mainInfo = menuBar()->addMenu("Informacje");
+    auto mainSettings = menuBar()->addMenu("Ustawienia");
+
+    //    mainfile->addAction(fileSave);
+    //    mainfile->addAction(fileEksport);
+
+    mainfile->addSeparator();
+    mainfile->addAction(fileWyjscie);
+
+    //    mainEdycja->addAction(edycjaDodajProducenta);
+    //    mainEdycja->addAction(edycjaDodajModel);
+
+    //    mainEdycja->addAction(editKopiuj);
+    //    mainEdycja->addAction(editWklej);
+    mainInfo->addAction(infoOProgramie);
+    mainInfo->addAction(infoOAutorze);
+    mainInfo->addAction(infoLog);
+
+    mainSettings->addAction(settingsOption);
+
+    //connect(settingsOption, &QAction::triggered,this, SLOT (openInfo()));
+    connect(settingsOption, SIGNAL(triggered()), this, SLOT(openSettings()));
+    connect(infoOProgramie, SIGNAL(triggered()), this, SLOT(openInfo()));
+    //    connect(edycjaDodajProducenta,
+    //            SIGNAL(triggered()),
+    //            this,
+    //            SLOT(on_actionDodaj_Producenta_triggered()));
+    //    connect(edycjaDodajModel, SIGNAL(triggered()), this, SLOT(on_actionDodaj_Model_triggered()));
+}
+void UrzadzeniaListaKontrahent::on_pushButton_clicked()// Przypisz
+{
+
     cout << "przypisz klienta do analziatora" << endl;
     //pobierz z comboboxa
 
@@ -69,9 +123,9 @@ void UrzadzeniaListaKontrahent::on_pushButton_clicked()
     ui->pushButton->setEnabled(false);
 }
 
-void UrzadzeniaListaKontrahent::on_pushButton_2_clicked()
+void UrzadzeniaListaKontrahent::on_pushButton_2_clicked()//zamknij
 {
-    //zamknij
+
 
     cout << "Zamknij liste urzadzen z prypisania" << endl;
     timer->stop();
@@ -87,8 +141,8 @@ void UrzadzeniaListaKontrahent::wyswietl(QVariant p1, QVariant p2, QVariant p3, 
 }
 
 void UrzadzeniaListaKontrahent::wczytajDane()
-{
-    QString file2 = "C:/Defaults/Pliki/2.Kontrahent.txt";
+{ MainDb *mainDb = new MainDb(this);
+    //QString file2 = "C:/Defaults/Pliki/2.Kontrahent.txt";
     // Tworze modele do Qtable
 
     model = new QStandardItemModel(1, 14, this);
@@ -108,47 +162,35 @@ void UrzadzeniaListaKontrahent::wczytajDane()
     model->setHeaderData(11, Qt::Horizontal, "Telefon prywatny");
     model->setHeaderData(12, Qt::Horizontal, "Adres E-mail");
     model->setHeaderData(13, Qt::Horizontal, "Strona URL");
+    model->setHeaderData(14, Qt::Horizontal, "Numer Seryjny z Przypisania");
 
     //    setSelectionBehavior(QAbstractItemView::SelectRows);
     //    setSelectionMode(QAbstractItemView::SingleSelection);
     //---------------------------------------------------------------
-    ui->tableView->setColumnHidden(0, true); //Ukrywam kolumne z LP
+    //TODO: Ukrywam linie w kolumnie 1
+    //ui->tableView->setColumnHidden(0, true); //Ukrywam kolumne z LP
         //---------------------------------------------------------------
     //model->insertRow(model->rowCount());
 
     //ui->labelTest->text(QString::number(iloscWierszy));
 
-    QStandardItem *dodajItem = new QStandardItem("Jakies cos");
-    //    model->setItem(iloscWierszy,1,dodajItem);
-    //    model->setItem(iloscWierszy, 1, dodajItem); // Dodoaje item i od razu wiersz.
+    QStandardItem *dodajItem = new QStandardItem();
+    int pobierzKontrId = 0;
+
+    QString pobierzKontr = "";
+
+    pobierzKontrId = mainDb->pobierzKontrahentaId(pobierzKontrId);
+    for (int i = 1; i <= pobierzKontrId; i++) {
+        for (int d = 0; d <= 14; d++) {
+            pobierzKontr = mainDb->pobierzKontrahenta(pobierzKontr, i, d);
+            dodajItem = new QStandardItem(pobierzKontr);
+            model->setItem(i - 1, d, dodajItem);
+        }
+    }
 
     //Wczytuje kontrahentow z pliku
 
-    //QStandardItem *dodajNumer = new QStandardItem("");
-    plikUrzadzeniaKontrahentLista.open(file2.toStdString(), ios::in);
-    if (plikUrzadzeniaKontrahentLista.good() == false) {
-        cout << "Plik nie istnieje !!!!!";
-        //exit(0);
-    }
-    string linia;
-    int row = 0;
-    int nr_lini = 0; // zmiana z int nr_lini = 1;
-    while (getline(plikUrzadzeniaKontrahentLista, linia)) {
-        dodajItem = new QStandardItem(linia.c_str());
-        //if (nr_lini > 0)
-        {
-            model->setItem(row, nr_lini, dodajItem); //row, nr_lini - 2, dodajItem
-        }
-        //ui->comboBoxWczytajMiasta->addItem(linia.c_str());
-        //cout << linia.c_str() << endl;
-        nr_lini++;
-        if (nr_lini > 13) {
-            row = row + 1;
-            nr_lini = 0;
-        }
-    }
 
-    plikUrzadzeniaKontrahentLista.close();
 
     // pobierz ilosc rzedów
     int rowDoSize = model->rowCount();
@@ -207,65 +249,79 @@ void UrzadzeniaListaKontrahent::myfunctiontimer()
     ui->labelDzien->setText(stringDzienTygodnia);
 }
 
-void UrzadzeniaListaKontrahent::on_pushButton_3_clicked()
+void UrzadzeniaListaKontrahent::on_pushButton_3_clicked()// Zapisz
 {
-    // Zapisz
+MainDb *mainDb = new MainDb(this);
     ui->comboBox->addItem("Przypisany");
-    fileDB.open("C:/Defaults/Pliki/1.DB.txt", ios::app);
+    //fileDB.open("C:/Defaults/Pliki/1.DB.txt", ios::app);
     // urzadzenia było append
+//TODO: Update albo alter
 
-    fileUrzadzenia.open("C:/Defaults/Pliki/3.Urzadzenie.txt", ios::in);
-    string linia;
-    int row = 0;
-    int nr_lini = 0; // zmiana z int nr_lini = 1;
-    while (getline(fileUrzadzenia, linia)) {
-        ui->comboBox_3->addItem(linia.c_str());
-        //cout << linia.c_str() << endl;
-        nr_lini++;
-        if (nr_lini > 4) {
-            row = row + 1;
-            nr_lini = 0;
-        }
-    }
-    fileUrzadzenia.close();
 
-    QString nrSeryjnyzCB1 = ui->comboBox->itemText(3);
+//    UPDATE pracownicy
+//        SET pensja = pensja * 1.1
+//              WHERE staz > 2;
+ QString nrSeryjnyzCB1 = ui->comboBox->itemText(3); //numer seryjny dla którego przyisujemy pacjenta
+    //UPDATE person SET surname = 'Lake', age = 5 WHERE rowid = 3;
+ QString nazwaZComboBoxa1 = ui->comboBox_2->itemText(1);
 
-    int IntnrSetyjnyzCB2 = ui->comboBox_3->findText(nrSeryjnyzCB1);
-    QString tym1 = ui->comboBox_3->itemText(IntnrSetyjnyzCB2);
-    QString tym2 = ui->comboBox_3->itemText(IntnrSetyjnyzCB2 + 1);
-    QString tym3 = ui->comboBox_3->itemText(IntnrSetyjnyzCB2 - 1);
-    QString tym4 = ui->comboBox_3->itemText(IntnrSetyjnyzCB2 - 2);
-    QString tym5 = ui->comboBox_3->itemText(IntnrSetyjnyzCB2 - 3);
+ mainDb->addUrzadzeniaUpdate(nrSeryjnyzCB1,nazwaZComboBoxa1);
 
-    ui->comboBox_3->removeItem(IntnrSetyjnyzCB2 - 3);
-    ui->comboBox_3->removeItem(IntnrSetyjnyzCB2 - 3);
-    ui->comboBox_3->removeItem(IntnrSetyjnyzCB2 - 3);
-    ui->comboBox_3->removeItem(IntnrSetyjnyzCB2 - 3);
-    ui->comboBox_3->removeItem(IntnrSetyjnyzCB2 - 3);
 
-    QString pierwsza = ui->comboBox->itemText(0);
-    QString druga = ui->comboBox_2->itemText(0);
-    ui->lblNrUrza->setText(pierwsza);
-    ui->lblNrKontr->setText(druga);
+    //fileUrzadzenia.open("C:/Defaults/Pliki/3.Urzadzenie.txt", ios::in);
+//    string linia;
+//    int row = 0;
+//    int nr_lini = 0; // zmiana z int nr_lini = 1;
 
-    fileDB << ui->lblNrUrza->text().toStdString() << endl;
-    fileDB << ui->lblNrKontr->text().toStdString() << endl;
-    fileDB.close();
-    ;
 
-    fileUrzadzenia.open("C:/Defaults/Pliki/3.Urzadzenie.txt", ios::out | ios::trunc);
+//    while (getline(fileUrzadzenia, linia)) {
+//        ui->comboBox_3->addItem(linia.c_str());
+//        //cout << linia.c_str() << endl;
+//        nr_lini++;
+//        if (nr_lini > 4) {
+//            row = row + 1;
+//            nr_lini = 0;
+//        }
+//    }
+//    fileUrzadzenia.close();
 
-    for (int i = 0; i <= ui->comboBox_3->count() - 1; i++) {
-        fileUrzadzenia << ui->comboBox_3->itemText(i).toStdString() << endl;
-    }
-    fileUrzadzenia.close();
-    fileUrzadzenia.open("C:/Defaults/Pliki/3.Urzadzenie.txt", ios::app);
 
-    for (int i = 0; i <= ui->comboBox->count() - 1; i++) {
-        fileUrzadzenia << ui->comboBox->itemText(i).toStdString() << endl;
-    }
-    fileUrzadzenia.close();
+
+//    int IntnrSetyjnyzCB2 = ui->comboBox_3->findText(nrSeryjnyzCB1);
+//    QString tym1 = ui->comboBox_3->itemText(IntnrSetyjnyzCB2);
+//    QString tym2 = ui->comboBox_3->itemText(IntnrSetyjnyzCB2 + 1);
+//    QString tym3 = ui->comboBox_3->itemText(IntnrSetyjnyzCB2 - 1);
+//    QString tym4 = ui->comboBox_3->itemText(IntnrSetyjnyzCB2 - 2);
+//    QString tym5 = ui->comboBox_3->itemText(IntnrSetyjnyzCB2 - 3);
+
+//    ui->comboBox_3->removeItem(IntnrSetyjnyzCB2 - 3);
+//    ui->comboBox_3->removeItem(IntnrSetyjnyzCB2 - 3);
+//    ui->comboBox_3->removeItem(IntnrSetyjnyzCB2 - 3);
+//    ui->comboBox_3->removeItem(IntnrSetyjnyzCB2 - 3);
+//    ui->comboBox_3->removeItem(IntnrSetyjnyzCB2 - 3);
+
+//    QString pierwsza = ui->comboBox->itemText(0);
+//    QString druga = ui->comboBox_2->itemText(0);
+//    ui->lblNrUrza->setText(pierwsza);
+//    ui->lblNrKontr->setText(druga);
+
+//    fileDB << ui->lblNrUrza->text().toStdString() << endl;
+//    fileDB << ui->lblNrKontr->text().toStdString() << endl;
+//    fileDB.close();
+
+
+    //fileUrzadzenia.open("C:/Defaults/Pliki/3.Urzadzenie.txt", ios::out | ios::trunc);
+
+//    for (int i = 0; i <= ui->comboBox_3->count() - 1; i++) {
+//        //fileUrzadzenia << ui->comboBox_3->itemText(i).toStdString() << endl;
+//    }
+//    //fileUrzadzenia.close();
+//    //fileUrzadzenia.open("C:/Defaults/Pliki/3.Urzadzenie.txt", ios::app);
+
+//    for (int i = 0; i <= ui->comboBox->count() - 1; i++) {
+//        //fileUrzadzenia << ui->comboBox->itemText(i).toStdString() << endl;
+//    }
+    //fileUrzadzenia.close();
 
     ui->comboBox->clear();
     ui->comboBox_2->clear();

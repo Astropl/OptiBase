@@ -1,11 +1,12 @@
 #include "baza.h"
-#include "ui_baza.h"
+#include "Kontrahent/kontrahentinfo.h"
 #include "QApplication"
 #include "Timery/timedate.h"
 #include "time.h"
-#include "Kontrahent/kontrahentinfo.h"
-#include "ui_Baza.h"
+//#include "ui_Baza.h"
+#include "ui_baza.h"
 //#include <Info/info.h>
+#include "DataBase/maindb.h"
 #include <ctime>
 #include <fstream>
 #include <iostream>
@@ -22,9 +23,9 @@ using namespace std;
 //int wynikPierwsza;
 
 fstream fileDataBase1, fileDataBase2, fileDataBase3;
-Baza::Baza(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::Baza)
+Baza::Baza(QWidget *parent)
+    : QMainWindow(parent)
+    , ui(new Ui::Baza)
 {
     ui->setupUi(this);
     ui->labelZegara->setText(" cos tam");
@@ -52,15 +53,28 @@ Baza::Baza(QWidget *parent) :
     wczytajDane();
 }
 
-
 void Baza::wczytajDane()
 {
-    QString file1 = "C:/Defaults/Pliki/1.DB.txt";
-    QString file2 = "C:/Defaults/Pliki/2.Kontrahent.txt";
-    QString file3 = "C:/Defaults/Pliki/3.Urzadzenie.txt";
+    // Wczytac z Bazy. Kontrahneci i Urzadzenia które mają zakładkę TAK
+    QStandardItem *dodajItem = new QStandardItem("");
+    MainDb *mainDb = new MainDb(this);
+    int pobierzUrzKontId = 0;
+
+    QString QStringPobierzUrzKont = "";
+    QString sprawdz;
+    //MainDb *mainDb = new MainDb(this);
+
+
+    //QStandardItem *dodajItem1 = new QStandardItem("Jakies cos");
+    //    model->setItem(iloscWierszy,1,dodajItem);
+    //    model->setItem(iloscWierszy, 1, dodajItem); // Dodoaje item i od razu wiersz.
+
+    //    QString file1 = "C:/Defaults/Pliki/1.DB.txt";
+    //    QString file2 = "C:/Defaults/Pliki/2.Kontrahent.txt";
+    //    QString file3 = "C:/Defaults/Pliki/3.Urzadzenie.txt";
     // Tworze modele do Qtable
 
-    model = new QStandardItemModel(1, 19, this); //było 14
+    model = new QStandardItemModel(1, 20, this); //było 14
     ui->tableViewDB->setModel(model);
     //QModelIndex *index;
     model->setHeaderData(0, Qt::Horizontal, "L.P.");
@@ -83,27 +97,49 @@ void Baza::wczytajDane()
     model->setHeaderData(16, Qt::Horizontal, "Telefon prywatny");   //Telefon prywatny
     model->setHeaderData(17, Qt::Horizontal, "Adres E-mail");       //Adres E-mail
     model->setHeaderData(18, Qt::Horizontal, "Strona URL");         //Strona URL
+    model->setHeaderData(19, Qt::Horizontal, "Numer Seryjny z Przypisania");
 
+
+
+
+
+
+
+    qWarning() << "Lece do MainDB->pobierz Id.";
+    pobierzUrzKontId = mainDb->pobierzKontrahentaZNrSeryjnymId(pobierzUrzKontId);
+    qWarning() << "pobierz kontr i urzadz:: mam ilosc modeli z bazy danych:" << pobierzUrzKontId;
+    int przesuniecieNaKontraheta=5;
+    for (int i = 1; i <= pobierzUrzKontId; i++) {
+        for (int d = 0; d <= 15; d++) {
+            QStringPobierzUrzKont = mainDb->pobierzKontrahentaZNrSeryjnym(QStringPobierzUrzKont, i, d);
+            dodajItem = new QStandardItem(QStringPobierzUrzKont);
+            qWarning ()<< "Jestem przed dodawaniu do tabeli" ;
+            model->setItem(i - 1, d+przesuniecieNaKontraheta, dodajItem);
+            qWarning ()<< "Jestem w po dodawaniu do tabeli" ;
+            // ui->comboBox_2->addItem(QStringPobierzUrzKont);
+            qDebug() << QStringPobierzUrzKont;
+        }
+    }
     //    setSelectionBehavior(QAbstractItemView::SelectRows);
     //    setSelectionMode(QAbstractItemView::SingleSelection);
     //---------------------------------------------------------------
     //NOTE: ukrywam 3 linie
 
-    ui->tableViewDB->setColumnHidden(0, true); //Ukrywam kolumne z LP urzadzenia
-    ui->tableViewDB->setColumnHidden(4, true); // Ukrywam Kolumnę z info o przypsianiu
-    ui->tableViewDB->setColumnHidden(5, true); // Ukrywam Kolumnę z LP kontrahenta
+    //    ui->tableViewDB->setColumnHidden(0, true); //Ukrywam kolumne z LP urzadzenia
+    //    ui->tableViewDB->setColumnHidden(4, true); // Ukrywam Kolumnę z info o przypsianiu
+    //    ui->tableViewDB->setColumnHidden(5, true); // Ukrywam Kolumnę z LP kontrahenta
     //---------------------------------------------------------------
     //model->insertRow(model->rowCount());
 
     //ui->labelTest->text(QString::number(iloscWierszy));
 
-    QStandardItem *dodajItem = new QStandardItem("Jakies cos");
+    //QStandardItem *dodajItem = new QStandardItem("Jakies cos");
     //QStandardItem *dodajItem1 = new QStandardItem("Jakies cos");
     //    model->setItem(iloscWierszy,1,dodajItem);
     //    model->setItem(iloscWierszy, 1, dodajItem); // Dodoaje item i od razu wiersz.
 
     //Wczytuje kontrahentow z pliku
-//TODO: Wczytaj kontrahentow z DB "kontrahenci"
+    //TODO: Wczytaj kontrahentow z DB "kontrahenci"
     QString tempUrzadz;
     QString tempUrzadz1;
     string linia3;
@@ -114,74 +150,72 @@ void Baza::wczytajDane()
     //int row2 = 0;
     //int nr_lini2 = 0;
     //int row1 = 0;
-    int nr_lini1 = 0;
-    { // wczytaj urzadzenia
-        fileDataBase3.open(file3.toStdString(), ios::in);
-        if (fileDataBase3.good() == false) {
-            cout << "Plik nie istnieje !!!!!";
-            //exit(0);
-        }
+    //  int nr_lini1 = 0;
+    //
+    //    { // wczytaj urzadzenia
+    ////        fileDataBase3.open(file3.toStdString(), ios::in);
+    ////        if (fileDataBase3.good() == false) {
+    ////            cout << "Plik nie istnieje !!!!!";
+    ////            //exit(0);
+    ////        }
 
-        // zmiana z int nr_lini = 1;
-        //cout << "cos sprawdzam1 " << endl;
-        while (getline(fileDataBase3, linia3)) {
-            //cout << "cos sprawdzam z id Urzadzenia " << endl;
-            //ui->comboBox->addItem(linia3.c_str());
-            //ui->lblUrzadzenie->setText(linia3.c_str());
+    //        while (getline(fileDataBase3, linia3)) {
+    //            //cout << "cos sprawdzam z id Urzadzenia " << endl;
+    //            //ui->comboBox->addItem(linia3.c_str());
+    //            //ui->lblUrzadzenie->setText(linia3.c_str());
 
-            tempUrzadz = ui->lblUrzadzenie->text();
-            ui->comboBox->addItem(linia3.c_str());
-            //            int ostatni = ui->comboBox->count();
-            //            tempUrzadz1 = ui->comboBox->itemText(ostatni).toStdString();
-        }
-    }
-    fileDataBase3.close();
+    //            tempUrzadz = ui->lblUrzadzenie->text();
+    //            ui->comboBox->addItem(linia3.c_str());
 
-    // wczytaj kontrahentow
-    fileDataBase2.open(file2.toStdString(), ios::in);
-    if (fileDataBase2.good() == false) {
-        cout << "Plik nie istnieje !!!!!";
-        //exit(0);
-    }
-    // zmiana z int nr_lini = 1;
-    //cout << "cos sprawdzam2 " << endl;
-    while (getline(fileDataBase2, linia2)) {
-        //cout << "cos sprawdzam2 " << endl;
-        //ui->comboBox->addItem(linia3.c_str());
-        //ui->lblKontrahent->setText(linia2.c_str());
-        //string tempKontr = ui->lblKontrahent->text().toStdString();
-        ui->comboBox_2->addItem(linia2.c_str()); //ui->comboBox_2->addItem(linia2.c_str());
-        //int ostatni = ui->comboBox_2->count();
-        //string tempKontr1 = ui->comboBox_2->itemText(ostatni).toStdString();
-    }
+    //        }
+    //    }
+    // fileDataBase3.close();
 
-    fileDataBase2.close();
+    //    // wczytaj kontrahentow
+    //    fileDataBase2.open(file2.toStdString(), ios::in);
+    //    if (fileDataBase2.good() == false) {
+    //        cout << "Plik nie istnieje !!!!!";
+    //        //exit(0);
+    //    }
+    //    // zmiana z int nr_lini = 1;
+    //    //cout << "cos sprawdzam2 " << endl;
+    //    while (getline(fileDataBase2, linia2)) {
+    //        //cout << "cos sprawdzam2 " << endl;
+    //        //ui->comboBox->addItem(linia3.c_str());
+    //        //ui->lblKontrahent->setText(linia2.c_str());
+    //        //string tempKontr = ui->lblKontrahent->text().toStdString();
+    //        ui->comboBox_2->addItem(linia2.c_str()); //ui->comboBox_2->addItem(linia2.c_str());
+    //        //int ostatni = ui->comboBox_2->count();
+    //        //string tempKontr1 = ui->comboBox_2->itemText(ostatni).toStdString();
+    //    }
 
-    fileDataBase1.open(file1.toStdString(), ios::in);
-    if (fileDataBase1.good() == false) {
-        cout << "Plik nie istnieje !!!!!";
-        //exit(0);
-    }
+    //    fileDataBase2.close();
 
-    while (getline(fileDataBase1, linia1)) {
-        dodajItem = new QStandardItem(linia1.c_str());
-        //if (nr_lini > 0)
-        if (nr_lini1 == 0) {
-            ui->lblUrzadzenie->setText(dodajItem->text());
-            ui->comboBox_3->addItem(linia1.c_str());
+    //    fileDataBase1.open(file1.toStdString(), ios::in);
+    //    if (fileDataBase1.good() == false) {
+    //        cout << "Plik nie istnieje !!!!!";
+    //        //exit(0);
+    //    }
 
-            nr_lini1++;
-        } else if (nr_lini1 == 1) {
-            ui->lblKontrahent->setText(dodajItem->text());
-            ui->comboBox_4->addItem(linia1.c_str());
-            string tempKontr1 = ui->lblKontrahent->text().toStdString();
-            nr_lini1++;
-        }
-        if (nr_lini1 >= 2) {
-            nr_lini1 = 0;
-        }
-    }
-    fileDataBase1.close();
+    //    while (getline(fileDataBase1, linia1)) {
+    //        dodajItem = new QStandardItem(linia1.c_str());
+    //        //if (nr_lini > 0)
+    //        if (nr_lini1 == 0) {
+    //            ui->lblUrzadzenie->setText(dodajItem->text());
+    //            ui->comboBox_3->addItem(linia1.c_str());
+
+    //            nr_lini1++;
+    //        } else if (nr_lini1 == 1) {
+    //            ui->lblKontrahent->setText(dodajItem->text());
+    //            ui->comboBox_4->addItem(linia1.c_str());
+    //            string tempKontr1 = ui->lblKontrahent->text().toStdString();
+    //            nr_lini1++;
+    //        }
+    //        if (nr_lini1 >= 2) {
+    //            nr_lini1 = 0;
+    //        }
+    //    }
+    //    fileDataBase1.close();
 
     // porownuje i sprawdzam czy sa takie same w combo boxach
 
@@ -249,13 +283,12 @@ void Baza::wczytajDane()
     //row2 = 0;
     //nr_lini2 = 0;
 
-    nr_lini1 = 0;
+    // nr_lini1 = 0;
     tempUrzadz = "";
     tempUrzadz1 = "";
     linia3 = "";
     linia2 = "";
     linia1 = "";
-
 }
 
 void Baza::iloscWierszy()

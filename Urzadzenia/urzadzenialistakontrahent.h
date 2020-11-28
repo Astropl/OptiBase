@@ -21,9 +21,12 @@ public:
 public slots:
 
     void wczytajDane();
+    void initMenuUrzadzeniaListaKontrahent();
     void iloscWierszy();
     void myfunctiontimer();
     void wyswietl(QVariant p1, QVariant p2, QVariant p3, QVariant p4);
+
+
 private slots:
     void on_pushButton_clicked();
 

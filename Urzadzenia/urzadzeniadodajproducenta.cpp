@@ -44,6 +44,7 @@ UrzadzeniaDodajProducenta::UrzadzeniaDodajProducenta(QWidget *parent)
 
     for (int i = 1; i <= producentId; i++) {
         QStringPobierzProducenta = mainDb->pobierzProducenta(QStringPobierzProducenta, i);
+        cout<<"powrocił producent : "<< QStringPobierzProducenta.toStdString() <<endl;
         ui->comboBoxDodajProdcuenta->addItem(QStringPobierzProducenta);
         qDebug() << QStringPobierzProducenta;
     }

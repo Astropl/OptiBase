@@ -3,7 +3,8 @@
 #include "kontrahentshow.h"
 #include "tableviewlistakontrahentow.h"
 #include "ui_kontrahentlista.h"
-#include <Info/info.h>
+#include "Info/info.h"
+#include "DataBase/maindb.h"
 #include <ctime>
 #include <fstream>
 #include <iostream>
@@ -55,7 +56,7 @@ KontrahentLista::KontrahentLista(QWidget *parent)
     QString file13 = "C:/Defaults/Pliki/13.CheckFlagsInKrajKontrahentShow.txt";
     QString file14 = "C:/Defaults/Pliki/14.CheckFlagsInMiastoKontrahentShow.txt";
     QString file15 = "C:/Defaults/Pliki/15.CheckFlagsInWojewodztwoKontrahentShow.txt";
-
+ initMenuKontrahentLista();
     wczytajDane();
 }
 
@@ -63,12 +64,68 @@ KontrahentLista::~KontrahentLista()
 {
     delete ui;
 }
-void KontrahentLista::wczytajDane()
+void KontrahentLista::initMenuKontrahentLista()
 {
-    QString file2 = "C:/Defaults/Pliki/2.Kontrahent.txt";
+
+
+    //tworze menu kontekstowe
+    setWindowTitle("OptiBase v 1.0:Kontrahent - Lista Kontrahentów");
+
+    //    QAction *fileSave = new QAction(("&Zapisz"), this);
+    //    QAction *fileEksport = new QAction(("&Eksport"), this);
+    // QAction *fileseparator = new QAction(("----------"), this);
+    QAction *fileWyjscie = new QAction(("&Wyjście"), this);
+
+    //    QAction *edycjaDodajProducenta = new QAction(("Dodaj Producenta"), this);
+    //    QAction *edycjaDodajModel = new QAction(("Dodaj Model"), this);
+
+    //    QAction *editKopiuj = new QAction(("&Kopiuj"), this);
+    //    QAction *editWklej = new QAction(("&Wklej"), this);
+
+    QAction *infoOProgramie = new QAction(("&O Programie"), this);
+    QAction *infoOAutorze = new QAction(("O &Autorze"), this);
+    QAction *infoLog = new QAction(("&Log"), this);
+
+    QAction *settingsOption = new QAction(("&Opcje"), this);
+
+    auto mainfile = menuBar()->addMenu("Plik");
+    //auto mainEdycja = menuBar()->addMenu("Edycja");
+    auto mainInfo = menuBar()->addMenu("Informacje");
+    auto mainSettings = menuBar()->addMenu("Ustawienia");
+
+    //    mainfile->addAction(fileSave);
+    //    mainfile->addAction(fileEksport);
+
+    mainfile->addSeparator();
+    mainfile->addAction(fileWyjscie);
+
+    //    mainEdycja->addAction(edycjaDodajProducenta);
+    //    mainEdycja->addAction(edycjaDodajModel);
+
+    //    mainEdycja->addAction(editKopiuj);
+    //    mainEdycja->addAction(editWklej);
+    mainInfo->addAction(infoOProgramie);
+    mainInfo->addAction(infoOAutorze);
+    mainInfo->addAction(infoLog);
+
+    mainSettings->addAction(settingsOption);
+
+    //connect(settingsOption, &QAction::triggered,this, SLOT (openInfo()));
+    connect(settingsOption, SIGNAL(triggered()), this, SLOT(openSettings()));
+    connect(infoOProgramie, SIGNAL(triggered()), this, SLOT(openInfo()));
+    //    connect(edycjaDodajProducenta,
+    //            SIGNAL(triggered()),
+    //            this,
+    //            SLOT(on_actionDodaj_Producenta_triggered()));
+    //    connect(edycjaDodajModel, SIGNAL(triggered()), this, SLOT(on_actionDodaj_Model_triggered()));
+
+}
+void KontrahentLista::wczytajDane()
+{ MainDb *mainDb = new MainDb(this);
+    //QString file2 = "C:/Defaults/Pliki/2.Kontrahent.txt";
     // Tworze modele do Qtable
 
-    model = new QStandardItemModel(1, 14, this);
+    model = new QStandardItemModel(1, 15, this);
     ui->tableView->setModel(model);
 
     model->setHeaderData(0, Qt::Horizontal, "L.P.");
@@ -85,39 +142,57 @@ void KontrahentLista::wczytajDane()
     model->setHeaderData(11, Qt::Horizontal, "Telefon prywatny");
     model->setHeaderData(12, Qt::Horizontal, "Adres E-mail");
     model->setHeaderData(13, Qt::Horizontal, "Strona URL");
+    model->setHeaderData(14, Qt::Horizontal, "Numer Seryjny z przypisania");
 
     //---------------------------------------------------------------
-    ui->tableView->setColumnHidden(0, true); //Ukrywam kolumne z LP
+    //ui->tableView->setColumnHidden(0, true); //Ukrywam kolumne z LP
         //---------------------------------------------------------------
 
-    QStandardItem *dodajItem = new QStandardItem("Jakies cos");
+    QStandardItem *dodajItem = new QStandardItem();
 
     //Wczytuje kontrahentow z pliku
 
-    plikKontrahentLista.open(file2.toStdString(), ios::in);
-    if (plikKontrahentLista.good() == false) {
-        cout << "Plik nie istnieje !!!!!";
-        //exit(0);
-    }
-    string linia;
-    int row = 0;
-    int nr_lini = 0; // zmiana z int nr_lini = 1;
-    while (getline(plikKontrahentLista, linia)) {
-        dodajItem = new QStandardItem(linia.c_str());
-        //if (nr_lini > 0)
-        {
-            model->setItem(row, nr_lini, dodajItem); //row, nr_lini - 2, dodajItem
-        }
-        //ui->comboBoxWczytajMiasta->addItem(linia.c_str());
-        cout << linia.c_str() << endl;
-        nr_lini++;
-        if (nr_lini > 13) {
-            row = row + 1;
-            nr_lini = 0;
-        }
-    }
+    //plikKontrahentLista.open(file2.toStdString(), ios::in);
+//    if (plikKontrahentLista.good() == false) {
+//        cout << "Plik nie istnieje !!!!!";
+//        //exit(0);
+//    }
 
-    plikKontrahentLista.close();
+    QString daneKontrahenta;
+    int kontrahentId =0, i = 0, d =0;
+
+   kontrahentId=  mainDb->pobierzKontrahentaId(kontrahentId);
+
+
+   for (i=1;i<= kontrahentId;i++)
+   {
+       for (d=0;d<=14;d++)
+       {
+           daneKontrahenta= mainDb->pobierzKontrahenta(daneKontrahenta, i, d);
+           dodajItem =new QStandardItem(daneKontrahenta);
+           model->setItem(i-1,d,dodajItem);
+   }
+}
+
+//    string linia;
+//    int row = 0;
+//    int nr_lini = 0; // zmiana z int nr_lini = 1;
+//    while (getline(plikKontrahentLista, linia)) {
+//        dodajItem = new QStandardItem(linia.c_str());
+//        //if (nr_lini > 0)
+//        {
+//            model->setItem(row, nr_lini, dodajItem); //row, nr_lini - 2, dodajItem
+//        }
+//        //ui->comboBoxWczytajMiasta->addItem(linia.c_str());
+//        cout << linia.c_str() << endl;
+//        nr_lini++;
+//        if (nr_lini > 13) {
+//            row = row + 1;
+//            nr_lini = 0;
+//        }
+//    }
+
+//    plikKontrahentLista.close();
 
     // pobierz ilosc rzedów
     int rowDoSize = model->rowCount();
