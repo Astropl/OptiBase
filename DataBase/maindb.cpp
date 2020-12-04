@@ -89,7 +89,8 @@ void MainDb::dBKontrahent()
                "TEXT UNIQUE, imie TEXT, nazwisko TEXT, kontrahent_panstwo_id TEXT, "
                "kontrahent_wojewodztwo_id TEXT, kontrahent_miasto_id TEXT, kodPocztowy TEXT, "
                "ulica TEXT, nrDomu INTEGER, telefon TEXT, "
-               "telefonPrywatny TEXT, adresEmail TEXT, stronaUrl TEXT, urzadzenia_numer_seryjny TEXT, FOREIGN KEY "
+               "telefonPrywatny TEXT, adresEmail TEXT, stronaUrl TEXT, urzadzenia_numer_seryjny "
+               "TEXT, FOREIGN KEY "
                "(kontrahent_panstwo_id) REFERENCES panstwa(panstwo), FOREIGN KEY "
                "(kontrahent_wojewodztwo_id) REFERENCES wojewodztwa (wojewodztwo), "
                "FOREIGN KEY "
@@ -130,19 +131,19 @@ QString MainDb::pobierzUrzadzenia(QString daneUrzadzenia, int i, int d)
 int MainDb::pobierzUrzadzeniaId(int daneUrzadzeniaId)
 {
     QSqlQuery query;
-    qWarning() << "Jestem w MainDB->pobierz Id.";
+    //qWarning() << "Jestem w MainDB->pobierz Id.";
     QString testName;
     int rows = 0;
     //TODO: pobrac z Bazy Modeli
 
     if (query.exec("SELECT * FROM urzadzenia")) {
         while (query.next()) {
-            qWarning() << query.value(1).toString();
+            //qWarning() << query.value(1).toString();
             rows++;
         }
-        qWarning() << "row to: " << rows;
+       // qWarning() << "row to: " << rows;
     }
-    qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
+    //qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
     daneUrzadzeniaId = rows;
     return rows;
 }
@@ -169,66 +170,105 @@ QString MainDb::pobierzKontrahenta(QString daneKontrahent, int i, int d)
 int MainDb::pobierzKontrahentaId(int daneKontrahentId)
 {
     QSqlQuery query;
-    qWarning() << "Jestem w MainDB->pobierz Id.";
+    //qWarning() << "Jestem w MainDB->pobierz Id.";
     QString testName;
     int rows = 0;
     //TODO: pobrac z Bazy Modeli
 
     if (query.exec("SELECT * FROM kontrahenci")) {
         while (query.next()) {
-            qWarning() << query.value(1).toString();
+            //qWarning() << query.value(1).toString();
             rows++;
         }
-        qWarning() << "row to: " << rows;
+       // qWarning() << "row to: " << rows;
     }
-    qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
+    //qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
     daneKontrahentId = rows;
     return rows;
 }
-QString MainDb::pobierzKontrahentaZNrSeryjnym(QString daneKontrahent, int i, int d)
+QString MainDb::pobierzKontrahentaZNrSeryjnym(QString daneKontrahent,
+                                              int i,
+                                              int d)
 {
     QSqlQuery query;
     QString testName;
-    qWarning() << "Pobrana ilosc Kontrahenci z ::KontrahenciPaństwa::" << i;
-
+    //qWarning() << "Pobrana ilosc Kontrahenci z ::KontrahenciPaństwa::" << i;
     QString inti = QString::number(i);
-
+    QString dinti = QString::number (d);
     QString name;
     daneKontrahent = name;
-    if (query.exec("SELECT * FROM kontrahenci where id =" + inti)) {
+//    if (query.exec("SELECT * FROM urzadzenia, kontrahenci WHERE urzadzenia.id =" + inti
+//                   + " and kontrahenci.id = " + inti
+//                   + " and kontrahenci.urzadzenia_numer_seryjny = urzadzenia.numerSeryjny" ))
+
+//    QVariant a1 = query.value(3);
+//    QString a11 = QVariant::toStdString(a1);
+     //QVariant a2 = query.value(19);
+    if (query.exec("SELECT * FROM urzadzenia, kontrahenci WHERE kontrahenci.id = " + inti
+                   + " and kontrahenci.urzadzenia_numer_seryjny = urzadzenia.numerSeryjny" )) {
         while (query.next()) {
+
+            if (query.value(3) != query.value(19))
+            { qWarning () <<"Nie Udane: query.value(3) != query.value(19) " <<query.value(3) <<" "<< query.value(19);
+                name = "Numeros4534";
+                return name;
+            }
+            else
+            {
+                qWarning () <<"Udane: query.value(3) != query.value(19) " <<query.value(3) <<" "<< query.value(19);
+                qWarning () <<" i = " +inti << " d = "  +dinti;
             qWarning() << query.value(d).toString();
             name = query.value(d).toString();
+            return name;
+            }
         }
-        qWarning() << "udalo sie? : pozniej " << name;
+        name = "Numeros4534";
         return name;
+        qWarning() << "udalo sie? : pozniej " << name;
+
+    }
+    return name;
+}
+
+QString MainDb::pobierzNumerSeryjnyZKontrahenta(QString pobierzNumerSeryjny)
+{
+    QSqlQuery query;
+    if (query.exec("SELECT * FROM kontrahenci")) {
+        while (query.next()) {
+            //if (query.value())
+            qWarning() << query.value(14).toString();
+            pobierzNumerSeryjny = query.value(14).toString();
+            return pobierzNumerSeryjny;
+        }
     }
     return 0;
 }
+
 int MainDb::pobierzKontrahentaZNrSeryjnymId(int daneKontrahentId)
 {
     QSqlQuery query;
-    qWarning() << "Jestem w MainDB->pobierz Id.";
+    //qWarning() << "Jestem w MainDB->pobierz Id.";
     QString testName;
     int rows = 0;
     //TODO: pobrac z Bazy Modeli
 
-    if (query.exec("SELECT * FROM kontrahenci")) {
+    if (query.exec("SELECT * FROM urzadzenia, kontrahenci WHERE kontrahenci.urzadzenia_numer_seryjny = urzadzenia.numerSeryjny")) {
         while (query.next()) {
-            qWarning() << query.value(1).toString();
+           //zliczam ilosc wierszy z seryj w urz = serej kontr
             rows++;
         }
-        qWarning() << "row to: " << rows;
+
     }
-    qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
+
     daneKontrahentId = rows;
+    //rows = rows +5; //INFO:: dodoaje  + dla elementwo urzadzenia
     return rows;
 }
 
 QString MainDb::addUrzadzeniaUpdate(QString daneNrSeryjny, QString daneUnicueName)
 {
     //Zapisuje do bazy Urzadzenia
-//TODO: Tutuaj dodoac update do Kontrahenci i pobrac unikalny kontrahent i dodoac numer seryjny
+    //TODO: Tutuaj dodoac update do Kontrahenci i pobrac unikalny kontrahent i dodoac numer seryjny
     QSqlQuery query;
     query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
     qWarning() << ("Dodoaje do bazy " + daneNrSeryjny);
@@ -245,15 +285,16 @@ QString MainDb::addUrzadzeniaUpdate(QString daneNrSeryjny, QString daneUnicueNam
         qWarning() << "MainDB::Update Urzadzenia - Udane: " << query.lastError().text();
     }
     //..............
-    if (!query.exec("UPDATE kontrahenci SET urzadzenia_numer_seryjny = '" + daneNrSeryjny + "' WHERE nazwaFirmy ='"
-                    + daneUnicueName + "' "))
+    if (!query.exec("UPDATE kontrahenci SET urzadzenia_numer_seryjny = '" + daneNrSeryjny
+                    + "' WHERE nazwaFirmy ='" + daneUnicueName + "' "))
 
     {
-        qWarning() << "MainDB::Update Kontrahenci z numerem seryjnym - ERROR: " << query.lastError().text();
+        qWarning() << "MainDB::Update Kontrahenci z numerem seryjnym - ERROR: "
+                   << query.lastError().text();
     } else {
-        qWarning() << "MainDB::Update Kontrahenci z numerem seryjnym - Udane: " << query.lastError().text();
+        qWarning() << "MainDB::Update Kontrahenci z numerem seryjnym - Udane: "
+                   << query.lastError().text();
     }
-
 
     return 0;
 }
@@ -357,7 +398,7 @@ int MainDb::pobierzKrajId(int pobierzKrajId)
 
 {
     QSqlQuery query;
-    qWarning() << "Jestem w MainDB->pobierz Id.";
+    //qWarning() << "Jestem w MainDB->pobierz Id.";
     QString testName;
     int rows = 0;
     //TODO: pobrac z Bazy Modeli
@@ -369,7 +410,7 @@ int MainDb::pobierzKrajId(int pobierzKrajId)
         }
         qWarning() << "row to: " << rows;
     }
-    qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
+    //qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
     pobierzKrajId = rows;
     return rows;
 }
@@ -396,7 +437,7 @@ int MainDb::pobierzWojewodztwoId(int pobierzWojewodztwoId)
 
 {
     QSqlQuery query;
-    qWarning() << "Jestem w MainDB->pobierz Id.";
+    //qWarning() << "Jestem w MainDB->pobierz Id.";
     QString testName;
     int rows = 0;
     pobierzWojewodztwoId = rows;
@@ -404,12 +445,12 @@ int MainDb::pobierzWojewodztwoId(int pobierzWojewodztwoId)
 
     if (query.exec("SELECT * FROM wojewodztwa")) {
         while (query.next()) {
-            qWarning() << query.value(1).toString();
+            //qWarning() << query.value(1).toString();
             rows++;
         }
-        qWarning() << "row to: " << rows;
+        //qWarning() << "row to: " << rows;
     }
-    qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
+    //qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
     return rows;
 }
 
@@ -438,7 +479,7 @@ int MainDb::pobierzModeliD(int daneModelId)
 
 {
     QSqlQuery query;
-    qWarning() << "Jestem w MainDB->pobierz Id.";
+    //qWarning() << "Jestem w MainDB->pobierz Id.";
     QString testName;
     int rows = 0;
     daneModelId = rows;
@@ -446,12 +487,12 @@ int MainDb::pobierzModeliD(int daneModelId)
 
     if (query.exec("SELECT * FROM modele")) {
         while (query.next()) {
-            qWarning() << query.value(1).toString();
+            //qWarning() << query.value(1).toString();
             rows++;
         }
-        qWarning() << "row to: " << rows;
+        //qWarning() << "row to: " << rows;
     }
-    qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
+    //qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
     return rows;
 }
 QString MainDb::pobierzMiasto(QString daneModel, int i)
@@ -479,19 +520,19 @@ int MainDb::pobierzMiastoiD(int daneModelId)
 
 {
     QSqlQuery query;
-    qWarning() << "Jestem w MainDB->pobierz Id.";
+    //qWarning() << "Jestem w MainDB->pobierz Id.";
     QString testName;
     int rows = 0;
     //TODO: pobrac z Bazy Modeli
 
     if (query.exec("SELECT * FROM miasta")) {
         while (query.next()) {
-            qWarning() << query.value(1).toString();
+            //qWarning() << query.value(1).toString();
             rows++;
         }
-        qWarning() << "row to: " << rows;
+        //qWarning() << "row to: " << rows;
     }
-    qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
+    //qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
     daneModelId = rows;
     return rows;
 }
@@ -500,20 +541,20 @@ int MainDb::pobierzProducentaiD(int daneProducentId)
 
 {
     QSqlQuery query;
-    qWarning() << "Jestem w MainDB->pobierz Id.";
+    //qWarning() << "Jestem w MainDB->pobierz Id.";
     QString testName;
     int rows = 0;
     //TODO: pobrac z Bazy producenta
 
     if (query.exec("SELECT * FROM producenci")) {
         while (query.next()) {
-            qWarning() << query.value(1).toString();
+            //qWarning() << query.value(1).toString();
             rows++;
         }
-        qWarning() << "row to: " << rows;
+        //qWarning() << "row to: " << rows;
     }
-    daneProducentId =rows;
-    qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
+    daneProducentId = rows;
+    //qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
     return rows;
 }
 QString MainDb::pobierzProducenta(QString daneProducent, int i)
@@ -528,7 +569,7 @@ QString MainDb::pobierzProducenta(QString daneProducent, int i)
     QString name;
     if (query.exec("SELECT * FROM producenci where id =" + inti)) {
         while (query.next()) {
-            qWarning() <<"Producent : "<< query.value(1).toString();
+            qWarning() << "Producent : " << query.value(1).toString();
             name = query.value(1).toString();
         }
         //daneProducent = name;
@@ -538,24 +579,23 @@ QString MainDb::pobierzProducenta(QString daneProducent, int i)
     return 0;
 }
 
-
 int MainDb::pobierzUrzKontiD(int daneProducentId)
 
 {
     QSqlQuery query;
-    qWarning() << "Jestem w MainDB->pobierz Id.";
+    //qWarning() << "Jestem w MainDB->pobierz Id.";
     QString testName;
     int rows = 0;
     //TODO: pobrac z Bazy producenta
 
     if (query.exec("SELECT * FROM producenci")) {
         while (query.next()) {
-            qWarning() << query.value(1).toString();
+            //qWarning() << query.value(1).toString();
             rows++;
         }
-        qWarning() << "row to: " << rows;
+        //qWarning() << "row to: " << rows;
     }
-    qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
+    //qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
     return rows;
 }
 QString MainDb::pobierzUrzKont(QString daneProducent, int i, int d)
@@ -578,8 +618,6 @@ QString MainDb::pobierzUrzKont(QString daneProducent, int i, int d)
     }
     return 0;
 }
-
-
 
 void MainDb::DatabaseConnect()
 {
@@ -731,9 +769,9 @@ void MainDb::dBBaza()
     if (!query.isActive())
         qWarning() << " Tworzenie Tabeli DB - ERROR: " << query.lastError().text();
 
-    if (!query.exec("INSERT INTO dbbaza (dbbaza_urzadzenia_id, dbbaza_kontrahent_id ) VALUES(2, 1)"))
+    if (!query.exec(
+            "INSERT INTO dbbaza (dbbaza_urzadzenia_id, dbbaza_kontrahent_id ) VALUES(2, 1)"))
         qWarning() << "MainWindow::DatabasePopulate Tabela DB- ERROR: " << query.lastError().text();
-
 
     //    if (!query.exec("INSERT INTO panstwa (panstwo) VALUES('Nuemcy')"))
     //        qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
@@ -788,11 +826,11 @@ int MainDb::isNumerSeryjnyTheSameId(int nrSeryjnyZLini)
 
     if (query.exec("SELECT * FROM urzadzenia")) {
         while (query.next()) {
-            qWarning() << query.value(1).toString();
+            //qWarning() << query.value(1).toString();
             rows++;
         }
-        qWarning() << "row to: " << rows;
+        //qWarning() << "row to: " << rows;
     }
-    qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
+    //qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
     return rows;
 }

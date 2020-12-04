@@ -174,25 +174,7 @@ void KontrahentLista::wczytajDane()
    }
 }
 
-//    string linia;
-//    int row = 0;
-//    int nr_lini = 0; // zmiana z int nr_lini = 1;
-//    while (getline(plikKontrahentLista, linia)) {
-//        dodajItem = new QStandardItem(linia.c_str());
-//        //if (nr_lini > 0)
-//        {
-//            model->setItem(row, nr_lini, dodajItem); //row, nr_lini - 2, dodajItem
-//        }
-//        //ui->comboBoxWczytajMiasta->addItem(linia.c_str());
-//        cout << linia.c_str() << endl;
-//        nr_lini++;
-//        if (nr_lini > 13) {
-//            row = row + 1;
-//            nr_lini = 0;
-//        }
-//    }
 
-//    plikKontrahentLista.close();
 
     // pobierz ilosc rzedów
     int rowDoSize = model->rowCount();

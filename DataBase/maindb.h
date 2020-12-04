@@ -54,7 +54,7 @@ public:
     QString pobierzUrzKont(QString daneProducent, int i, int d);
     int pobierzKontrahentaZNrSeryjnymId(int daneKontrahentId);
     QString pobierzKontrahentaZNrSeryjnym(QString daneKontrahent, int i, int d);
-
+    QString pobierzNumerSeryjnyZKontrahenta (QString pobierzNumerSeryjny);
 
 };
 

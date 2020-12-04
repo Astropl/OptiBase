@@ -86,9 +86,9 @@ void Urzadzenia::wypelnijModel()
 {qWarning() <<"Jestem w Wypenij Model.";
     //MainDb *mainDb =
     MainDb *mainDb = new MainDb(this);
-    qWarning() <<"Lece do MainDB->pobierz Id.";
+    //qWarning() <<"Lece do MainDB->pobierz Id.";
     pobierzModelId = mainDb->pobierzModeliD(pobierzModelId);
-    qWarning() <<"Urzadzenia:: mam ilosc modeli z bazy danych:"<< pobierzModelId;
+    //qWarning() <<"Urzadzenia:: mam ilosc modeli z bazy danych:"<< pobierzModelId;
     for (int i = 1; i <= pobierzModelId; i++) {
         QStringPobierzModel = mainDb->pobierzModel(QStringPobierzModel, i);
         ui->comboBox_2->addItem(QStringPobierzModel);
@@ -106,13 +106,13 @@ void Urzadzenia::wypelnijProducenta()
 {qWarning() <<"Jestem w Wypenij Producenta.";
     //MainDb *mainDb =
     MainDb *mainDb = new MainDb(this);
-    qWarning() <<"Lece do MainDB->pobierz Id.";
+   // qWarning() <<"Lece do MainDB->pobierz Id.";
     pobierzProducentaId = mainDb->pobierzProducentaiD(pobierzProducentaId);
-    qWarning() <<"Urzadzenia:: mam ilosc producentów z bazy danych:"<< pobierzProducentaId;
+   // qWarning() <<"Urzadzenia:: mam ilosc producentów z bazy danych:"<< pobierzProducentaId;
     for (int i = 1; i <= pobierzProducentaId; i++) {
         QStringPobierzProducenta = mainDb->pobierzProducenta(QStringPobierzProducenta, i);
         ui->comboBox->addItem(QStringPobierzProducenta);
-        qDebug() << QStringPobierzProducenta;
+       // qDebug() << QStringPobierzProducenta;
     }
 }
 

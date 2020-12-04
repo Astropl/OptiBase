@@ -62,21 +62,12 @@ void Baza::wczytajDane()
 
     QString QStringPobierzUrzKont = "";
     QString sprawdz;
-    //MainDb *mainDb = new MainDb(this);
 
-
-    //QStandardItem *dodajItem1 = new QStandardItem("Jakies cos");
-    //    model->setItem(iloscWierszy,1,dodajItem);
-    //    model->setItem(iloscWierszy, 1, dodajItem); // Dodoaje item i od razu wiersz.
-
-    //    QString file1 = "C:/Defaults/Pliki/1.DB.txt";
-    //    QString file2 = "C:/Defaults/Pliki/2.Kontrahent.txt";
-    //    QString file3 = "C:/Defaults/Pliki/3.Urzadzenie.txt";
     // Tworze modele do Qtable
 
     model = new QStandardItemModel(1, 20, this); //było 14
     ui->tableViewDB->setModel(model);
-    //QModelIndex *index;
+
     model->setHeaderData(0, Qt::Horizontal, "L.P.");
     model->setHeaderData(1, Qt::Horizontal, "Producent");    //nazwa
     model->setHeaderData(2, Qt::Horizontal, "Model");        // Imie
@@ -99,32 +90,93 @@ void Baza::wczytajDane()
     model->setHeaderData(18, Qt::Horizontal, "Strona URL");         //Strona URL
     model->setHeaderData(19, Qt::Horizontal, "Numer Seryjny z Przypisania");
 
+    //INFO:: 1. Pobrac ilosc wszytskich kontrahentow = int iloscWszytskichKontr
+    //INFO:: 2.Pobrac ilosc kontrahentow które nie mają NULL w numerze seryjnym int= iloscKontrBezNull
+    //INFO:: 3. Przeleciec kontrqhentow i jezeli nie ma null w numerze seryjnym wroci z tym ID.
+    //INFO:: 4. Pobrac Kontrahentow z tym numerem seryjnym i urzadzenie z tym numerem seryjnym
+    QString pobierzNumerSeryjny = "";
+    //qWarning() << "Lece do MainDB->pobierz Id.";
 
-
-
-
-
-
-    qWarning() << "Lece do MainDB->pobierz Id.";
-    pobierzUrzKontId = mainDb->pobierzKontrahentaZNrSeryjnymId(pobierzUrzKontId);
-    qWarning() << "pobierz kontr i urzadz:: mam ilosc modeli z bazy danych:" << pobierzUrzKontId;
-    int przesuniecieNaKontraheta=5;
+    //
+    pobierzUrzKontId = mainDb->pobierzKontrahentaId(pobierzUrzKontId);
+   // qWarning() << "pobierz kontr i urzadz:: mam ilosc modeli z bazy danych:" << pobierzUrzKontId;
+    int przesuniecieNaKontraheta = 0; //INFO:: przesuwam do id kontrahents
     for (int i = 1; i <= pobierzUrzKontId; i++) {
-        for (int d = 0; d <= 15; d++) {
-            QStringPobierzUrzKont = mainDb->pobierzKontrahentaZNrSeryjnym(QStringPobierzUrzKont, i, d);
-            dodajItem = new QStandardItem(QStringPobierzUrzKont);
-            qWarning ()<< "Jestem przed dodawaniu do tabeli" ;
-            model->setItem(i - 1, d+przesuniecieNaKontraheta, dodajItem);
-            qWarning ()<< "Jestem w po dodawaniu do tabeli" ;
-            // ui->comboBox_2->addItem(QStringPobierzUrzKont);
-            qDebug() << QStringPobierzUrzKont;
+        for (int d = 0; d <= 19 + przesuniecieNaKontraheta; d++) {
+            QString inti = QString::number(i);
+            QString dinti = QString::number(d);
+            //TODO:: Pobrac numer seryjny z kontrahenci
+            //qWarning() << " i = " + inti << " d = " + dinti;
+            //pobierzNumerSeryjny = mainDb->pobierzNumerSeryjnyZKontrahenta(pobierzNumerSeryjny);
+
+            QStringPobierzUrzKont = mainDb->pobierzKontrahentaZNrSeryjnym(QStringPobierzUrzKont,
+                                                                          i,
+                                                                          d);
+            if (QStringPobierzUrzKont == "Numeros4534") {
+                //i++;
+                d = 19;
+                //qWarning() << "Numeros inny jest";
+            } else {
+                dodajItem = new QStandardItem(QStringPobierzUrzKont);
+                //qWarning() << "Jestem przed dodawaniu do tabeli";
+                model->setItem(i - 1, d + przesuniecieNaKontraheta, dodajItem);
+                //qWarning() << "Jestem w po dodawaniu do tabeli";
+                // ui->comboBox_2->addItem(QStringPobierzUrzKont);
+                //            qDebug() << dodajItem->QString::toStdString(dodajItem);
+            }
         }
     }
     //    setSelectionBehavior(QAbstractItemView::SelectRows);
     //    setSelectionMode(QAbstractItemView::SingleSelection);
     //---------------------------------------------------------------
     //NOTE: ukrywam 3 linie
+    //ui->tableViewDB->setRowHidden()
+    // int iloscRowow = pobierzUrzKontId;
+    //int stringrowDoSize = (ui->tableViewDB->currentIndex().row()) + 1;
+    //qWarning()<<" string row do sieze pzy inicjalizacji  = "<<stringrowDoSize;
+    //        QModelIndex index = ui->tableViewDB  ->selectionModel()->currentIndex();
+    //        QVariant vartosc = index.sibling(index.row(), index.column()).data();
+    //        QString QVartsoc = QVariant(vartosc).toString();
 
+    int iloscRzedow = model->rowCount();
+//////*****************************************************************8
+//    for (int komorka = 0; komorka <= iloscRzedow;
+//         komorka++) { //qWarning()<<" string row do sieze  = "<<stringrowDoSize;
+//        qWarning() << " komorka  = " << komorka;
+//        //bool flaga = model-> item(komorka,1)->text().isNull();
+//        //porownajItem = new QStandardItem(model->tak)
+//        //QStandardItem cosJest = model->takeItem(komorka,0);
+//        //model->takeRow(int row);
+//        if (model->takeRow(komorka).isEmpty()) {
+//            qWarning() << model->takeRow(komorka).value(komorka)->text();
+//            qWarning() << "rzad " << komorka;
+//            qWarning() << "nie pusty wierz";
+//        } else {
+//            qWarning() << model->takeRow(komorka).value(komorka)->text();;
+//            qWarning() << "pusty wierz";
+//            qWarning() << "rzad " << komorka;
+//        }
+//    }
+//////*******************************************************************8
+
+    //        for (int xyz =0;xyz <=pobierzUrzKontId-2;xyz++)
+
+    //        {qWarning() <<"pobierz urzkontrid"<< xyz;
+    //            QString itemModel;
+
+    //               bool flaga = model-> item(xyz,0)->text().isNull();
+    //               qWarning ()<< "Flaga is: "<< flaga;
+    //               if (!flaga)
+    //               {
+    //                   //nic nie rob
+    //                   qWarning ()<< "nie pusty wierz";
+    //               }
+    //               else
+    //               {qWarning ()<< "pusty wierz";
+    //                   ui->tableViewDB->setRowHidden(xyz,true);
+    //               }
+
+    //        }
     //    ui->tableViewDB->setColumnHidden(0, true); //Ukrywam kolumne z LP urzadzenia
     //    ui->tableViewDB->setColumnHidden(4, true); // Ukrywam Kolumnę z info o przypsianiu
     //    ui->tableViewDB->setColumnHidden(5, true); // Ukrywam Kolumnę z LP kontrahenta
@@ -147,125 +199,56 @@ void Baza::wczytajDane()
     string linia1;
     int row3 = 0;
     int nr_lini3 = 0;
-    //int row2 = 0;
-    //int nr_lini2 = 0;
-    //int row1 = 0;
-    //  int nr_lini1 = 0;
-    //
-    //    { // wczytaj urzadzenia
-    ////        fileDataBase3.open(file3.toStdString(), ios::in);
-    ////        if (fileDataBase3.good() == false) {
-    ////            cout << "Plik nie istnieje !!!!!";
-    ////            //exit(0);
-    ////        }
-
-    //        while (getline(fileDataBase3, linia3)) {
-    //            //cout << "cos sprawdzam z id Urzadzenia " << endl;
-    //            //ui->comboBox->addItem(linia3.c_str());
-    //            //ui->lblUrzadzenie->setText(linia3.c_str());
-
-    //            tempUrzadz = ui->lblUrzadzenie->text();
-    //            ui->comboBox->addItem(linia3.c_str());
-
-    //        }
-    //    }
-    // fileDataBase3.close();
-
-    //    // wczytaj kontrahentow
-    //    fileDataBase2.open(file2.toStdString(), ios::in);
-    //    if (fileDataBase2.good() == false) {
-    //        cout << "Plik nie istnieje !!!!!";
-    //        //exit(0);
-    //    }
-    //    // zmiana z int nr_lini = 1;
-    //    //cout << "cos sprawdzam2 " << endl;
-    //    while (getline(fileDataBase2, linia2)) {
-    //        //cout << "cos sprawdzam2 " << endl;
-    //        //ui->comboBox->addItem(linia3.c_str());
-    //        //ui->lblKontrahent->setText(linia2.c_str());
-    //        //string tempKontr = ui->lblKontrahent->text().toStdString();
-    //        ui->comboBox_2->addItem(linia2.c_str()); //ui->comboBox_2->addItem(linia2.c_str());
-    //        //int ostatni = ui->comboBox_2->count();
-    //        //string tempKontr1 = ui->comboBox_2->itemText(ostatni).toStdString();
-    //    }
-
-    //    fileDataBase2.close();
-
-    //    fileDataBase1.open(file1.toStdString(), ios::in);
-    //    if (fileDataBase1.good() == false) {
-    //        cout << "Plik nie istnieje !!!!!";
-    //        //exit(0);
-    //    }
-
-    //    while (getline(fileDataBase1, linia1)) {
-    //        dodajItem = new QStandardItem(linia1.c_str());
-    //        //if (nr_lini > 0)
-    //        if (nr_lini1 == 0) {
-    //            ui->lblUrzadzenie->setText(dodajItem->text());
-    //            ui->comboBox_3->addItem(linia1.c_str());
-
-    //            nr_lini1++;
-    //        } else if (nr_lini1 == 1) {
-    //            ui->lblKontrahent->setText(dodajItem->text());
-    //            ui->comboBox_4->addItem(linia1.c_str());
-    //            string tempKontr1 = ui->lblKontrahent->text().toStdString();
-    //            nr_lini1++;
-    //        }
-    //        if (nr_lini1 >= 2) {
-    //            nr_lini1 = 0;
-    //        }
-    //    }
-    //    fileDataBase1.close();
 
     // porownuje i sprawdzam czy sa takie same w combo boxach
 
-    int iloscWcomboBox4 = ui->comboBox_4->count(); //krótki z DB kontrahenci
-    int iloscWComboBox2 = ui->comboBox_2->count(); //dlugi kontrahneci
-    for (int i = 0; i <= iloscWcomboBox4 - 1; i++) {
-        QString itZComboBoxa4 = ui->comboBox_4->itemText(i);
-        //tempUrzadz1 = ui->lblUrzadzenie->text();
+    //    int iloscWcomboBox4 = ui->comboBox_4->count(); //krótki z DB kontrahenci
+    //    int iloscWComboBox2 = ui->comboBox_2->count(); //dlugi kontrahneci
+    //    for (int i = 0; i <= iloscWcomboBox4 - 1; i++) {
+    //        QString itZComboBoxa4 = ui->comboBox_4->itemText(i);
+    //        //tempUrzadz1 = ui->lblUrzadzenie->text();
 
-        for (int z = 0; z <= iloscWComboBox2 - 1; z++) {
-            QString itZComboBoxa2 = ui->comboBox_2->itemText(z);
+    //        for (int z = 0; z <= iloscWComboBox2 - 1; z++) {
+    //            QString itZComboBoxa2 = ui->comboBox_2->itemText(z);
 
-            if (itZComboBoxa2 == itZComboBoxa4) {
-                for (int k = 0; k < 14; k++) {
-                    int naKtorejPozycji = ui->comboBox_2->findText(itZComboBoxa2);
-                    //cout << " Pozycja nr" << naKtorejPozycji << endl;
-                    QString tym1 = ui->comboBox_2->itemText(naKtorejPozycji + k);
-                    dodajItem = new QStandardItem(tym1);
-                    model->setItem(row3, nr_lini3 + k + 5, dodajItem);
-                }
-                row3++;
-            }
-        }
-        //row3++;
-    }
-    row3 = 0;
+    //            if (itZComboBoxa2 == itZComboBoxa4) {
+    //                for (int k = 0; k < 14; k++) {
+    //                    int naKtorejPozycji = ui->comboBox_2->findText(itZComboBoxa2);
+    //                    //cout << " Pozycja nr" << naKtorejPozycji << endl;
+    //                    QString tym1 = ui->comboBox_2->itemText(naKtorejPozycji + k);
+    //                    dodajItem = new QStandardItem(tym1);
+    //                    model->setItem(row3, nr_lini3 + k + 5, dodajItem);
+    //                }
+    //                row3++;
+    //            }
+    //        }
+    //        //row3++;
+    //    }
+    //    row3 = 0;
 
-    int iloscWcomboBox3 = ui->comboBox_3->count(); //CB4krótki z DB kontrahenci
-    int iloscWComboBox = ui->comboBox->count();    //CB2dlugi kontrahneci
-    for (int i = 0; i <= iloscWcomboBox3 - 1; i++) {
-        QString itZComboBoxa3 = ui->comboBox_3->itemText(i);
+    //    int iloscWcomboBox3 = ui->comboBox_3->count(); //CB4krótki z DB kontrahenci
+    //    int iloscWComboBox = ui->comboBox->count();    //CB2dlugi kontrahneci
+    //    for (int i = 0; i <= iloscWcomboBox3 - 1; i++) {
+    //        QString itZComboBoxa3 = ui->comboBox_3->itemText(i);
 
-        for (int z = 0; z <= iloscWComboBox - 1; z++) {
-            QString itZComboBoxa = ui->comboBox->itemText(z);
+    //        for (int z = 0; z <= iloscWComboBox - 1; z++) {
+    //            QString itZComboBoxa = ui->comboBox->itemText(z);
 
-            if (itZComboBoxa == itZComboBoxa3) {
-                //cout << "Znalazłem" << endl;
-                //cout << itZComboBoxa.toStdString() << endl;
-                for (int k = 0; k < 5; k++) {
-                    int naKtorejPozycji = ui->comboBox->findText(itZComboBoxa);
-                    //cout << " Pozycja nr" << naKtorejPozycji << endl;
-                    QString tym2 = ui->comboBox->itemText(naKtorejPozycji + k);
+    //            if (itZComboBoxa == itZComboBoxa3) {
+    //                //cout << "Znalazłem" << endl;
+    //                //cout << itZComboBoxa.toStdString() << endl;
+    //                for (int k = 0; k < 5; k++) {
+    //                    int naKtorejPozycji = ui->comboBox->findText(itZComboBoxa);
+    //                    //cout << " Pozycja nr" << naKtorejPozycji << endl;
+    //                    QString tym2 = ui->comboBox->itemText(naKtorejPozycji + k);
 
-                    dodajItem = new QStandardItem(tym2);
-                    model->setItem(row3, nr_lini3 + k, dodajItem);
-                }
-                row3++;
-            }
-        }
-    }
+    //                    dodajItem = new QStandardItem(tym2);
+    //                    model->setItem(row3, nr_lini3 + k, dodajItem);
+    //                }
+    //                row3++;
+    //            }
+    //        }
+    //    }
 
     int rowDoSize = model->rowCount();
     for (int i = 0; i <= rowDoSize; i++) {
