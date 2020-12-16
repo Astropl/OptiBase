@@ -41,6 +41,7 @@ public slots:
     void showTable();
     void pobierzDane();
     void loadWpis();
+    void initMenuBazy();
 
 
 private slots:

@@ -21,6 +21,8 @@ public:
     void dBModel();
     void dBUrzadzenia();
     void dBBaza();
+    void dBPrzypomnienie();
+
 
     QString ZapytanieTestowe(QString Zapytanie);
     //void addProducent();
@@ -55,6 +57,7 @@ public:
     int pobierzKontrahentaZNrSeryjnymId(int daneKontrahentId);
     QString pobierzKontrahentaZNrSeryjnym(QString daneKontrahent, int i, int d);
     QString pobierzNumerSeryjnyZKontrahenta (QString pobierzNumerSeryjny);
+    QString addPrzypomnienie(QString nrWpisu, QString dataWpisu,QString tematWpisu,QString trescWpisu,QString przypomnienie,QString dataNajblPrzypom,QString tekstPrzypom,QString nrSeryjny );
 
 };
 

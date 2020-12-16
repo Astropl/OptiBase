@@ -46,6 +46,7 @@ QString MainDb::ZapytanieTestowe(QString zapytanie)
     return zapytanie;
 }
 
+
 QString MainDb::addKontrahent(QString l1,
                               QString l2,
                               QString l3,
@@ -80,6 +81,33 @@ QString MainDb::addKontrahent(QString l1,
     }
     return 0;
 }
+
+
+
+
+void MainDb::dBPrzypomnienie()
+{
+    QSqlQuery query;
+    query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
+    qWarning("Tworzenie tabeli Z przypomnienienami ");
+    query.exec("CREATE TABLE IF NOT EXISTS dBPrzypomnienie  (id INTEGER PRIMARY KEY, nr_wpisu "
+               "TEXT UNIQUE, data TEXT, temat TEXT, tresc TEXT, "
+               "przypomnienie TEXT, data_przypomnienia TEXT, tekst_przypomnienia TEXT, "
+               "urzadzenia_numer_seryjny TEXT, "
+               "FOREIGN KEY (urzadzenia_numer_seryjny ) REFERENCES urzadzenia (numerSeryjny)  )");
+
+    if (!query.isActive())
+        qWarning() << " Tworzenie Tabeli - ERROR: " << query.lastError().text();
+
+//    if (!query.exec("INSERT INTO kontrahenci (nazwaFirmy, imie , nazwisko , kontrahent_panstwo_id "
+//                    ", kontrahent_wojewodztwo_id , kontrahent_miasto_id , kodPocztowy , ulica , "
+//                    "nrDomu , telefon , telefonPrywatny , adresEmail , stronaUrl  ) "
+//                    "VALUES('VITAKO' , 'Paweł' , 'Martys' , 'Polska' , "
+//                    "'Zachodniopomorskie' , 'Szczecin' , '71-766' , 'Małej Syrenki' , '2' , "
+//                    "'692717987' , '723508531' , 'serwis@vbody.pl' , 'www.vitako.pl')"))
+        qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
+}
+
 void MainDb::dBKontrahent()
 {
     QSqlQuery query;
@@ -311,7 +339,8 @@ QString MainDb::addUrzadzenia(QString daneProducent,
     if (!query.exec("INSERT INTO urzadzenia (urzadzenia_producent_id, urzadzenia_model_id, "
                     "numerSeryjny, przypisany) VALUES('"
                     + daneProducent + "','" + daneModel + "','" + daneNrSeryjny + "','" + przypisany
-                    + "' )")) {
+                    + "' )"))
+    {
         qWarning() << "MainDB::Dodoanie Urzadzenia - ERROR: " << query.lastError().text();
     } else {
         qWarning() << "MainDB::Dodoanie Urzadzenia - Udane: " << query.lastError().text();
@@ -329,6 +358,27 @@ QString MainDb::addProducent(QString daneProducent)
         qWarning() << "MainDB::Dodoanie Producenta - ERROR: " << query.lastError().text();
     return 0;
 }
+
+QString MainDb::addPrzypomnienie(QString nrWpisu, QString dataWpisu,QString tematWpisu,QString trescWpisu,QString przypomnienie,QString dataNajblPrzypom,QString tekstPrzypom,QString nrSeryjny )
+{
+    //Wczytaj dane z formatki przypomnienie
+    //TODO: dodoac do Bazy przypomnienia
+    QSqlQuery query;
+    query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
+    qWarning() << ("Dodoaje do bazy sekcje przypomnienia");
+
+
+    if (!query.exec("INSERT INTO dBPrzypomnienie (nr_wpisu, data, temat, tresc, przypomnienie, data_przypomnienia, tekst_przypomnienia, urzadzenia_numer_seryjny) VALUES('"
+                    + nrWpisu + "','" + dataWpisu + "','" + tematWpisu + "','" + trescWpisu + "','" + przypomnienie + "','" + dataNajblPrzypom + "','" + tekstPrzypom + "','" + nrSeryjny
+                    + "' )"))
+    {
+        qWarning() << "MainDB::Dodoanie Przypomnienia - ERROR: " << query.lastError().text();
+    } else {
+        qWarning() << "MainDB::Dodoanie Przypomnienia - Udane: " << query.lastError().text();
+    }
+    return 0;
+}
+
 QString MainDb::addModel(QString daneModel)
 
 {
@@ -659,6 +709,7 @@ void MainDb::DatabasePopulate()
     dBUrzadzenia();
     dBKontrahent();
     dBBaza();
+    dBPrzypomnienie();
 
     //QSqlQuery query;
 }

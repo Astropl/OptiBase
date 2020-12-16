@@ -218,6 +218,9 @@ przypomnienia:</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_2">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>80</x>
@@ -240,7 +243,7 @@ przypomnienia:</string>
      </rect>
     </property>
     <property name="text">
-     <string>IdUrz:</string>
+     <string>Nr seryjny</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_8">

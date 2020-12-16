@@ -1,6 +1,7 @@
 #include "kontrahentinfo.h"
 #include "ui_kontrahentinfo.h"
 //#include "kontrahentinfododajwpis.h"
+#include "kontrahentinfododajwpis.h"
 #include "Timery/timedate.h"
 #include "iostream"
 #include <ctime>
@@ -23,12 +24,73 @@ KontrahentInfo::KontrahentInfo(QWidget *parent) :
     //===================
     showTable();
     loadWpis();
-
+initMenuBazy ();
 }
 
 KontrahentInfo::~KontrahentInfo()
 {
     delete ui;
+}
+
+void KontrahentInfo::initMenuBazy()
+{
+    //tworze menu kontekstowe
+    setWindowTitle("OptiBase v 1.0:Kontrahent - Informacje o Kontrahencie");
+
+    //    QAction *fileSave = new QAction(("&Zapisz"), this);
+    //    QAction *fileEksport = new QAction(("&Eksport"), this);
+    // QAction *fileseparator = new QAction(("----------"), this);
+    QAction *fileWyjscie = new QAction(("&Wyjście"), this);
+
+    //    QAction *edycjaDodajProducenta = new QAction(("Dodaj Producenta"), this);
+    //    QAction *edycjaDodajModel = new QAction(("Dodaj Model"), this);
+
+    //    QAction *editKopiuj = new QAction(("&Kopiuj"), this);
+    //    QAction *editWklej = new QAction(("&Wklej"), this);
+
+    QAction *infoOProgramie = new QAction(("&O Programie"), this);
+    QAction *infoOAutorze = new QAction(("O &Autorze"), this);
+    QAction *infoLog = new QAction(("&Log"), this);
+
+    QAction *settingsOption = new QAction(("&Opcje"), this);
+
+    auto mainfile = menuBar()->addMenu("Plik");
+    //auto mainEdycja = menuBar()->addMenu("Edycja");
+    auto mainInfo = menuBar()->addMenu("Informacje");
+    auto mainSettings = menuBar()->addMenu("Ustawienia");
+
+    //    mainfile->addAction(fileSave);
+    //    mainfile->addAction(fileEksport);
+
+    mainfile->addSeparator();
+    mainfile->addAction(fileWyjscie);
+
+    //    mainEdycja->addAction(edycjaDodajProducenta);
+    //    mainEdycja->addAction(edycjaDodajModel);
+
+    //    mainEdycja->addAction(editKopiuj);
+    //    mainEdycja->addAction(editWklej);
+    mainInfo->addAction(infoOProgramie);
+    mainInfo->addAction(infoOAutorze);
+    mainInfo->addAction(infoLog);
+
+    mainSettings->addAction(settingsOption);
+
+    //connect(settingsOption, &QAction::triggered,this, SLOT (openInfo()));
+    connect(settingsOption, SIGNAL(triggered()), this, SLOT(openSettings()));
+    connect(infoOProgramie, SIGNAL(triggered()), this, SLOT(openInfo()));
+    //    connect(edycjaDodajProducenta,
+    //            SIGNAL(triggered()),
+    //            this,
+    //            SLOT(on_actionDodaj_Producenta_triggered()));
+    //    connect(edycjaDodajModel, SIGNAL(triggered()), this, SLOT(on_actionDodaj_Model_triggered()));
+
+
+
+
+
+
+
 }
 void KontrahentInfo::loadWpis()
 {
@@ -183,10 +245,10 @@ void KontrahentInfo::pobierzDane()
 void KontrahentInfo::on_pushButton_2_clicked()
 {
     // Dodaj Wpis
-//    KontrahentInfoDodajWpis *kontrDodajWpis = new KontrahentInfoDodajWpis (this);
-//    kontrDodajWpis->setSettingsId(ui->lblUrzad_2->text(),ui->lblNrKontrahent_2->text());
+    KontrahentInfoDodajWpis *kontrDodajWpis = new KontrahentInfoDodajWpis (this);
+    kontrDodajWpis->setSettingsId(ui->lblNrSeryjny_2->text());
 
-//    kontrDodajWpis ->show();
+    kontrDodajWpis ->show();
 }
 
 void KontrahentInfo::on_pushButton_3_clicked()

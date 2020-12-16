@@ -25,6 +25,7 @@ public slots:
     void DataiCzas();
     void wczytajDane();
     void iloscWierszy();
+    void initMenuBazy();
 private:
     Ui::Baza *ui;
 

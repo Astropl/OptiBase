@@ -32,10 +32,10 @@ private slots:
     //int myfunctiontimerDoDaty(int godzina,int minuta,int sekunda,int dzien,int miesiac,int rok,int dzienTygodnia);
 
     void on_comboBox_currentTextChanged(const QString);
-
+    void initMenu();
 public:
     void init();
-    QString setSettingsId(QString IdUrz, QString IdKontr );
+    QString setSettingsId(QString NrSeryjny );
 
 
 private:

@@ -1,11 +1,13 @@
 #include "kontrahentinfododajwpis.h"
 #include "Timery/timedate.h"
+#include "DataBase/maindb.h"
 #include "iostream"
 #include "time.h"
 #include "ui_kontrahentinfododajwpis.h"
 #include <fstream>
 #include <QTableView>
 #include <QTimer>
+#include <random>
 
 using namespace std;
 
@@ -19,7 +21,7 @@ int dzien;
 int miesiac;
 int rok;
 int dzienTygodnia;
-int idWpisu = 1000;
+int idWpisu = 1002;
 
 fstream fileWpis;
 bool przypomnienie = false;
@@ -38,7 +40,14 @@ KontrahentInfoDodajWpis::KontrahentInfoDodajWpis(QWidget *parent)
     uncheckedCheckBox();
     init();
     ui->comboBox->setCurrentIndex(-1);
+    initMenu();
+
 }
+void KontrahentInfoDodajWpis::initMenu()
+{
+    setWindowTitle("OptiBase v 1.0: Urzadzenia - Dodaj wpis o urzadzeniu");
+}
+
 void KontrahentInfoDodajWpis::setDate()
 {
     //Pousawiaj date do obrówki
@@ -72,32 +81,59 @@ KontrahentInfoDodajWpis::~KontrahentInfoDodajWpis()
 void KontrahentInfoDodajWpis::on_pushButton_2_clicked()
 {
     //Zapisz
-    QString IdUrzKont = ui->label_12->text() + ui->label_13->text();
-    if (przypomnienie ==true)
+
+    // Dojdz do bazy i zapisz w bazie dane z kontrahent dodaj wpis
+
+    MainDb *mainDb = new MainDb (this);
+    QString przypomnienieTemp;
+    QString nrWpisu = ui->label_2->text();
+    QString dataWpisu = ui->label_4->text() + ui->label_5->text() + ui->label_6->text();
+    QString tematWpisu = ui->lineEdit->text();
+    QString trescWpisu = ui->textEdit->toPlainText();
+    if (ui->checkBox->isChecked()==true)
     {
-        przypomnienieId ="True";
+        przypomnienieTemp = "TAK";
     }
     else
-    {ui->comboBox->setCurrentIndex(-1);
-        przypomnienieId="false";
+    {
+        przypomnienieTemp = "NIE";
     }
+    QString przypomnienie = przypomnienieTemp;
+    QString dataNajblPrzypom = ui->label_10->text();
+    QString tekstPrzypom = ui->textEdit_2->toPlainText();
+    QString nrSeryjny = ui->label_12->text();
 
-    QString file18 = "C:/Defaults/Pliki/18.WpisKontrahentInfo.txt";
-    fileWpis.open(file18.toStdString(), ios::out | ios::app);
-    fileWpis << "{#NrWpisu# " + ui->label_2->text().toStdString() + "}" << endl;
-    fileWpis << "{#IdUrzadzenia# " + IdUrzKont.toStdString() + "}"<<endl;
-    fileWpis << "{#Data: Rok# " + ui->label_4->text().toStdString() + "}" << endl;
-    fileWpis << "{#Data: Miesiac# " + ui->label_5->text().toStdString() + "}" << endl;
-    fileWpis << "{#Data: Dzien# " + ui->label_6->text().toStdString() + "}" << endl;
-    fileWpis << "{#Temat# " + ui->lineEdit->text().toStdString() + "}" << endl;
-    fileWpis << "{#Tresc# " + ui->textEdit->toPlainText().toStdString() + "}" << endl;
-    //ui->textEdit->ge
 
-    fileWpis <<"{#Przypomnienie# " +przypomnienieId +"}" <<endl;
-    fileWpis <<"{#Czestotliwosc# " +ui->comboBox->currentText().toStdString()+"}"<<endl;
-    fileWpis <<"{#DataPrzypomnienia# " +ui->label_11->text().toStdString()+"}"<<endl;
-    fileWpis <<"{#TrescPrzypomnienia# " +ui->textEdit_2->toPlainText().toStdString()+"}"<<endl;
-    fileWpis.close();
+    mainDb->addPrzypomnienie(nrWpisu, dataWpisu,tematWpisu,trescWpisu,przypomnienie,dataNajblPrzypom,tekstPrzypom,nrSeryjny );
+
+
+
+//    QString IdUrzKont = ui->label_12->text() + ui->label_13->text();
+//    if (przypomnienie ==true)
+//    {
+//        przypomnienieId ="True";
+//    }
+//    else
+//    {ui->comboBox->setCurrentIndex(-1);
+//        przypomnienieId="false";
+//    }
+
+//    QString file18 = "C:/Defaults/Pliki/18.WpisKontrahentInfo.txt";
+//    fileWpis.open(file18.toStdString(), ios::out | ios::app);
+//    fileWpis << "{#NrWpisu# " + ui->label_2->text().toStdString() + "}" << endl;
+//    fileWpis << "{#IdUrzadzenia# " + IdUrzKont.toStdString() + "}"<<endl;
+//    fileWpis << "{#Data: Rok# " + ui->label_4->text().toStdString() + "}" << endl;
+//    fileWpis << "{#Data: Miesiac# " + ui->label_5->text().toStdString() + "}" << endl;
+//    fileWpis << "{#Data: Dzien# " + ui->label_6->text().toStdString() + "}" << endl;
+//    fileWpis << "{#Temat# " + ui->lineEdit->text().toStdString() + "}" << endl;
+//    fileWpis << "{#Tresc# " + ui->textEdit->toPlainText().toStdString() + "}" << endl;
+//    //ui->textEdit->ge
+
+//    fileWpis <<"{#Przypomnienie# " +przypomnienieId +"}" <<endl;
+//    fileWpis <<"{#Czestotliwosc# " +ui->comboBox->currentText().toStdString()+"}"<<endl;
+//    fileWpis <<"{#DataPrzypomnienia# " +ui->label_11->text().toStdString()+"}"<<endl;
+//    fileWpis <<"{#TrescPrzypomnienia# " +ui->textEdit_2->toPlainText().toStdString()+"}"<<endl;
+//    fileWpis.close();
 }
 
 void KontrahentInfoDodajWpis::on_pushButton_clicked()
@@ -131,6 +167,9 @@ void KontrahentInfoDodajWpis::init()
     qStrGodz = timeDate->changeStringsGodz(godzina);
     qStrMiesiac = timeDate->changeStringsMiesiac(miesiac);
     //stringDzienTygodnia = timeDate->changeStringsDzienTygodnia(dzienTygodnia);
+
+    idWpisu = rand() %1000 +1;
+
 
     nrWpisu = QString::number(rok) + "/" + qStrMiesiac + "/" + qStrDzien + "/"
               + QString::number(idWpisu);
@@ -243,9 +282,9 @@ void KontrahentInfoDodajWpis::on_comboBox_currentTextChanged(const QString ) //(
         cout<<"Plus 1 rok"<<rok<<endl;
     }
 }
-QString KontrahentInfoDodajWpis::setSettingsId(QString IdUrz, QString IdKontr )
+QString KontrahentInfoDodajWpis::setSettingsId(QString NrSeryjny )
 {
-    ui->label_12->setText(IdUrz);
-    ui->label_13->setText(IdKontr);
+    ui->label_12->setText(NrSeryjny);
+    //ui->label_13->setText(IdKontr);
     return 0;
 }
