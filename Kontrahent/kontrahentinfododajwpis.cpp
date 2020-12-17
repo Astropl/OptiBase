@@ -7,6 +7,7 @@
 #include <fstream>
 #include <QTableView>
 #include <QTimer>
+#include <QDebug>
 #include <random>
 
 using namespace std;
@@ -17,9 +18,9 @@ QString qStrMin, qStrGodz, qStrSek, qStrDzien, qStrMiesiac, stringDzienTygodnia;
 int godzina;
 int minuta;
 int sekunda;
-int dzien;
-int miesiac;
-int rok;
+int dzien, dzienKolejny;
+int miesiac, miesiacKolejny;
+int rok, rokKolejny;
 int dzienTygodnia;
 int idWpisu = 1002;
 
@@ -99,7 +100,7 @@ void KontrahentInfoDodajWpis::on_pushButton_2_clicked()
         przypomnienieTemp = "NIE";
     }
     QString przypomnienie = przypomnienieTemp;
-    QString dataNajblPrzypom = ui->label_10->text();
+    QString dataNajblPrzypom = ui->label_11->text();
     QString tekstPrzypom = ui->textEdit_2->toPlainText();
     QString nrSeryjny = ui->label_12->text();
 
@@ -168,7 +169,7 @@ void KontrahentInfoDodajWpis::init()
     qStrMiesiac = timeDate->changeStringsMiesiac(miesiac);
     //stringDzienTygodnia = timeDate->changeStringsDzienTygodnia(dzienTygodnia);
 
-    idWpisu = rand() %1000 +1;
+    idWpisu = rand() %1000000 +1;
 
 
     nrWpisu = QString::number(rok) + "/" + qStrMiesiac + "/" + qStrDzien + "/"
@@ -254,37 +255,61 @@ void KontrahentInfoDodajWpis::myfunctiontimer()
 //    stringDzienTygodnia = timeDate->changeStringsDzienTygodnia(dzienTygodnia);
 //}
 void KontrahentInfoDodajWpis::on_comboBox_currentTextChanged(const QString ) //(const QString &arg1)
-{
+{dzienKolejny = dzien;
+    miesiacKolejny = miesiac;
+    rokKolejny=rok;
+
     if (ui->comboBox->currentText().toStdString()=="Co 1 dzień")
     {
         cout<<"Co 1 dzień"<<endl;
         //Dodac do dnia 1 dzien. Jezeli wychodzi po za miesiac to dodoac mc
 
-        dzien = dzien+1;
+        dzienKolejny = dzienKolejny+1;
         cout<<"Plus 1 dzien"<<dzien<<endl;
     }
     if (ui->comboBox->currentText().toStdString()=="Co tydzień")
     {
         cout<<"Co tydzien"<<endl;
-        dzien = dzien+7;
+        dzienKolejny = dzienKolejny+7;
         cout<<"Plus tydzien"<<dzien<<endl;
     }
     if (ui->comboBox->currentText().toStdString()=="Co miesiąc")
     {
         cout<<"Co miesiac"<<endl;
-        miesiac = miesiac+1;
+        miesiacKolejny = miesiacKolejny+1;
+        if (miesiacKolejny>12)
+        {
+            miesiacKolejny =1;
+            rokKolejny++;
+        }
         cout<<"Plus 1 mc"<<miesiac<<endl;
     }
     if (ui->comboBox->currentText().toStdString()=="Co rok")
     {
         cout<<"Co rok"<<endl;
-        rok=rok+1;
+        rokKolejny=rokKolejny+1;
         cout<<"Plus 1 rok"<<rok<<endl;
     }
+    dodajDateKolejnegoWpisu(dzienKolejny, miesiacKolejny, rokKolejny);
+}
+
+int KontrahentInfoDodajWpis::dodajDateKolejnegoWpisu(int dzienKolejny, int miesiacKolejny, int rokKolejny)
+{
+    //label_11 -> data najbizeszego przypomnienia
+    QString QrokKolejny = QString::number(rokKolejny);
+    QString QmiesiacKolejny = QString::number(miesiacKolejny);
+    QString QdzienKolejny = QString::number(dzienKolejny);
+    ui->label_11->setText(QrokKolejny + ":"+ QmiesiacKolejny+":"+QdzienKolejny);
+    return 0;
 }
 QString KontrahentInfoDodajWpis::setSettingsId(QString NrSeryjny )
 {
     ui->label_12->setText(NrSeryjny);
     //ui->label_13->setText(IdKontr);
     return 0;
+}
+void KontrahentInfoDodajWpis::on_comboBox_currentIndexChanged(const QString &arg1)
+{
+    //Zmiana daty przypomnienia
+    qWarning ()<<"Zmiana na : " <<ui->comboBox->currentText();
 }

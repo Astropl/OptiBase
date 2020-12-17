@@ -33,10 +33,12 @@ private slots:
 
     void on_comboBox_currentTextChanged(const QString);
     void initMenu();
+    void on_comboBox_currentIndexChanged(const QString &arg1);
+
 public:
     void init();
     QString setSettingsId(QString NrSeryjny );
-
+    int dodajDateKolejnegoWpisu(int dzien, int miesiac, int rok);
 
 private:
     Ui::KontrahentInfoDodajWpis *ui;

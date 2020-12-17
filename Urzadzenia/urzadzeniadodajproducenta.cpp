@@ -35,7 +35,7 @@ UrzadzeniaDodajProducenta::UrzadzeniaDodajProducenta(QWidget *parent)
     QString file15 = "C:/Defaults/Pliki/15.CheckFlagsInWojewodztwoKontrahentShow.txt";
 
 
-    //TODO:: Wczytac producenta z bazy danych MainB
+
     int producentId=0;
     QString QStringPobierzProducenta;
     MainDb *mainDb = new MainDb (this);
