@@ -113,7 +113,7 @@ void UrzadzeniaLista::wczytajDane()
     // QString file1 = "C:/Defaults/Pliki/1.DB.txt";
     //QString file2 = "C:/Defaults/Pliki/2.Kontrahent.txt";
     //QString file3 = "C:/Defaults/Pliki/3.Urzadzenie.txt";
-    model = new QStandardItemModel(1, 5, this);
+    model = new QStandardItemModel(1, 6, this);
     ui->tableView->setModel(model);
     //QModelIndex *index;
 
@@ -122,6 +122,7 @@ void UrzadzeniaLista::wczytajDane()
     model->setHeaderData(2, Qt::Horizontal, "Model");
     model->setHeaderData(3, Qt::Horizontal, "Nr Seryjny");
     model->setHeaderData(4, Qt::Horizontal, "Przypisany");
+     model->setHeaderData(5, Qt::Horizontal, "Kontrahent");
 
     //    model->setHeaderData(5, Qt::Horizontal, "Kontrahent");
     //    model->setHeaderData(6, Qt::Horizontal, "Imię");
@@ -148,7 +149,7 @@ void UrzadzeniaLista::wczytajDane()
 
     pobierzUrzId = mainDb->pobierzUrzadzeniaId(pobierzUrzId);
     for (int i = 1; i <= pobierzUrzId; i++) {
-        for (int d = 0; d <= 4; d++) {
+        for (int d = 0; d <= 5; d++) {
             pobierzUrz = mainDb->pobierzUrzadzenia(pobierzUrz, i, d);
             dodajItem = new QStandardItem(pobierzUrz);
             model->setItem(i - 1, d, dodajItem);

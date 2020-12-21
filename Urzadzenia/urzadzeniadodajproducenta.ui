@@ -37,7 +37,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Zamknij</string>
+     <string>Zapisz</string>
     </property>
    </widget>
    <widget class="QComboBox" name="comboBoxDodajProdcuenta">

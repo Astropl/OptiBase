@@ -166,4 +166,7 @@ void MainWindow::on_pushButton_9_clicked()
     zapytanie = mainDb->ZapytanieTestowe(zapytanie);
     //cout << "Zapytanie w main glownym odpowiedz: " + zapytanie.toStdString() << endl;
     ui->comboBox->addItem(zapytanie);
+    mainDb->PrzypiszTestowo();
+
+
 }

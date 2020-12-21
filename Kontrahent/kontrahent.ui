@@ -753,6 +753,35 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <tabstops>
+  <tabstop>lineEditWczytajNazwa_1</tabstop>
+  <tabstop>lineEditWczytajImie</tabstop>
+  <tabstop>lineEditWczytajNazwisko</tabstop>
+  <tabstop>comboBoxWczytajKraj</tabstop>
+  <tabstop>comboBoxWczytajMiasta</tabstop>
+  <tabstop>pushButton_2</tabstop>
+  <tabstop>lineEditWczytajNrDomu</tabstop>
+  <tabstop>lineEditWczytajKodPocztowy</tabstop>
+  <tabstop>scrollArea_8</tabstop>
+  <tabstop>lineEditWczytajUlica</tabstop>
+  <tabstop>lineEditWczytajTelefon</tabstop>
+  <tabstop>lineEditWczytajTelefonDod</tabstop>
+  <tabstop>lineEditWczytajEmail</tabstop>
+  <tabstop>lineEditWczytajUrl</tabstop>
+  <tabstop>scrollArea_4</tabstop>
+  <tabstop>comboBoxWczytajWojewodztwa</tabstop>
+  <tabstop>scrollArea_7</tabstop>
+  <tabstop>scrollArea_3</tabstop>
+  <tabstop>pushButton</tabstop>
+  <tabstop>lineEditWczytajNumer</tabstop>
+  <tabstop>comboBoxPomoc</tabstop>
+  <tabstop>scrollArea_2</tabstop>
+  <tabstop>scrollArea_6</tabstop>
+  <tabstop>lineEditWczytajKraj</tabstop>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>scrollArea_9</tabstop>
+  <tabstop>scrollArea_5</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

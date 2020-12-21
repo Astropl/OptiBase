@@ -23,6 +23,7 @@ public:
     void dBBaza();
     void dBPrzypomnienie();
 
+    void PrzypiszTestowo();
 
     QString ZapytanieTestowe(QString Zapytanie);
     //void addProducent();
