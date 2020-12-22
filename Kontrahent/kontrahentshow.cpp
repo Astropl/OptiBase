@@ -105,7 +105,7 @@ void KontrahentShow::on_pushButton_clicked()
     //Zmienić region w UI -> Wojewodzwtwo
 }
 void KontrahentShow::showKraj()
-{
+{//TODO: ZAMIENIC NA WCZYTYWANIE Z SQL
     QString file4 = "C:/Defaults/Pliki/4.ZapisKraj.txt";
     // wczytuje kraje do comboBoxa
     fstream plikOdczytDodajKraj;
@@ -128,7 +128,7 @@ void KontrahentShow::showKraj()
 }
 
 void KontrahentShow::showWojewodztwa()
-{
+{//TODO: ZAMIENIC NA WCZYTYWANIE Z SQL
     QString file6 = "C:/Defaults/Pliki/6.ZapisWojewodztwa.txt";
     // wczytuje wojewodztwa do comboBoxa
     fstream plikOdczytDodajwojewodztwo;
@@ -150,7 +150,7 @@ void KontrahentShow::showWojewodztwa()
     ui->comboBoxWojewodztwa->setCurrentText(ui->leRegion->text());
 }
 void KontrahentShow::showCities()
-{
+{//TODO: ZAMIENIC NA WCZYTYWANIE Z SQL
     QString file5 = "C:/Defaults/Pliki/5.ZapisMiasta.txt";
     fstream plikOdczytDodajMiasto;
     // wczytuje miasta do comboBoxa

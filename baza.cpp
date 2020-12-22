@@ -332,11 +332,13 @@ void Baza::wczytajDane()
     QVariant wartosc;
     QString Qwartosc;
     qWarning() << "row Do size = " << rowDoSize;
-    for (int i = 0; i <= rowDoSize; i++) {
-        wartosc = index.sibling(index.row(), 1).data();
+    for (int i = 0; i <= rowDoSize-1; i++) {
+        wartosc = index.sibling(i, 2).data();
+        qWarning() << "zwykla wartosc = " << i << " " << wartosc;
         Qwartosc = QVariant(wartosc).toString();
-        if (Qwartosc == "") {
-            qWarning() << "QWaertosc = " << i << " " << Qwartosc;
+qWarning() << "QWaertosc = " << i << " " << Qwartosc;
+        if (Qwartosc != "") {
+
             ui->tableViewDB->hideRow(i);
         }
     }

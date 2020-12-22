@@ -1,19 +1,19 @@
 #include "kontrahentinfo.h"
 #include "ui_kontrahentinfo.h"
 //#include "kontrahentinfododajwpis.h"
-#include "kontrahentinfododajwpis.h"
+#include "DataBase/maindb.h"
 #include "Timery/timedate.h"
 #include "iostream"
+#include "kontrahentinfododajwpis.h"
 #include <ctime>
-#include <QTimer>
 #include <fstream>
+#include <QTimer>
 
 using namespace std;
 
-
-KontrahentInfo::KontrahentInfo(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::KontrahentInfo)
+KontrahentInfo::KontrahentInfo(QWidget *parent)
+    : QMainWindow(parent)
+    , ui(new Ui::KontrahentInfo)
 {
     ui->setupUi(this);
     ui->labelZegara->setText(" cos tam");
@@ -23,8 +23,9 @@ KontrahentInfo::KontrahentInfo(QWidget *parent) :
     timer->start(1000);
     //===================
     showTable();
-    loadWpis();
-initMenuBazy ();
+
+    initMenuBazy();
+
 }
 
 KontrahentInfo::~KontrahentInfo()
@@ -84,20 +85,35 @@ void KontrahentInfo::initMenuBazy()
     //            this,
     //            SLOT(on_actionDodaj_Producenta_triggered()));
     //    connect(edycjaDodajModel, SIGNAL(triggered()), this, SLOT(on_actionDodaj_Model_triggered()));
-
-
-
-
-
-
-
 }
 void KontrahentInfo::loadWpis()
 {
     //Załaduj wpisy
+    MainDb *mainDb = new MainDb(this);
+    QStandardItem *dodajItem = new QStandardItem();
+    int iloscWpisow = 0;
+    QString pobierzWpisy;
+    iloscWpisow = mainDb->loadDataRemiderId(iloscWpisow);
 
+    for (int i = 1; i <= iloscWpisow; i++) {
+        for (int d = 0; d <= 8; d++) {
+            QString numerSeryjnydoPorownania = ui->lblNrSeryjny_2->text();
+            pobierzWpisy = mainDb->loadDataRemider(pobierzWpisy, i, d, numerSeryjnydoPorownania);
+            dodajItem = new QStandardItem(pobierzWpisy);
+            //if(ui->lblNrSeryjny_2==)
+            model->setItem(i - 1, d, dodajItem);
+        }
+    }
+    int rowDoSize = model->rowCount();
+    for (int i = 0; i <= rowDoSize; i++) {
+        ui->tableView->setRowHeight(i, 20);
+    }
+    ui->tableView->horizontalHeader()->setSectionResizeMode(
+        QHeaderView::ResizeToContents); // Rozszerza kolumny do najdłuzszego itema w kolumnie.
+    ui->tableView->sortByColumn(0,
+                                Qt::SortOrder(1)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy , a druga nie wiem. wrzucieł z zera na 1 i sprawdzam
 
-
+ //TODO: a teraz przydało by się wyswietlic tylko te które mają numer seryjny u góry
 
 }
 
@@ -107,23 +123,23 @@ void KontrahentInfo::on_pushButton_clicked()
 }
 void KontrahentInfo::showTable()
 {
-    model = new QStandardItemModel(1, 5, this); //było 14
+    model = new QStandardItemModel(1, 9, this); //było 14
     ui->tableView->setModel(model);
     //QModelIndex *index;
     model->setHeaderData(0, Qt::Horizontal, "L.P.");
-    model->setHeaderData(1, Qt::Horizontal, "Data Wpisu");    //nazwa
-    model->setHeaderData(2, Qt::Horizontal, "Temat");        // Imie
-    model->setHeaderData(3, Qt::Horizontal, "Treść");   // Imie
-    model->setHeaderData(4, Qt::Horizontal, "Przypomnienie"); // Imie
-
-    //TODO: Zrobic wpisywanie i wczytywanie z DBWpisu
-    // otworzyc fstream
-    // wczytac linie
-    // jesli lnia bedzie sie rówanała labelowi z IdUrz i IdKont to wczytac dalej + 11 linii
-
+    model->setHeaderData(1, Qt::Horizontal, "Numer Wpisu");              //nazwa
+    model->setHeaderData(2, Qt::Horizontal, "Data wpisu");               // Imie
+    model->setHeaderData(3, Qt::Horizontal, "Temat");                    // Imie
+    model->setHeaderData(4, Qt::Horizontal, "Treść");                    // Imie
+    model->setHeaderData(5, Qt::Horizontal, "Przypomnienie");            // Imie
+    model->setHeaderData(6, Qt::Horizontal, "Data Przypomnienia");       // Imie
+    model->setHeaderData(7, Qt::Horizontal, "Tekst Przypomnienia");      // Imie
+    model->setHeaderData(8, Qt::Horizontal, "Numer seryjny urządzenia"); // Imie
+        //TODO: Zrobic wpisywanie i wczytywanie z DBWpisu
+        // otworzyc fstream
+        // wczytac linie
+        // jesli lnia bedzie sie rówanała labelowi z IdUrz i IdKont to wczytac dalej + 11 linii
 }
-
-
 
 void KontrahentInfo::myfunctiontimer()
 {
@@ -160,13 +176,8 @@ void KontrahentInfo::myfunctiontimer()
     ui->labelDzien->setText(stringDzienTygodnia);
 
     wczytajDane();
-
 }
-void KontrahentInfo::wczytajDane()
-{
-
-}
-
+void KontrahentInfo::wczytajDane() {}
 
 void KontrahentInfo::wyswietl(QVariant p1,
                               QVariant p2,
@@ -209,31 +220,29 @@ void KontrahentInfo::wyswietl(QVariant p1,
     ui->lblEmail_2->setText(p18.toString());
     ui->lblUrl_2->setText(p19.toString());
     pobierzDane();
-
-
+    loadWpis();
 }
 void KontrahentInfo::pobierzDane()
 {
     QString file18 = "C:/Defaults/Pliki/18.WpisKontrahentInfo.txt";
     fstream wpisDoBazy;
 
-    wpisDoBazy.open(file18.toStdString(),ios::in);
+    wpisDoBazy.open(file18.toStdString(), ios::in);
     if (wpisDoBazy.good() == false) {
         cout << "Plik nie istnieje !!!!!";
         //exit(0);
     }
     string linia;
     QString IdUrz, IdKont, IdUrzKont;
-    IdUrz=ui->lblUrzad_2->text();
+    IdUrz = ui->lblUrzad_2->text();
     IdKont = ui->lblNrKontrahent_2->text();
-    IdUrzKont = ("{IdUrzadzenia# "+IdUrz+IdKont+"}");
+    IdUrzKont = ("{IdUrzadzenia# " + IdUrz + IdKont + "}");
     int nr_lini = 1;
     while (getline(wpisDoBazy, linia)) {
         //ui->comboBoxDodajMiasto->addItem(linia.c_str());
         //cout << linia.c_str() << endl;
-        if (linia.c_str()==IdUrzKont)
-        {
-            cout<<"JESTTTTT"<<endl;
+        if (linia.c_str() == IdUrzKont) {
+            cout << "JESTTTTT" << endl;
             //Dodoac do tabeli
         }
         nr_lini++;
@@ -245,10 +254,10 @@ void KontrahentInfo::pobierzDane()
 void KontrahentInfo::on_pushButton_2_clicked()
 {
     // Dodaj Wpis
-    KontrahentInfoDodajWpis *kontrDodajWpis = new KontrahentInfoDodajWpis (this);
+    KontrahentInfoDodajWpis *kontrDodajWpis = new KontrahentInfoDodajWpis(this);
     kontrDodajWpis->setSettingsId(ui->lblNrSeryjny_2->text());
 
-    kontrDodajWpis ->show();
+    kontrDodajWpis->show();
 }
 
 void KontrahentInfo::on_pushButton_3_clicked()

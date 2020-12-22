@@ -546,22 +546,70 @@ int MainDb::pobierzModeliD(int daneModelId)
 
 {
     QSqlQuery query;
-    //qWarning() << "Jestem w MainDB->pobierz Id.";
+
     QString testName;
     int rows = 0;
     daneModelId = rows;
-    //TODO: pobrac z Bazy Modeli
+
 
     if (query.exec("SELECT * FROM modele")) {
         while (query.next()) {
-            //qWarning() << query.value(1).toString();
+
             rows++;
         }
-        //qWarning() << "row to: " << rows;
+
     }
-    //qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
+
     return rows;
 }
+//*******************888
+QString MainDb::loadDataRemider(QString remiderSelf,int i,int n, QString numerSeryjnydoPorownania)
+
+{
+    QSqlQuery query;
+    QString testName;
+    qWarning() << "Pobrana ilosc wpisu z ::dBPrzypomnienie::" << i;
+
+    QString inti = QString::number(i);
+QString ninti = QString::number(n);
+    QString name;
+    qWarning ()<<numerSeryjnydoPorownania<< "tutaj numer seryjny do porowniania ";
+    if (query.exec("SELECT * FROM dBPrzypomnienie where id =" + inti +" and urzadzenia_numer_seryjny = '" +numerSeryjnydoPorownania+"'")) {
+        while (query.next()) {
+            qWarning() << query.value(n).toString();
+            name = query.value(n).toString();
+            remiderSelf=name ;
+        }
+        qWarning() << "udalo sie? : pozniej " << name;
+        return name;
+    }
+    return 0;
+}
+
+int MainDb::loadDataRemiderId(int dataRemiderId)
+
+{
+    QSqlQuery query;
+
+    QString testName;
+    int rows = 0;
+    dataRemiderId = rows;
+
+
+    if (query.exec("SELECT * FROM dBPrzypomnienie")) {
+        while (query.next()) {
+
+            rows++;
+        }
+
+    }
+
+    return rows;
+}
+//*********************
+
+
+
 QString MainDb::pobierzMiasto(QString daneModel, int i)
 
 {

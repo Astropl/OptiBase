@@ -59,7 +59,8 @@ public:
     QString pobierzKontrahentaZNrSeryjnym(QString daneKontrahent, int i, int d);
     QString pobierzNumerSeryjnyZKontrahenta (QString pobierzNumerSeryjny);
     QString addPrzypomnienie(QString nrWpisu, QString dataWpisu,QString tematWpisu,QString trescWpisu,QString przypomnienie,QString dataNajblPrzypom,QString tekstPrzypom,QString nrSeryjny );
-
+    int loadDataRemiderId(int dataRemiderId);
+    QString loadDataRemider(QString remiderSelf, int i,int n,QString numerSeryjnydoPorownania);
 };
 
 #endif // MAINDB_H
