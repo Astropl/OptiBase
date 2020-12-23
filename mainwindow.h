@@ -36,7 +36,7 @@ private slots:
     void openSettings();
 
     void on_pushButton_9_clicked();
-
+    void statsy();
 private:
     Ui::MainWindow *ui;
 };

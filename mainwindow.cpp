@@ -8,6 +8,7 @@
 #include "DataBase/maindb.h"
 #include "ui_mainwindow.h"
 #include <Info/info.h>
+#include "Ustawienia/statystyki.h"
 #include <baza.h>
 //#include <druga.h>
 //#include <trzecia.h>
@@ -32,6 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     CheckIsFileExist();
     InitDB();
+    statsy();
 }
 
 MainWindow::~MainWindow()
@@ -78,6 +80,11 @@ void MainWindow::initWindow()
     //connect(settingsOption, &QAction::triggered,this, SLOT (openInfo()));
     connect(settingsOption, SIGNAL(triggered()), this, SLOT(on_actionOpcje_triggered()));
     connect(infoOProgramie, SIGNAL(triggered()), this, SLOT(on_actionO_programie_triggered()));
+}
+void MainWindow::statsy()
+{
+    Statystyki *stats = new Statystyki (this);
+    stats->liczbaUruchomien();
 }
 void MainWindow::openInfo()
 {

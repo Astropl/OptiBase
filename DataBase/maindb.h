@@ -22,7 +22,7 @@ public:
     void dBUrzadzenia();
     void dBBaza();
     void dBPrzypomnienie();
-
+    void dBStatistisc();
     void PrzypiszTestowo();
 
     QString ZapytanieTestowe(QString Zapytanie);
@@ -61,6 +61,8 @@ public:
     QString addPrzypomnienie(QString nrWpisu, QString dataWpisu,QString tematWpisu,QString trescWpisu,QString przypomnienie,QString dataNajblPrzypom,QString tekstPrzypom,QString nrSeryjny );
     int loadDataRemiderId(int dataRemiderId);
     QString loadDataRemider(QString remiderSelf, int i,int n,QString numerSeryjnydoPorownania);
+
+    int iloscUruchomien (int iloscUruchomien);
 };
 
 #endif // MAINDB_H

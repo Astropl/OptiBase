@@ -775,6 +775,7 @@ void MainDb::DatabasePopulate()
     dBKontrahent();
     dBBaza();
     dBPrzypomnienie();
+    dBStatistisc();
 
     //QSqlQuery query;
 }
@@ -911,7 +912,41 @@ void MainDb::dBKraj()
     if (!query.exec("INSERT INTO panstwa (panstwo) VALUES('Nuemcy')"))
         qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
 }
+void MainDb::dBStatistisc()
+{
+    QSqlQuery query;
+    //query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
+    qWarning("Tworzenie tabeli ststystyki ");
+    query.exec("CREATE TABLE IF NOT EXISTS dBStatRun  (id INTEGER PRIMARY KEY, ilosc INTEGER )");
 
+    if (!query.isActive())
+        qWarning() << " Tworzenie Tabeli - ERROR: " << query.lastError().text();
+    //query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
+    query.exec("CREATE TABLE IF NOT EXISTS dBStatDays  (id INTEGER PRIMARY KEY, years INTEGER, month INTEGER, days INTEGER, hours INTEGER, minuts INTEGER )");
+    if (!query.isActive())
+        qWarning() << " Tworzenie Tabeli - ERROR: " << query.lastError().text();
+    if (!query.exec("INSERT INTO dBStatRun (ilosc) VALUES(0)"))
+        qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
+    if (!query.exec("INSERT INTO dBStatDays ( years , month , days , hours , minuts ) VALUES(0,0,0,0,1)"))
+        qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
+}
+
+int MainDb::iloscUruchomien (int iloscUruchomien)
+{
+    QSqlQuery query;
+    qWarning() << "Jestem w pobierz ilosc uruchomien";
+    if (query.exec("SELECT * FROM dBStatRun")) {
+        while (query.next()) {
+            //qWarning() << inti << " pobrany: " << query.value(3).toString();
+            iloscUruchomien = query.value(1).toInt();
+            qWarning() << "Ilosc uruchomien to : "<< iloscUruchomien;
+        }
+        qWarning() << "udalo sie? : pozniej " << iloscUruchomien;
+
+    }
+    return iloscUruchomien;;
+
+}
 QString MainDb::isNumerSeryjnyTheSame(QString nrSeryjnyZLini, int i)
 {
     QSqlQuery query;

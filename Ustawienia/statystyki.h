@@ -14,8 +14,10 @@ class Statystyki : public QMainWindow
 public:
     explicit Statystyki(QWidget *parent = nullptr);
     ~Statystyki();
-    void myfunctiontimer();
 
+public slots:
+    void myfunctiontimer();
+    void liczbaUruchomien();
 
 private:
     Ui::Statystyki *ui;

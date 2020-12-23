@@ -1,7 +1,10 @@
 #include "statystyki.h"
 #include "ui_statystyki.h"
 #include"Timery/timedate.h"
+#include "DataBase/maindb.h"
+
 #include "QTimer"
+#include <QDebug>
 
 
 
@@ -54,4 +57,17 @@ void Statystyki::myfunctiontimer()
     ui->labelDaty->setText(QString::number(rok) + "." + qStrMiesiac + "." + qStrDzien);
 
     ui->labelDzien->setText(stringDzienTygodnia);
+}
+void Statystyki::liczbaUruchomien ()
+{int iloscUruhomienRun=0;
+    //Zapytanie do bazy o ilosc juz zapisanych uruchomien.
+    MainDb *maindb = new MainDb (this);
+     iloscUruhomienRun = maindb->iloscUruchomien(iloscUruhomienRun);
+     qWarning ()<<"Powrociło ilosc uruchomen: " << iloscUruhomienRun ;
+     iloscUruhomienRun++;
+     QString QiloscUruhomienRun = QString::number(iloscUruhomienRun);
+
+     ui->label_2 ->setText(QiloscUruhomienRun);
+
+    //dodanie do liczby zapisanych ++
 }
