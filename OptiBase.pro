@@ -35,6 +35,7 @@ SOURCES += \
     Urzadzenia/urzadzeniadodajproducenta.cpp \
     Urzadzenia/urzadzenialista.cpp \
     Urzadzenia/urzadzenialistakontrahent.cpp \
+    Ustawienia/statystyki.cpp \
     Ustawienia/ustawienia.cpp \
     baza.cpp \
     main.cpp \
@@ -60,6 +61,7 @@ HEADERS += \
     Urzadzenia/urzadzeniadodajproducenta.h \
     Urzadzenia/urzadzenialista.h \
     Urzadzenia/urzadzenialistakontrahent.h \
+    Ustawienia/statystyki.h \
     Ustawienia/ustawienia.h \
     baza.h \
     mainwindow.h
@@ -80,6 +82,7 @@ FORMS += \
     Urzadzenia/urzadzeniadodajproducenta.ui \
     Urzadzenia/urzadzenialista.ui \
     Urzadzenia/urzadzenialistakontrahent.ui \
+    Ustawienia/statystyki.ui \
     Ustawienia/ustawienia.ui \
     baza.ui \
     mainwindow.ui

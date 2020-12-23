@@ -89,6 +89,7 @@ void KontrahentInfo::initMenuBazy()
 void KontrahentInfo::loadWpis()
 {
     //Załaduj wpisy
+    model->sort(0,Qt::AscendingOrder);
     MainDb *mainDb = new MainDb(this);
     QStandardItem *dodajItem = new QStandardItem();
     int iloscWpisow = 0;
@@ -110,8 +111,7 @@ void KontrahentInfo::loadWpis()
     }
     ui->tableView->horizontalHeader()->setSectionResizeMode(
         QHeaderView::ResizeToContents); // Rozszerza kolumny do najdłuzszego itema w kolumnie.
-    ui->tableView->sortByColumn(0,
-                                Qt::SortOrder(1)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy , a druga nie wiem. wrzucieł z zera na 1 i sprawdzam
+    //ui->tableView->sortByColumn(0,Qt::SortOrder(1)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy , a druga nie wiem. wrzucieł z zera na 1 i sprawdzam
 
  //TODO: a teraz przydało by się wyswietlic tylko te które mają numer seryjny u góry
 
