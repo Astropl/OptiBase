@@ -84,7 +84,7 @@ void MainWindow::initWindow()
 void MainWindow::statsy()
 {
     Statystyki *stats = new Statystyki (this);
-    stats->liczbaUruchomien();
+    stats->liczbaUruchomienFirst();
 }
 void MainWindow::openInfo()
 {

@@ -18,6 +18,10 @@ public:
 public slots:
     void myfunctiontimer();
     void liczbaUruchomien();
+    void liczbaUruchomienFirst ();
+
+private slots:
+    void on_pushButton_clicked();
 
 private:
     Ui::Statystyki *ui;

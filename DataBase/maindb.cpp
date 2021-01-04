@@ -925,17 +925,18 @@ void MainDb::dBStatistisc()
     query.exec("CREATE TABLE IF NOT EXISTS dBStatDays  (id INTEGER PRIMARY KEY, years INTEGER, month INTEGER, days INTEGER, hours INTEGER, minuts INTEGER )");
     if (!query.isActive())
         qWarning() << " Tworzenie Tabeli - ERROR: " << query.lastError().text();
-    if (!query.exec("INSERT INTO dBStatRun (ilosc) VALUES(0)"))
+    if (!query.exec("INSERT INTO dBStatRun (id, ilosc) VALUES(1,1)"))
         qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
-    if (!query.exec("INSERT INTO dBStatDays ( years , month , days , hours , minuts ) VALUES(0,0,0,0,1)"))
+    if (!query.exec("INSERT INTO dBStatDays (id, years , month , days , hours , minuts ) VALUES(1,0,0,0,0,1)"))
         qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
 }
 
-int MainDb::iloscUruchomien (int iloscUruchomien)
+int MainDb::iloscUruchomienSave (int iloscUruchomien)
 {
     QSqlQuery query;
     qWarning() << "Jestem w pobierz ilosc uruchomien";
-    if (query.exec("SELECT * FROM dBStatRun")) {
+    QString QIloscUruchomien = QString::number(iloscUruchomien);
+    if (query.exec("UPDATE dBStatRun SET ilosc = '" +QIloscUruchomien+"' WHERE id ='1'")) {
         while (query.next()) {
             //qWarning() << inti << " pobrany: " << query.value(3).toString();
             iloscUruchomien = query.value(1).toInt();
@@ -944,9 +945,26 @@ int MainDb::iloscUruchomien (int iloscUruchomien)
         qWarning() << "udalo sie? : pozniej " << iloscUruchomien;
 
     }
-    return iloscUruchomien;;
+    return iloscUruchomien;
 
 }
+int MainDb::iloscUruchomienFirst (int iloscUruchomienFirst)
+{
+    QSqlQuery query;
+    qWarning() << "Jestem w pobierz ilosc First uruchomien";
+    if (query.exec("SELECT * FROM dBStatRun WHERE id ='1'")) {
+        while (query.next()) {
+            //qWarning() << inti << " pobrany: " << query.value(3).toString();
+            iloscUruchomienFirst = query.value(1).toInt();
+            qWarning() << "Ilosc uruchomien to : "<< iloscUruchomienFirst;
+        }
+        qWarning() << "First udalo sie? : pozniej " << iloscUruchomienFirst;
+
+    }
+    return iloscUruchomienFirst;
+
+}
+
 QString MainDb::isNumerSeryjnyTheSame(QString nrSeryjnyZLini, int i)
 {
     QSqlQuery query;

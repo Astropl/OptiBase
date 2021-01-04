@@ -7,7 +7,7 @@
 #include <QDebug>
 
 
-
+int iloscUruhomienRun;
 Statystyki::Statystyki(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Statystyki)
@@ -19,6 +19,7 @@ Statystyki::Statystyki(QWidget *parent) :
     connect(timer, SIGNAL(timeout()), this, SLOT(myfunctiontimer()));
     timer->start(1000);
     //===================
+    liczbaUruchomien();
 }
 
 Statystyki::~Statystyki()
@@ -59,15 +60,33 @@ void Statystyki::myfunctiontimer()
     ui->labelDzien->setText(stringDzienTygodnia);
 }
 void Statystyki::liczbaUruchomien ()
-{int iloscUruhomienRun=0;
+{
     //Zapytanie do bazy o ilosc juz zapisanych uruchomien.
     MainDb *maindb = new MainDb (this);
-     iloscUruhomienRun = maindb->iloscUruchomien(iloscUruhomienRun);
+     iloscUruhomienRun = maindb->iloscUruchomienFirst(iloscUruhomienRun);
      qWarning ()<<"Powrociło ilosc uruchomen: " << iloscUruhomienRun ;
-     iloscUruhomienRun++;
+    // iloscUruhomienRun++;
      QString QiloscUruhomienRun = QString::number(iloscUruhomienRun);
-
+     qWarning ()<<"Powrociło ilosc Quruchomen: " << QiloscUruhomienRun ;
      ui->label_2 ->setText(QiloscUruhomienRun);
 
     //dodanie do liczby zapisanych ++
+}
+void Statystyki::liczbaUruchomienFirst ()
+{
+    //Zapytanie do bazy o ilosc juz zapisanych uruchomien.
+    MainDb *maindb = new MainDb (this);
+    iloscUruhomienRun = maindb->iloscUruchomienFirst(iloscUruhomienRun);
+    qWarning ()<<"First Powrociło ilosc uruchomen: " << iloscUruhomienRun ;
+    iloscUruhomienRun++;
+    QString QiloscUruhomienRun = QString::number(iloscUruhomienRun);
+    qWarning ()<<"First Powrociło ilosc Quruchomen: " << QiloscUruhomienRun ;
+    ui->label_2 ->setText(QiloscUruhomienRun);
+    maindb->iloscUruchomienSave(iloscUruhomienRun);
+    //dodanie do liczby zapisanych ++
+}
+void Statystyki::on_pushButton_clicked()
+{
+    //Exit
+
 }

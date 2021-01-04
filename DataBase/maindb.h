@@ -62,7 +62,8 @@ public:
     int loadDataRemiderId(int dataRemiderId);
     QString loadDataRemider(QString remiderSelf, int i,int n,QString numerSeryjnydoPorownania);
 
-    int iloscUruchomien (int iloscUruchomien);
+    int iloscUruchomienSave (int iloscUruchomien);
+    int iloscUruchomienFirst (int iloscUruchomienFirst);
 };
 
 #endif // MAINDB_H
