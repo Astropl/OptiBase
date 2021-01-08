@@ -170,7 +170,11 @@ void KontrahentInfoDodajWpis::init()
     //stringDzienTygodnia = timeDate->changeStringsDzienTygodnia(dzienTygodnia);
 
     idWpisu = rand() %1000000 +1;
-
+//TODO: nowa funkcja wczytująca numer wpisu.
+    //Wyodrebnic koncówke
+    // zaminic na int
+    // dodac kolejny numer
+    // zapisac całosc.
 
     nrWpisu = QString::number(rok) + "/" + qStrMiesiac + "/" + qStrDzien + "/"
               + QString::number(idWpisu);

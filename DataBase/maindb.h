@@ -24,6 +24,18 @@ public:
     void dBPrzypomnienie();
     void dBStatistisc();
     void PrzypiszTestowo();
+    QString ObliczCzasUruchomien(QString DbSec, QString DbMin, QString DbGodz, QString DbDni);
+    int PobierzCzasUruchomien(int DbSec,int dBMin,int DbGodz, int DbDni);
+
+    int PobierzCzasUruchomienDbSec(int DbSec);
+
+    int PobierzCzasUruchomienDbMin(int DbMin);
+
+    int PobierzCzasUruchomienDbGodz(int DbGodz);
+
+    int PobierzCzasUruchomienDbDni(int DbDni);
+
+
 
     QString ZapytanieTestowe(QString Zapytanie);
     //void addProducent();

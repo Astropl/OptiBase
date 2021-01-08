@@ -922,27 +922,27 @@ void MainDb::dBStatistisc()
     if (!query.isActive())
         qWarning() << " Tworzenie Tabeli - ERROR: " << query.lastError().text();
     //query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
-    query.exec("CREATE TABLE IF NOT EXISTS dBStatDays  (id INTEGER PRIMARY KEY, years INTEGER, month INTEGER, days INTEGER, hours INTEGER, minuts INTEGER )");
+    query.exec("CREATE TABLE IF NOT EXISTS dBStatDays  (id INTEGER PRIMARY KEY, years INTEGER, month INTEGER, days INTEGER, hours INTEGER, minuts INTEGER, secunds INTEGER )");
     if (!query.isActive())
         qWarning() << " Tworzenie Tabeli - ERROR: " << query.lastError().text();
     if (!query.exec("INSERT INTO dBStatRun (id, ilosc) VALUES(1,1)"))
-        qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
-    if (!query.exec("INSERT INTO dBStatDays (id, years , month , days , hours , minuts ) VALUES(1,0,0,0,0,1)"))
-        qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
+        qWarning() << "MainWindow::dBStatRun - ERROR: " << query.lastError().text();
+    if (!query.exec("INSERT INTO dBStatDays (id, years , month , days , hours , minuts, secunds ) VALUES(1,0,0,0,0,0,1)"))
+        qWarning() << "MainWindow::dBStatDays - ERROR: " << query.lastError().text();
 }
 
 int MainDb::iloscUruchomienSave (int iloscUruchomien)
 {
     QSqlQuery query;
-    qWarning() << "Jestem w pobierz ilosc uruchomien";
+    //qWarning() << "Jestem w pobierz ilosc uruchomien";
     QString QIloscUruchomien = QString::number(iloscUruchomien);
     if (query.exec("UPDATE dBStatRun SET ilosc = '" +QIloscUruchomien+"' WHERE id ='1'")) {
         while (query.next()) {
             //qWarning() << inti << " pobrany: " << query.value(3).toString();
             iloscUruchomien = query.value(1).toInt();
-            qWarning() << "Ilosc uruchomien to : "<< iloscUruchomien;
+            //qWarning() << "Ilosc uruchomien to : "<< iloscUruchomien;
         }
-        qWarning() << "udalo sie? : pozniej " << iloscUruchomien;
+        //qWarning() << "udalo sie? : pozniej " << iloscUruchomien;
 
     }
     return iloscUruchomien;
@@ -951,14 +951,14 @@ int MainDb::iloscUruchomienSave (int iloscUruchomien)
 int MainDb::iloscUruchomienFirst (int iloscUruchomienFirst)
 {
     QSqlQuery query;
-    qWarning() << "Jestem w pobierz ilosc First uruchomien";
+    //qWarning() << "Jestem w pobierz ilosc First uruchomien";
     if (query.exec("SELECT * FROM dBStatRun WHERE id ='1'")) {
         while (query.next()) {
             //qWarning() << inti << " pobrany: " << query.value(3).toString();
             iloscUruchomienFirst = query.value(1).toInt();
-            qWarning() << "Ilosc uruchomien to : "<< iloscUruchomienFirst;
+            //qWarning() << "Ilosc uruchomien to : "<< iloscUruchomienFirst;
         }
-        qWarning() << "First udalo sie? : pozniej " << iloscUruchomienFirst;
+        //qWarning() << "First udalo sie? : pozniej " << iloscUruchomienFirst;
 
     }
     return iloscUruchomienFirst;
@@ -1008,6 +1008,7 @@ int MainDb::isNumerSeryjnyTheSameId(int nrSeryjnyZLini)
 }
 
 void MainDb::PrzypiszTestowo()
+
 {
     QSqlQuery query;
     //Dodaje Miasta
@@ -1043,4 +1044,109 @@ void MainDb::PrzypiszTestowo()
     //query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
 
 
+}
+QString MainDb::ObliczCzasUruchomien(QString DbSec,QString DbMin, QString DbGodz, QString DbDni)
+{QSqlQuery query;
+    qWarning() << "w Main DB ";
+    qWarning() << "Ilosc sekund to " << DbSec;
+    qWarning() << "Ilosc minut to " << DbMin;
+    qWarning() << "Ilosc godzin to " << DbGodz;
+    qWarning() << "Ilosc dni to " << DbDni;
+    if (query.exec("UPDATE dBStatDays SET secunds = '" +DbSec+"' WHERE id ='1'")) {
+        while (query.next()) {
+            //qWarning() << inti << " pobrany: " << query.value(3).toString();
+            //iloscUruchomien = query.value(1).toInt();
+            //qWarning() << "Ilosc uruchomien to : "<< iloscUruchomien;
+        }
+        //qWarning() << "udalo sie? : pozniej " << iloscUruchomien;
+
+    }
+    if (query.exec("UPDATE dBStatDays SET minuts = '" +DbMin+"' WHERE id ='1'")) {
+        while (query.next()) {
+            //qWarning() << inti << " pobrany: " << query.value(3).toString();
+            //iloscUruchomien = query.value(1).toInt();
+            //qWarning() << "Ilosc uruchomien to : "<< iloscUruchomien;
+        }
+        //qWarning() << "udalo sie? : pozniej " << iloscUruchomien;
+
+    }
+    if (query.exec("UPDATE dBStatDays SET hours = '" +DbGodz+"' WHERE id ='1'")) {
+        while (query.next()) {
+            //qWarning() << inti << " pobrany: " << query.value(3).toString();
+            //iloscUruchomien = query.value(1).toInt();
+            //qWarning() << "Ilosc uruchomien to : "<< iloscUruchomien;
+        }
+        //qWarning() << "udalo sie? : pozniej " << iloscUruchomien;
+
+    }
+    if (query.exec("UPDATE dBStatDays SET days = '" +DbDni+"' WHERE id ='1'")) {
+        while (query.next()) {
+            //qWarning() << inti << " pobrany: " << query.value(3).toString();
+            //iloscUruchomien = query.value(1).toInt();
+            //qWarning() << "Ilosc uruchomien to : "<< iloscUruchomien;
+        }
+        //qWarning() << "udalo sie? : pozniej " << iloscUruchomien;
+
+    }
+    return 0;
+}
+int MainDb::PobierzCzasUruchomienDbSec(int DbSec)
+{
+    QSqlQuery query;
+    qWarning() << "Jestem w pobierz ilosc secund";
+    if (query.exec("SELECT * FROM dBStatDays WHERE id ='1'")) {
+        while (query.next()) {
+           // qWarning() << inti << " pobrany: " << query.value(3).toString();
+            DbSec = query.value(6).toInt();
+            //qWarning() << "Ilosc uruchomien to : "<< iloscUruchomienFirst;
+        }
+        //qWarning() << "First udalo sie? : pozniej " << iloscUruchomienFirst;
+
+    }
+    return DbSec;
+}
+int MainDb::PobierzCzasUruchomienDbMin(int DbMin)
+{
+    QSqlQuery query;
+    qWarning() << "Jestem w pobierz ilosc minut";
+    if (query.exec("SELECT * FROM dBStatDays WHERE id ='1'")) {
+        while (query.next()) {
+            // qWarning() << inti << " pobrany: " << query.value(3).toString();
+            DbMin = query.value(5).toInt();
+            //qWarning() << "Ilosc uruchomien to : "<< iloscUruchomienFirst;
+        }
+        //qWarning() << "First udalo sie? : pozniej " << iloscUruchomienFirst;
+
+    }
+    return DbMin;
+}
+int MainDb::PobierzCzasUruchomienDbGodz(int DbGodz)
+{
+    QSqlQuery query;
+    qWarning() << "Jestem w pobierz ilosc godzin";
+    if (query.exec("SELECT * FROM dBStatDays WHERE id ='1'")) {
+        while (query.next()) {
+            // qWarning() << inti << " pobrany: " << query.value(3).toString();
+            DbGodz = query.value(4).toInt();
+            //qWarning() << "Ilosc uruchomien to : "<< iloscUruchomienFirst;
+        }
+        //qWarning() << "First udalo sie? : pozniej " << iloscUruchomienFirst;
+
+    }
+    return DbGodz;
+}
+int MainDb::PobierzCzasUruchomienDbDni(int DbDni)
+{
+    QSqlQuery query;
+    qWarning() << "Jestem w pobierz ilosc dni";
+    if (query.exec("SELECT * FROM dBStatDays WHERE id ='1'")) {
+        while (query.next()) {
+            // qWarning() << inti << " pobrany: " << query.value(3).toString();
+            DbDni = query.value(3).toInt();
+            //qWarning() << "Ilosc uruchomien to : "<< iloscUruchomienFirst;
+        }
+        //qWarning() << "First udalo sie? : pozniej " << iloscUruchomienFirst;
+
+    }
+    return DbDni;
 }

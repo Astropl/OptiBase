@@ -145,7 +145,7 @@ void MainWindow::on_pushButton_6_clicked()
 void MainWindow::on_pushButton_4_clicked()
 {
     //Zamnkij
-    destroy();
+    destroy(1);
 }
 
 void MainWindow::on_pushButton_2_clicked()

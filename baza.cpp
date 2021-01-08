@@ -34,21 +34,22 @@ Baza::Baza(QWidget *parent)
     connect(timer, SIGNAL(timeout()), this, SLOT(myfunctiontimer()));
     timer->start(1000);
     //===================
-    //QString file1 = "C:/Defaults/Pliki/1.DB.txt";
-    //QString file2 = "C:/Defaults/Pliki/2.Kontrahent.txt";
-    //QString file3 = "C:/Defaults/Pliki/3.Urzadzenie.txt";
-    QString file4 = "C:/Defaults/Pliki/4.ZapisKraj.txt";
-    QString file5 = "C:/Defaults/Pliki/5.ZapisMiasta.txt";
-    QString file6 = "C:/Defaults/Pliki/6.ZapisWojewodztwa.txt";
-    QString file7 = "C:/Defaults/Pliki/7.ZapisProducenta.txt";
-    QString file8 = "C:/Defaults/Pliki/8.ZapisModel.txt";
-    QString file9 = "C:/Defaults/Pliki/9.ZapisNrSeryjny.txt";
-    QString file10 = "C:/Defaults/Pliki/10.CheckFlagsInMiasto.txt";
-    QString file11 = "C:/Defaults/Pliki/11.CheckFlagsInKraj.txt";
-    QString file12 = "C:/Defaults/Pliki/12.CheckFlagsInWojewodztwa.txt";
-    QString file13 = "C:/Defaults/Pliki/13.CheckFlagsInKrajKontrahentShow.txt";
-    QString file14 = "C:/Defaults/Pliki/14.CheckFlagsInMiastoKontrahentShow.txt";
-    QString file15 = "C:/Defaults/Pliki/15.CheckFlagsInWojewodztwoKontrahentShow.txt";
+//    //QString file1 = "C:/Defaults/Pliki/1.DB.txt";
+//    //QString file2 = "C:/Defaults/Pliki/2.Kontrahent.txt";
+//    //QString file3 = "C:/Defaults/Pliki/3.Urzadzenie.txt";
+//    QString file4 = "C:/Defaults/Pliki/4.ZapisKraj.txt";
+//    QString file5 = "C:/Defaults/Pliki/5.ZapisMiasta.txt";
+//    QString file6 = "C:/Defaults/Pliki/6.ZapisWojewodztwa.txt";
+//    QString file7 = "C:/Defaults/Pliki/7.ZapisProducenta.txt";
+//    QString file8 = "C:/Defaults/Pliki/8.ZapisModel.txt";
+//    QString file9 = "C:/Defaults/Pliki/9.ZapisNrSeryjny.txt";
+//    QString file10 = "C:/Defaults/Pliki/10.CheckFlagsInMiasto.txt";
+//    QString file11 = "C:/Defaults/Pliki/11.CheckFlagsInKraj.txt";
+//    QString file12 = "C:/Defaults/Pliki/12.CheckFlagsInWojewodztwa.txt";
+//    QString file13 = "C:/Defaults/Pliki/13.CheckFlagsInKrajKontrahentShow.txt";
+//    QString file14 = "C:/Defaults/Pliki/14.CheckFlagsInMiastoKontrahentShow.txt";
+//    QString file15 = "C:/Defaults/Pliki
+    //15.CheckFlagsInWojewodztwoKontrahentShow.txt";
     initMenuBazy();
 
     wczytajDane();
@@ -454,7 +455,8 @@ void Baza::on_pushButton_2_clicked()
                             tab[15],
                             tab[16],
                             tab[17],
-                            tab[18]);
+                            tab[18],
+                            tab[19]);
 
         kontrInfo->show();
     }

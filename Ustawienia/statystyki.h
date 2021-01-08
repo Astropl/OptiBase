@@ -19,6 +19,7 @@ public slots:
     void myfunctiontimer();
     void liczbaUruchomien();
     void liczbaUruchomienFirst ();
+    void czasUruchomien();
 
 private slots:
     void on_pushButton_clicked();

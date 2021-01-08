@@ -139,6 +139,17 @@ void KontrahentInfo::showTable()
         // otworzyc fstream
         // wczytac linie
         // jesli lnia bedzie sie rówanała labelowi z IdUrz i IdKont to wczytac dalej + 11 linii
+
+    int rowDoSize = model->rowCount();
+    for (int i = 0; i <= rowDoSize; i++) {
+        ui->tableView->setRowHeight(i, 20);
+    }
+    ui->tableView->horizontalHeader()->setSectionResizeMode(
+        QHeaderView::ResizeToContents); // Rozszerza kolumny do najdłuzszego itema w kolumnie.
+    ui->tableView->sortByColumn(0,
+                                  Qt::SortOrder(
+                                      0)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy
+    //ui->tableView->sortByColumn(1);
 }
 
 void KontrahentInfo::myfunctiontimer()
@@ -197,7 +208,8 @@ void KontrahentInfo::wyswietl(QVariant p1,
                               QVariant p16,
                               QVariant p17,
                               QVariant p18,
-                              QVariant p19)
+                              QVariant p19,
+                              QVariant p20)
 {
     //cout << "Jestem w kontrahent Info Wyswietl" << endl;
     QVariant przypisanyZp5 = p5; // info o przypisaniu analizatora do kontr.
@@ -205,20 +217,20 @@ void KontrahentInfo::wyswietl(QVariant p1,
     ui->lblProduc_2->setText(p2.toString());
     ui->lblModel_2->setText(p3.toString());
     ui->lblNrSeryjny_2->setText(p4.toString());
-    ui->lblNrKontrahent_2->setText(p6.toString());
-    ui->lblNazwa_2->setText(p7.toString());
-    ui->lblImie_2->setText(p8.toString());
-    ui->lblNazwisko_2->setText(p9.toString());
-    ui->lblKraj_2->setText(p10.toString());
-    ui->lblRegion_2->setText(p11.toString());
-    ui->lblMiasto_2->setText(p12.toString());
-    ui->lblZipCode_2->setText(p13.toString());
-    ui->lblUlica_2->setText(p14.toString());
-    ui->lblNrDomu_2->setText(p15.toString());
-    ui->lblTelefon_2->setText(p16.toString());
-    ui->lblTelDodat_2->setText(p17.toString());
-    ui->lblEmail_2->setText(p18.toString());
-    ui->lblUrl_2->setText(p19.toString());
+    ui->lblNrKontrahent_2->setText(p7.toString());//było p6
+    ui->lblNazwa_2->setText(p6.toString());//było p7
+    ui->lblImie_2->setText(p9.toString());
+    ui->lblNazwisko_2->setText(p10.toString());
+    ui->lblKraj_2->setText(p11.toString());
+    ui->lblRegion_2->setText(p12.toString());
+    ui->lblMiasto_2->setText(p13.toString());
+    ui->lblZipCode_2->setText(p14.toString());
+    ui->lblUlica_2->setText(p15.toString());
+    ui->lblNrDomu_2->setText(p16.toString());
+    ui->lblTelefon_2->setText(p17.toString());
+    ui->lblTelDodat_2->setText(p18.toString());
+    ui->lblEmail_2->setText(p19.toString());
+    ui->lblUrl_2->setText(p20.toString());
     pobierzDane();
     loadWpis();
 }
@@ -239,11 +251,10 @@ void KontrahentInfo::pobierzDane()
     IdUrzKont = ("{IdUrzadzenia# " + IdUrz + IdKont + "}");
     int nr_lini = 1;
     while (getline(wpisDoBazy, linia)) {
-        //ui->comboBoxDodajMiasto->addItem(linia.c_str());
-        //cout << linia.c_str() << endl;
+
         if (linia.c_str() == IdUrzKont) {
             cout << "JESTTTTT" << endl;
-            //Dodoac do tabeli
+
         }
         nr_lini++;
     }

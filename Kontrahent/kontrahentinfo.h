@@ -35,7 +35,8 @@ public slots:
                   QVariant p16,
                   QVariant p17,
                   QVariant p18,
-                  QVariant p19);
+                  QVariant p19,
+                  QVariant p20);
     void myfunctiontimer();
     void wczytajDane();
     void showTable();
