@@ -148,7 +148,7 @@ void KontrahentInfo::showTable()
         QHeaderView::ResizeToContents); // Rozszerza kolumny do najdłuzszego itema w kolumnie.
     ui->tableView->sortByColumn(0,
                                   Qt::SortOrder(
-                                      0)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy
+                                      1)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy
     //ui->tableView->sortByColumn(1);
 }
 

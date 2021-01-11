@@ -64,9 +64,9 @@ QString MainDb::addKontrahent(QString l1,
     //Zapisuje do bazy Urzadzenia
 
     QSqlQuery query;
-    qWarning() << ("Dodoaje do bazy " + l1 + " , " + l2 + " , " + l3 + " , " + l4 + " , " + l6
-                   + " , " + l5 + " , " + l7 + " , " + l8 + " , " + l9 + " , " + l10 + " , " + l11
-                   + " , " + l12 + " , " + l13);
+//    //qWarning() << ("Dodoaje do bazy " + l1 + " , " + l2 + " , " + l3 + " , " + l4 + " , " + l6
+//                   + " , " + l5 + " , " + l7 + " , " + l8 + " , " + l9 + " , " + l10 + " , " + l11
+//                   + " , " + l12 + " , " + l13);
     if (!query.exec("INSERT INTO kontrahenci (nazwaFirmy, imie , nazwisko , kontrahent_panstwo_id "
                     ", kontrahent_wojewodztwo_id , kontrahent_miasto_id , kodPocztowy , ulica , "
                     "nrDomu , telefon , telefonPrywatny , adresEmail , stronaUrl) VALUES('"
@@ -147,11 +147,11 @@ QString MainDb::pobierzUrzadzenia(QString daneUrzadzenia, int i, int d)
     QString name;
     if (query.exec("SELECT * FROM urzadzenia where id =" + inti)) {
         while (query.next()) {
-            qWarning() << query.value(d).toString();
+            //qWarning() << query.value(d).toString();
             name = query.value(d).toString();
         }
         daneUrzadzenia = name;
-        qWarning() << "udalo sie? : pozniej " << name;
+        //qWarning() << "udalo sie? : pozniej " << name;
         return name;
     }
     return 0;
@@ -187,10 +187,10 @@ QString MainDb::pobierzKontrahenta(QString daneKontrahent, int i, int d)
     daneKontrahent = name;
     if (query.exec("SELECT * FROM kontrahenci where id =" + inti)) {
         while (query.next()) {
-            qWarning() << query.value(d).toString();
+            //qWarning() << query.value(d).toString();
             name = query.value(d).toString();
         }
-        qWarning() << "udalo sie? : pozniej " << name;
+        //qWarning() << "udalo sie? : pozniej " << name;
         return name;
     }
     return 0;
@@ -237,22 +237,22 @@ QString MainDb::pobierzKontrahentaZNrSeryjnym(QString daneKontrahent,
         while (query.next()) {
 
             if (query.value(5) != query.value(7))
-            { qWarning () <<"Nie Udane: query.value(5) != query.value(7) " <<query.value(5) <<" "<< query.value(7);
+            { //qWarning () <<"Nie Udane: query.value(5) != query.value(7) " <<query.value(5) <<" "<< query.value(7);
                 name = "Numeros4534";
                 return name;
             }
             else
             {
-                qWarning () <<"Udane: query.value(5) != query.value(7) " <<query.value(5) <<" "<< query.value(7);
-                qWarning () <<" i = " +inti << " d = "  +dinti;
-            qWarning() << query.value(d).toString();
+                //qWarning () <<"Udane: query.value(5) != query.value(7) " <<query.value(5) <<" "<< query.value(7);
+                //qWarning () <<" i = " +inti << " d = "  +dinti;
+            //qWarning() << query.value(d).toString();
             name = query.value(d).toString();
             return name;
             }
         }
         name = "Numeros4534";
         return name;
-        qWarning() << "udalo sie? : pozniej " << name;
+        //qWarning() << "udalo sie? : pozniej " << name;
 
     }
     return name;
@@ -445,7 +445,7 @@ QString MainDb::pobierzKraj(QString daneModel, int i)
     QSqlQuery query;
     query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
     QString testName;
-    qWarning() << "Pobrana ilosc Kraji z ::Państwa::" << i;
+    //qWarning() << "Pobrana ilosc Kraji z ::Państwa::" << i;
 
     QString inti = QString::number(i);
 
@@ -453,10 +453,10 @@ QString MainDb::pobierzKraj(QString daneModel, int i)
     daneModel = name;
     if (query.exec("SELECT * FROM panstwa where id =" + inti)) {
         while (query.next()) {
-            qWarning() << query.value(1).toString();
+            //qWarning() << query.value(1).toString();
             name = query.value(1).toString();
         }
-        qWarning() << "udalo sie? : pozniej " << name;
+        //qWarning() << "udalo sie? : pozniej " << name;
         return name;
     }
     return 0;
@@ -486,16 +486,16 @@ QString MainDb::pobierzWojewodztwo(QString daneModel, int i)
 {
     QSqlQuery query;
     QString testName = daneModel;
-    qWarning() << "Pobrana ilosc Kraji z ::Państwa::" << i;
+    //qWarning() << "Pobrana ilosc Kraji z ::Państwa::" << i;
 
     QString inti = QString::number(i);
     QString name;
     if (query.exec("SELECT * FROM wojewodztwa where id =" + inti)) {
         while (query.next()) {
-            qWarning() << query.value(1).toString();
+            //qWarning() << query.value(1).toString();
             name = query.value(1).toString();
         }
-        qWarning() << "udalo sie? : pozniej " << name;
+        //qWarning() << "udalo sie? : pozniej " << name;
         return name;
     }
     return 0;
@@ -526,17 +526,17 @@ QString MainDb::pobierzModel(QString daneModel, int i)
 {
     QSqlQuery query;
     QString testName;
-    qWarning() << "Pobrana ilosc modeli z ::Urzadzenia::" << i;
+    //qWarning() << "Pobrana ilosc modeli z ::Urzadzenia::" << i;
 
     QString inti = QString::number(i);
 
     QString name;
     if (query.exec("SELECT * FROM modele where id =" + inti)) {
         while (query.next()) {
-            qWarning() << query.value(1).toString();
+            //qWarning() << query.value(1).toString();
             name = query.value(1).toString();
         }
-        qWarning() << "udalo sie? : pozniej " << name;
+        //qWarning() << "udalo sie? : pozniej " << name;
         return name;
     }
     return 0;
@@ -568,19 +568,19 @@ QString MainDb::loadDataRemider(QString remiderSelf,int i,int n, QString numerSe
 {
     QSqlQuery query;
     QString testName;
-    qWarning() << "Pobrana ilosc wpisu z ::dBPrzypomnienie::" << i;
+    //qWarning() << "Pobrana ilosc wpisu z ::dBPrzypomnienie::" << i;
 
     QString inti = QString::number(i);
 QString ninti = QString::number(n);
     QString name;
-    qWarning ()<<numerSeryjnydoPorownania<< "tutaj numer seryjny do porowniania ";
+    //qWarning ()<<numerSeryjnydoPorownania<< "tutaj numer seryjny do porowniania ";
     if (query.exec("SELECT * FROM dBPrzypomnienie where id =" + inti +" and urzadzenia_numer_seryjny = '" +numerSeryjnydoPorownania+"'")) {
         while (query.next()) {
-            qWarning() << query.value(n).toString();
+            //qWarning() << query.value(n).toString();
             name = query.value(n).toString();
             remiderSelf=name ;
         }
-        qWarning() << "udalo sie? : pozniej " << name;
+        //qWarning() << "udalo sie? : pozniej " << name;
         return name;
     }
     return 0;
@@ -615,7 +615,7 @@ QString MainDb::pobierzMiasto(QString daneModel, int i)
 {
     QSqlQuery query;
     QString testName;
-    qWarning() << "Pobrana ilosc miasta z ::kontrahenta::" << i;
+    //qWarning() << "Pobrana ilosc miasta z ::kontrahenta::" << i;
 
     QString inti = QString::number(i);
 
@@ -625,7 +625,7 @@ QString MainDb::pobierzMiasto(QString daneModel, int i)
             qWarning() << query.value(1).toString();
             name = query.value(1).toString();
         }
-        qWarning() << "udalo sie? : pozniej " << name;
+        //qWarning() << "udalo sie? : pozniej " << name;
         return name;
     }
     return 0;
@@ -677,18 +677,18 @@ QString MainDb::pobierzProducenta(QString daneProducent, int i)
 {
     QSqlQuery query;
     QString testName;
-    qWarning() << "Pobrana ilosc producentow z ::Urzadzenia::" << i;
+    //qWarning() << "Pobrana ilosc producentow z ::Urzadzenia::" << i;
 
     QString inti = QString::number(i);
 
     QString name;
     if (query.exec("SELECT * FROM producenci where id =" + inti)) {
         while (query.next()) {
-            qWarning() << "Producent : " << query.value(1).toString();
+           // qWarning() << "Producent : " << query.value(1).toString();
             name = query.value(1).toString();
         }
         //daneProducent = name;
-        qWarning() << "udalo sie? : pozniej " << name;
+        //qWarning() << "udalo sie? : pozniej " << name;
         return name;
     }
     return 0;
@@ -718,17 +718,17 @@ QString MainDb::pobierzUrzKont(QString daneProducent, int i, int d)
 {
     QSqlQuery query;
     QString testName;
-    qWarning() << "Pobrana ilosc producentow z ::Urzadzenia::" << i;
+    //qWarning() << "Pobrana ilosc producentow z ::Urzadzenia::" << i;
 
     QString inti = QString::number(i);
 
     QString name;
     if (query.exec("SELECT * FROM producenci where id =" + inti)) {
         while (query.next()) {
-            qWarning() << query.value(d).toString();
+            //qWarning() << query.value(d).toString();
             name = query.value(d).toString();
         }
-        qWarning() << "udalo sie? : pozniej " << name;
+        //qWarning() << "udalo sie? : pozniej " << name;
         return name;
     }
     return 0;
@@ -969,17 +969,17 @@ QString MainDb::isNumerSeryjnyTheSame(QString nrSeryjnyZLini, int i)
 {
     QSqlQuery query;
     QString testName = nrSeryjnyZLini;
-    qWarning() << "Pobrana ilosc Urzadzen z ::Urzadzenia::" << i;
+    //qWarning() << "Pobrana ilosc Urzadzen z ::Urzadzenia::" << i;
 
     QString inti = QString::number(i);
 
     QString name;
     if (query.exec("SELECT * FROM urzadzenia where id =" + inti)) {
         while (query.next()) {
-            qWarning() << inti << " pobrany: " << query.value(3).toString();
+            //qWarning() << inti << " pobrany: " << query.value(3).toString();
             name = query.value(3).toString();
         }
-        qWarning() << "udalo sie? : pozniej " << name;
+       //qWarning() << "udalo sie? : pozniej " << name;
         return name;
     }
     return 0;
@@ -1047,11 +1047,11 @@ void MainDb::PrzypiszTestowo()
 }
 QString MainDb::ObliczCzasUruchomien(QString DbSec,QString DbMin, QString DbGodz, QString DbDni)
 {QSqlQuery query;
-    qWarning() << "w Main DB ";
-    qWarning() << "Ilosc sekund to " << DbSec;
-    qWarning() << "Ilosc minut to " << DbMin;
-    qWarning() << "Ilosc godzin to " << DbGodz;
-    qWarning() << "Ilosc dni to " << DbDni;
+//    qWarning() << "w Main DB ";
+//    qWarning() << "Ilosc sekund to " << DbSec;
+//    qWarning() << "Ilosc minut to " << DbMin;
+//    qWarning() << "Ilosc godzin to " << DbGodz;
+//    qWarning() << "Ilosc dni to " << DbDni;
     if (query.exec("UPDATE dBStatDays SET secunds = '" +DbSec+"' WHERE id ='1'")) {
         while (query.next()) {
             //qWarning() << inti << " pobrany: " << query.value(3).toString();
@@ -1093,7 +1093,7 @@ QString MainDb::ObliczCzasUruchomien(QString DbSec,QString DbMin, QString DbGodz
 int MainDb::PobierzCzasUruchomienDbSec(int DbSec)
 {
     QSqlQuery query;
-    qWarning() << "Jestem w pobierz ilosc secund";
+   // qWarning() << "Jestem w pobierz ilosc secund";
     if (query.exec("SELECT * FROM dBStatDays WHERE id ='1'")) {
         while (query.next()) {
            // qWarning() << inti << " pobrany: " << query.value(3).toString();
@@ -1108,7 +1108,7 @@ int MainDb::PobierzCzasUruchomienDbSec(int DbSec)
 int MainDb::PobierzCzasUruchomienDbMin(int DbMin)
 {
     QSqlQuery query;
-    qWarning() << "Jestem w pobierz ilosc minut";
+   // qWarning() << "Jestem w pobierz ilosc minut";
     if (query.exec("SELECT * FROM dBStatDays WHERE id ='1'")) {
         while (query.next()) {
             // qWarning() << inti << " pobrany: " << query.value(3).toString();
@@ -1123,7 +1123,7 @@ int MainDb::PobierzCzasUruchomienDbMin(int DbMin)
 int MainDb::PobierzCzasUruchomienDbGodz(int DbGodz)
 {
     QSqlQuery query;
-    qWarning() << "Jestem w pobierz ilosc godzin";
+    //qWarning() << "Jestem w pobierz ilosc godzin";
     if (query.exec("SELECT * FROM dBStatDays WHERE id ='1'")) {
         while (query.next()) {
             // qWarning() << inti << " pobrany: " << query.value(3).toString();
@@ -1138,7 +1138,7 @@ int MainDb::PobierzCzasUruchomienDbGodz(int DbGodz)
 int MainDb::PobierzCzasUruchomienDbDni(int DbDni)
 {
     QSqlQuery query;
-    qWarning() << "Jestem w pobierz ilosc dni";
+    //qWarning() << "Jestem w pobierz ilosc dni";
     if (query.exec("SELECT * FROM dBStatDays WHERE id ='1'")) {
         while (query.next()) {
             // qWarning() << inti << " pobrany: " << query.value(3).toString();
@@ -1149,4 +1149,21 @@ int MainDb::PobierzCzasUruchomienDbDni(int DbDni)
 
     }
     return DbDni;
+}
+
+QString MainDb::pobierzNumerWpisu(QString QnrWpisu)
+{
+    QSqlQuery query;
+    //qWarning() << "Jestem w pobierz ilosc dni";
+    if (query.exec("SELECT * FROM dBPrzypomnienie WHERE id =(SELECT max(id) FROM dBPrzypomnienie)")) {
+        while (query.next()) {
+            // qWarning() << inti << " pobrany: " << query.value(3).toString();
+            QnrWpisu = query.value(1).toString(); //QnrWpisu = query.value(4).toInt();
+            //qWarning() << "Ilosc uruchomien to : "<< iloscUruchomienFirst;
+        }
+        //qWarning() << "First udalo sie? : pozniej " << iloscUruchomienFirst;
+
+    }
+    qWarning ()<< "MainDb::QNumr wpsiu rowna się " <<QnrWpisu;
+    return QnrWpisu;
 }

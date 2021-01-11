@@ -332,12 +332,12 @@ void Baza::wczytajDane()
     QModelIndex index = ui->tableViewDB->selectionModel()->currentIndex();
     QVariant wartosc;
     QString Qwartosc;
-    qWarning() << "row Do size = " << rowDoSize;
+    //qWarning() << "row Do size = " << rowDoSize;
     for (int i = 0; i <= rowDoSize-1; i++) {
         wartosc = index.sibling(i, 2).data();
-        qWarning() << "zwykla wartosc = " << i << " " << wartosc;
+        //qWarning() << "zwykla wartosc = " << i << " " << wartosc;
         Qwartosc = QVariant(wartosc).toString();
-qWarning() << "QWaertosc = " << i << " " << Qwartosc;
+//qWarning() << "QWaertosc = " << i << " " << Qwartosc;
         if (Qwartosc != "") {
 
             ui->tableViewDB->hideRow(i);

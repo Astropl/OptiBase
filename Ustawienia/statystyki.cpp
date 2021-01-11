@@ -72,10 +72,10 @@ void Statystyki::myfunctiontimer()
     DbGodz = maindb->PobierzCzasUruchomienDbGodz(DbGodz);
     DbDni = maindb->PobierzCzasUruchomienDbDni(DbDni);
 
-    qWarning() << "Ilosc sekund to " << DbSec;
-    qWarning() << "Ilosc minut to " << DbMin;
-    qWarning() << "Ilosc godzin to " << DbGodz;
-    qWarning() << "Ilosc dni to " << DbDni;
+//    qWarning() << "Ilosc sekund to " << DbSec;
+//    qWarning() << "Ilosc minut to " << DbMin;
+//    qWarning() << "Ilosc godzin to " << DbGodz;
+//    qWarning() << "Ilosc dni to " << DbDni;
 
 
 
@@ -124,10 +124,10 @@ void Statystyki::liczbaUruchomien()
     //Zapytanie do bazy o ilosc juz zapisanych uruchomien.
     MainDb *maindb = new MainDb(this);
     iloscUruhomienRun = maindb->iloscUruchomienFirst(iloscUruhomienRun);
-    qWarning() << "Powrociło ilosc uruchomen: " << iloscUruhomienRun;
+    //qWarning() << "Powrociło ilosc uruchomen: " << iloscUruhomienRun;
     // iloscUruhomienRun++;
     QString QiloscUruhomienRun = QString::number(iloscUruhomienRun);
-    qWarning() << "Powrociło ilosc Quruchomen: " << QiloscUruhomienRun;
+    //qWarning() << "Powrociło ilosc Quruchomen: " << QiloscUruhomienRun;
     ui->label_2->setText(QiloscUruhomienRun);
 
     //dodanie do liczby zapisanych ++

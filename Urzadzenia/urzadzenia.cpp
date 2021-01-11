@@ -83,7 +83,7 @@ Urzadzenia::Urzadzenia(QWidget *parent)
 }
 
 void Urzadzenia::wypelnijModel()
-{qWarning() <<"Jestem w Wypenij Model.";
+{//qWarning() <<"Jestem w Wypenij Model.";
     //MainDb *mainDb =
     MainDb *mainDb = new MainDb(this);
     //qWarning() <<"Lece do MainDB->pobierz Id.";
@@ -103,7 +103,7 @@ QString Urzadzenia::zMainDb(QString testName)
     return 0;
 }
 void Urzadzenia::wypelnijProducenta()
-{qWarning() <<"Jestem w Wypenij Producenta.";
+{//qWarning() <<"Jestem w Wypenij Producenta.";
     //MainDb *mainDb =
     MainDb *mainDb = new MainDb(this);
    // qWarning() <<"Lece do MainDB->pobierz Id.";

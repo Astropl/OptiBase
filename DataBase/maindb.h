@@ -36,7 +36,7 @@ public:
     int PobierzCzasUruchomienDbDni(int DbDni);
 
 
-
+    QString pobierzNumerWpisu(QString QnrWpisu);
     QString ZapytanieTestowe(QString Zapytanie);
     //void addProducent();
     QString addKontrahent(QString l1,QString l2,QString l3,QString l4,QString l5,QString l6,QString l7,QString l8, QString l9,QString l10,QString l11,QString l12,QString l13);

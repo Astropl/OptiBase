@@ -9,6 +9,12 @@
 #include <QTimer>
 #include <QDebug>
 #include <random>
+#include <iterator>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <stdlib.h>
+
 
 using namespace std;
 
@@ -144,7 +150,7 @@ void KontrahentInfoDodajWpis::on_pushButton_clicked()
     destroy();
 }
 void KontrahentInfoDodajWpis::init()
-{
+{MainDb *mainDb = new MainDb (this);
     cout << "Jstem w show" << endl;
     TimeDate *timeDate = new TimeDate();
     QString nrWpisu;
@@ -176,8 +182,25 @@ void KontrahentInfoDodajWpis::init()
     // dodac kolejny numer
     // zapisac całosc.
 
+    QString QnrWpisu;
+    QnrWpisu = mainDb ->pobierzNumerWpisu(QnrWpisu);
+//QnrWpisu = mainDb ->pobierzNumerWpisu(QnrWpisu.toUtf8().constData());
+    qWarning ()<< "KontrahentInfododoajWpis::QNumr wpsiu rowna się " <<QnrWpisu;
+
+    string str0 = QnrWpisu.toStdString();
+    std::string str1 = str0.substr (0,3);
+    std::string str2 = str0.substr (5,2);
+    std::string str3 = str0.substr (0,4);
+    std::string str4 = str0.substr (11,4);
+
+    qWarning ()<< str4.c_str();
+    int IntNrwpisu = atoi(str4.c_str());
+    IntNrwpisu++;
+
+
+
     nrWpisu = QString::number(rok) + "/" + qStrMiesiac + "/" + qStrDzien + "/"
-              + QString::number(idWpisu);
+              + QString::number(IntNrwpisu);
     ui->label_2->setText(nrWpisu);
     ui->label_4->setText(QString::number(rok));
     ui->label_5->setText(qStrMiesiac);

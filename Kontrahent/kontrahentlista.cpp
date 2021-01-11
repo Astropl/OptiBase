@@ -150,13 +150,7 @@ void KontrahentLista::wczytajDane()
 
     QStandardItem *dodajItem = new QStandardItem();
 
-    //Wczytuje kontrahentow z pliku
 
-    //plikKontrahentLista.open(file2.toStdString(), ios::in);
-//    if (plikKontrahentLista.good() == false) {
-//        cout << "Plik nie istnieje !!!!!";
-//        //exit(0);
-//    }
 
     QString daneKontrahenta;
     int kontrahentId =0, i = 0, d =0;
