@@ -47,21 +47,6 @@ Urzadzenia::Urzadzenia(QWidget *parent)
     connect(timer, SIGNAL(timeout()), this, SLOT(myfunctiontimer()));
     timer->start(1000);
     //===================
-//    QString file1 = "C:/Defaults/Pliki/1.DB.txt";
-//    QString file2 = "C:/Defaults/Pliki/2.Kontrahent.txt";
-//    QString file3 = "C:/Defaults/Pliki/3.Urzadzenie.txt";
-//    QString file4 = "C:/Defaults/Pliki/4.ZapisKraj.txt";
-//    QString file5 = "C:/Defaults/Pliki/5.ZapisMiasta.txt";
-//    QString file6 = "C:/Defaults/Pliki/6.ZapisWojewodztwa.txt";
-//    QString file7 = "C:/Defaults/Pliki/7.ZapisProducenta.txt";
-//    QString file8 = "C:/Defaults/Pliki/8.ZapisModel.txt";
-//    QString file9 = "C:/Defaults/Pliki/9.ZapisNrSeryjny.txt";
-//    QString file10 = "C:/Defaults/Pliki/10.CheckFlagsInMiasto.txt";
-//    QString file11 = "C:/Defaults/Pliki/11.CheckFlagsInKraj.txt";
-//    QString file12 = "C:/Defaults/Pliki/12.CheckFlagsInWojewodztwa.txt";
-//    QString file13 = "C:/Defaults/Pliki/13.CheckFlagsInKrajKontrahentShow.txt";
-//    QString file14 = "C:/Defaults/Pliki/14.CheckFlagsInMiastoKontrahentShow.txt";
-//    QString file15 = "C:/Defaults/Pliki/15.CheckFlagsInWojewodztwoKontrahentShow.txt";
 
     howMuchDevice();
     initMenuUrzadzenia();
@@ -171,32 +156,21 @@ void Urzadzenia::initMenuUrzadzenia()
 }
 void Urzadzenia::howMuchDevice()
 {
-//    QString file3 = "C:/Defaults/Pliki/3.Urzadzenie.txt";
 
-//    plikUrzadzenia.open(file3.toStdString(), ios::in);
-//    if (plikUrzadzenia.good() == false) {
-//        cout << "Plik nie istnieje";
-//    }
-//    string linia;
-
-//    int nr_lini = 0;
-//    while (getline(plikUrzadzenia, linia)) {
-//        iloscUrzadzen++;
-//        //cout << linia.c_str() << endl;
-//        nr_lini++;
-//    }
 int deviceCount=0;
+QString QDeviceCount ="";
 MainDb *mainDb = new MainDb (this);
 
 deviceCount = mainDb ->isNumerSeryjnyTheSameId(deviceCount);
-    //cout << "ilosc Urzadzen wczytanych stringów: " << iloscUrzadzen << endl;
-    //deviceCount = (deviceCount / 5); //5 to ilosc wierszy dla urzadzenia
-    //cout << "ilosc Urzadzen po 5: " << iloscUrzadzen << endl;
-    ui->LblNumberAnaliz->setText(QString::number(deviceCount));
-    //plikUrzadzenia.close();
-    //iloscUrzadzen ++;
-   // cout << "ilosc Urzadzen z nastepnym: " << iloscUrzadzen + 1 << endl;
 
+    ui->LblNumberAnaliz->setText(QString::number(deviceCount));
+
+//    if (deviceCount<10)
+//    {
+//        QDeviceCount = "000" + deviceCount;
+
+//    }
+//    qWarning ()<<"Device równa się "<<QDeviceCount;
     ui->lineEditNumber->setText(QString::number(deviceCount + 1));
 }
 void Urzadzenia::myfunctiontimer()
@@ -385,7 +359,7 @@ void Urzadzenia::on_pushButton_clicked()// DODAJ urzadzena do Comboboxa
         QString dodajNapis = ui->lineEditNumber->text();
         QString dodajNapis1 = "[IdUrzadzenia:" + dodajNapis + "]";
         ui->comboBox_4->addItem(dodajNapis1);
-        //ui->comboBox_4->addItem(ui->lineEditNumber->text());
+
         ui->comboBox_4->addItem(ui->comboBox->currentText());
         ui->comboBox_4->addItem(ui->comboBox_2->currentText());
         ui->comboBox_4->addItem(ui->lineEditNrSeryjny->text());

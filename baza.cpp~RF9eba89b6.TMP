@@ -8,7 +8,6 @@
 //#include <Info/info.h>
 #include "DataBase/maindb.h"
 #include <ctime>
-#include <exception>
 #include <fstream>
 #include <iostream>
 #include <stdio.h>
@@ -153,11 +152,9 @@ void Baza::wczytajDane()
 
             QStringPobierzUrzKont = mainDb->pobierzKontrahentaZNrSeryjnym(QStringPobierzUrzKont,
                                                                           i,
-                                                                d);
-            qWarning() << "Numeroinny jest" <<QStringPobierzUrzKont;
+                                                                          d);
             if (QStringPobierzUrzKont == "Numeros4534") {
                 //i++;
-                ui->tableViewDB->hideRow(i);
                 d = 20;
                 //qWarning() << "Numeros inny jest";
             } else {
@@ -320,33 +317,25 @@ void Baza::wczytajDane()
     QModelIndex index = ui->tableViewDB->selectionModel()->currentIndex();
     QVariant wartosc;
     QString Qwartosc;
-    qWarning() << "Wchodze w petle do ukrycia rzedow ";
-    for (int i = 0; i <= rowDoSize - 1; i++) {
+    qWarning() << "Wchodze w petle do ukrycia rzedow " ;
+    for (int i = 0; i <= rowDoSize-1; i++) {
         //qWarning()<<(index.siblingAtRow(i) , index.siblingAtColumn(2)).data();
-
-        QString SelectetItem;
-
-        try { //auto item = model->item(i,0);
-              //SelectetItem = item;
-            //qWarning()<< item->text();
-
-        } catch (const std::exception &ex) {
-            qWarning() << "Zbłedem";
-        }
-        //qWarning()<< index.model()->data
-        //qWarning()<< model->item(i,2);
-        //qWarning()<<ui->tableViewDB->model()->index(i,2).data().toString();
+        qWarning()<<ui->tableViewDB->model()->index(i,2).data().toInt();
         //wartosc = index.sibling(i, 2).data().toString();
-        //wartosc = (index.siblingAtRow(i) , index.siblingAtColumn(2)).data();
+        wartosc = (index.siblingAtRow(i) , index.siblingAtColumn(2)).data();
         Qwartosc = QVariant(wartosc).toString();
-        qWarning() << "ilosc rzedow = " << i << " z " << rowDoSize;
-        qWarning() << "zwykla wartosc = " << i << " " << Qwartosc;
+         qWarning() << "ilosc rzedow = " << i << " z " << rowDoSize;
+         qWarning() << "zwykla wartosc = " << i << " " << Qwartosc;
         //Qwartosc = QVariant(wartosc).toString();
-        //qWarning() << "QWaertosc = " << i << " " << Qwartosc;
+//qWarning() << "QWaertosc = " << i << " " << Qwartosc;
         if (Qwartosc != "") {
+
             ui->tableViewDB->hideRow(i);
         }
     }
+
+
+
 }
 
 void Baza::iloscWierszy()

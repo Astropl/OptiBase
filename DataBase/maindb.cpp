@@ -140,7 +140,7 @@ QString MainDb::pobierzUrzadzenia(QString daneUrzadzenia, int i, int d)
 {
     QSqlQuery query;
     QString testName;
-    qWarning() << "Pobrana ilosc Urzadzenia z ::Uradzernia::Lista" << i + d;
+    //qWarning() << "Pobrana ilosc Urzadzenia z ::Uradzernia::Lista" << i + d;
 
     QString inti = QString::number(i);
 
@@ -166,8 +166,11 @@ int MainDb::pobierzUrzadzeniaId(int daneUrzadzeniaId)
 
     if (query.exec("SELECT * FROM urzadzenia")) {
         while (query.next()) {
-            //qWarning() << query.value(1).toString();
+            qWarning() << query.value(5).toString();
+            //if (query.value(5).toString()!="")
+           // {
             rows++;
+           // }
         }
        // qWarning() << "row to: " << rows;
     }
@@ -986,8 +989,8 @@ QString MainDb::isNumerSeryjnyTheSame(QString nrSeryjnyZLini, int i)
 }
 int MainDb::isNumerSeryjnyTheSameId(int nrSeryjnyZLini)
 {
-    qWarning() << "Jestem w MainDB::isNumerSeryjnyTheSameId";
-    qWarning() << "Przekazany Numer seryjny wprowadzany" << nrSeryjnyZLini;
+//    qWarning() << "Jestem w MainDB::isNumerSeryjnyTheSameId";
+//    qWarning() << "Przekazany Numer seryjny wprowadzany" << nrSeryjnyZLini;
 
     //TODO: Wczytac z bazy urzadzenia same numery seryjne
 
@@ -1004,6 +1007,7 @@ int MainDb::isNumerSeryjnyTheSameId(int nrSeryjnyZLini)
         //qWarning() << "row to: " << rows;
     }
     //qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
+    nrSeryjnyZLini = rows;
     return rows;
 }
 
