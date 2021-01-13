@@ -141,100 +141,54 @@ void Baza::wczytajDane()
 
     //
     pobierzUrzKontId = mainDb->pobierzUrzadzeniaId(pobierzUrzKontId);
+    vector<int> tabelaPustychRzedow[pobierzUrzKontId];
+    int iTabelaPustychRzedow = 0;
     // qWarning() << "pobierz kontr i urzadz:: mam ilosc modeli z bazy danych:" << pobierzUrzKontId;
     int przesuniecieNaKontraheta = 0; //INFO:: przesuwam do id kontrahents
     for (int i = 1; i <= pobierzUrzKontId; i++) {
         for (int d = 0; d <= 20 + przesuniecieNaKontraheta; d++) {
             QString inti = QString::number(i);
             QString dinti = QString::number(d);
-            //TODO:: Pobrac numer seryjny z kontrahenci
-            //qWarning() << " i = " + inti << " d = " + dinti;
-            //pobierzNumerSeryjny = mainDb->pobierzNumerSeryjnyZKontrahenta(pobierzNumerSeryjny);
+
 
             QStringPobierzUrzKont = mainDb->pobierzKontrahentaZNrSeryjnym(QStringPobierzUrzKont,
                                                                           i,
-                                                                d);
-            qWarning() << "Numeroinny jest" <<QStringPobierzUrzKont;
+                                                                          d);
+            qWarning() << "Numeroinny jest" << QStringPobierzUrzKont;
             if (QStringPobierzUrzKont == "Numeros4534") {
                 //i++;
-                ui->tableViewDB->hideRow(i);
+                // ui->tableViewDB->hideRow(i);
                 d = 20;
-                //qWarning() << "Numeros inny jest";
+               // qWarning() << "Ukrywam rzad: Numeros inny jest : " << i;
+                tabelaPustychRzedow->push_back(i);
+                iTabelaPustychRzedow++;
+
             } else {
                 dodajItem = new QStandardItem(QStringPobierzUrzKont);
                 //qWarning() << "Jestem przed dodawaniu do tabeli";
                 model->setItem(i - 1, d + przesuniecieNaKontraheta, dodajItem);
-                //qWarning() << "Jestem w po dodawaniu do tabeli";
-                // ui->comboBox_2->addItem(QStringPobierzUrzKont);
-                //            qDebug() << dodajItem->QString::toStdString(dodajItem);
+
             }
         }
     }
-    //    setSelectionBehavior(QAbstractItemView::SelectRows);
-    //    setSelectionMode(QAbstractItemView::SingleSelection);
-    //---------------------------------------------------------------
-    //NOTE: ukrywam 3 linie
-    //ui->tableViewDB->setRowHidden()
-    // int iloscRowow = pobierzUrzKontId;
-    //int stringrowDoSize = (ui->tableViewDB->currentIndex().row()) + 1;
-    //qWarning()<<" string row do sieze pzy inicjalizacji  = "<<stringrowDoSize;
-    //        QModelIndex index = ui->tableViewDB  ->selectionModel()->currentIndex();
-    //        QVariant vartosc = index.sibling(index.row(), index.column()).data();
-    //        QString QVartsoc = QVariant(vartosc).toString();
 
-    int iloscRzedow = model->rowCount();
+    for (int i = 0; i <= pobierzUrzKontId - 1; i++) {
+        //qWarning() << " Puste linie to: " << tabelaPustychRzedow[i];
+    }
+
+
     //////*****************************************************************8
-    //    for (int komorka = 0; komorka <= iloscRzedow;
-    //         komorka++) { //qWarning()<<" string row do sieze  = "<<stringrowDoSize;
-    //        qWarning() << " komorka  = " << komorka;
-    //        //bool flaga = model-> item(komorka,1)->text().isNull();
-    //        //porownajItem = new QStandardItem(model->tak)
-    //        //QStandardItem cosJest = model->takeItem(komorka,0);
-    //        //model->takeRow(int row);
-    //        if (model->takeRow(komorka).isEmpty()) {
-    //            qWarning() << model->takeRow(komorka).value(komorka)->text();
-    //            qWarning() << "rzad " << komorka;
-    //            qWarning() << "nie pusty wierz";
-    //        } else {
-    //            qWarning() << model->takeRow(komorka).value(komorka)->text();;
-    //            qWarning() << "pusty wierz";
-    //            qWarning() << "rzad " << komorka;
-    //        }
-    //    }
+
     //////*******************************************************************8
 
-    //        for (int xyz =0;xyz <=pobierzUrzKontId-2;xyz++)
 
-    //        {qWarning() <<"pobierz urzkontrid"<< xyz;
-    //            QString itemModel;
-
-    //               bool flaga = model-> item(xyz,0)->text().isNull();
-    //               qWarning ()<< "Flaga is: "<< flaga;
-    //               if (!flaga)
-    //               {
-    //                   //nic nie rob
-    //                   qWarning ()<< "nie pusty wierz";
-    //               }
-    //               else
-    //               {qWarning ()<< "pusty wierz";
-    //                   ui->tableViewDB->setRowHidden(xyz,true);
-    //               }
-
-    //        }
     //    ui->tableViewDB->setColumnHidden(0, true); //Ukrywam kolumne z LP urzadzenia
     //    ui->tableViewDB->setColumnHidden(4, true); // Ukrywam Kolumnę z info o przypsianiu
     //    ui->tableViewDB->setColumnHidden(5, true); // Ukrywam Kolumnę z LP kontrahenta
     //---------------------------------------------------------------
-    //model->insertRow(model->rowCount());
 
-    //ui->labelTest->text(QString::number(iloscWierszy));
 
-    //QStandardItem *dodajItem = new QStandardItem("Jakies cos");
-    //QStandardItem *dodajItem1 = new QStandardItem("Jakies cos");
-    //    model->setItem(iloscWierszy,1,dodajItem);
-    //    model->setItem(iloscWierszy, 1, dodajItem); // Dodoaje item i od razu wiersz.
 
-    //Wczytuje kontrahentow z pliku
     //TODO: Wczytaj kontrahentow z DB "kontrahenci"
     QString tempUrzadz;
     QString tempUrzadz1;
@@ -244,55 +198,8 @@ void Baza::wczytajDane()
     int row3 = 0;
     int nr_lini3 = 0;
 
-    // porownuje i sprawdzam czy sa takie same w combo boxach
 
-    //    int iloscWcomboBox4 = ui->comboBox_4->count(); //krótki z DB kontrahenci
-    //    int iloscWComboBox2 = ui->comboBox_2->count(); //dlugi kontrahneci
-    //    for (int i = 0; i <= iloscWcomboBox4 - 1; i++) {
-    //        QString itZComboBoxa4 = ui->comboBox_4->itemText(i);
-    //        //tempUrzadz1 = ui->lblUrzadzenie->text();
 
-    //        for (int z = 0; z <= iloscWComboBox2 - 1; z++) {
-    //            QString itZComboBoxa2 = ui->comboBox_2->itemText(z);
-
-    //            if (itZComboBoxa2 == itZComboBoxa4) {
-    //                for (int k = 0; k < 14; k++) {
-    //                    int naKtorejPozycji = ui->comboBox_2->findText(itZComboBoxa2);
-    //                    //cout << " Pozycja nr" << naKtorejPozycji << endl;
-    //                    QString tym1 = ui->comboBox_2->itemText(naKtorejPozycji + k);
-    //                    dodajItem = new QStandardItem(tym1);
-    //                    model->setItem(row3, nr_lini3 + k + 5, dodajItem);
-    //                }
-    //                row3++;
-    //            }
-    //        }
-    //        //row3++;
-    //    }
-    //    row3 = 0;
-
-    //    int iloscWcomboBox3 = ui->comboBox_3->count(); //CB4krótki z DB kontrahenci
-    //    int iloscWComboBox = ui->comboBox->count();    //CB2dlugi kontrahneci
-    //    for (int i = 0; i <= iloscWcomboBox3 - 1; i++) {
-    //        QString itZComboBoxa3 = ui->comboBox_3->itemText(i);
-
-    //        for (int z = 0; z <= iloscWComboBox - 1; z++) {
-    //            QString itZComboBoxa = ui->comboBox->itemText(z);
-
-    //            if (itZComboBoxa == itZComboBoxa3) {
-    //                //cout << "Znalazłem" << endl;
-    //                //cout << itZComboBoxa.toStdString() << endl;
-    //                for (int k = 0; k < 5; k++) {
-    //                    int naKtorejPozycji = ui->comboBox->findText(itZComboBoxa);
-    //                    //cout << " Pozycja nr" << naKtorejPozycji << endl;
-    //                    QString tym2 = ui->comboBox->itemText(naKtorejPozycji + k);
-
-    //                    dodajItem = new QStandardItem(tym2);
-    //                    model->setItem(row3, nr_lini3 + k, dodajItem);
-    //                }
-    //                row3++;
-    //            }
-    //        }
-    //    }
 
     int rowDoSize = model->rowCount();
     for (int i = 0; i <= rowDoSize; i++) {
@@ -304,13 +211,10 @@ void Baza::wczytajDane()
                                   Qt::SortOrder(
                                       0)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy
 
-    iloscWierszy();
+
     row3 = 0;
     nr_lini3 = 0;
-    //row2 = 0;
-    //nr_lini2 = 0;
 
-    // nr_lini1 = 0;
     tempUrzadz = "";
     tempUrzadz1 = "";
     linia3 = "";
@@ -321,37 +225,24 @@ void Baza::wczytajDane()
     QVariant wartosc;
     QString Qwartosc;
     qWarning() << "Wchodze w petle do ukrycia rzedow ";
-    for (int i = 0; i <= rowDoSize - 1; i++) {
-        //qWarning()<<(index.siblingAtRow(i) , index.siblingAtColumn(2)).data();
+    //int pusteRzedy;
 
-        QString SelectetItem;
+    qWarning() << "rowDoSize to : " << rowDoSize;
+    qWarning() << "iTabelaPustychRzedow to : " << iTabelaPustychRzedow;
+    //+++++++++++
+    for (int i = rowDoSize; i >= (rowDoSize ) - (iTabelaPustychRzedow);i--) {
+        qWarning() << "Pusty rzad to : "<<i;
 
-        try { //auto item = model->item(i,0);
-              //SelectetItem = item;
-            //qWarning()<< item->text();
-
-        } catch (const std::exception &ex) {
-            qWarning() << "Zbłedem";
-        }
-        //qWarning()<< index.model()->data
-        //qWarning()<< model->item(i,2);
-        //qWarning()<<ui->tableViewDB->model()->index(i,2).data().toString();
-        //wartosc = index.sibling(i, 2).data().toString();
-        //wartosc = (index.siblingAtRow(i) , index.siblingAtColumn(2)).data();
-        Qwartosc = QVariant(wartosc).toString();
-        qWarning() << "ilosc rzedow = " << i << " z " << rowDoSize;
-        qWarning() << "zwykla wartosc = " << i << " " << Qwartosc;
-        //Qwartosc = QVariant(wartosc).toString();
-        //qWarning() << "QWaertosc = " << i << " " << Qwartosc;
-        if (Qwartosc != "") {
-            ui->tableViewDB->hideRow(i);
-        }
+        ui->tableViewDB->hideRow(i);
     }
+    //++++++++++++++
+
+      iloscWierszy(iTabelaPustychRzedow);
 }
 
-void Baza::iloscWierszy()
+void Baza::iloscWierszy(int iTabelaPustychRzedow)
 {
-    int iloscWierszy = model->rowCount();
+    int iloscWierszy = model->rowCount()-iTabelaPustychRzedow;
     QString qIloscWierszy;
     qIloscWierszy.setNum(iloscWierszy);
     ui->labelTest->setText("Ilosć Kontrahentów: " + qIloscWierszy);

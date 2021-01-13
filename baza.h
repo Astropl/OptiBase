@@ -24,7 +24,7 @@ public slots:
     void myfunctiontimer();
     void DataiCzas();
     void wczytajDane();
-    void iloscWierszy();
+    void iloscWierszy(int iTabelaPustychRzedow);
     void initMenuBazy();
 private:
     Ui::Baza *ui;

@@ -8,6 +8,7 @@
 #include <ctime>
 #include <fstream>
 #include <QTimer>
+#include <QDebug>
 
 using namespace std;
 
@@ -114,7 +115,17 @@ void KontrahentInfo::loadWpis()
     //ui->tableView->sortByColumn(0,Qt::SortOrder(1)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy , a druga nie wiem. wrzucieł z zera na 1 i sprawdzam
 
  //TODO: a teraz przydało by się wyswietlic tylko te które mają numer seryjny u góry
+    //++++++++++++++++++++++++++++++++++++++
+    int iTabelaPustychRzedow = 0;
+    qWarning() << "Wchodze w petle do ukrycia rzedow ";
+    qWarning() << "rowDoSize to : " << rowDoSize;
+    qWarning() << "iTabelaPustychRzedow to : " << iTabelaPustychRzedow;
+    //+++++++++++
+    for (int i = rowDoSize; i >= (rowDoSize ) - (iTabelaPustychRzedow);i--) {
+        qWarning() << "Pusty rzad to : "<<i;
 
+        ui->tableView->hideRow(i);
+    }
 }
 
 void KontrahentInfo::on_pushButton_clicked()
@@ -150,6 +161,11 @@ void KontrahentInfo::showTable()
                                   Qt::SortOrder(
                                       1)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy
     //ui->tableView->sortByColumn(1);
+
+
+
+
+    //++++++++++++++++++++++++++++++++++++++++
 }
 
 void KontrahentInfo::myfunctiontimer()

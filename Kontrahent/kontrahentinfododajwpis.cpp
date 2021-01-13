@@ -115,32 +115,9 @@ void KontrahentInfoDodajWpis::on_pushButton_2_clicked()
 
 
 
-//    QString IdUrzKont = ui->label_12->text() + ui->label_13->text();
-//    if (przypomnienie ==true)
-//    {
-//        przypomnienieId ="True";
-//    }
-//    else
-//    {ui->comboBox->setCurrentIndex(-1);
-//        przypomnienieId="false";
-//    }
 
-//    QString file18 = "C:/Defaults/Pliki/18.WpisKontrahentInfo.txt";
-//    fileWpis.open(file18.toStdString(), ios::out | ios::app);
-//    fileWpis << "{#NrWpisu# " + ui->label_2->text().toStdString() + "}" << endl;
-//    fileWpis << "{#IdUrzadzenia# " + IdUrzKont.toStdString() + "}"<<endl;
-//    fileWpis << "{#Data: Rok# " + ui->label_4->text().toStdString() + "}" << endl;
-//    fileWpis << "{#Data: Miesiac# " + ui->label_5->text().toStdString() + "}" << endl;
-//    fileWpis << "{#Data: Dzien# " + ui->label_6->text().toStdString() + "}" << endl;
-//    fileWpis << "{#Temat# " + ui->lineEdit->text().toStdString() + "}" << endl;
-//    fileWpis << "{#Tresc# " + ui->textEdit->toPlainText().toStdString() + "}" << endl;
-//    //ui->textEdit->ge
 
-//    fileWpis <<"{#Przypomnienie# " +przypomnienieId +"}" <<endl;
-//    fileWpis <<"{#Czestotliwosc# " +ui->comboBox->currentText().toStdString()+"}"<<endl;
-//    fileWpis <<"{#DataPrzypomnienia# " +ui->label_11->text().toStdString()+"}"<<endl;
-//    fileWpis <<"{#TrescPrzypomnienia# " +ui->textEdit_2->toPlainText().toStdString()+"}"<<endl;
-//    fileWpis.close();
+
 }
 
 void KontrahentInfoDodajWpis::on_pushButton_clicked()
