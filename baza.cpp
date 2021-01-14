@@ -156,10 +156,9 @@ void Baza::wczytajDane()
                                                                           d);
             qWarning() << "Numeroinny jest" << QStringPobierzUrzKont;
             if (QStringPobierzUrzKont == "Numeros4534") {
-                //i++;
-                // ui->tableViewDB->hideRow(i);
+
                 d = 20;
-               // qWarning() << "Ukrywam rzad: Numeros inny jest : " << i;
+               // qWarning() << "Do Ukryciaif rzad: Numeros inny jest : " << i;
                 tabelaPustychRzedow->push_back(i);
                 iTabelaPustychRzedow++;
 
@@ -172,9 +171,9 @@ void Baza::wczytajDane()
         }
     }
 
-    for (int i = 0; i <= pobierzUrzKontId - 1; i++) {
-        //qWarning() << " Puste linie to: " << tabelaPustychRzedow[i];
-    }
+//    for (int i = 0; i <= pobierzUrzKontId - 1; i++) {
+//        //qWarning() << " Puste linie to: " << tabelaPustychRzedow[i];
+//    }
 
 
     //////*****************************************************************8
@@ -224,14 +223,14 @@ void Baza::wczytajDane()
     QModelIndex index = ui->tableViewDB->selectionModel()->currentIndex();
     QVariant wartosc;
     QString Qwartosc;
-    qWarning() << "Wchodze w petle do ukrycia rzedow ";
-    //int pusteRzedy;
+//    qWarning() << "Wchodze w petle do ukrycia rzedow ";
+//    //int pusteRzedy;
 
-    qWarning() << "rowDoSize to : " << rowDoSize;
-    qWarning() << "iTabelaPustychRzedow to : " << iTabelaPustychRzedow;
+//    qWarning() << "rowDoSize to : " << rowDoSize;
+//    qWarning() << "iTabelaPustychRzedow to : " << iTabelaPustychRzedow;
     //+++++++++++
     for (int i = rowDoSize; i >= (rowDoSize ) - (iTabelaPustychRzedow);i--) {
-        qWarning() << "Pusty rzad to : "<<i;
+        //qWarning() << "Pusty rzad to : "<<i;
 
         ui->tableViewDB->hideRow(i);
     }

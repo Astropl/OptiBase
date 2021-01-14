@@ -562,28 +562,25 @@ QString MainDb::loadDataRemider(QString remiderSelf, int i, int n, QString numer
     QString name;
 
 
-    qWarning ()<<"Numer seryjny z Kontrahent Info przy Id: "<<i<<" "<<numerSeryjnydoPorownania;
+    qWarning ()<<"Numer seryjny z Kontrahent Info: "<<numerSeryjnydoPorownania;
     //qWarning ()<<numerSeryjnydoPorownania<< "tutaj numer seryjny do porowniania ";
     if (query.exec("SELECT * FROM dBPrzypomnienie where id =" + inti
                    + " and urzadzenia_numer_seryjny = '" + numerSeryjnydoPorownania + "'")) {
         while (query.next()) {
-           // qWarning ()<<"Numer seryjny z Bazy  "<<query.value(8).toString()<<" przy Id "<<i;
-            if (query.value(8) != numerSeryjnydoPorownania) {
+             qWarning ()<<"Numer seryjny z Bazy  "<<query.value(7);
+            if (query.value(7) != numerSeryjnydoPorownania) {
                 name = "Numeros4534";
-               // qWarning ()<<"Name to się rowna  "<<name;
                 return name;
             } else {
                 name = query.value(n).toString();
-              //  qWarning ()<<"Name to się rowna  "<<name;
                 return name;
             }
         }
         name = "Numeros4534";
         remiderSelf = name;
-      //  qWarning ()<<"Name po za petla to się rowna  "<<name;
         return name;
     }
-    return name;
+    return 0;
 }
 
 int MainDb::loadDataRemiderId(int dataRemiderId)

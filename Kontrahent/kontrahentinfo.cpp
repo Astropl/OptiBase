@@ -90,20 +90,38 @@ void KontrahentInfo::initMenuBazy()
 void KontrahentInfo::loadWpis()
 {
     //Załaduj wpisy
+    qWarning()<<"KontrahentInfo:LoadWpisy";
     model->sort(0,Qt::AscendingOrder);
     MainDb *mainDb = new MainDb(this);
     QStandardItem *dodajItem = new QStandardItem();
+
+    int iTabelaPustychRzedow = 0;
     int iloscWpisow = 0;
     QString pobierzWpisy;
     iloscWpisow = mainDb->loadDataRemiderId(iloscWpisow);
-
+vector<int> tabelaPustychRzedow[iloscWpisow];
+qWarning()<< "Pobrałerm ilosc wpisów: "<< iloscWpisow;
     for (int i = 1; i <= iloscWpisow; i++) {
         for (int d = 0; d <= 8; d++) {
+
             QString numerSeryjnydoPorownania = ui->lblNrSeryjny_2->text();
             pobierzWpisy = mainDb->loadDataRemider(pobierzWpisy, i, d, numerSeryjnydoPorownania);
-            dodajItem = new QStandardItem(pobierzWpisy);
-            //if(ui->lblNrSeryjny_2==)
-            model->setItem(i - 1, d, dodajItem);
+
+            if (pobierzWpisy =="Numeros4534")
+            {
+                d=8;
+                    tabelaPustychRzedow->push_back(i);
+                iTabelaPustychRzedow++;
+                dodajItem= new QStandardItem("");
+                model->setItem(i-1, d, dodajItem);
+            }
+            else
+            {
+                dodajItem = new QStandardItem(pobierzWpisy);
+                //if(ui->lblNrSeryjny_2==)
+               // qWarning()<<"Dodoaje linie w tablewiew: "<<i;
+                model->setItem(i - 1, d, dodajItem);
+            }
         }
     }
     int rowDoSize = model->rowCount();
@@ -112,17 +130,20 @@ void KontrahentInfo::loadWpis()
     }
     ui->tableView->horizontalHeader()->setSectionResizeMode(
         QHeaderView::ResizeToContents); // Rozszerza kolumny do najdłuzszego itema w kolumnie.
-    //ui->tableView->sortByColumn(0,Qt::SortOrder(1)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy , a druga nie wiem. wrzucieł z zera na 1 i sprawdzam
+    ui->tableView->sortByColumn(0,
+                                  Qt::SortOrder(
+                                      0)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy
 
- //TODO: a teraz przydało by się wyswietlic tylko te które mają numer seryjny u góry
+
+
     //++++++++++++++++++++++++++++++++++++++
-    int iTabelaPustychRzedow = 0;
-    qWarning() << "Wchodze w petle do ukrycia rzedow ";
-    qWarning() << "rowDoSize to : " << rowDoSize;
-    qWarning() << "iTabelaPustychRzedow to : " << iTabelaPustychRzedow;
+   // int iTabelaPustychRzedow = 0;
+//    qWarning() << "Wchodze w petle do ukrycia rzedow ";
+//    qWarning() << "rowDoSize to : " << rowDoSize;
+//    qWarning() << "iTabelaPustychRzedow to : " << iTabelaPustychRzedow;
     //+++++++++++
     for (int i = rowDoSize; i >= (rowDoSize ) - (iTabelaPustychRzedow);i--) {
-        qWarning() << "Pusty rzad to : "<<i;
+        //qWarning() << "Pusty rzad to : "<<i;
 
         ui->tableView->hideRow(i);
     }
@@ -146,10 +167,7 @@ void KontrahentInfo::showTable()
     model->setHeaderData(6, Qt::Horizontal, "Data Przypomnienia");       // Imie
     model->setHeaderData(7, Qt::Horizontal, "Tekst Przypomnienia");      // Imie
     model->setHeaderData(8, Qt::Horizontal, "Numer seryjny urządzenia"); // Imie
-        //TODO: Zrobic wpisywanie i wczytywanie z DBWpisu
-        // otworzyc fstream
-        // wczytac linie
-        // jesli lnia bedzie sie rówanała labelowi z IdUrz i IdKont to wczytac dalej + 11 linii
+
 
     int rowDoSize = model->rowCount();
     for (int i = 0; i <= rowDoSize; i++) {
@@ -160,7 +178,7 @@ void KontrahentInfo::showTable()
     ui->tableView->sortByColumn(0,
                                   Qt::SortOrder(
                                       1)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy
-    //ui->tableView->sortByColumn(1);
+
 
 
 

@@ -94,7 +94,7 @@ void KontrahentInfoDodajWpis::on_pushButton_2_clicked()
     MainDb *mainDb = new MainDb (this);
     QString przypomnienieTemp;
     QString nrWpisu = ui->label_2->text();
-    QString dataWpisu = ui->label_4->text() + ui->label_5->text() + ui->label_6->text();
+    QString dataWpisu = ui->label_4->text() +":"+ ui->label_5->text() +":"+ ui->label_6->text();
     QString tematWpisu = ui->lineEdit->text();
     QString trescWpisu = ui->textEdit->toPlainText();
     if (ui->checkBox->isChecked()==true)
@@ -152,7 +152,7 @@ void KontrahentInfoDodajWpis::init()
     qStrMiesiac = timeDate->changeStringsMiesiac(miesiac);
     //stringDzienTygodnia = timeDate->changeStringsDzienTygodnia(dzienTygodnia);
 
-    idWpisu = rand() %1000000 +1;
+    //idWpisu = rand() %1000000 +1;
 //TODO: nowa funkcja wczytująca numer wpisu.
     //Wyodrebnic koncówke
     // zaminic na int
@@ -299,11 +299,22 @@ void KontrahentInfoDodajWpis::on_comboBox_currentTextChanged(const QString ) //(
 
 int KontrahentInfoDodajWpis::dodajDateKolejnegoWpisu(int dzienKolejny, int miesiacKolejny, int rokKolejny)
 {
+    TimeDate *timeDate = new TimeDate();
     //label_11 -> data najbizeszego przypomnienia
     QString QrokKolejny = QString::number(rokKolejny);
     QString QmiesiacKolejny = QString::number(miesiacKolejny);
     QString QdzienKolejny = QString::number(dzienKolejny);
-    ui->label_11->setText(QrokKolejny + ":"+ QmiesiacKolejny+":"+QdzienKolejny);
+
+//    qStrMin = timeDate->changeStringsMin(minuta);
+//    qStrSek = timeDate->changeStringsSek(sekunda);
+    qStrDzien = timeDate->changeStringsDzien(dzien);
+    //qStrGodz = timeDate->changeStringsGodz(godzina);
+    qStrMiesiac = timeDate->changeStringsMiesiac(miesiac);
+
+    QString nrWpisuKolejnego;
+    nrWpisuKolejnego = QString::number(rok)+":"+qStrMiesiac+":"+qStrDzien;
+    //ui->label_11->setText(QrokKolejny + ":"+ QmiesiacKolejny+":"+QdzienKolejny);
+    ui->label_11->setText(nrWpisuKolejnego);
     return 0;
 }
 QString KontrahentInfoDodajWpis::setSettingsId(QString NrSeryjny )
