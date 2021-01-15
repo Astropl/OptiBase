@@ -141,6 +141,7 @@ void Baza::wczytajDane()
 
     //
     pobierzUrzKontId = mainDb->pobierzUrzadzeniaId(pobierzUrzKontId);
+    qWarning() << "BAZA: Pobierz ilosc urzadzen: "<< pobierzUrzKontId;
     vector<int> tabelaPustychRzedow[pobierzUrzKontId];
     int iTabelaPustychRzedow = 0;
     // qWarning() << "pobierz kontr i urzadz:: mam ilosc modeli z bazy danych:" << pobierzUrzKontId;
@@ -161,6 +162,8 @@ void Baza::wczytajDane()
                // qWarning() << "Do Ukryciaif rzad: Numeros inny jest : " << i;
                 tabelaPustychRzedow->push_back(i);
                 iTabelaPustychRzedow++;
+                dodajItem= new QStandardItem("");
+                model->setItem(i-1, d, dodajItem);
 
             } else {
                 dodajItem = new QStandardItem(QStringPobierzUrzKont);

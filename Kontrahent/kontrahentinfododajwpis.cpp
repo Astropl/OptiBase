@@ -93,23 +93,32 @@ void KontrahentInfoDodajWpis::on_pushButton_2_clicked()
 
     MainDb *mainDb = new MainDb (this);
     QString przypomnienieTemp;
+    QString dataNajblPrzypom;
     QString nrWpisu = ui->label_2->text();
     QString dataWpisu = ui->label_4->text() +":"+ ui->label_5->text() +":"+ ui->label_6->text();
     QString tematWpisu = ui->lineEdit->text();
     QString trescWpisu = ui->textEdit->toPlainText();
+    //QString dataNajblPrzypom = ui->label_11->text();
     if (ui->checkBox->isChecked()==true)
     {
         przypomnienieTemp = "TAK";
+        qWarning ()<<"Data przypomnieniea TAK";
+         dataNajblPrzypom = ui->label_11->text();
     }
     else
     {
         przypomnienieTemp = "NIE";
+        ui->label_11->setText("BRAK");
+        qWarning ()<<"Data przypomnieniea NIE";
+        dataNajblPrzypom = ui->label_11->text();
     }
+
+
     QString przypomnienie = przypomnienieTemp;
-    QString dataNajblPrzypom = ui->label_11->text();
+
     QString tekstPrzypom = ui->textEdit_2->toPlainText();
     QString nrSeryjny = ui->label_12->text();
-
+    qWarning ()<<"Data przypomnieniea NIE i wydruk zniej "<<dataNajblPrzypom;
 
     mainDb->addPrzypomnienie(nrWpisu, dataWpisu,tematWpisu,trescWpisu,przypomnienie,dataNajblPrzypom,tekstPrzypom,nrSeryjny );
 

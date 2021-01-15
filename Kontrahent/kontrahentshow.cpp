@@ -1,12 +1,14 @@
 #include "kontrahentshow.h"
 
 #include "DataBase/checkfiles.h"
+#include "DataBase/maindb.h"
 #include "Info/info.h"
 #include "ui_kontrahentshow.h"
 #include <String>
 #include <fstream>
 #include <iostream>
 #include <ostream>
+#include <QDebug>
 #include <QString>
 
 using namespace std;
@@ -105,74 +107,56 @@ void KontrahentShow::on_pushButton_clicked()
     //Zmienić region w UI -> Wojewodzwtwo
 }
 void KontrahentShow::showKraj()
-{//TODO: ZAMIENIC NA WCZYTYWANIE Z SQL
-    QString file4 = "C:/Defaults/Pliki/4.ZapisKraj.txt";
-    // wczytuje kraje do comboBoxa
-    fstream plikOdczytDodajKraj;
-    // wczytuje miasta do comboBoxa
+{ //TODO: ZAMIENIC NA WCZYTYWANIE Z SQL
+
+    //Wczytac liste krajów z MainDB i dodoac ją do comboBoxDodajKra
     ui->comboBoxKraj->clear();
-    plikOdczytDodajKraj.open(file4.toStdString(), ios::in);
-    if (plikOdczytDodajKraj.good() == false) {
-        cout << "Plik nie istnieje !!!!!";
-        //exit(0);
+    MainDb *mainDb = new MainDb(this);
+    QString QStringpobierzKraj;
+    int pobierzKrajId = 0;
+    pobierzKrajId = mainDb->pobierzKrajId(pobierzKrajId);
+    for (int i = 1; i <= pobierzKrajId; i++) {
+        QStringpobierzKraj = mainDb->pobierzKraj(QStringpobierzKraj, i);
+        ui->comboBoxKraj->addItem(QStringpobierzKraj);
     }
-    string linia;
-    int nr_lini = 1;
-    while (getline(plikOdczytDodajKraj, linia)) {
-        ui->comboBoxKraj->addItem(linia.c_str());
-        cout << linia.c_str() << endl;
-        nr_lini++;
-    }
-    plikOdczytDodajKraj.close();
     ui->comboBoxKraj->setCurrentText(ui->leKraj->text());
 }
 
 void KontrahentShow::showWojewodztwa()
-{//TODO: ZAMIENIC NA WCZYTYWANIE Z SQL
-    QString file6 = "C:/Defaults/Pliki/6.ZapisWojewodztwa.txt";
-    // wczytuje wojewodztwa do comboBoxa
-    fstream plikOdczytDodajwojewodztwo;
-    // wczytuje miasta do comboBoxa
+{ //TODO: ZAMIENIC NA WCZYTYWANIE Z SQL
     ui->comboBoxWojewodztwa->clear();
-    plikOdczytDodajwojewodztwo.open(file6.toStdString(), ios::in);
-    if (plikOdczytDodajwojewodztwo.good() == false) {
-        cout << "Plik nie istnieje !!!!!";
-        //exit(0);
+    //Wczytac liste wojewdoztw z MainDB i dodoac ją do comboBoxDodajWojewdoztwo
+    MainDb *mainDb = new MainDb(this);
+    QString QStringpobierzWojewodztwo;
+    int pobierzWojewodztwoId = 0;
+    pobierzWojewodztwoId = mainDb->pobierzWojewodztwoId(pobierzWojewodztwoId);
+    for (int i = 1; i <= pobierzWojewodztwoId; i++) {
+        QStringpobierzWojewodztwo = mainDb->pobierzWojewodztwo(QStringpobierzWojewodztwo, i);
+        ui->comboBoxWojewodztwa->addItem(QStringpobierzWojewodztwo);
     }
-    string linia;
-    int nr_lini = 1;
-    while (getline(plikOdczytDodajwojewodztwo, linia)) {
-        ui->comboBoxWojewodztwa->addItem(linia.c_str());
-        cout << linia.c_str() << endl;
-        nr_lini++;
-    }
-    plikOdczytDodajwojewodztwo.close();
+
     ui->comboBoxWojewodztwa->setCurrentText(ui->leRegion->text());
 }
 void KontrahentShow::showCities()
-{//TODO: ZAMIENIC NA WCZYTYWANIE Z SQL
-    QString file5 = "C:/Defaults/Pliki/5.ZapisMiasta.txt";
-    fstream plikOdczytDodajMiasto;
-    // wczytuje miasta do comboBoxa
+{
     ui->comboBoxMiasta->clear();
-    plikOdczytDodajMiasto.open(file5.toStdString(), ios::in);
-    if (plikOdczytDodajMiasto.good() == false) {
-        cout << "Plik nie istnieje !!!!!";
-        //exit(0);
+    //Wczytac liste miast z MainDB i dodoac ją do comboBoxDodajKra
+    MainDb *mainDb = new MainDb(this);
+    QString QStringpobierzMiasto;
+    int pobierzMiastoId = 0;
+    pobierzMiastoId = mainDb->pobierzMiastoiD(pobierzMiastoId);
+    for (int i = 1; i <= pobierzMiastoId; i++) {
+        QStringpobierzMiasto = mainDb->pobierzMiasto(QStringpobierzMiasto, i);
+        ui->comboBoxMiasta->addItem(QStringpobierzMiasto);
     }
-    string linia;
-    int nr_lini = 1;
-    while (getline(plikOdczytDodajMiasto, linia)) {
-        ui->comboBoxMiasta->addItem(linia.c_str());
-        cout << linia.c_str() << endl;
-        nr_lini++;
-    }
-    plikOdczytDodajMiasto.close();
+
     ui->comboBoxMiasta->setCurrentText(ui->leMiasto->text());
 }
-void KontrahentShow::on_pushButton_3_clicked()
+void KontrahentShow::on_pushButton_3_clicked() //ZAPISZ?
+
 {
-    QString file2 = "C:/Defaults/Pliki/2.Kontrahent.txt";
+    MainDb *mainDb = new MainDb(this);
+    //QString file2 = "C:/Defaults/Pliki/2.Kontrahent.txt";
     ui->comboBoxPomoc->clear();
     ui->comboBoxPomoc1->clear();
     //ZAPISZ wszytsko
@@ -186,7 +170,7 @@ void KontrahentShow::on_pushButton_3_clicked()
     //fstream file;
     string kontrahent;
     //Zapisz
-    cout << "Zapisuje" << endl;
+    //cout << "Zapisuje" << endl;
 
     //file.open("C:/Defaults/Pliki/2.Kontrahent.txt", ios::out | ios::app);
 
@@ -224,66 +208,114 @@ void KontrahentShow::on_pushButton_3_clicked()
 
     //int QComboBox::findText(const QString &text, Qt::MatchFlags flags) const;
 
-    //    int findPosition  = ui->comboBoxPomoc->findText(ui->lblNumerPorz->text(), Qt::MatchContains);
-
     int findPosition = ui->comboBoxPomoc->findText(ui->leNazwa->text(), Qt::MatchContains);
 
     //warning:
     ui->label_14->setText(QString::number(findPosition));
     //file.close();
 
-    fstream fileKontrahent;
-    fileKontrahent.open(file2.toStdString(), ios::in);
-    string linia;
-    while (getline(fileKontrahent, linia)) {
-        ui->comboBoxPomoc1->addItem(linia.c_str());
-        cout << linia.c_str() << endl;
-    }
+    //fstream fileKontrahent;
 
-    fileKontrahent.close();
+    //Wczytac kontrahentow do CBP1
 
-    int findPosition2 = ui->comboBoxPomoc1->findText(ui->leNazwa->text(), Qt::MatchContains);
-    //ui->label_15->setText(ui->comboBoxPomoc1->itemText(findPosition2));
-    int koniecPomocy1 = ui->comboBoxPomoc1->count();
-    QString tym1 = ui->comboBoxPomoc1->itemText(findPosition2 - 1);
-    QString tym2 = ui->comboBoxPomoc1->itemText(findPosition2);
-    QString tym3 = ui->comboBoxPomoc1->itemText(findPosition2 + 1);
-    QString tym4 = ui->comboBoxPomoc1->itemText(findPosition2 + 2);
-    QString tym5 = ui->comboBoxPomoc1->itemText(findPosition2 + 3);
-    QString tym6 = ui->comboBoxPomoc1->itemText(findPosition2 + 4);
-    QString tym7 = ui->comboBoxPomoc1->itemText(findPosition2 + 5);
-    QString tym8 = ui->comboBoxPomoc1->itemText(findPosition2 + 6);
-    QString tym9 = ui->comboBoxPomoc1->itemText(findPosition2 + 7);
-    QString tym10 = ui->comboBoxPomoc1->itemText(findPosition2 + 8);
-    QString tym11 = ui->comboBoxPomoc1->itemText(findPosition2 + 9);
-    QString tym12 = ui->comboBoxPomoc1->itemText(findPosition2 + 10);
-    QString tym13 = ui->comboBoxPomoc1->itemText(findPosition2 + 11);
-    QString tym14 = ui->comboBoxPomoc1->itemText(findPosition2 + 12);
+    // Ilosc kontrahentow
 
-    for (int i = -1; i <= ui->comboBoxPomoc->count() - 2; i++) {
-        QString tym8 = ui->comboBoxPomoc1->itemText(findPosition2 - 1);
-        ui->comboBoxPomoc1->removeItem(findPosition2 - 1);
-    }
+    // pobrac kontarhanta
 
-    for (int i = 0; i <= ui->comboBoxPomoc->count() - 1; i++) {
-        ui->comboBoxPomoc1->addItem(ui->comboBoxPomoc->itemText(i));
-    }
+    int iloscKontrahentow = 0, i = 0, d = 0;
+    QString QKontrahent = "";
+    iloscKontrahentow = mainDb->pobierzKontrahentaId(iloscKontrahentow);
 
-    fileKontrahent.open(file2.toStdString(), ios::out);
-    //teraz zapisac itemy z comboxaPomoc1
-    fileKontrahent.clear();
+    qWarning() << "ilosc kontrahentow pobranych z bazy to: " << iloscKontrahentow;
 
-    int iloscWComboPomoc1 = ui->comboBoxPomoc1->count();
-    string ala1;
-    for (int i = 0; i <= iloscWComboPomoc1 - 1; i++) {
-        ala1 = ui->comboBoxPomoc1->itemText(i).toStdString();
-        fileKontrahent << ala1 << endl;
-    }
+//    for (i = 1; i <= iloscKontrahentow; i++) {
+//        for (d = 0; d <= 14; d++)
+//            QKontrahent = mainDb->pobierzKontrahenta(QKontrahent, i, d);
+//        //ui->comboBoxPomoc1->addItem(QKontrahent);
+//        qWarning() << QKontrahent << endl;
 
-    fileKontrahent.close();
-    ui->comboBoxPomoc->clear();
+
+
+//    }
+    QString tym1 = ui->leNazwa->text();
+        QString tym2 = ui->leImie->text();
+        QString tym3 = ui->leNazwisko->text();
+//        QString tym3 = ui->leKraj->text();
+//        QString tym4 = ui->leRegion->text();
+        QString tym4 = ui->comboBoxKraj->currentText();
+        QString tym5 = ui->comboBoxWojewodztwa->currentText();
+        QString tym6 = ui->comboBoxMiasta->currentText();
+        //QString tym8 = ui->leMiasto;
+        QString tym7 = ui->leKod->text();
+        QString tym8 = ui->leUlica->text();
+        QString tym9 = ui->leNrDomu->text();
+        QString tym10 = ui->leTelefon->text();
+        QString tym11 = ui->leTelPryw->text();
+        QString tym12 = ui->leEmail->text();
+        QString tym13 = ui->leUrl->text();
+
+        mainDb->addKontrahenciUpdate(tym1,tym2,tym3,tym4,tym5,tym6,tym7,tym8,tym9,tym10,tym11,tym12,tym13);
+
+
+        //// //
+        ////    ui->leImie->setText("");
+        ////    ui->leNazwisko->setText("");
+        ////    ui->leKraj->setText("");
+        ////    ui->leRegion->setText("");
+        ////    ui->comboBoxKraj->clear();
+        ////    ui->comboBoxWojewodztwa->clear();
+        ////    ui->comboBoxMiasta->clear();
+        ////    ui->leMiasto->setText("");
+        ////    ui->leKod->setText("");
+        ////    ui->leUlica->setText("");
+        ////    ui->leNrDomu->setText("");
+        ////    ui->leTelefon->setText("");
+        ////    ui->leTelPryw->setText("");
+        ////    ui->leEmail->setText("");
+        ////    ui->leUrl->setText("");
+
+        //}
+
+        //    int findPosition2 = ui->comboBoxPomoc1->findText(ui->leNazwa->text(), Qt::MatchContains);
+        //    //ui->label_15->setText(ui->comboBoxPomoc1->itemText(findPosition2));
+        //    int koniecPomocy1 = ui->comboBoxPomoc1->count();
+        //    QString tym1 = ui->comboBoxPomoc1->itemText(findPosition2 - 1);
+        //    QString tym2 = ui->comboBoxPomoc1->itemText(findPosition2);
+        //    QString tym3 = ui->comboBoxPomoc1->itemText(findPosition2 + 1);
+        //    QString tym4 = ui->comboBoxPomoc1->itemText(findPosition2 + 2);
+        //    QString tym5 = ui->comboBoxPomoc1->itemText(findPosition2 + 3);
+        //    QString tym6 = ui->comboBoxPomoc1->itemText(findPosition2 + 4);
+        //    QString tym7 = ui->comboBoxPomoc1->itemText(findPosition2 + 5);
+        //    QString tym8 = ui->comboBoxPomoc1->itemText(findPosition2 + 6);
+        //    QString tym9 = ui->comboBoxPomoc1->itemText(findPosition2 + 7);
+        //    QString tym10 = ui->comboBoxPomoc1->itemText(findPosition2 + 8);
+        //    QString tym11 = ui->comboBoxPomoc1->itemText(findPosition2 + 9);
+        //    QString tym12 = ui->comboBoxPomoc1->itemText(findPosition2 + 10);
+        //    QString tym13 = ui->comboBoxPomoc1->itemText(findPosition2 + 11);
+        //    QString tym14 = ui->comboBoxPomoc1->itemText(findPosition2 + 12);
+
+        //    for (int i = -1; i <= ui->comboBoxPomoc->count() - 2; i++) {
+        //        QString tym8 = ui->comboBoxPomoc1->itemText(findPosition2 - 1);
+        //        ui->comboBoxPomoc1->removeItem(findPosition2 - 1);
+        //    }
+
+        //    for (int i = 0; i <= ui->comboBoxPomoc->count() - 1; i++) {
+        //        ui->comboBoxPomoc1->addItem(ui->comboBoxPomoc->itemText(i));
+        //    }
+
+        //    //teraz zapisac itemy z comboxaPomoc1
+
+        //    int iloscWComboPomoc1 = ui->comboBoxPomoc1->count();
+        //    string ala1;
+        //    for (int i = 0; i <= iloscWComboPomoc1 - 1; i++) {
+        //        ala1 = ui->comboBoxPomoc1->itemText(i).toStdString();
+        //        //fileKontrahent << ala1 << endl;
+        //    }
+
+        //    //fileKontrahent.close();
+        //    ui->comboBoxPomoc->clear();
+
 }
-
 void KontrahentShow::on_pushButton_4_clicked()
 {
     QString file2 = "C:/Defaults/Pliki/2.Kontrahent.txt";

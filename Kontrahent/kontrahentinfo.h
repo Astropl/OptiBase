@@ -43,6 +43,10 @@ public slots:
     void pobierzDane();
     void loadWpis();
     void initMenuBazy();
+    void openInfo();
+
+    void openSettings();
+
 
 
 private slots:

@@ -3,6 +3,9 @@
 //#include "kontrahentinfododajwpis.h"
 #include "DataBase/maindb.h"
 #include "Timery/timedate.h"
+#include <Info/info.h>
+#include "Ustawienia/ustawienia.h"
+#include "Ustawienia/statystyki.h"
 #include "iostream"
 #include "kontrahentinfododajwpis.h"
 #include <ctime>
@@ -87,10 +90,23 @@ void KontrahentInfo::initMenuBazy()
     //            SLOT(on_actionDodaj_Producenta_triggered()));
     //    connect(edycjaDodajModel, SIGNAL(triggered()), this, SLOT(on_actionDodaj_Model_triggered()));
 }
+void KontrahentInfo::openInfo()
+{
+    Info *info = new Info(this);
+    info->show();
+}
+void KontrahentInfo::openSettings()
+{
+    Ustawienia *ustaw = new Ustawienia(this);
+    ustaw->show();
+}
+
+
+
 void KontrahentInfo::loadWpis()
 {
     //Załaduj wpisy
-    qWarning()<<"KontrahentInfo:LoadWpisy";
+    //qWarning()<<"KontrahentInfo:LoadWpisy";
     model->sort(0,Qt::AscendingOrder);
     MainDb *mainDb = new MainDb(this);
     QStandardItem *dodajItem = new QStandardItem();
@@ -100,7 +116,7 @@ void KontrahentInfo::loadWpis()
     QString pobierzWpisy;
     iloscWpisow = mainDb->loadDataRemiderId(iloscWpisow);
 vector<int> tabelaPustychRzedow[iloscWpisow];
-qWarning()<< "Pobrałerm ilosc wpisów: "<< iloscWpisow;
+//qWarning()<< "Pobrałerm ilosc wpisów: "<< iloscWpisow;
     for (int i = 1; i <= iloscWpisow; i++) {
         for (int d = 0; d <= 8; d++) {
 

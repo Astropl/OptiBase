@@ -40,6 +40,7 @@ public:
     QString ZapytanieTestowe(QString Zapytanie);
     //void addProducent();
     QString addKontrahent(QString l1,QString l2,QString l3,QString l4,QString l5,QString l6,QString l7,QString l8, QString l9,QString l10,QString l11,QString l12,QString l13);
+    QString addKontrahenciUpdate (QString tym1, QString tym2, QString tym3,QString tym4, QString tym5,QString tym6,QString tym7,QString tym8,QString tym9,QString tym10,QString tym11,QString tym12,QString tym13);
     QString pobierzKontrahenta(QString daneKontrahent, int i, int d);
     int pobierzKontrahentaId(int daneKontrahentId);
     QString pobierzUrzadzenia(QString daneUrzadzenia, int i, int d);

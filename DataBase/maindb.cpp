@@ -178,7 +178,7 @@ QString MainDb::pobierzKontrahenta(QString daneKontrahent, int i, int d)
 {
     QSqlQuery query;
     QString testName;
-    qWarning() << "Pobrana ilosc Kontrahenci z ::KontrahenciPaństwa::" << i;
+    //qWarning() << "Pobrana ilosc Kontrahenci z ::Kontrahenci::" << i;
 
     QString inti = QString::number(i);
 
@@ -188,6 +188,7 @@ QString MainDb::pobierzKontrahenta(QString daneKontrahent, int i, int d)
         while (query.next()) {
             //qWarning() << query.value(d).toString();
             name = query.value(d).toString();
+            qWarning()<<"Name z MainDB: "<<name;
         }
         //qWarning() << "udalo sie? : pozniej " << name;
         return name;
@@ -275,17 +276,48 @@ int MainDb::pobierzKontrahentaZNrSeryjnymId(int daneKontrahentId)
     return rows;
 }
 
+
+
+QString MainDb::addKontrahenciUpdate (QString tym1, QString tym2, QString tym3,QString tym4, QString tym5,QString tym6,QString tym7,QString tym8,QString tym9,QString tym10,QString tym11,QString tym12,QString tym13)
+{
+    QSqlQuery query;
+
+    qWarning ()<< "NOTO to dzieła.";
+    query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
+
+    if (!query.exec("UPDATE kontrahenci SET nazwaFirmy ='" +tym1+"', imie = '"+tym2+"', nazwisko ='"+tym3+"', kontrahent_panstwo_id = '"+tym4+"', kontrahent_wojewodztwo_id = '"+tym5+"', kontrahent_miasto_id = '"+tym6+"', kodPocztowy = '"+tym7+"', ulica = '"+tym8+"', nrDomu = '"+tym9+"', telefon = '"+tym10+"', telefonPrywatny = '"+tym11+"', adresEmail = '"+tym12+"', stronaUrl = '"+tym13+"'   WHERE nazwaFirmy = '"+tym1+ "' "))
+
+
+
+// kontrahent_panstwo_id TEXT, "
+//               "kontrahent_wojewodztwo_id TEXT, kontrahent_miasto_id TEXT, kodPocztowy TEXT, "
+//               "ulica TEXT, nrDomu INTEGER, telefon TEXT, "
+//               "telefonPrywatny TEXT, adresEmail TEXT, stronaUrl TEXT, urzadzenia_numer_seryjny "
+//               "TEXT, FOREIGN KEY "
+//               "(kontrahent_panstwo_id) REFERENCES panstwa(panstwo), FOREIGN KEY "
+//               "(kontrahent_wojewodztwo_id) REFERENCES wojewodztwa (wojewodztwo), "
+//               "FOREIGN KEY "
+//               "(kontrahent_miasto_id) REFERENCES miasta (miasto), "
+//               "FOREIGN KEY (urzadzenia_numer_seryjny ) REFERENCES urzadzenia (numerSeryjny) //
+    {
+        qWarning() << "MainDB::Update Urzadzenia - ERROR: " << query.lastError().text();
+    } else {
+        qWarning() << "MainDB::Update Urzadzenia - Udane: " << query.lastError().text();
+    }
+
+
+    return 0;
+}
+
+
 QString MainDb::addUrzadzeniaUpdate(QString daneNrSeryjny, QString daneUnicueName)
 {
     //Zapisuje do bazy Urzadzenia
-    //TODO: Tutuaj dodoac update do Kontrahenci i pobrac unikalny kontrahent i dodoac numer seryjny
     QSqlQuery query;
     query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
     qWarning() << ("Dodoaje do bazy " + daneNrSeryjny);
     QString przypisany = "TAK";
-    /*if (!query.exec("INSERT INTO urzadzenia (numerSeryjny, przypisany) VALUES('"
-                    + daneNrSeryjny +"','" + przypisany + "' )")) {
-        qWarning() << "MainDB::Dodoanie Urzadzenia - ERROR: " <<*/
+
     if (!query.exec("UPDATE urzadzenia SET przypisany = '" + przypisany + "' WHERE numerSeryjny ='"
                     + daneNrSeryjny + "' "))
 
@@ -294,15 +326,7 @@ QString MainDb::addUrzadzeniaUpdate(QString daneNrSeryjny, QString daneUnicueNam
     } else {
         qWarning() << "MainDB::Update Urzadzenia - Udane: " << query.lastError().text();
     }
-    //..............
-    //    if (!query.exec("UPDATE urzadzenia SET przypisany = '" + przypisany + "' WHERE numerSeryjny ='"
-    //                    + daneNrSeryjny + "' "))
 
-    //    {
-    //        qWarning() << "MainDB::Update Urzadzenia: Przypisany - ERROR: " << query.lastError().text();
-    //    } else {
-    //        qWarning() << "MainDB::Update Urzadzenia: Przypisany - Udane: " << query.lastError().text();
-    //    }
     if (!query.exec("UPDATE urzadzenia SET kontrahent_id = '" + daneUnicueName
                     + "' WHERE numerSeryjny ='" + daneNrSeryjny + "' "))
 
@@ -314,16 +338,7 @@ QString MainDb::addUrzadzeniaUpdate(QString daneNrSeryjny, QString daneUnicueNam
                    << query.lastError().text();
     }
 
-    //    if (!query.exec("UPDATE kontrahenci SET urzadzenia_numer_seryjny = '" + daneNrSeryjny
-    //                    + "' WHERE nazwaFirmy ='" + daneUnicueName + "' "))
 
-    //    {
-    //        qWarning() << "MainDB::Update Kontrahenci z numerem seryjnym - ERROR: "
-    //                   << query.lastError().text();
-    //    } else {
-    //        qWarning() << "MainDB::Update Kontrahenci z numerem seryjnym - Udane: "
-    //                   << query.lastError().text();
-    //    }
 
     return 0;
 }
@@ -562,7 +577,7 @@ QString MainDb::loadDataRemider(QString remiderSelf, int i, int n, QString numer
     QString name;
 
 
-    qWarning ()<<"Numer seryjny z Kontrahent Info przy Id: "<<i<<" "<<numerSeryjnydoPorownania;
+    //qWarning ()<<"Numer seryjny z Kontrahent Info przy Id: "<<i<<" "<<numerSeryjnydoPorownania;
     //qWarning ()<<numerSeryjnydoPorownania<< "tutaj numer seryjny do porowniania ";
     if (query.exec("SELECT * FROM dBPrzypomnienie where id =" + inti
                    + " and urzadzenia_numer_seryjny = '" + numerSeryjnydoPorownania + "'")) {
