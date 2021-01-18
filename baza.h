@@ -26,11 +26,16 @@ public slots:
     void wczytajDane();
     void iloscWierszy(int iTabelaPustychRzedow);
     void initMenuBazy();
+
+    void filtrOn();
 private:
     Ui::Baza *ui;
 
 private slots:
     void on_pushButton_2_clicked();
+
+    void on_checkBox_stateChanged();
+
 
 private:
     QTimer *timer;

@@ -97,6 +97,10 @@ void Baza::initMenuBazy()
 
 void Baza::wczytajDane()
 {
+    ui->comboBox_5->setVisible(false);
+    ui->comboBox_6->setVisible(false);
+    ui->checkBox->setChecked(false);
+
     // Wczytac z Bazy. Kontrahneci i Urzadzenia które mają zakładkę TAK
     QStandardItem *dodajItem = new QStandardItem("");
     MainDb *mainDb = new MainDb(this);
@@ -141,7 +145,7 @@ void Baza::wczytajDane()
 
     //
     pobierzUrzKontId = mainDb->pobierzUrzadzeniaId(pobierzUrzKontId);
-    qWarning() << "BAZA: Pobierz ilosc urzadzen: "<< pobierzUrzKontId;
+    qWarning() << "BAZA: Pobierz ilosc urzadzen: " << pobierzUrzKontId;
     vector<int> tabelaPustychRzedow[pobierzUrzKontId];
     int iTabelaPustychRzedow = 0;
     // qWarning() << "pobierz kontr i urzadz:: mam ilosc modeli z bazy danych:" << pobierzUrzKontId;
@@ -151,45 +155,38 @@ void Baza::wczytajDane()
             QString inti = QString::number(i);
             QString dinti = QString::number(d);
 
-
             QStringPobierzUrzKont = mainDb->pobierzKontrahentaZNrSeryjnym(QStringPobierzUrzKont,
                                                                           i,
                                                                           d);
             qWarning() << "Numeroinny jest" << QStringPobierzUrzKont;
             if (QStringPobierzUrzKont == "Numeros4534") {
-
                 d = 20;
-               // qWarning() << "Do Ukryciaif rzad: Numeros inny jest : " << i;
+                // qWarning() << "Do Ukryciaif rzad: Numeros inny jest : " << i;
                 tabelaPustychRzedow->push_back(i);
                 iTabelaPustychRzedow++;
-                dodajItem= new QStandardItem("");
-                model->setItem(i-1, d, dodajItem);
+                dodajItem = new QStandardItem("");
+                model->setItem(i - 1, d, dodajItem);
 
             } else {
                 dodajItem = new QStandardItem(QStringPobierzUrzKont);
                 //qWarning() << "Jestem przed dodawaniu do tabeli";
                 model->setItem(i - 1, d + przesuniecieNaKontraheta, dodajItem);
-
             }
         }
     }
 
-//    for (int i = 0; i <= pobierzUrzKontId - 1; i++) {
-//        //qWarning() << " Puste linie to: " << tabelaPustychRzedow[i];
-//    }
-
+    //    for (int i = 0; i <= pobierzUrzKontId - 1; i++) {
+    //        //qWarning() << " Puste linie to: " << tabelaPustychRzedow[i];
+    //    }
 
     //////*****************************************************************8
 
     //////*******************************************************************8
 
-
     //    ui->tableViewDB->setColumnHidden(0, true); //Ukrywam kolumne z LP urzadzenia
     //    ui->tableViewDB->setColumnHidden(4, true); // Ukrywam Kolumnę z info o przypsianiu
     //    ui->tableViewDB->setColumnHidden(5, true); // Ukrywam Kolumnę z LP kontrahenta
     //---------------------------------------------------------------
-
-
 
     //TODO: Wczytaj kontrahentow z DB "kontrahenci"
     QString tempUrzadz;
@@ -200,9 +197,6 @@ void Baza::wczytajDane()
     int row3 = 0;
     int nr_lini3 = 0;
 
-
-
-
     int rowDoSize = model->rowCount();
     for (int i = 0; i <= rowDoSize; i++) {
         ui->tableViewDB->setRowHeight(i, 20);
@@ -212,7 +206,6 @@ void Baza::wczytajDane()
     ui->tableViewDB->sortByColumn(0,
                                   Qt::SortOrder(
                                       0)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy
-
 
     row3 = 0;
     nr_lini3 = 0;
@@ -226,25 +219,25 @@ void Baza::wczytajDane()
     QModelIndex index = ui->tableViewDB->selectionModel()->currentIndex();
     QVariant wartosc;
     QString Qwartosc;
-//    qWarning() << "Wchodze w petle do ukrycia rzedow ";
-//    //int pusteRzedy;
+    //    qWarning() << "Wchodze w petle do ukrycia rzedow ";
+    //    //int pusteRzedy;
 
-//    qWarning() << "rowDoSize to : " << rowDoSize;
-//    qWarning() << "iTabelaPustychRzedow to : " << iTabelaPustychRzedow;
+    //    qWarning() << "rowDoSize to : " << rowDoSize;
+    //    qWarning() << "iTabelaPustychRzedow to : " << iTabelaPustychRzedow;
     //+++++++++++
-    for (int i = rowDoSize; i >= (rowDoSize ) - (iTabelaPustychRzedow);i--) {
+    for (int i = rowDoSize; i >= (rowDoSize) - (iTabelaPustychRzedow); i--) {
         //qWarning() << "Pusty rzad to : "<<i;
 
         ui->tableViewDB->hideRow(i);
     }
     //++++++++++++++
 
-      iloscWierszy(iTabelaPustychRzedow);
+    iloscWierszy(iTabelaPustychRzedow);
 }
 
 void Baza::iloscWierszy(int iTabelaPustychRzedow)
 {
-    int iloscWierszy = model->rowCount()-iTabelaPustychRzedow;
+    int iloscWierszy = model->rowCount() - iTabelaPustychRzedow;
     QString qIloscWierszy;
     qIloscWierszy.setNum(iloscWierszy);
     ui->labelTest->setText("Ilosć Kontrahentów: " + qIloscWierszy);
@@ -357,4 +350,73 @@ void Baza::on_pushButton_2_clicked()
 
         kontrInfo->show();
     }
+}
+
+void Baza::on_checkBox_stateChanged() // Checked Mark Filtr :ON/OFF
+
+{
+    qWarning() << "checekd Mark Filtr ON:OFF";
+    if (ui->checkBox->isChecked()) {
+        qWarning() << "cKliknietey";
+        ui->comboBox_5->setVisible(true);
+        ui->comboBox_6->setVisible(true);
+        filtrOn();
+    } else {
+        qWarning() << "NIE Klikniety";
+        ui->comboBox_5->setVisible(false);
+        ui->comboBox_6->setVisible(false);
+        ui->comboBox_5->clear();
+        ui->comboBox_6->clear();
+        for (int i = 0; i <= model->rowCount() - 1; i++) {
+            qWarning() << "Wejscie do odkrycia rzedów numer : " << i;
+            ui->tableViewDB->showRow(i);
+        }
+    }
+}
+
+void Baza::filtrOn()
+{
+    for (int k = 0; k <= model->rowCount() - 1; k++) {
+        qWarning() << "Ukrywam rzad : " << k;
+
+        ui->tableViewDB->hideRow(k);
+    }
+
+    qWarning() << "Jestem w filtrze";
+    QString filter = "Jawon";
+
+    qWarning ()<< " Odkrywam takie co mają w nazwie Jawon";
+
+    for (int i =0; i<=model ->rowCount()-1;i++)
+    {
+        for (int j=0; j<= model->columnCount()-1;j++)
+        {QStandardItem *item = model->item(i, j);
+            qWarning ()<< " Wyswietlam i: "<<i<<" j: " <<j<< " wyraz to: "<< item->text();
+        }
+
+
+    }
+
+    //    for (int i = 1; i <= model->rowCount() - 1; ++i) //int i = 0; i < model->rowCount()
+    //    //for( int i = 0; i < ui->tableViewDB->rowCount(); ++i )
+    //    {
+    //        bool match = false;
+    //        for (int j = 1; j <= model->columnCount() - 1;
+    //             ++j) { //QTableWidgetItem //int j = 0; j < model->columnCount()
+    //            QStandardItem *item = model->item(i, j);
+    //            if (item->text().contains(filter)) {
+    //                qWarning() << "Pokazuje Numer i: " << i << " Numer j: " << j;
+    //                qWarning() << item->text();
+    //                ui->tableViewDB->showRow(i);
+    //                j = 20;
+    //            } else {
+    //                qWarning() << item->text();
+    //                //ui->tableViewDB->hideRow(i);
+    //                qWarning() << "Ukrywam Numer i: " << i << " Numer j: " << j;
+    //                //                match = true;
+    //                //                break;
+    //            }
+    //        }
+    //        //ui->tableViewDB->setRowHidden(i, !match);
+    //    }
 }
