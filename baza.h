@@ -28,6 +28,7 @@ public slots:
     void initMenuBazy();
 
     void filtrOn();
+    void fillComboBoxes();
 private:
     Ui::Baza *ui;
 

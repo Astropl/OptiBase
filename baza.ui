@@ -308,6 +308,9 @@
       <height>22</height>
      </rect>
     </property>
+    <property name="duplicatesEnabled">
+     <bool>false</bool>
+    </property>
    </widget>
    <widget class="QComboBox" name="comboBox_6">
     <property name="geometry">
@@ -317,6 +320,19 @@
       <width>160</width>
       <height>22</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>510</y>
+      <width>47</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Puste rzedy</string>
     </property>
    </widget>
    <zorder>tableViewDB</zorder>
@@ -335,6 +351,7 @@
    <zorder>checkBox</zorder>
    <zorder>comboBox_5</zorder>
    <zorder>comboBox_6</zorder>
+   <zorder>label_2</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

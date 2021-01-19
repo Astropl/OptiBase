@@ -22,7 +22,9 @@ using namespace std;
 //int labelGodzinaPierwsza;
 //int labelDataPierwsza;
 //int wynikPierwsza;
+int rowDoSize = 0, iTabelaPustychRzedow = 0;
 
+int pusteRzedy = (rowDoSize) - (iTabelaPustychRzedow);
 fstream fileDataBase1, fileDataBase2, fileDataBase3;
 Baza::Baza(QWidget *parent)
     : QMainWindow(parent)
@@ -219,13 +221,18 @@ void Baza::wczytajDane()
     QModelIndex index = ui->tableViewDB->selectionModel()->currentIndex();
     QVariant wartosc;
     QString Qwartosc;
+    pusteRzedy = (rowDoSize) - (iTabelaPustychRzedow);
+
+    // ui->label_2->setText(QString::number(pusteRzedy));
+    ui->label_2->setText(QString::number(iTabelaPustychRzedow));
     //    qWarning() << "Wchodze w petle do ukrycia rzedow ";
     //    //int pusteRzedy;
 
     //    qWarning() << "rowDoSize to : " << rowDoSize;
     //    qWarning() << "iTabelaPustychRzedow to : " << iTabelaPustychRzedow;
     //+++++++++++
-    for (int i = rowDoSize; i >= (rowDoSize) - (iTabelaPustychRzedow); i--) {
+    //for (int i = rowDoSize; i >= (rowDoSize) - (iTabelaPustychRzedow); i--) {
+    for (int i = rowDoSize; i >= pusteRzedy; i--) {
         //qWarning() << "Pusty rzad to : "<<i;
 
         ui->tableViewDB->hideRow(i);
@@ -355,24 +362,78 @@ void Baza::on_pushButton_2_clicked()
 void Baza::on_checkBox_stateChanged() // Checked Mark Filtr :ON/OFF
 
 {
+    pusteRzedy = ui->label_2->text().toInt();
     qWarning() << "checekd Mark Filtr ON:OFF";
     if (ui->checkBox->isChecked()) {
         qWarning() << "cKliknietey";
         ui->comboBox_5->setVisible(true);
         ui->comboBox_6->setVisible(true);
         filtrOn();
+        fillComboBoxes();
     } else {
         qWarning() << "NIE Klikniety";
         ui->comboBox_5->setVisible(false);
         ui->comboBox_6->setVisible(false);
         ui->comboBox_5->clear();
         ui->comboBox_6->clear();
-        for (int i = 0; i <= model->rowCount() - 1; i++) {
+        for (int i = 0; i <= model->rowCount() - 1 - pusteRzedy; i++) {
             qWarning() << "Wejscie do odkrycia rzedów numer : " << i;
             ui->tableViewDB->showRow(i);
         }
     }
 }
+void Baza::fillComboBoxes()
+{
+    bool jestItem;
+    pusteRzedy = ui->label_2->text().toInt();
+    ui->comboBox_5->addItem("Brak");
+    ui->comboBox_6->addItem("Brak");
+
+    for (int i = 0; i <= model->rowCount() - 1 - pusteRzedy; i++) {
+        //int iloscElemtowWCB5 = ui->comboBox_5->count();
+
+        QStandardItem *item1 = model->item(i, 1);
+        QStandardItem *item2 = model->item(i, 2);
+
+        //NOTE: Sprawdzam czy element jest juz na liscie w comboBox
+
+        //
+        ui->comboBox_5->addItem(item1->text());
+        ui->comboBox_6->addItem(item2->text());
+    }
+    int iloscElemetowWCB5 = ui->comboBox_5->count();
+
+    for (int j = 0; j <= iloscElemetowWCB5; j++)
+
+    {
+        qWarning() << "wyraz do porowniaa to: " << ui->comboBox_5->itemText(j);
+
+        for (int k = 1; k <= iloscElemetowWCB5; k++) {
+            if (ui->comboBox_5->itemText(j) == ui->comboBox_5->itemText(k)) {
+                ui->comboBox_5->removeItem(k);
+            }
+        }
+
+    } //
+    int iloscElemetowWCB6 = ui->comboBox_6->count();
+
+    for (int j = 0; j <= iloscElemetowWCB6; j++)
+
+    {
+        qWarning() << "wyraz do porowniaa to: " << ui->comboBox_6->itemText(j);
+
+        for (int k = 1; k <= iloscElemetowWCB6; k++) {
+            if (ui->comboBox_6->itemText(j) == ui->comboBox_6->itemText(k)) {
+                ui->comboBox_6->removeItem(k);
+            }
+        }
+
+    } //
+
+
+}
+//    ui->comboBox_5->setDuplicatesEnabled(false);
+//    ui->comboBox_6->setDuplicatesEnabled(true);
 
 void Baza::filtrOn()
 {
@@ -385,16 +446,22 @@ void Baza::filtrOn()
     qWarning() << "Jestem w filtrze";
     QString filter = "Jawon";
 
-    qWarning ()<< " Odkrywam takie co mają w nazwie Jawon";
-
-    for (int i =0; i<=model ->rowCount()-1;i++)
+    qWarning() << " Odkrywam takie co mają w nazwie Jawon";
+    pusteRzedy = ui->label_2->text().toInt();
+    qWarning() << "Puste rzedy to : " << pusteRzedy;
+    //for (int i =0; i<=model ->rowCount()-1;i++)// pusteRzedy
+    for (int i = 0; i <= model->rowCount() - 1 - pusteRzedy; i++) // pusteRzedy
     {
-        for (int j=0; j<= model->columnCount()-1;j++)
-        {QStandardItem *item = model->item(i, j);
-            qWarning ()<< " Wyswietlam i: "<<i<<" j: " <<j<< " wyraz to: "<< item->text();
+        for (int j = 0; j <= model->columnCount() - 1; j++) {
+            QStandardItem *item = model->item(i, j);
+            qWarning() << " Wyswietlam i: " << i << " j: " << j << " wyraz to: " << item->text();
+
+            if (item->text().contains(filter)) {
+                qWarning() << "Wiersz: " << i << " zawiera: " << filter;
+                ui->tableViewDB->showRow(i);
+            }
         }
-
-
+        //TODO: Jakis problem przy wyswietlaniu powyzej 12 linii. ( czyli 13) tam gdzie mam puste czyli nulle.
     }
 
     //    for (int i = 1; i <= model->rowCount() - 1; ++i) //int i = 0; i < model->rowCount()
