@@ -408,7 +408,7 @@ void Baza::fillComboBoxes()
     {
         //qWarning() << "wyraz do porowniaa to: " << ui->comboBox_5->itemText(j);
 
-        for (int k =j+ 1; k <= iloscElemetowWCB5; k++) {
+        for (int k = 1; k <= iloscElemetowWCB5; k++) {
             if (ui->comboBox_5->itemText(j) == ui->comboBox_5->itemText(k)) {
                 ui->comboBox_5->removeItem(k);
             }
@@ -422,16 +422,15 @@ void Baza::fillComboBoxes()
     {
         qWarning() << "wyraz do porowniaa to: " << ui->comboBox_6->itemText(j);
 
-        for (int k =j+ 1; k <= iloscElemetowWCB6 - 1; k++) {
-            qWarning() << "Porownuje : " << ui->comboBox_6->itemText(j)
-                       << " z: " << ui->comboBox_6->itemText(k);
+        for (int k = 1; k <= iloscElemetowWCB6; k++) {
             if (ui->comboBox_6->itemText(j) == ui->comboBox_6->itemText(k)) {
-                qWarning() << "Usuwam : " << ui->comboBox_6->itemText(k);
                 ui->comboBox_6->removeItem(k);
             }
         }
 
     } //
+
+
 }
 //    ui->comboBox_5->setDuplicatesEnabled(false);
 //    ui->comboBox_6->setDuplicatesEnabled(true);
@@ -457,29 +456,33 @@ QString Baza::filtrOn(QString aktywnyProducent)
             QStandardItem *item = model->item(i, j);
             //qWarning() << " Wyswietlam i: " << i << " j: " << j << " wyraz to: " << item->text();
 
-            if (filter == "Brak") {
+            if(filter=="Brak")
+            {
                 ui->tableViewDB->showRow(i);
-            } else {
-                if (item->text().contains(filter)) {
-                    //qWarning() << "Wiersz: " << i << " zawiera: " << filter;
-                    ui->tableViewDB->showRow(i);
-                }
             }
+            else{
+
+            if (item->text().contains(filter)) {
+                //qWarning() << "Wiersz: " << i << " zawiera: " << filter;
+                ui->tableViewDB->showRow(i);
+            }}
         }
         //TODO: Jakis problem przy wyswietlaniu powyzej 12 linii. ( czyli 13) tam gdzie mam puste czyli nulle.
     }
+
+
 }
 
 void Baza::on_comboBox_5_activated(const QString &arg1)
 {
-    qWarning() << "Activatefd w CB5: " << ui->comboBox_5->currentText();
-    QString aktywnyProducent = ui->comboBox_5->currentText();
+    qWarning()<< "Activatefd w CB5: "<<ui->comboBox_5->currentText();
+    QString aktywnyProducent=ui->comboBox_5->currentText();
     filtrOn(aktywnyProducent);
 }
 
 void Baza::on_comboBox_6_activated(const QString &arg1)
 {
-    qWarning() << "Activatefd w CB6: " << ui->comboBox_6->currentText();
-    QString aktywnyProducent = ui->comboBox_6->currentText();
+    qWarning()<< "Activatefd w CB6: "<<ui->comboBox_6->currentText();
+    QString aktywnyProducent=ui->comboBox_6->currentText();
     filtrOn(aktywnyProducent);
 }

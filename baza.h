@@ -27,7 +27,7 @@ public slots:
     void iloscWierszy(int iTabelaPustychRzedow);
     void initMenuBazy();
 
-    void filtrOn();
+    QString  filtrOn(QString aktywnyProducent);
     void fillComboBoxes();
 private:
     Ui::Baza *ui;
@@ -37,6 +37,10 @@ private slots:
 
     void on_checkBox_stateChanged();
 
+
+    void on_comboBox_5_activated(const QString &arg1);
+
+    void on_comboBox_6_activated(const QString &arg1);
 
 private:
     QTimer *timer;
