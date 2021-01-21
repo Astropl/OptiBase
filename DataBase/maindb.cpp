@@ -95,12 +95,12 @@ void MainDb::dBPrzypomnienie()
     if (!query.isActive())
         qWarning() << " Tworzenie Tabeli - ERROR: " << query.lastError().text();
 
-    //    if (!query.exec("INSERT INTO kontrahenci (nazwaFirmy, imie , nazwisko , kontrahent_panstwo_id "
-    //                    ", kontrahent_wojewodztwo_id , kontrahent_miasto_id , kodPocztowy , ulica , "
-    //                    "nrDomu , telefon , telefonPrywatny , adresEmail , stronaUrl  ) "
-    //                    "VALUES('VITAKO' , 'Paweł' , 'Martys' , 'Polska' , "
-    //                    "'Zachodniopomorskie' , 'Szczecin' , '71-766' , 'Małej Syrenki' , '2' , "
-    //                    "'692717987' , '723508531' , 'serwis@vbody.pl' , 'www.vitako.pl')"))
+        if (!query.exec("INSERT INTO kontrahenci (nazwaFirmy, imie , nazwisko , kontrahent_panstwo_id "
+                        ", kontrahent_wojewodztwo_id , kontrahent_miasto_id , kodPocztowy , ulica , "
+                        "nrDomu , telefon , telefonPrywatny , adresEmail , stronaUrl  ) "
+                        "VALUES('VITAKO' , 'Paweł' , 'Martys' , 'Polska' , "
+                        "'Zachodniopomorskie' , 'Szczecin' , '71-766' , 'Małej Syrenki' , '2' , "
+                        "'692717987' , '723508531' , 'serwis@vbody.pl' , 'www.vitako.pl')"))
     qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
 }
 
@@ -188,7 +188,7 @@ QString MainDb::pobierzKontrahenta(QString daneKontrahent, int i, int d)
         while (query.next()) {
             //qWarning() << query.value(d).toString();
             name = query.value(d).toString();
-            qWarning()<<"Name z MainDB: "<<name;
+            qWarning() << "Name z MainDB: " << name;
         }
         //qWarning() << "udalo sie? : pozniej " << name;
         return name;
@@ -276,39 +276,66 @@ int MainDb::pobierzKontrahentaZNrSeryjnymId(int daneKontrahentId)
     return rows;
 }
 
-
-
-QString MainDb::addKontrahenciUpdate (QString tym1, QString tym2, QString tym3,QString tym4, QString tym5,QString tym6,QString tym7,QString tym8,QString tym9,QString tym10,QString tym11,QString tym12,QString tym13)
+QString MainDb::addKontrahenciUpdate(QString tym1,
+                                     QString tym2,
+                                     QString tym3,
+                                     QString tym4,
+                                     QString tym5,
+                                     QString tym6,
+                                     QString tym7,
+                                     QString tym8,
+                                     QString tym9,
+                                     QString tym10,
+                                     QString tym11,
+                                     QString tym12,
+                                     QString tym13)
 {
     QSqlQuery query;
 
-    qWarning ()<< "NOTO to dzieła.";
+    qWarning() << "NOTO to dzieła.";
     query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
 
-    if (!query.exec("UPDATE kontrahenci SET nazwaFirmy ='" +tym1+"', imie = '"+tym2+"', nazwisko ='"+tym3+"', kontrahent_panstwo_id = '"+tym4+"', kontrahent_wojewodztwo_id = '"+tym5+"', kontrahent_miasto_id = '"+tym6+"', kodPocztowy = '"+tym7+"', ulica = '"+tym8+"', nrDomu = '"+tym9+"', telefon = '"+tym10+"', telefonPrywatny = '"+tym11+"', adresEmail = '"+tym12+"', stronaUrl = '"+tym13+"'   WHERE nazwaFirmy = '"+tym1+ "' "))
+    if (!query.exec("UPDATE kontrahenci SET nazwaFirmy ='" + tym1 + "', imie = '" + tym2
+                    + "', nazwisko ='" + tym3 + "', kontrahent_panstwo_id = '" + tym4
+                    + "', kontrahent_wojewodztwo_id = '" + tym5 + "', kontrahent_miasto_id = '"
+                    + tym6 + "', kodPocztowy = '" + tym7 + "', ulica = '" + tym8 + "', nrDomu = '"
+                    + tym9 + "', telefon = '" + tym10 + "', telefonPrywatny = '" + tym11
+                    + "', adresEmail = '" + tym12 + "', stronaUrl = '" + tym13
+                    + "'   WHERE nazwaFirmy = '" + tym1 + "' "))
 
-
-
-// kontrahent_panstwo_id TEXT, "
-//               "kontrahent_wojewodztwo_id TEXT, kontrahent_miasto_id TEXT, kodPocztowy TEXT, "
-//               "ulica TEXT, nrDomu INTEGER, telefon TEXT, "
-//               "telefonPrywatny TEXT, adresEmail TEXT, stronaUrl TEXT, urzadzenia_numer_seryjny "
-//               "TEXT, FOREIGN KEY "
-//               "(kontrahent_panstwo_id) REFERENCES panstwa(panstwo), FOREIGN KEY "
-//               "(kontrahent_wojewodztwo_id) REFERENCES wojewodztwa (wojewodztwo), "
-//               "FOREIGN KEY "
-//               "(kontrahent_miasto_id) REFERENCES miasta (miasto), "
-//               "FOREIGN KEY (urzadzenia_numer_seryjny ) REFERENCES urzadzenia (numerSeryjny) //
+    // kontrahent_panstwo_id TEXT, "
+    //               "kontrahent_wojewodztwo_id TEXT, kontrahent_miasto_id TEXT, kodPocztowy TEXT, "
+    //               "ulica TEXT, nrDomu INTEGER, telefon TEXT, "
+    //               "telefonPrywatny TEXT, adresEmail TEXT, stronaUrl TEXT, urzadzenia_numer_seryjny "
+    //               "TEXT, FOREIGN KEY "
+    //               "(kontrahent_panstwo_id) REFERENCES panstwa(panstwo), FOREIGN KEY "
+    //               "(kontrahent_wojewodztwo_id) REFERENCES wojewodztwa (wojewodztwo), "
+    //               "FOREIGN KEY "
+    //               "(kontrahent_miasto_id) REFERENCES miasta (miasto), "
+    //               "FOREIGN KEY (urzadzenia_numer_seryjny ) REFERENCES urzadzenia (numerSeryjny) //
     {
         qWarning() << "MainDB::Update Urzadzenia - ERROR: " << query.lastError().text();
     } else {
         qWarning() << "MainDB::Update Urzadzenia - Udane: " << query.lastError().text();
     }
 
-
     return 0;
 }
 
+QString MainDb::UrzadzeniaDelete(QString numerSeryjny)
+{
+    qDebug() << "Usuwam analizator o danym numerze seryjnym: " << numerSeryjny;
+    QSqlQuery query;
+    //Delete
+    if (!query.exec("DELETE FROM urzadzenia WHERE numerSeryjny ='" + numerSeryjny + "' "))
+
+    {
+        qWarning() << "MainDB::DELETE Urzadzenia - ERROR: " << query.lastError().text();
+    } else {
+        qWarning() << "MainDB::DELETE Urzadzenia - Udane: " << query.lastError().text();
+    }
+    return 0;
+}
 
 QString MainDb::addUrzadzeniaUpdate(QString daneNrSeryjny, QString daneUnicueName)
 {
@@ -337,8 +364,6 @@ QString MainDb::addUrzadzeniaUpdate(QString daneNrSeryjny, QString daneUnicueNam
         qWarning() << "MainDB::Update Urzadzenia:Nr Id Kontr. - Udane: " << daneUnicueName
                    << query.lastError().text();
     }
-
-
 
     return 0;
 }
@@ -576,26 +601,25 @@ QString MainDb::loadDataRemider(QString remiderSelf, int i, int n, QString numer
     QString ninti = QString::number(n);
     QString name;
 
-
     //qWarning ()<<"Numer seryjny z Kontrahent Info przy Id: "<<i<<" "<<numerSeryjnydoPorownania;
     //qWarning ()<<numerSeryjnydoPorownania<< "tutaj numer seryjny do porowniania ";
     if (query.exec("SELECT * FROM dBPrzypomnienie where id =" + inti
                    + " and urzadzenia_numer_seryjny = '" + numerSeryjnydoPorownania + "'")) {
         while (query.next()) {
-           // qWarning ()<<"Numer seryjny z Bazy  "<<query.value(8).toString()<<" przy Id "<<i;
+            // qWarning ()<<"Numer seryjny z Bazy  "<<query.value(8).toString()<<" przy Id "<<i;
             if (query.value(8) != numerSeryjnydoPorownania) {
                 name = "Numeros4534";
-               // qWarning ()<<"Name to się rowna  "<<name;
+                // qWarning ()<<"Name to się rowna  "<<name;
                 return name;
             } else {
                 name = query.value(n).toString();
-              //  qWarning ()<<"Name to się rowna  "<<name;
+                //  qWarning ()<<"Name to się rowna  "<<name;
                 return name;
             }
         }
         name = "Numeros4534";
         remiderSelf = name;
-      //  qWarning ()<<"Name po za petla to się rowna  "<<name;
+        //  qWarning ()<<"Name po za petla to się rowna  "<<name;
         return name;
     }
     return name;
@@ -790,7 +814,19 @@ void MainDb::DatabasePopulate()
     //QSqlQuery query;
 }
 void MainDb::dBUrzadzenia()
-{
+{//_____
+//    query.exec("CREATE TABLE IF NOT EXISTS urzadzenia  (id INTEGER PRIMARY KEY, "
+//               "urzadzenia_producent_id TEXT,"
+//               "urzadzenia_model_id TEXT, "
+//               "numerSeryjny TEXT UNIQUE, "
+//               "przypisany TEXT,"
+//               "kontrahent_id,"
+//               "FOREIGN KEY (urzadzenia_producent_id) REFERENCES "
+//               "producenci(producent),"
+//               "FOREIGN KEY (urzadzenia_model_id) REFERENCES modele(model) ON DELETE SET NULL,"
+//               "FOREIGN KEY (kontrahent_id) REFERENCES kontrahenci(nazwaFirmy) ON DELETE SET NULL)");
+    //______
+
     QSqlQuery query;
     query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
     qWarning("Tworzenie tabeli Urzadzenia ");
@@ -801,9 +837,9 @@ void MainDb::dBUrzadzenia()
                "przypisany TEXT,"
                "kontrahent_id,"
                "FOREIGN KEY (urzadzenia_producent_id) REFERENCES "
-               "producenci(producent),"
-               "FOREIGN KEY (urzadzenia_model_id) REFERENCES modele(model),"
-               "FOREIGN KEY (kontrahent_id) REFERENCES kontrahenci(nazwaFirmy))");
+               "producenci(producent) ON DELETE SET NULL,"
+               "FOREIGN KEY (urzadzenia_model_id) REFERENCES modele(model) ON DELETE SET NULL,"
+               "FOREIGN KEY (kontrahent_id) REFERENCES kontrahenci(nazwaFirmy)ON DELETE SET NULL)");
     if (!query.isActive())
         qWarning() << "1. Tworzenie Tabeli - ERROR: " << query.lastError().text();
 
@@ -892,9 +928,9 @@ void MainDb::dBBaza()
     //        "testowa TEXT, "
     //        "FOREIGN KEY (dbbaza_urzadzenia_producent_id) REFERENCES "
     //        "urzadzenia(urzadzenia_producent_id),"
-    //        "FOREIGN KEY (dbbaza_urzadzenia_model_id) REFERENCES urzadzenia(urzadzenia_model_id),"
-    //        "FOREIGN KEY (dbbaza_urzadzenia_numerSeryjny) REFERENCES urzadzenia(numerSeryjny),"
-    //        "FOREIGN KEY (dbbaza_urzadzenia_przypisany) REFERENCES urzadzenia(przypisany))");
+    //        "FOREIGN KEY (dbbaza_urzadzenia_model_id) REFERENCES urzadzenia(urzadzenia_model_id) ON DELETE SET NULL,"
+    //        "FOREIGN KEY (dbbaza_urzadzenia_numerSeryjny) REFERENCES urzadzenia(numerSeryjny) ON DELETE SET NULL,"
+    //        "FOREIGN KEY (dbbaza_urzadzenia_przypisany) REFERENCES urzadzenia(przypisany) ON DELETE SET NULL)");
 
     if (!query.isActive())
         qWarning() << " Tworzenie Tabeli DB - ERROR: " << query.lastError().text();

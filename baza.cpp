@@ -302,7 +302,7 @@ void Baza::DataiCzas()
 {
     cout << "Wszedłem do daty i czsu" << endl;
 }
-//Info do Gita
+
 void Baza::on_pushButton_2_clicked()
 {
     // Informacje o knotrahencie
@@ -433,8 +433,7 @@ void Baza::fillComboBoxes()
 
     } //
 }
-//    ui->comboBox_5->setDuplicatesEnabled(false);
-//    ui->comboBox_6->setDuplicatesEnabled(true);
+
 
 QString Baza::filtrOn(QString aktywnyProducent)
 {

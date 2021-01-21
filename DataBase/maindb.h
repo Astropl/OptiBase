@@ -35,7 +35,7 @@ public:
 
     int PobierzCzasUruchomienDbDni(int DbDni);
 
-
+    QString UrzadzeniaDelete (QString numerSeryjny);
     QString pobierzNumerWpisu(QString QnrWpisu);
     QString ZapytanieTestowe(QString Zapytanie);
     //void addProducent();

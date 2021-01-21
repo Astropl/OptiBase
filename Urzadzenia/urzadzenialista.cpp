@@ -229,7 +229,7 @@ void UrzadzeniaLista::on_pushButton_3_clicked()
 {
     //Usuń
     // usunać zaznaczony rząd
-
+MainDb *mainDb = new MainDb(this);
     QMessageBox msgBox;
     if (QMessageBox::question(this,
                               "Ostrzeżenie",
@@ -258,9 +258,22 @@ void UrzadzeniaLista::on_pushButton_3_clicked()
             tab[i] = index.sibling(stringrowDoSize - 1, i).data();
         }
 
+
+ //TODO: usunać z bazy danych urzadzenie  o takim numerze seryjnym
+        QString QNumerSeryjny="";
+        //QVariant VNumerSeryjny = index.sibling(index.row(), index.column()).data();
+        QVariant VNumerSeryjny = index.sibling(index.row(), (3)).data();
+
+
+        QNumerSeryjny = QVariant(VNumerSeryjny).toString();
+        mainDb->UrzadzeniaDelete(QNumerSeryjny);
+
         model->removeRows(stringrowDoSize - 1, 1);
         //wczytaj ponownie dane
         iloscWierszy();
+
+
+
         QMessageBox::information(this, "Ostrzeżenie", "Rekord  usunięty");
     } else {
         QMessageBox::information(this, "Ostrzeżenie", "Rekord nie usunięty");
