@@ -109,12 +109,12 @@ void KontrahentDodajMiasto::on_pushButton_2_clicked() //dodoaj do comboboxa
         for (int i = 0; i <= iloscElementowwCombo; i++) {
             QVariant zmienna1 = ui->lineEditDodajMiasto->text();
             //QString zmienna2=QVariant(ui->comboBoxDodajMiasto->itemData(i));
-            cout << "Wyswietlam po koleji itemy z comboboxa dodaj miasta" << endl;
-            cout << ui->comboBoxDodajMiasto->itemText(i).toStdString() << endl;
-            ;
+            //cout << "Wyswietlam po koleji itemy z comboboxa dodaj miasta" << endl;
+            //cout << ui->comboBoxDodajMiasto->itemText(i).toStdString() << endl;
+
             if (zmienna1 != (ui->comboBoxDodajMiasto->itemText(i))) {
-                cout << "Miasto numer :" << i << " "
-                     << ui->comboBoxDodajMiasto->itemText(i).toStdString() << endl;
+                //cout << "Miasto numer :" << i << " "
+                     //<< ui->comboBoxDodajMiasto->itemText(i).toStdString() << endl;
                 porownanieMiast = false;
 
                 //Wrzucic do tabeli. Przeleciec tabele. jezeli bedzie wyraz z listy zakonczyc. Jezeli nie dodoać do combo boa.

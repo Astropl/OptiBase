@@ -24,7 +24,7 @@ KontrahentShow::KontrahentShow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    cout << "Jestem w Kontrahebt show" << endl;
+    //cout << "Jestem w Kontrahebt show" << endl;
     QString file1 = "C:/Defaults/Pliki/1.DB.txt";
     QString file2 = "C:/Defaults/Pliki/2.Kontrahent.txt";
     QString file3 = "C:/Defaults/Pliki/3.Urzadzenie.txt";
@@ -67,7 +67,7 @@ QVariant KontrahentShow::wyswietl(QVariant p1,
                                   QVariant p13,
                                   QVariant p14)
 {
-    cout << "Chche wysiwretlic i dopisac do labeli wybranego kontrahenta" << endl;
+    //cout << "Chche wysiwretlic i dopisac do labeli wybranego kontrahenta" << endl;
     ui->lblNumerPorz->setText(p1.toString());
     ui->leNazwa->setText(p2.toString());
     ui->leImie->setText(p3.toString());
@@ -160,7 +160,7 @@ void KontrahentShow::on_pushButton_3_clicked() //ZAPISZ?
     ui->comboBoxPomoc->clear();
     ui->comboBoxPomoc1->clear();
     //ZAPISZ wszytsko
-    cout << "Zapisuje po edycji" << endl;
+    //cout << "Zapisuje po edycji" << endl;
     // Wczytać dane do cmoboBoxaPomoc.
     // Znalesc te same dane co sa w trybie edycji.
     // skasować te dane.
@@ -226,26 +226,21 @@ void KontrahentShow::on_pushButton_3_clicked() //ZAPISZ?
     QString QKontrahent = "";
     iloscKontrahentow = mainDb->pobierzKontrahentaId(iloscKontrahentow);
 
-    qWarning() << "ilosc kontrahentow pobranych z bazy to: " << iloscKontrahentow;
-
-//    for (i = 1; i <= iloscKontrahentow; i++) {
-//        for (d = 0; d <= 14; d++)
-//            QKontrahent = mainDb->pobierzKontrahenta(QKontrahent, i, d);
-//        //ui->comboBoxPomoc1->addItem(QKontrahent);
-//        qWarning() << QKontrahent << endl;
+    //qWarning() << "ilosc kontrahentow pobranych z bazy to: " << iloscKontrahentow;
 
 
 
-//    }
+
+
+
     QString tym1 = ui->leNazwa->text();
         QString tym2 = ui->leImie->text();
         QString tym3 = ui->leNazwisko->text();
-//        QString tym3 = ui->leKraj->text();
-//        QString tym4 = ui->leRegion->text();
+
         QString tym4 = ui->comboBoxKraj->currentText();
         QString tym5 = ui->comboBoxWojewodztwa->currentText();
         QString tym6 = ui->comboBoxMiasta->currentText();
-        //QString tym8 = ui->leMiasto;
+
         QString tym7 = ui->leKod->text();
         QString tym8 = ui->leUlica->text();
         QString tym9 = ui->leNrDomu->text();
@@ -450,11 +445,11 @@ void KontrahentShow::on_comboBoxKraj_highlighted(const QString)
     QString file13 = "C:/Defaults/Pliki/13.CheckFlagsInKrajKontrahentShow.txt";
     // Sortowanie kraj
     CheckFiles *checkFiles = new CheckFiles(this);
-    cout << "Otrzymanie highland przycisku wczytaj Kraj" << endl;
+    //cout << "Otrzymanie highland przycisku wczytaj Kraj" << endl;
     checkFlagsVarriableKrajKontrahentShow = checkFiles->checkFlagsKraj(
         checkFlagsVarriableKrajKontrahentShow);
     if (checkFlagsVarriableKrajKontrahentShow != 0) {
-        cout << "textHighlighted" << endl;
+        //cout << "textHighlighted" << endl;
         QStringList listaKraj = QStringList();
 
         ui->comboBoxKraj->clear();
@@ -481,11 +476,11 @@ void KontrahentShow::on_comboBoxWojewodztwa_highlighted(const QString)
     fstream checkFlags;
     // Sortowanie wojewodztwo
     CheckFiles *checkFiles = new CheckFiles(this);
-    cout << "Otrzymanie highland przycisku wczytaj wojewodztwo" << endl;
+    //cout << "Otrzymanie highland przycisku wczytaj wojewodztwo" << endl;
     checkFlagsVarriableWojewodztwoKontrahentShow = checkFiles->checkFlagsWojewodztwa(
         checkFlagsVarriableWojewodztwoKontrahentShow);
     if (checkFlagsVarriableWojewodztwoKontrahentShow != 0) {
-        cout << "textHighlighted" << endl;
+       // cout << "textHighlighted" << endl;
         QStringList listaWojewodztwo = QStringList();
 
         ui->comboBoxWojewodztwa->clear();
@@ -512,11 +507,11 @@ void KontrahentShow::on_comboBoxMiasta_highlighted(const QString)
     fstream checkFlags;
     // Sortowanie wojewodztwo
     CheckFiles *checkFiles = new CheckFiles(this);
-    cout << "Otrzymanie highland przycisku wczytaj Miasta" << endl;
+    //cout << "Otrzymanie highland przycisku wczytaj Miasta" << endl;
     checkFlagsVarriableMiastoKontrahentShow = checkFiles->checkFlagsMiasto(
         checkFlagsVarriableMiastoKontrahentShow);
     if (checkFlagsVarriableMiastoKontrahentShow != 0) {
-        cout << "textHighlighted" << endl;
+        //cout << "textHighlighted" << endl;
         QStringList listaMiasto = QStringList();
 
         ui->comboBoxMiasta->clear();

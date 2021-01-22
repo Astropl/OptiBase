@@ -19,6 +19,9 @@
 
 using namespace std;
 fstream fileUrzadzeniaLista, fileUrzadzeniaLista2;
+int rowDoSize = 0, iTabelaPustychRzedow = 0;
+int pusteRzedy = (rowDoSize) - (iTabelaPustychRzedow);
+
 
 UrzadzeniaLista::UrzadzeniaLista(QWidget *parent)
     : QMainWindow(parent)
@@ -105,11 +108,14 @@ void UrzadzeniaLista::initMenuUrzadzeniaLista()
     //            this,
     //            SLOT(on_actionDodaj_Producenta_triggered()));
     //    connect(edycjaDodajModel, SIGNAL(triggered()), this, SLOT(on_actionDodaj_Model_triggered()));
+
+    ui->label->setVisible(false);
+    ui->label_2->setVisible(false);
 }
 void UrzadzeniaLista::wczytajDane()
 {
     MainDb *mainDb = new MainDb(this);
-
+ui->checkBox->setChecked(false);
     // QString file1 = "C:/Defaults/Pliki/1.DB.txt";
     //QString file2 = "C:/Defaults/Pliki/2.Kontrahent.txt";
     //QString file3 = "C:/Defaults/Pliki/3.Urzadzenie.txt";
@@ -336,4 +342,157 @@ void UrzadzeniaLista::openSettings()
 {
     Ustawienia *ustaw = new Ustawienia(this);
     ustaw->show();
+}
+void UrzadzeniaLista::on_checkBox_stateChanged()
+{
+
+    pusteRzedy = ui->label_2->text().toInt();
+    qWarning() << "checekd Mark Filtr ON:OFF";
+    if (ui->checkBox->isChecked()) {
+        qWarning() << "cKliknietey";
+        ui->comboBox->setVisible(true);
+        ui->comboBox_2->setVisible(true);
+        ui->comboBox_3->setVisible(true);
+        //filtrOn("Brak");
+        fillComboBoxes();
+    } else {
+        qWarning() << "NIE Klikniety";
+        ui->comboBox->setVisible(false);
+        ui->comboBox_2->setVisible(false);
+        ui->comboBox_3->setVisible(false);
+        ui->comboBox->clear();
+        ui->comboBox_2->clear();
+        ui->comboBox_3->clear();
+        for (int i = 0; i <= model->rowCount() - 1 - pusteRzedy; i++) {
+            qWarning() << "Wejscie do odkrycia rzedów numer : " << i;
+            ui->tableView->showRow(i);
+        }
+    }
+
+}
+
+void UrzadzeniaLista::fillComboBoxes()
+{
+    bool jestItem;
+    pusteRzedy = ui->label_3->text().toInt();
+    ui->comboBox->addItem("Brak");
+    ui->comboBox_2->addItem("Brak");
+    ui->comboBox_3->addItem("Brak");
+
+    for (int i = 0; i <= model->rowCount() - 1 - pusteRzedy; i++) {
+        //int iloscElemtowWCB5 = ui->comboBox_5->count();
+
+        QStandardItem *item1 = model->item(i, 1);
+        QStandardItem *item2 = model->item(i, 2);
+        QStandardItem *item3 = model->item(i, 4);
+
+        //NOTE: Sprawdzam czy element jest juz na liscie w comboBox
+
+        //
+        ui->comboBox->addItem(item1->text());
+        ui->comboBox_2->addItem(item2->text());
+        ui->comboBox_3->addItem(item3->text());
+    }
+    int iloscElemetowWCB2 = ui->comboBox_2->count();
+
+    for (int j = 0; j <= iloscElemetowWCB2; j++)
+
+    {
+        //qWarning() << "wyraz do porowniaa to: " << ui->comboBox_5->itemText(j);
+
+        for (int k =j+ 1; k <= iloscElemetowWCB2; k++) {
+            if (ui->comboBox_2->itemText(j) == ui->comboBox_2->itemText(k)) {
+                ui->comboBox_2->removeItem(k);
+            }
+        }
+
+    } //
+    int iloscElemetowWCB3 = ui->comboBox_3->count();
+
+    for (int j = 0; j <= iloscElemetowWCB3; j++)
+
+    {
+        //qWarning() << "wyraz do porowniaa to: " << ui->comboBox_6->itemText(j);
+
+        for (int k =j+ 1; k <= iloscElemetowWCB3 - 1; k++) {
+            //qWarning() << "Porownuje : " << ui->comboBox_6->itemText(j)
+            //<< " z: " << ui->comboBox_6->itemText(k);
+            if (ui->comboBox_3->itemText(j) == ui->comboBox_3->itemText(k)) {
+                //qWarning() << "Usuwam : " << ui->comboBox_6->itemText(k);
+                ui->comboBox_3->removeItem(k);
+            }
+        }
+
+    } //
+    int iloscElemetowWCB0 = ui->comboBox->count();
+
+    for (int j = 0; j <= iloscElemetowWCB0; j++)
+
+    {
+        //qWarning() << "wyraz do porowniaa to: " << ui->comboBox_6->itemText(j);
+
+        for (int k =j+ 1; k <= iloscElemetowWCB0 - 1; k++) {
+            //qWarning() << "Porownuje : " << ui->comboBox_6->itemText(j)
+            //<< " z: " << ui->comboBox_6->itemText(k);
+            if (ui->comboBox->itemText(j) == ui->comboBox->itemText(k)) {
+                //qWarning() << "Usuwam : " << ui->comboBox_6->itemText(k);
+                ui->comboBox->removeItem(k);
+            }
+        }
+
+    } //
+
+
+}
+void UrzadzeniaLista::on_comboBox_activated(const QString &arg1)
+{
+    //qWarning() << "Activatefd w CB5: " << ui->comboBox_5->currentText();
+    QString aktywnyProducent = ui->comboBox->currentText();
+    filtrOn(aktywnyProducent);
+}
+
+void UrzadzeniaLista::on_comboBox_2_activated(const QString &arg1)
+{
+    //qWarning() << "Activatefd w CB6: " << ui->comboBox_6->currentText();
+    QString aktywnyProducent = ui->comboBox_2->currentText();
+    filtrOn(aktywnyProducent);
+}
+void UrzadzeniaLista::on_comboBox_3_activated(const QString &arg1)
+{
+    //qWarning() << "Activatefd w CB6: " << ui->comboBox_6->currentText();
+    QString aktywnyProducent = ui->comboBox_3->currentText();
+    filtrOn(aktywnyProducent);
+}
+QString UrzadzeniaLista::filtrOn(QString aktywnyProducent)
+{
+    for (int k = 0; k <= model->rowCount() - 1; k++) {
+        //qWarning() << "Ukrywam rzad : " << k;
+
+        ui->tableView->hideRow(k);
+    }
+
+    //qWarning() << "Jestem w filtrze";
+    QString filter = aktywnyProducent;
+
+    //qWarning() << " Odkrywam takie co mają w nazwie Jawon";
+    pusteRzedy = ui->label_2->text().toInt();
+    //qWarning() << "Puste rzedy to : " << pusteRzedy;
+    //for (int i =0; i<=model ->rowCount()-1;i++)// pusteRzedy
+    for (int i = 0; i <= model->rowCount() - 1 - pusteRzedy; i++) // pusteRzedy
+    {
+        for (int j = 0; j <= model->columnCount() - 1; j++) {
+            QStandardItem *item = model->item(i, j);
+            //qWarning() << " Wyswietlam i: " << i << " j: " << j << " wyraz to: " << item->text();
+
+            if (filter == "Brak") {
+                ui->tableView->showRow(i);
+            } else {
+                if (item->text().contains(filter)) {
+                    //qWarning() << "Wiersz: " << i << " zawiera: " << filter;
+                    ui->tableView->showRow(i);
+                }
+            }
+        }
+        //TODO: Jakis problem przy wyswietlaniu powyzej 12 linii. ( czyli 13) tam gdzie mam puste czyli nulle.
+    }
 }

@@ -106,7 +106,7 @@ void UrzadzeniaListaKontrahent::initMenuUrzadzeniaListaKontrahent()
 void UrzadzeniaListaKontrahent::on_pushButton_clicked()// Przypisz
 {
 
-    cout << "przypisz klienta do analziatora" << endl;
+    //cout << "przypisz klienta do analziatora" << endl;
     //pobierz z comboboxa
 
     int iloscColumn = model->columnCount();
@@ -127,7 +127,7 @@ void UrzadzeniaListaKontrahent::on_pushButton_2_clicked()//zamknij
 {
 
 
-    cout << "Zamknij liste urzadzen z prypisania" << endl;
+    //cout << "Zamknij liste urzadzen z prypisania" << endl;
     timer->stop();
     destroy();
 }
@@ -142,12 +142,12 @@ void UrzadzeniaListaKontrahent::wyswietl(QVariant p1, QVariant p2, QVariant p3, 
 
 void UrzadzeniaListaKontrahent::wczytajDane()
 { MainDb *mainDb = new MainDb(this);
-    //QString file2 = "C:/Defaults/Pliki/2.Kontrahent.txt";
+
     // Tworze modele do Qtable
 
     model = new QStandardItemModel(1, 14, this);
     ui->tableView->setModel(model);
-    //QModelIndex *index;
+
     model->setHeaderData(0, Qt::Horizontal, "L.P.");
     model->setHeaderData(1, Qt::Horizontal, "Nazwa");
     model->setHeaderData(2, Qt::Horizontal, "Imię");
@@ -164,15 +164,12 @@ void UrzadzeniaListaKontrahent::wczytajDane()
     model->setHeaderData(13, Qt::Horizontal, "Strona URL");
     model->setHeaderData(14, Qt::Horizontal, "Numer Seryjny z Przypisania");
 
-    //    setSelectionBehavior(QAbstractItemView::SelectRows);
-    //    setSelectionMode(QAbstractItemView::SingleSelection);
+
     //---------------------------------------------------------------
     //TODO: Ukrywam linie w kolumnie 1
     //ui->tableView->setColumnHidden(0, true); //Ukrywam kolumne z LP
         //---------------------------------------------------------------
-    //model->insertRow(model->rowCount());
 
-    //ui->labelTest->text(QString::number(iloscWierszy));
 
     QStandardItem *dodajItem = new QStandardItem();
     int pobierzKontrId = 0;
@@ -188,7 +185,7 @@ void UrzadzeniaListaKontrahent::wczytajDane()
         }
     }
 
-    //Wczytuje kontrahentow z pliku
+
 
 
 
@@ -253,75 +250,13 @@ void UrzadzeniaListaKontrahent::on_pushButton_3_clicked()// Zapisz
 {
 MainDb *mainDb = new MainDb(this);
     ui->comboBox->addItem("Przypisany");
-    //fileDB.open("C:/Defaults/Pliki/1.DB.txt", ios::app);
-    // urzadzenia było append
-//TODO: Update albo alter
 
-
-//    UPDATE pracownicy
-//        SET pensja = pensja * 1.1
-//              WHERE staz > 2;
  QString nrSeryjnyzCB1 = ui->comboBox->itemText(3); //numer seryjny dla którego przyisujemy pacjenta
-    //UPDATE person SET surname = 'Lake', age = 5 WHERE rowid = 3;
+
  QString nazwaZComboBoxa1 = ui->comboBox_2->itemText(1);
 
  mainDb->addUrzadzeniaUpdate(nrSeryjnyzCB1,nazwaZComboBoxa1);
 
-
-    //fileUrzadzenia.open("C:/Defaults/Pliki/3.Urzadzenie.txt", ios::in);
-//    string linia;
-//    int row = 0;
-//    int nr_lini = 0; // zmiana z int nr_lini = 1;
-
-
-//    while (getline(fileUrzadzenia, linia)) {
-//        ui->comboBox_3->addItem(linia.c_str());
-//        //cout << linia.c_str() << endl;
-//        nr_lini++;
-//        if (nr_lini > 4) {
-//            row = row + 1;
-//            nr_lini = 0;
-//        }
-//    }
-//    fileUrzadzenia.close();
-
-
-
-//    int IntnrSetyjnyzCB2 = ui->comboBox_3->findText(nrSeryjnyzCB1);
-//    QString tym1 = ui->comboBox_3->itemText(IntnrSetyjnyzCB2);
-//    QString tym2 = ui->comboBox_3->itemText(IntnrSetyjnyzCB2 + 1);
-//    QString tym3 = ui->comboBox_3->itemText(IntnrSetyjnyzCB2 - 1);
-//    QString tym4 = ui->comboBox_3->itemText(IntnrSetyjnyzCB2 - 2);
-//    QString tym5 = ui->comboBox_3->itemText(IntnrSetyjnyzCB2 - 3);
-
-//    ui->comboBox_3->removeItem(IntnrSetyjnyzCB2 - 3);
-//    ui->comboBox_3->removeItem(IntnrSetyjnyzCB2 - 3);
-//    ui->comboBox_3->removeItem(IntnrSetyjnyzCB2 - 3);
-//    ui->comboBox_3->removeItem(IntnrSetyjnyzCB2 - 3);
-//    ui->comboBox_3->removeItem(IntnrSetyjnyzCB2 - 3);
-
-//    QString pierwsza = ui->comboBox->itemText(0);
-//    QString druga = ui->comboBox_2->itemText(0);
-//    ui->lblNrUrza->setText(pierwsza);
-//    ui->lblNrKontr->setText(druga);
-
-//    fileDB << ui->lblNrUrza->text().toStdString() << endl;
-//    fileDB << ui->lblNrKontr->text().toStdString() << endl;
-//    fileDB.close();
-
-
-    //fileUrzadzenia.open("C:/Defaults/Pliki/3.Urzadzenie.txt", ios::out | ios::trunc);
-
-//    for (int i = 0; i <= ui->comboBox_3->count() - 1; i++) {
-//        //fileUrzadzenia << ui->comboBox_3->itemText(i).toStdString() << endl;
-//    }
-//    //fileUrzadzenia.close();
-//    //fileUrzadzenia.open("C:/Defaults/Pliki/3.Urzadzenie.txt", ios::app);
-
-//    for (int i = 0; i <= ui->comboBox->count() - 1; i++) {
-//        //fileUrzadzenia << ui->comboBox->itemText(i).toStdString() << endl;
-//    }
-    //fileUrzadzenia.close();
 
     ui->comboBox->clear();
     ui->comboBox_2->clear();

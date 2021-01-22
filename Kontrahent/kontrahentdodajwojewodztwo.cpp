@@ -83,7 +83,7 @@ void KontrahentDodajWojewodztwo::on_pushButton_clicked()
     fstream checkflagsInWojewodztwo;
     QString file12 = "C:/Defaults/Pliki/12.CheckFlagsInWojewodztwa.txt";
     //QString file6 = "C:/Defaults/Pliki/6.ZapisWojewodztwa.txt";
-    cout << "Button Zapisz. Zapisuje i wychodze z okienka" << endl;
+    //cout << "Button Zapisz. Zapisuje i wychodze z okienka" << endl;
     // musze zapisać do pliku
     //plikOdczytDodajWojewodztwa.open(file6.toStdString(), ios::out | ios::trunc);
 
@@ -121,12 +121,12 @@ void KontrahentDodajWojewodztwo::on_pushButton_2_clicked()
         cout << "Dodoaje Wojewdoztwo" << endl;
         for (int i = 0; i <= iloscElementowWcombo; i++) {
             QVariant zmienna1 = (ui->lineEditDodajWojewodztwa->text());
-            cout << "Wyswietlam po koleji itemy z comboboxa dodaj wojewodztwo" << endl;
-            cout << ui->comboBoxDodajWojewodztwa->itemText(i).toStdString() << endl;
-            ;
+//            //cout << "Wyswietlam po koleji itemy z comboboxa dodaj wojewodztwo" << endl;
+//            cout << ui->comboBoxDodajWojewodztwa->itemText(i).toStdString() << endl;
+
             if (zmienna1 != (ui->comboBoxDodajWojewodztwa->itemText(i))) {
-                cout << "Miasto numer :" << i << " "
-                     << ui->comboBoxDodajWojewodztwa->itemText(i).toStdString() << endl;
+                //cout << "Miasto numer :" << i << " "
+                     //<< ui->comboBoxDodajWojewodztwa->itemText(i).toStdString() << endl;
                 porownanieWojewodztw = false;
 
             } else {
@@ -140,7 +140,7 @@ void KontrahentDodajWojewodztwo::on_pushButton_2_clicked()
             }
         }
         if (porownanieWojewodztw == false) {
-            cout << "dodaje wojewodztwo" << endl;
+            //cout << "dodaje wojewodztwo" << endl;
             QString dodajWojewodztwo = ui->lineEditDodajWojewodztwa->text();
             ui->comboBoxDodajWojewodztwa->addItem(dodajWojewodztwo);
             ui->lineEditDodajWojewodztwa->setText("");

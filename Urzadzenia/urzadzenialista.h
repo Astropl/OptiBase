@@ -24,6 +24,17 @@ public slots:
     void initMenuUrzadzeniaLista();
     void openSettings();
     void openInfo();
+    void fillComboBoxes();
+
+    void on_comboBox_activated(const QString &arg1);
+
+
+    void on_comboBox_2_activated(const QString &arg1);
+
+    void on_comboBox_3_activated(const QString &arg1);
+
+    QString filtrOn(QString aktywnyProducent);
+
 
 private slots:
     void on_pushButton_clicked();
@@ -32,6 +43,8 @@ private slots:
     void on_pushButton_4_clicked();
     void on_pushButton_5_clicked();
     void on_pushButton_6_clicked();
+
+    void on_checkBox_stateChanged();
 
 private:
     Ui::UrzadzeniaLista *ui;

@@ -22,10 +22,10 @@ using namespace std;
 //int labelGodzinaPierwsza;
 //int labelDataPierwsza;
 //int wynikPierwsza;
-int rowDoSize = 0, iTabelaPustychRzedow = 0;
+int rowDoSize1 = 0, iTabelaPustychRzedow1 = 0;
 
-int pusteRzedy = (rowDoSize) - (iTabelaPustychRzedow);
-fstream fileDataBase1, fileDataBase2, fileDataBase3;
+int pusteRzedy1 = (rowDoSize1) - (iTabelaPustychRzedow1);
+//fstream fileDataBase1, fileDataBase2, fileDataBase3;
 Baza::Baza(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::Baza)
@@ -147,7 +147,7 @@ void Baza::wczytajDane()
 
     //
     pobierzUrzKontId = mainDb->pobierzUrzadzeniaId(pobierzUrzKontId);
-    qWarning() << "BAZA: Pobierz ilosc urzadzen: " << pobierzUrzKontId;
+   // qWarning() << "BAZA: Pobierz ilosc urzadzen: " << pobierzUrzKontId;
     vector<int> tabelaPustychRzedow[pobierzUrzKontId];
     int iTabelaPustychRzedow = 0;
     // qWarning() << "pobierz kontr i urzadz:: mam ilosc modeli z bazy danych:" << pobierzUrzKontId;
@@ -160,7 +160,7 @@ void Baza::wczytajDane()
             QStringPobierzUrzKont = mainDb->pobierzKontrahentaZNrSeryjnym(QStringPobierzUrzKont,
                                                                           i,
                                                                           d);
-            qWarning() << "Numeroinny jest" << QStringPobierzUrzKont;
+            //qWarning() << "Numeroinny jest" << QStringPobierzUrzKont;
             if (QStringPobierzUrzKont == "Numeros4534") {
                 d = 20;
                 // qWarning() << "Do Ukryciaif rzad: Numeros inny jest : " << i;
@@ -221,7 +221,7 @@ void Baza::wczytajDane()
     QModelIndex index = ui->tableViewDB->selectionModel()->currentIndex();
     QVariant wartosc;
     QString Qwartosc;
-    pusteRzedy = (rowDoSize) - (iTabelaPustychRzedow);
+    pusteRzedy1 = (rowDoSize1) - (iTabelaPustychRzedow1);
 
     // ui->label_2->setText(QString::number(pusteRzedy));
     ui->label_2->setText(QString::number(iTabelaPustychRzedow));
@@ -232,7 +232,7 @@ void Baza::wczytajDane()
     //    qWarning() << "iTabelaPustychRzedow to : " << iTabelaPustychRzedow;
     //+++++++++++
     //for (int i = rowDoSize; i >= (rowDoSize) - (iTabelaPustychRzedow); i--) {
-    for (int i = rowDoSize; i >= pusteRzedy; i--) {
+    for (int i = rowDoSize1; i >= pusteRzedy1; i--) {
         //qWarning() << "Pusty rzad to : "<<i;
 
         ui->tableViewDB->hideRow(i);
@@ -362,7 +362,7 @@ void Baza::on_pushButton_2_clicked()
 void Baza::on_checkBox_stateChanged() // Checked Mark Filtr :ON/OFF
 
 {
-    pusteRzedy = ui->label_2->text().toInt();
+    pusteRzedy1 = ui->label_2->text().toInt();
     qWarning() << "checekd Mark Filtr ON:OFF";
     if (ui->checkBox->isChecked()) {
         qWarning() << "cKliknietey";
@@ -376,7 +376,7 @@ void Baza::on_checkBox_stateChanged() // Checked Mark Filtr :ON/OFF
         ui->comboBox_6->setVisible(false);
         ui->comboBox_5->clear();
         ui->comboBox_6->clear();
-        for (int i = 0; i <= model->rowCount() - 1 - pusteRzedy; i++) {
+        for (int i = 0; i <= model->rowCount() - 1 - pusteRzedy1; i++) {
             qWarning() << "Wejscie do odkrycia rzedów numer : " << i;
             ui->tableViewDB->showRow(i);
         }
@@ -385,11 +385,11 @@ void Baza::on_checkBox_stateChanged() // Checked Mark Filtr :ON/OFF
 void Baza::fillComboBoxes()
 {
     bool jestItem;
-    pusteRzedy = ui->label_2->text().toInt();
+    pusteRzedy1 = ui->label_2->text().toInt();
     ui->comboBox_5->addItem("Brak");
     ui->comboBox_6->addItem("Brak");
 
-    for (int i = 0; i <= model->rowCount() - 1 - pusteRzedy; i++) {
+    for (int i = 0; i <= model->rowCount() - 1 - pusteRzedy1; i++) {
         //int iloscElemtowWCB5 = ui->comboBox_5->count();
 
         QStandardItem *item1 = model->item(i, 1);
@@ -420,13 +420,13 @@ void Baza::fillComboBoxes()
     for (int j = 0; j <= iloscElemetowWCB6; j++)
 
     {
-        qWarning() << "wyraz do porowniaa to: " << ui->comboBox_6->itemText(j);
+        //qWarning() << "wyraz do porowniaa to: " << ui->comboBox_6->itemText(j);
 
         for (int k =j+ 1; k <= iloscElemetowWCB6 - 1; k++) {
-            qWarning() << "Porownuje : " << ui->comboBox_6->itemText(j)
-                       << " z: " << ui->comboBox_6->itemText(k);
+            //qWarning() << "Porownuje : " << ui->comboBox_6->itemText(j)
+                       //<< " z: " << ui->comboBox_6->itemText(k);
             if (ui->comboBox_6->itemText(j) == ui->comboBox_6->itemText(k)) {
-                qWarning() << "Usuwam : " << ui->comboBox_6->itemText(k);
+                //qWarning() << "Usuwam : " << ui->comboBox_6->itemText(k);
                 ui->comboBox_6->removeItem(k);
             }
         }
@@ -447,10 +447,10 @@ QString Baza::filtrOn(QString aktywnyProducent)
     QString filter = aktywnyProducent;
 
     //qWarning() << " Odkrywam takie co mają w nazwie Jawon";
-    pusteRzedy = ui->label_2->text().toInt();
+    pusteRzedy1 = ui->label_2->text().toInt();
     //qWarning() << "Puste rzedy to : " << pusteRzedy;
     //for (int i =0; i<=model ->rowCount()-1;i++)// pusteRzedy
-    for (int i = 0; i <= model->rowCount() - 1 - pusteRzedy; i++) // pusteRzedy
+    for (int i = 0; i <= model->rowCount() - 1 - pusteRzedy1; i++) // pusteRzedy
     {
         for (int j = 0; j <= model->columnCount() - 1; j++) {
             QStandardItem *item = model->item(i, j);
@@ -471,14 +471,14 @@ QString Baza::filtrOn(QString aktywnyProducent)
 
 void Baza::on_comboBox_5_activated(const QString &arg1)
 {
-    qWarning() << "Activatefd w CB5: " << ui->comboBox_5->currentText();
+    //qWarning() << "Activatefd w CB5: " << ui->comboBox_5->currentText();
     QString aktywnyProducent = ui->comboBox_5->currentText();
     filtrOn(aktywnyProducent);
 }
 
 void Baza::on_comboBox_6_activated(const QString &arg1)
 {
-    qWarning() << "Activatefd w CB6: " << ui->comboBox_6->currentText();
+    //qWarning() << "Activatefd w CB6: " << ui->comboBox_6->currentText();
     QString aktywnyProducent = ui->comboBox_6->currentText();
     filtrOn(aktywnyProducent);
 }

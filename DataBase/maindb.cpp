@@ -184,7 +184,7 @@ QString MainDb::pobierzKontrahenta(QString daneKontrahent, int i, int d)
         while (query.next()) {
             //qWarning() << query.value(d).toString();
             name = query.value(d).toString();
-            qWarning() << "Name z MainDB: " << name;
+            //qWarning() << "Name z MainDB: " << name;
         }
         //qWarning() << "udalo sie? : pozniej " << name;
         return name;
@@ -288,7 +288,7 @@ QString MainDb::addKontrahenciUpdate(QString tym1,
 {
     QSqlQuery query;
 
-    qWarning() << "NOTO to dzieła.";
+    //qWarning() << "NOTO to dzieła.";
     query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
 
     if (!query.exec("UPDATE kontrahenci SET nazwaFirmy ='" + tym1 + "', imie = '" + tym2
@@ -430,7 +430,7 @@ QString MainDb::addModel(QString daneModel)
     query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
     qWarning() << ("Dodoaje do bazy " + daneModel);
     if (!query.exec("INSERT INTO modele (model) VALUES('" + daneModel + "')"))
-        qWarning() << "MainDB::Dodoanie Modelu - ERROR: " << query.lastError().text();
+        qWarning() << "MainDB::addModel - ERROR: " << query.lastError().text();
     return 0;
 }
 QString MainDb::addKraj(QString daneKraj)
@@ -441,7 +441,7 @@ QString MainDb::addKraj(QString daneKraj)
     query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
     qWarning() << ("Dodoaje do bazy " + daneKraj);
     if (!query.exec("INSERT INTO panstwa (panstwo) VALUES('" + daneKraj + "')"))
-        qWarning() << "MainDB::Dodoanie Modelu - ERROR: " << query.lastError().text();
+        qWarning() << "MainDB::addKraj - ERROR: " << query.lastError().text();
     return 0;
 }
 QString MainDb::addWojewodztwo(QString daneWojewodztwo)
@@ -452,7 +452,7 @@ QString MainDb::addWojewodztwo(QString daneWojewodztwo)
     query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
     qWarning() << ("Dodoaje do bazy " + daneWojewodztwo);
     if (!query.exec("INSERT INTO wojewodztwa (wojewodztwo) VALUES('" + daneWojewodztwo + "')"))
-        qWarning() << "MainDB::Dodoanie Modelu - ERROR: " << query.lastError().text();
+        qWarning() << "MainDB::addWojewodztwo - ERROR: " << query.lastError().text();
     return 0;
 }
 QString MainDb::addMiasto(QString daneMiasto)
@@ -463,7 +463,7 @@ QString MainDb::addMiasto(QString daneMiasto)
     query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
     qWarning() << ("Dodoaje do bazy " + daneMiasto);
     if (!query.exec("INSERT INTO miasta (miasto) VALUES('" + daneMiasto + "')"))
-        qWarning() << "MainDB::Dodoanie Modelu - ERROR: " << query.lastError().text();
+        qWarning() << "MainDB::addMiasto - ERROR: " << query.lastError().text();
     return 0;
 }
 QString MainDb::pobierzKraj(QString daneModel, int i)
@@ -1056,22 +1056,22 @@ void MainDb::PrzypiszTestowo()
     QSqlQuery query;
     //Dodaje Miasta
     if (!query.exec("INSERT INTO miasta (miasto) VALUES('Szczecin')"))
-        qWarning() << "MainDB::Dodoanie Modelu - ERROR: " << query.lastError().text();
+        qWarning() << "MainDB::Dodoanie TestMiasto - ERROR: " << query.lastError().text();
     if (!query.exec("INSERT INTO miasta (miasto) VALUES('Wrocław')"))
-        qWarning() << "MainDB::Dodoanie Modelu - ERROR: " << query.lastError().text();
+        qWarning() << "MainDB::Dodoanie TestMiasto - ERROR: " << query.lastError().text();
     //------------------------------------------------------------------------
     //Dodaje Wojewodztwa
     qWarning() << ("Dodoaje do bazy  + Szczecin");
     if (!query.exec("INSERT INTO wojewodztwa (wojewodztwo) VALUES('Brak')"))
-        qWarning() << "MainDB::Dodoanie Modelu - ERROR: " << query.lastError().text();
+        qWarning() << "MainDB::Dodoanie TestWojewodztwa - ERROR: " << query.lastError().text();
     if (!query.exec("INSERT INTO wojewodztwa (wojewodztwo) VALUES('Dolnośląskie')"))
-        qWarning() << "MainDB::Dodoanie Modelu - ERROR: " << query.lastError().text();
+        qWarning() << "MainDB::Dodoanie TestWojewodztwa - ERROR: " << query.lastError().text();
     //---------------------------------------------------------------------------
     //Dodaje Producentów
     if (!query.exec("INSERT INTO producenci (producent) VALUES('Selvas')"))
-        qWarning() << "MainDB::Dodoanie Modelu - ERROR: " << query.lastError().text();
+        qWarning() << "MainDB::Dodoanie TestProducenci - ERROR: " << query.lastError().text();
     if (!query.exec("INSERT INTO producenci (producent) VALUES('Jawon')"))
-        qWarning() << "MainDB::Dodoanie Modelu - ERROR: " << query.lastError().text();
+        qWarning() << "MainDB::Dodoanie TestProducenci - ERROR: " << query.lastError().text();
     //----------------------------------------------------------------------------
     //dodaje Modele
     if (!query.exec("INSERT INTO modele (model) VALUES('IOI 353')"))
@@ -1087,7 +1087,7 @@ void MainDb::PrzypiszTestowo()
             "telefon , telefonPrywatny , adresEmail , stronaUrl ) VALUES('MarPaw10', 'Paw', 'Mar', "
             "'Polska', 'Zachodniopomorskie' , 'Szczecin', '70-890', 'Maciejowicka', '20/123', "
             "'512052411', '723508531', 'serwsi@vbody.pl', 'www.vitako.pl')"))
-        qWarning() << "MainDB::Dodoanie Modelu - ERROR: " << query.lastError().text();
+        qWarning() << "MainDB::Dodoanie TestowoKontrahenta - ERROR: " << query.lastError().text();
 
     //query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
 }

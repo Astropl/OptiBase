@@ -191,7 +191,7 @@ void KontrahentInfo::showTable()
     }
     ui->tableView->horizontalHeader()->setSectionResizeMode(
         QHeaderView::ResizeToContents); // Rozszerza kolumny do najdłuzszego itema w kolumnie.
-    ui->tableView->sortByColumn(0,
+    ui->tableView->sortByColumn(2,
                                   Qt::SortOrder(
                                       1)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy
 

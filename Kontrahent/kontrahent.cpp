@@ -359,7 +359,7 @@ void Kontrahent::on_pushButton_clicked()//zapisz
 void Kontrahent::on_pushButton_2_clicked()//exit
 {
         //Wyjdz
-        cout << "Wychodze z Kontrahentów" << endl;
+        //cout << "Wychodze z Kontrahentów" << endl;
         timer->stop();
         destroy();
 }
