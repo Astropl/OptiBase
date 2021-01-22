@@ -95,13 +95,9 @@ void MainDb::dBPrzypomnienie()
     if (!query.isActive())
         qWarning() << " Tworzenie Tabeli - ERROR: " << query.lastError().text();
 
-        if (!query.exec("INSERT INTO kontrahenci (nazwaFirmy, imie , nazwisko , kontrahent_panstwo_id "
-                        ", kontrahent_wojewodztwo_id , kontrahent_miasto_id , kodPocztowy , ulica , "
-                        "nrDomu , telefon , telefonPrywatny , adresEmail , stronaUrl  ) "
-                        "VALUES('VITAKO' , 'Paweł' , 'Martys' , 'Polska' , "
-                        "'Zachodniopomorskie' , 'Szczecin' , '71-766' , 'Małej Syrenki' , '2' , "
-                        "'692717987' , '723508531' , 'serwis@vbody.pl' , 'www.vitako.pl')"))
-    qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
+    if (!query.exec("INSERT INTO dBPrzypomnienie ( nr_wpisu , data , temat , tresc , przypomnienie , urzadzenia_numer_seryjny  ) "
+                    "VALUES('2021/01/01/1' , '2021.01.01' , 'Temat Testowy' , 'Treść Testowa' , 'NIE' , 'AN TESTOWY')"))
+        qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
 }
 
 void MainDb::dBKontrahent()
@@ -814,17 +810,17 @@ void MainDb::DatabasePopulate()
     //QSqlQuery query;
 }
 void MainDb::dBUrzadzenia()
-{//_____
-//    query.exec("CREATE TABLE IF NOT EXISTS urzadzenia  (id INTEGER PRIMARY KEY, "
-//               "urzadzenia_producent_id TEXT,"
-//               "urzadzenia_model_id TEXT, "
-//               "numerSeryjny TEXT UNIQUE, "
-//               "przypisany TEXT,"
-//               "kontrahent_id,"
-//               "FOREIGN KEY (urzadzenia_producent_id) REFERENCES "
-//               "producenci(producent),"
-//               "FOREIGN KEY (urzadzenia_model_id) REFERENCES modele(model) ON DELETE SET NULL,"
-//               "FOREIGN KEY (kontrahent_id) REFERENCES kontrahenci(nazwaFirmy) ON DELETE SET NULL)");
+{   //_____
+    //    query.exec("CREATE TABLE IF NOT EXISTS urzadzenia  (id INTEGER PRIMARY KEY, "
+    //               "urzadzenia_producent_id TEXT,"
+    //               "urzadzenia_model_id TEXT, "
+    //               "numerSeryjny TEXT UNIQUE, "
+    //               "przypisany TEXT,"
+    //               "kontrahent_id,"
+    //               "FOREIGN KEY (urzadzenia_producent_id) REFERENCES "
+    //               "producenci(producent),"
+    //               "FOREIGN KEY (urzadzenia_model_id) REFERENCES modele(model) ON DELETE SET NULL,"
+    //               "FOREIGN KEY (kontrahent_id) REFERENCES kontrahenci(nazwaFirmy) ON DELETE SET NULL)");
     //______
 
     QSqlQuery query;
@@ -843,9 +839,9 @@ void MainDb::dBUrzadzenia()
     if (!query.isActive())
         qWarning() << "1. Tworzenie Tabeli - ERROR: " << query.lastError().text();
 
-    //    if (!query.exec("INSERT INTO urzadzenia (urzadzenia_producent_id , urzadzenia_model_id, "
-    //                    "numerSeryjny) VALUES('Jawon', 'IOI-353', 'AP00034232-324222')"))
-    //        qWarning() << "2. MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
+        if (!query.exec("INSERT INTO urzadzenia (urzadzenia_producent_id , urzadzenia_model_id, "
+                        "numerSeryjny) VALUES('Jawon', 'IOI-353', 'AN TESTOWY')"))
+            qWarning() << "2. MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
 
     //    if (!query.exec("INSERT INTO urzadzenia (urzadzenia_producent_id , urzadzenia_model_id, "
     //                    "numerSeryjny) VALUES('Selvas', 'BC-380', 'AP4222')"))
@@ -863,6 +859,8 @@ void MainDb::dBProducent()
     if (!query.isActive())
         qWarning() << " Tworzenie Tabeli - ERROR: " << query.lastError().text();
     //NOTE:: dodoaje dwa przykładowe wpisy Producenci
+    if (!query.exec("INSERT INTO producenci (producent) VALUES('Jawon')"))
+        qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
 }
 void MainDb::dBModel()
 {
@@ -875,8 +873,8 @@ void MainDb::dBModel()
     if (!query.isActive())
         qWarning() << " Tworzenie Tabeli - ERROR: " << query.lastError().text();
 
-    //    if (!query.exec("INSERT INTO modele (model) VALUES('IOI 353')"))
-    //        qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
+        if (!query.exec("INSERT INTO modele (model) VALUES('IOI 353')"))
+            qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
     query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
 }
 

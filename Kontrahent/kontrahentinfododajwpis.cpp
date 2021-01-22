@@ -95,7 +95,7 @@ void KontrahentInfoDodajWpis::on_pushButton_2_clicked()
     QString przypomnienieTemp;
     QString dataNajblPrzypom;
     QString nrWpisu = ui->label_2->text();
-    QString dataWpisu = ui->label_4->text() +":"+ ui->label_5->text() +":"+ ui->label_6->text();
+    QString dataWpisu = ui->label_4->text() +":"+ ui->label_5->text() +":"+ ui->label_6->text()+" | "+ui->label_14->text();
     QString tematWpisu = ui->lineEdit->text();
     QString trescWpisu = ui->textEdit->toPlainText();
     //QString dataNajblPrzypom = ui->label_11->text();
@@ -168,6 +168,7 @@ void KontrahentInfoDodajWpis::init()
     // dodac kolejny numer
     // zapisac całosc.
 
+    ui->label_14->setText(qStrGodz+":"+qStrMin);
     QString QnrWpisu;
     QnrWpisu = mainDb ->pobierzNumerWpisu(QnrWpisu);
 //QnrWpisu = mainDb ->pobierzNumerWpisu(QnrWpisu.toUtf8().constData());
@@ -319,7 +320,7 @@ int KontrahentInfoDodajWpis::dodajDateKolejnegoWpisu(int dzienKolejny, int miesi
     qStrDzien = timeDate->changeStringsDzien(dzien);
     //qStrGodz = timeDate->changeStringsGodz(godzina);
     qStrMiesiac = timeDate->changeStringsMiesiac(miesiac);
-
+//TODO: tutuaj jest coś nie tak. Poprawić.
     QString nrWpisuKolejnego;
     nrWpisuKolejnego = QString::number(rok)+":"+qStrMiesiac+":"+qStrDzien;
     //ui->label_11->setText(QrokKolejny + ":"+ QmiesiacKolejny+":"+QdzienKolejny);
