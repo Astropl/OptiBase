@@ -18,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     DataBase/checkfiles.cpp \
     DataBase/maindb.cpp \
+    DataBase/wpisy.cpp \
     Info/info.cpp \
     Kontrahent/kontrahent.cpp \
     Kontrahent/kontrahentdodajkraj.cpp \
@@ -44,6 +45,7 @@ SOURCES += \
 HEADERS += \
     DataBase/checkfiles.h \
     DataBase/maindb.h \
+    DataBase/wpisy.h \
     Info/info.h \
     Kontrahent/kontrahent.h \
     Kontrahent/kontrahentdodajkraj.h \
@@ -67,6 +69,7 @@ HEADERS += \
     mainwindow.h
 
 FORMS += \
+    DataBase/wpisy.ui \
     Info/info.ui \
     Kontrahent/kontrahent.ui \
     Kontrahent/kontrahentdodajkraj.ui \

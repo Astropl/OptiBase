@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>864</width>
+    <width>1076</width>
     <height>634</height>
    </rect>
   </property>
@@ -19,7 +19,7 @@
      <rect>
       <x>40</x>
       <y>110</y>
-      <width>761</width>
+      <width>1001</width>
       <height>341</height>
      </rect>
     </property>
@@ -104,8 +104,8 @@
    <widget class="QLabel" name="labelDaty">
     <property name="geometry">
      <rect>
-      <x>710</x>
-      <y>10</y>
+      <x>950</x>
+      <y>20</y>
       <width>81</width>
       <height>20</height>
      </rect>
@@ -176,8 +176,8 @@
    <widget class="QScrollArea" name="scrollArea">
     <property name="geometry">
      <rect>
-      <x>610</x>
-      <y>0</y>
+      <x>850</x>
+      <y>10</y>
       <width>190</width>
       <height>70</height>
      </rect>
@@ -335,6 +335,36 @@
      <string>Puste rzedy</string>
     </property>
    </widget>
+   <widget class="QComboBox" name="comboBox_7">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>80</y>
+      <width>81</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="comboBox_8">
+    <property name="geometry">
+     <rect>
+      <x>540</x>
+      <y>80</y>
+      <width>111</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="comboBox_9">
+    <property name="geometry">
+     <rect>
+      <x>660</x>
+      <y>80</y>
+      <width>151</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
    <zorder>tableViewDB</zorder>
    <zorder>labelTest</zorder>
    <zorder>comboBox_4</zorder>
@@ -352,13 +382,16 @@
    <zorder>comboBox_5</zorder>
    <zorder>comboBox_6</zorder>
    <zorder>label_2</zorder>
+   <zorder>comboBox_7</zorder>
+   <zorder>comboBox_8</zorder>
+   <zorder>comboBox_9</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>864</width>
+     <width>1076</width>
      <height>21</height>
     </rect>
    </property>
