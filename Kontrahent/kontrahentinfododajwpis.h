@@ -18,6 +18,27 @@ public:
     explicit KontrahentInfoDodajWpis(QWidget *parent = nullptr);
     ~KontrahentInfoDodajWpis();
 
+
+public slots:
+    void init();
+    QString setSettingsId(QString NrSeryjny );
+    int dodajDateKolejnegoWpisu(int dzien, int miesiac, int rok);
+
+
+    void initMenuBazy();
+
+
+    void openInfo();
+    void openSettings();
+    void InfoTemat();
+    void openDodajTemat();
+//    void on_actionOprogramie_triggered();
+//    void on_actionOpenSettings_triggered();
+//    void on_actionOpcje_triggered();
+//    void on_actionInfoTemat_triggered();
+    void loadInfoOTemacie();
+
+
 private slots:
     void on_pushButton_2_clicked();
 
@@ -35,10 +56,7 @@ private slots:
     void initMenu();
     void on_comboBox_currentIndexChanged(const QString &arg1);
 
-public:
-    void init();
-    QString setSettingsId(QString NrSeryjny );
-    int dodajDateKolejnegoWpisu(int dzien, int miesiac, int rok);
+
 
 private:
     Ui::KontrahentInfoDodajWpis *ui;

@@ -559,10 +559,10 @@ QString MainDb::pobierzModel(QString daneModel, int i)
     QString name;
     if (query.exec("SELECT * FROM modele where id =" + inti)) {
         while (query.next()) {
-            //qWarning() << query.value(1).toString();
+
             name = query.value(1).toString();
         }
-        //qWarning() << "udalo sie? : pozniej " << name;
+
         return name;
     }
     return 0;
@@ -586,6 +586,32 @@ int MainDb::pobierzModeliD(int daneModelId)
     return rows;
 }
 //*******************888
+
+QString MainDb::loadDataRemiderAll(QString remiderSelf, int i, int n)
+
+{
+QSqlQuery query;
+QString name;
+QString inti = QString::number(i);
+QString ninti = QString::number(n); //+ "'"
+if (query.exec("SELECT * FROM dBPrzypomnienie WHERE id =" + inti)) {
+    while (query.next()) {
+        // qWarning ()<<"Numer seryjny z Bazy  "<<query.value(8).toString()<<" przy Id "<<i;
+
+            name = query.value(n).toString();
+              //qWarning ()<<"Name to się rowna  "<<name;
+
+        }
+         return name;
+    }
+
+     return name;
+
+
+
+
+}
+
 QString MainDb::loadDataRemider(QString remiderSelf, int i, int n, QString numerSeryjnydoPorownania)
 
 {
@@ -596,6 +622,8 @@ QString MainDb::loadDataRemider(QString remiderSelf, int i, int n, QString numer
     QString inti = QString::number(i);
     QString ninti = QString::number(n);
     QString name;
+
+
 
     //qWarning ()<<"Numer seryjny z Kontrahent Info przy Id: "<<i<<" "<<numerSeryjnydoPorownania;
     //qWarning ()<<numerSeryjnydoPorownania<< "tutaj numer seryjny do porowniania ";
@@ -662,22 +690,15 @@ QString MainDb::pobierzMiasto(QString daneModel, int i)
 }
 
 int MainDb::pobierzMiastoiD(int daneModelId)
-
 {
     QSqlQuery query;
-    //qWarning() << "Jestem w MainDB->pobierz Id.";
     QString testName;
     int rows = 0;
-    //TODO: pobrac z Bazy Modeli
-
     if (query.exec("SELECT * FROM miasta")) {
         while (query.next()) {
-            //qWarning() << query.value(1).toString();
             rows++;
         }
-        //qWarning() << "row to: " << rows;
     }
-    //qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
     daneModelId = rows;
     return rows;
 }
@@ -806,6 +827,7 @@ void MainDb::DatabasePopulate()
     dBBaza();
     dBPrzypomnienie();
     dBStatistisc();
+    dBInfoOTemacie();
 
     //QSqlQuery query;
 }
@@ -956,6 +978,24 @@ void MainDb::dBKraj()
     if (!query.exec("INSERT INTO panstwa (panstwo) VALUES('Nuemcy')"))
         qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
 }
+
+void MainDb::dBInfoOTemacie()
+{
+    QSqlQuery query;
+    query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
+    qWarning("Tworzenie tabeli Info O Temacie ");
+    query.exec(
+        "CREATE TABLE IF NOT EXISTS tematDowpisu  (id INTEGER PRIMARY KEY, temat TEXT UNIQUE )");
+
+    if (!query.isActive())
+        qWarning() << " Tworzenie Tabeli:tematDowpisu - ERROR: " << query.lastError().text();
+
+    if (!query.exec("INSERT INTO tematDowpisu (temat) VALUES('Info')"))
+        qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
+//    if (!query.exec("INSERT INTO panstwa (panstwo) VALUES('Nuemcy')"))
+//        qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
+}
+
 void MainDb::dBStatistisc()
 {
     QSqlQuery query;
@@ -1202,4 +1242,37 @@ QString MainDb::pobierzNumerWpisu(QString QnrWpisu)
     }
 
     return QnrWpisu;
+}
+int MainDb::pobierzIloscTematowiD(int iloscTematowId)
+{
+    QSqlQuery query;
+    QString testName;
+    int rows = 0;
+    if (query.exec("SELECT * FROM tematDowpisu")) {
+        while (query.next()) {
+            rows++;
+        }
+    }
+    iloscTematowId = rows;
+    return rows;
+}
+QString MainDb::pobierzIloscTematow(QString qIloscTematow,int i)
+{
+    QSqlQuery query;
+    QString testName;
+    //qWarning() << "Pobrana ilosc producentow z ::Urzadzenia::" << i;
+
+    QString inti = QString::number(i);
+
+    QString name;
+    if (query.exec("SELECT * FROM tematDowpisu where id =" + inti)) {
+        while (query.next()) {
+            // qWarning() << "Producent : " << query.value(1).toString();
+            name = query.value(1).toString();
+        }
+        qIloscTematow = name;
+        //qWarning() << "udalo sie? : pozniej " << name;
+        return name;
+    }
+    return 0;
 }

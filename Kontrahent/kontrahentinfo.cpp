@@ -3,7 +3,7 @@
 //#include "kontrahentinfododajwpis.h"
 #include "DataBase/maindb.h"
 #include "Timery/timedate.h"
-#include <Info/info.h>
+#include "Info/info.h"
 #include "Ustawienia/ustawienia.h"
 #include "Ustawienia/statystyki.h"
 #include "iostream"
@@ -193,7 +193,7 @@ void KontrahentInfo::showTable()
         QHeaderView::ResizeToContents); // Rozszerza kolumny do najdłuzszego itema w kolumnie.
     ui->tableView->sortByColumn(2,
                                   Qt::SortOrder(
-                                      1)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy
+                                      2)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy
 
 
 

@@ -57,7 +57,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>100</y>
+      <y>110</y>
       <width>51</width>
       <height>16</height>
      </rect>
@@ -70,8 +70,8 @@
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>140</y>
-      <width>191</width>
+      <y>320</y>
+      <width>471</width>
       <height>71</height>
      </rect>
     </property>
@@ -250,7 +250,7 @@ przypomnienia:</string>
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>140</y>
+      <y>320</y>
       <width>51</width>
       <height>16</height>
      </rect>
@@ -408,19 +408,6 @@ przypomnienia:</string>
      </property>
     </item>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>100</y>
-      <width>191</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Testowo</string>
-    </property>
-   </widget>
    <widget class="QTextEdit" name="textEdit_2">
     <property name="geometry">
      <rect>
@@ -444,6 +431,29 @@ przypomnienia:</string>
      <string>12:00</string>
     </property>
    </widget>
+   <widget class="QComboBox" name="comboBox_2">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>110</y>
+      <width>191</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_15">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>280</y>
+      <width>191</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Info: Temat</string>
+    </property>
+   </widget>
    <zorder>label_9</zorder>
    <zorder>label_13</zorder>
    <zorder>label</zorder>
@@ -463,10 +473,11 @@ przypomnienia:</string>
    <zorder>scrollArea_8</zorder>
    <zorder>label_11</zorder>
    <zorder>comboBox</zorder>
-   <zorder>lineEdit</zorder>
    <zorder>textEdit_2</zorder>
    <zorder>labelDaty</zorder>
    <zorder>label_14</zorder>
+   <zorder>comboBox_2</zorder>
+   <zorder>label_15</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

@@ -24,6 +24,7 @@ public:
     void dBPrzypomnienie();
     void dBStatistisc();
     void PrzypiszTestowo();
+    void dBInfoOTemacie();
     QString ObliczCzasUruchomien(QString DbSec, QString DbMin, QString DbGodz, QString DbDni);
     int PobierzCzasUruchomien(int DbSec,int dBMin,int DbGodz, int DbDni);
 
@@ -34,7 +35,9 @@ public:
     int PobierzCzasUruchomienDbGodz(int DbGodz);
 
     int PobierzCzasUruchomienDbDni(int DbDni);
-
+    int pobierzIloscTematowiD(int iloscTematowId);
+    QString pobierzIloscTematow(QString qIloscTematow,int i);
+    QString loadDataRemiderAll(QString remiderSelf, int i, int n);
     QString UrzadzeniaDelete (QString numerSeryjny);
     QString pobierzNumerWpisu(QString QnrWpisu);
     QString ZapytanieTestowe(QString Zapytanie);
