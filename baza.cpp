@@ -380,9 +380,9 @@ void Baza::on_checkBox_stateChanged() // Checked Mark Filtr :ON/OFF
 
 {
     pusteRzedy1 = ui->label_2->text().toInt();
-    qWarning() << "checekd Mark Filtr ON:OFF";
+    //qWarning() << "checekd Mark Filtr ON:OFF";
     if (ui->checkBox->isChecked()) {
-        qWarning() << "cKliknietey";
+        //qWarning() << "cKliknietey";
         ui->comboBox_5->setVisible(true);
         ui->comboBox_6->setVisible(true);
          ui->comboBox_7->setVisible(true);
@@ -391,7 +391,7 @@ void Baza::on_checkBox_stateChanged() // Checked Mark Filtr :ON/OFF
         //filtrOn("Brak");
         fillComboBoxes();
     } else {
-        qWarning() << "NIE Klikniety";
+        //qWarning() << "NIE Klikniety";
         ui->comboBox_5->setVisible(false);
         ui->comboBox_6->setVisible(false);
         ui->comboBox_7->setVisible(false);
@@ -403,7 +403,7 @@ void Baza::on_checkBox_stateChanged() // Checked Mark Filtr :ON/OFF
         ui->comboBox_8->clear();
         ui->comboBox_9->clear();
         for (int i = 0; i <= model->rowCount() - 1 - pusteRzedy1; i++) {
-            qWarning() << "Wejscie do odkrycia rzedów numer : " << i;
+            //qWarning() << "Wejscie do odkrycia rzedów numer : " << i;
             ui->tableViewDB->showRow(i);
         }
     }

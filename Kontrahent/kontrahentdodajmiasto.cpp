@@ -57,7 +57,7 @@ void KontrahentDodajMiasto::loadMiasto()
         for (int i = 1; i <= pobierzMiastoId; i++) {
             QStringpobierzMiasto = mainDb->pobierzMiasto(QStringpobierzMiasto, i);
             ui->comboBoxDodajMiasto ->addItem(QStringpobierzMiasto);
-            qDebug() << QStringpobierzMiasto;
+            //qDebug() << QStringpobierzMiasto;
         }
 
     }

@@ -333,7 +333,7 @@ QString KontrahentInfoDodajWpis::setSettingsId(QString NrSeryjny)
 
     return 0;
 }
-void KontrahentInfoDodajWpis::on_comboBox_currentIndexChanged(const QString &arg1)
+void KontrahentInfoDodajWpis::on_comboBox_currentIndexChanged(const QString)
 {
     //Zmiana daty przypomnienia
     //qWarning() << "Zmiana na : " << ui->comboBox->currentText();
@@ -413,14 +413,14 @@ void KontrahentInfoDodajWpis::openDodajTemat()
     QString infoTemat = QInputDialog::getText(0, "Wprowadź nowy temat", "Wprowadź nowy temat", QLineEdit::Normal,"",&ok);
     if (ok && !infoTemat.isEmpty())
     {
-        qDebug()<<"Cos jest";
-        qDebug()<<infoTemat;
+        //qDebug()<<"Cos jest";
+       // qDebug()<<infoTemat;
         ui->comboBox_2->addItem(infoTemat);
         mainDb->dodajIloscTematow(infoTemat);
     }else
     {
-        qDebug()<<"pusrt";
-        qDebug()<<infoTemat;
+       // qDebug()<<"pusrt";
+       // qDebug()<<infoTemat;
         QMessageBox::information(this,
                                      "Ostrzeżenie",
                                      "Nie wprowaziłes żadnego tematu.");
@@ -440,7 +440,7 @@ void KontrahentInfoDodajWpis::openSettings()
     ustaw->show();
 }
 
-void KontrahentInfoDodajWpis::on_comboBox_2_textActivated(const QString &arg1)
+void KontrahentInfoDodajWpis::on_comboBox_2_textActivated(const QString )
 {
      ui->label_15->setText("Temat: "+ui->comboBox_2->currentText());
 }

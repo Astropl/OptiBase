@@ -70,7 +70,7 @@ void KontrahentDodajWojewodztwo::loadWojewodztwo()
     for (int i = 1; i <= pobierzWojewodztwoId; i++) {
          QStringpobierzWojewodztwo = mainDb->pobierzWojewodztwo(QStringpobierzWojewodztwo, i);
         ui->comboBoxDodajWojewodztwa ->addItem( QStringpobierzWojewodztwo);
-        qDebug() <<  QStringpobierzWojewodztwo;
+        //qDebug() <<  QStringpobierzWojewodztwo;
     }
 
 }

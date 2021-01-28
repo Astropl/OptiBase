@@ -50,7 +50,7 @@ void KontrahentDodajKraj::loadKraj()
         for (int i = 1; i <= pobierzKrajId; i++) {
         QStringpobierzKraj = mainDb->pobierzKraj(QStringpobierzKraj, i);
         ui->comboBoxDodajKraj ->addItem(QStringpobierzKraj);
-        qDebug() << QStringpobierzKraj;
+        //qDebug() << QStringpobierzKraj;
     }
 
 }

@@ -192,7 +192,7 @@ void Kontrahent::wczytajKraj()
     for (int i = 1; i <= pobierzKrajId; i++) {
         QStringpobierzKraj = mainDb->pobierzKraj(QStringpobierzKraj, i);
         ui->comboBoxWczytajKraj->addItem(QStringpobierzKraj);
-        qDebug() << QStringpobierzKraj;
+        //qDebug() << QStringpobierzKraj;
     }
 
     //    //Wczytuje Kraje z pliku
@@ -223,7 +223,7 @@ void Kontrahent::wczytajMiasta()
     for (int i = 1; i <= pobierzMiastoId; i++) {
         QStringpobierzMiasto = mainDb->pobierzMiasto(QStringpobierzMiasto, i);
         ui->comboBoxWczytajMiasta->addItem(QStringpobierzMiasto);
-        qDebug() << QStringpobierzMiasto;
+        //qDebug() << QStringpobierzMiasto;
     }
 
     //    QString file5 = "C:/Defaults/Pliki/5.ZapisMiasta.txt";
@@ -253,7 +253,7 @@ void Kontrahent::wczytajWojewodztwa()
     for (int i = 1; i <= pobierzWojewodztwoId; i++) {
         QStringpobierzWojewodztwo = mainDb->pobierzWojewodztwo(QStringpobierzWojewodztwo, i);
         ui->comboBoxWczytajWojewodztwa->addItem(QStringpobierzWojewodztwo);
-        qDebug() << QStringpobierzWojewodztwo;
+        //qDebug() << QStringpobierzWojewodztwo;
     }
 
     //    QString file6 = "C:/Defaults/Pliki/6.ZapisWojewodztwa.txt";

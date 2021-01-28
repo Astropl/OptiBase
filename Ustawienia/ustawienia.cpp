@@ -131,9 +131,10 @@ void Ustawienia::on_pushButton_clicked()
     } else {
         //        plik.copy("patchExt" , "patchExt1");
         if (plik.rename("C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/DataBase/" + QnameOfDB, "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/DataBase/" + QnameOfDB1))
-        {qDebug() << "success";}
-        else
-        {qDebug() << "failed";
+        {//qDebug() << "success";}
+        }
+            else
+        {//qDebug() << "failed";
             if (!source1.copy("patchExt1"))
             {
                 //qWarning()<<"BłąD: "<<source1.error();

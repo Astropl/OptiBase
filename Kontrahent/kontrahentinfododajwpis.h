@@ -54,11 +54,11 @@ private slots:
 
     void on_comboBox_currentTextChanged(const QString);
     void initMenu();
-    void on_comboBox_currentIndexChanged(const QString &arg1);
+    void on_comboBox_currentIndexChanged(const QString);
 
 
 
-    void on_comboBox_2_textActivated(const QString &arg1);
+    void on_comboBox_2_textActivated(const QString);
 
 private:
     Ui::KontrahentInfoDodajWpis *ui;

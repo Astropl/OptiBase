@@ -316,7 +316,7 @@ void UrzadzeniaLista::on_pushButton_6_clicked()
                                  "Nie możesz go przypisać do innego.");
 
     } else {
-        cout << "nie przypisany" << endl;
+        //cout << "nie przypisany" << endl;
 
         UrzadzeniaListaKontrahent *urzkl = new UrzadzeniaListaKontrahent(this);
         int iloscColumn = model->columnCount();
@@ -347,16 +347,16 @@ void UrzadzeniaLista::on_checkBox_stateChanged()
 {
 
     pusteRzedy = ui->label_2->text().toInt();
-    qWarning() << "checekd Mark Filtr ON:OFF";
+    //qWarning() << "checekd Mark Filtr ON:OFF";
     if (ui->checkBox->isChecked()) {
-        qWarning() << "cKliknietey";
+        //qWarning() << "cKliknietey";
         ui->comboBox->setVisible(true);
         ui->comboBox_2->setVisible(true);
         ui->comboBox_3->setVisible(true);
         //filtrOn("Brak");
         fillComboBoxes();
     } else {
-        qWarning() << "NIE Klikniety";
+       // qWarning() << "NIE Klikniety";
         ui->comboBox->setVisible(false);
         ui->comboBox_2->setVisible(false);
         ui->comboBox_3->setVisible(false);
@@ -364,7 +364,7 @@ void UrzadzeniaLista::on_checkBox_stateChanged()
         ui->comboBox_2->clear();
         ui->comboBox_3->clear();
         for (int i = 0; i <= model->rowCount() - 1 - pusteRzedy; i++) {
-            qWarning() << "Wejscie do odkrycia rzedów numer : " << i;
+           // qWarning() << "Wejscie do odkrycia rzedów numer : " << i;
             ui->tableView->showRow(i);
         }
     }

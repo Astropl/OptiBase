@@ -151,7 +151,7 @@ void MainWindow::on_pushButton_4_clicked()
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    qDebug ()<<"Wchodze do Wpisów";
+    //qDebug ()<<"Wchodze do Wpisów";
 
     Wpisy *wpisy = new Wpisy(this);
     wpisy->show();
@@ -161,7 +161,7 @@ void MainWindow::on_pushButton_3_clicked()
 //TODO: Zrobic
 }
 void MainWindow::on_actionO_programie_triggered()
-{qDebug()<<"on_actionO_programie_triggered";
+{//qDebug()<<"on_actionO_programie_triggered";
     Info *info = new Info(this);
     info->show();
 }
