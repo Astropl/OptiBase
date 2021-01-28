@@ -983,7 +983,7 @@ void MainDb::dBInfoOTemacie()
 {
     QSqlQuery query;
     query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
-    qWarning("Tworzenie tabeli Info O Temacie ");
+    //qWarning("Tworzenie tabeli Info O Temacie ");
     query.exec(
         "CREATE TABLE IF NOT EXISTS tematDowpisu  (id INTEGER PRIMARY KEY, temat TEXT UNIQUE )");
 
@@ -992,8 +992,7 @@ void MainDb::dBInfoOTemacie()
 
     if (!query.exec("INSERT INTO tematDowpisu (temat) VALUES('Info')"))
         qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
-//    if (!query.exec("INSERT INTO panstwa (panstwo) VALUES('Nuemcy')"))
-//        qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
+
 }
 
 void MainDb::dBStatistisc()
@@ -1267,7 +1266,7 @@ QString MainDb::pobierzIloscTematow(QString qIloscTematow,int i)
     QString name;
     if (query.exec("SELECT * FROM tematDowpisu where id =" + inti)) {
         while (query.next()) {
-            // qWarning() << "Producent : " << query.value(1).toString();
+
             name = query.value(1).toString();
         }
         qIloscTematow = name;
@@ -1275,4 +1274,13 @@ QString MainDb::pobierzIloscTematow(QString qIloscTematow,int i)
         return name;
     }
     return 0;
+}
+QString MainDb::dodajIloscTematow(QString qIloscTematow)
+{
+    QSqlQuery query;
+    if (!query.exec("INSERT INTO tematDowpisu (temat) VALUES('" + qIloscTematow + "')"))
+        qWarning() << "MainDB::iloscTematow - ERROR: " << query.lastError().text();
+    return 0;
+
+
 }

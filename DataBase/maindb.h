@@ -36,6 +36,7 @@ public:
 
     int PobierzCzasUruchomienDbDni(int DbDni);
     int pobierzIloscTematowiD(int iloscTematowId);
+    QString dodajIloscTematow(QString qIloscTematow);
     QString pobierzIloscTematow(QString qIloscTematow,int i);
     QString loadDataRemiderAll(QString remiderSelf, int i, int n);
     QString UrzadzeniaDelete (QString numerSeryjny);

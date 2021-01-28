@@ -337,6 +337,7 @@ void KontrahentInfoDodajWpis::on_comboBox_currentIndexChanged(const QString &arg
 {
     //Zmiana daty przypomnienia
     qWarning() << "Zmiana na : " << ui->comboBox->currentText();
+    ui->label_15->setText("Temat: "+ui->comboBox->currentText());
 }
 
 void KontrahentInfoDodajWpis::initMenu()
