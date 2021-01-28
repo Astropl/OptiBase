@@ -324,7 +324,7 @@ void KontrahentInfo::on_pushButton_2_clicked()
 void KontrahentInfo::on_pushButton_3_clicked()
 {
     // Odswiez
-    qDebug ()<<"Odsiwezam i wchodze w load Wpis";
+    //qDebug ()<<"Odsiwezam i wchodze w load Wpis";
     //ui->tableView->cle
     model->clear();
     showTable();

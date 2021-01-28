@@ -2,6 +2,9 @@
 #include "Kontrahent/kontrahentinfo.h"
 #include "QApplication"
 #include "Timery/timedate.h"
+#include "Info/info.h"
+#include "Ustawienia/statystyki.h"
+#include "Ustawienia/ustawienia.h"
 #include "time.h"
 //#include "ui_Baza.h"
 #include "ui_baza.h"
@@ -95,6 +98,17 @@ void Baza::initMenuBazy()
     //            this,
     //            SLOT(on_actionDodaj_Producenta_triggered()));
     //    connect(edycjaDodajModel, SIGNAL(triggered()), this, SLOT(on_actionDodaj_Model_triggered()));
+}
+
+void Baza::openInfo()
+{
+    Info *info = new Info(this);
+    info->show();
+}
+void Baza::openSettings()
+{
+    Ustawienia *ustaw = new Ustawienia(this);
+    ustaw->show();
 }
 
 void Baza::wczytajDane()

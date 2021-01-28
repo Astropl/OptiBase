@@ -167,7 +167,7 @@ void MainWindow::on_actionO_programie_triggered()
 }
 
 void MainWindow::on_actionOpcje_triggered()
-{qDebug()<<"on_actionOpcje_triggered";
+{//qDebug()<<"on_actionOpcje_triggered";
     Ustawienia *ustaw = new Ustawienia(this);
     ustaw->show();
 }

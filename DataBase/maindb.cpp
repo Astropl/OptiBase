@@ -154,6 +154,7 @@ int MainDb::pobierzUrzadzeniaId(int daneUrzadzeniaId)
     //qWarning() << "Jestem w MainDB->pobierz Id.";
     QString testName;
     int rows = 0;
+    daneUrzadzeniaId=rows;
     //TODO: pobrac z Bazy Modeli
 
     if (query.exec("SELECT * FROM urzadzenia")) {
@@ -197,6 +198,7 @@ int MainDb::pobierzKontrahentaId(int daneKontrahentId)
     //qWarning() << "Jestem w MainDB->pobierz Id.";
     QString testName;
     int rows = 0;
+    daneKontrahentId=rows;
     //TODO: pobrac z Bazy Modeli
 
     if (query.exec("SELECT * FROM kontrahenci")) {
@@ -257,6 +259,7 @@ int MainDb::pobierzKontrahentaZNrSeryjnymId(int daneKontrahentId)
     //qWarning() << "Jestem w MainDB->pobierz Id.";
     QString testName;
     int rows = 0;
+    daneKontrahentId=rows;
     //TODO: pobrac z Bazy Modeli
 
     if (query.exec("SELECT * FROM urzadzenia, kontrahenci WHERE urzadzenia.kontrahent_id = "
@@ -408,7 +411,7 @@ QString MainDb::addPrzypomnienie(QString nrWpisu,
     //TODO: dodoac do Bazy przypomnienia
     QSqlQuery query;
     query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
-    qWarning() << ("Dodoaje do bazy sekcje przypomnienia");
+    //qWarning() << ("Dodoaje do bazy sekcje przypomnienia");
 
     if (!query.exec("INSERT INTO dBPrzypomnienie (nr_wpisu, data, temat, tresc, przypomnienie, "
                     "data_przypomnienia, tekst_przypomnienia, urzadzenia_numer_seryjny) VALUES('"
@@ -494,6 +497,7 @@ int MainDb::pobierzKrajId(int pobierzKrajId)
     //qWarning() << "Jestem w MainDB->pobierz Id.";
     QString testName;
     int rows = 0;
+        pobierzKrajId=rows;
     //TODO: pobrac z Bazy Modeli
 
     if (query.exec("SELECT * FROM panstwa")) {
@@ -533,6 +537,7 @@ int MainDb::pobierzWojewodztwoId(int pobierzWojewodztwoId)
     //qWarning() << "Jestem w MainDB->pobierz Id.";
     QString testName;
     int rows = 0;
+
     pobierzWojewodztwoId = rows;
     //TODO: pobrac z Bazy Modeli
 
@@ -557,6 +562,7 @@ QString MainDb::pobierzModel(QString daneModel, int i)
     QString inti = QString::number(i);
 
     QString name;
+    daneModel=name;
     if (query.exec("SELECT * FROM modele where id =" + inti)) {
         while (query.next()) {
 

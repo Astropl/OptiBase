@@ -25,12 +25,12 @@ public slots:
     int dodajDateKolejnegoWpisu(int dzien, int miesiac, int rok);
 
 
-    void initMenuBazy();
+    //void initMenuBazy();
 
 
     void openInfo();
     void openSettings();
-    void InfoTemat();
+    //void InfoTemat();
     void openDodajTemat();
 //    void on_actionOprogramie_triggered();
 //    void on_actionOpenSettings_triggered();
@@ -57,6 +57,8 @@ private slots:
     void on_comboBox_currentIndexChanged(const QString &arg1);
 
 
+
+    void on_comboBox_2_textActivated(const QString &arg1);
 
 private:
     Ui::KontrahentInfoDodajWpis *ui;

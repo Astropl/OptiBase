@@ -29,6 +29,11 @@ public slots:
 
     QString  filtrOn(QString aktywnyProducent);
     void fillComboBoxes();
+
+    void openInfo();
+
+    void openSettings();
+
 private:
     Ui::Baza *ui;
 

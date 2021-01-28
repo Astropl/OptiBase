@@ -117,8 +117,8 @@ void KontrahentInfoDodajWpis::on_pushButton_2_clicked()
     QString nrWpisu = ui->label_2->text();
     QString dataWpisu = ui->label_4->text() + ":" + ui->label_5->text() + ":" + ui->label_6->text()
                         + " | " + ui->label_14->text();
-    //QString tematWpisu = ui->lineEdit->text();
-    QString tematWpisu = "tempoczasowy";
+    QString tematWpisu = ui->label_15->text();
+    //QString tematWpisu = "tempoczasowy";
     //TODO: Zamienic teamt wpisu na prawdziwy temat z comboBoxa_2
     QString trescWpisu = ui->textEdit->toPlainText();
     //QString dataNajblPrzypom = ui->label_11->text();
@@ -137,7 +137,7 @@ void KontrahentInfoDodajWpis::on_pushButton_2_clicked()
 
     QString tekstPrzypom = ui->textEdit_2->toPlainText();
     QString nrSeryjny = ui->label_12->text();
-    qWarning() << "Data przypomnieniea NIE i wydruk zniej " << dataNajblPrzypom;
+    //qWarning() << "Data przypomnieniea NIE i wydruk zniej " << dataNajblPrzypom;
 
     mainDb->addPrzypomnienie(nrWpisu,
                              dataWpisu,
@@ -158,7 +158,7 @@ void KontrahentInfoDodajWpis::on_pushButton_clicked()
 void KontrahentInfoDodajWpis::init()
 {
     MainDb *mainDb = new MainDb(this);
-    cout << "Jstem w show" << endl;
+    //cout << "Jstem w show" << endl;
     TimeDate *timeDate = new TimeDate();
     QString nrWpisu;
     //myfunctiontimerDoDaty(godzina,minuta,sekunda,dzien,miesiac,rok,dzienTygodnia);
@@ -336,7 +336,8 @@ QString KontrahentInfoDodajWpis::setSettingsId(QString NrSeryjny)
 void KontrahentInfoDodajWpis::on_comboBox_currentIndexChanged(const QString &arg1)
 {
     //Zmiana daty przypomnienia
-    qWarning() << "Zmiana na : " << ui->comboBox->currentText();
+    //qWarning() << "Zmiana na : " << ui->comboBox->currentText();
+
 }
 
 void KontrahentInfoDodajWpis::initMenu()
@@ -437,4 +438,9 @@ void KontrahentInfoDodajWpis::openSettings()
 {
     Ustawienia *ustaw = new Ustawienia(this);
     ustaw->show();
+}
+
+void KontrahentInfoDodajWpis::on_comboBox_2_textActivated(const QString &arg1)
+{
+     ui->label_15->setText("Temat: "+ui->comboBox_2->currentText());
 }
