@@ -118,7 +118,7 @@ void KontrahentDodajWojewodztwo::on_pushButton_2_clicked()
     int iloscElementowWcombo = ui->comboBoxDodajWojewodztwa->count();
 
     if (ui->lineEditDodajWojewodztwa->text() != "") {
-        cout << "Dodoaje Wojewdoztwo" << endl;
+        //cout << "Dodoaje Wojewdoztwo" << endl;
         for (int i = 0; i <= iloscElementowWcombo; i++) {
             QVariant zmienna1 = (ui->lineEditDodajWojewodztwa->text());
 //            //cout << "Wyswietlam po koleji itemy z comboboxa dodaj wojewodztwo" << endl;

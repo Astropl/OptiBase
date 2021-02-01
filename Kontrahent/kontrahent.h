@@ -41,6 +41,10 @@ private slots:
     void on_comboBoxWczytajKraj_activated(const QString);
     void initMenuKontrahent();
 
+    void on_lineEditWczytajUlica_editingFinished();
+
+    void on_comboBoxWczytajMiasta_textActivated(const QString &arg1);
+
 private:
     Ui::Kontrahent *ui;
     QTimer *timer;

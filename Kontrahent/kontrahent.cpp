@@ -388,7 +388,7 @@ void Kontrahent::on_actionDodaj_Kraj_triggered()
 
 void Kontrahent::on_lineEditWczytajNazwa_1_textChanged(const QString) // (const QString &arg1)
 {
-    cout << "Zmiana textu" << endl;
+    //cout << "Zmiana textu" << endl;
 }
 
 void Kontrahent::on_actionInfo_triggered()
@@ -497,3 +497,31 @@ void Kontrahent::on_actionOpcje_triggered()
 //    timer->stop();
 //    destroy();
 //}
+
+void Kontrahent::on_lineEditWczytajUlica_editingFinished()
+{
+    qWarning ()<<"Koniec edycji";
+}
+
+void Kontrahent::on_comboBoxWczytajMiasta_textActivated(const QString &arg1)
+{QString qWybraneMiasto;
+
+    qWarning()<<"Wybrane miasto to: "<< ui->comboBoxWczytajMiasta->currentText();
+    qWybraneMiasto=ui->comboBoxWczytajMiasta->currentText();
+    if (qWybraneMiasto =="Poznań")
+    {
+        ui->comboBoxWczytajWojewodztwa->setCurrentText("Wielkopolskie");
+    }
+    else if (qWybraneMiasto =="Szczecin")
+    {
+        ui->comboBoxWczytajWojewodztwa->setCurrentText("Zachodniopomorskie");
+    }
+    else if (qWybraneMiasto =="Warszawa")
+    {
+        ui->comboBoxWczytajWojewodztwa->setCurrentText("Mazowieckie");
+    }
+else
+    {
+         ui->comboBoxWczytajWojewodztwa->setCurrentText("Brak");
+    }
+}
