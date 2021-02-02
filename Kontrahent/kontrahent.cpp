@@ -503,7 +503,7 @@ void Kontrahent::on_lineEditWczytajUlica_editingFinished()
     qWarning ()<<"Koniec edycji";
 }
 
-void Kontrahent::on_comboBoxWczytajMiasta_textActivated(const QString &arg1)
+void Kontrahent::on_comboBoxWczytajMiasta_textActivated(const QString )
 {QString qWybraneMiasto;
 
     qWarning()<<"Wybrane miasto to: "<< ui->comboBoxWczytajMiasta->currentText();

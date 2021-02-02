@@ -113,7 +113,7 @@ void UrzadzeniaLista::initMenuUrzadzeniaLista()
     ui->label_2->setVisible(false);
 }
 void UrzadzeniaLista::wczytajDane()
-{qWarning()<<"Jestem w UrzadzeniaLista:WczytajDane";
+{//qWarning()<<"Jestem w UrzadzeniaLista:WczytajDane";
     MainDb *mainDb = new MainDb(this);
 ui->checkBox->setChecked(false);
     // QString file1 = "C:/Defaults/Pliki/1.DB.txt";
@@ -175,7 +175,7 @@ ui->checkBox->setChecked(false);
     //ui->tableView->setRowHeight(2,20);
     //ui->tableView->setRowHeight(3,20);
     iloscWierszy();
-    qWarning()<<"Jestem w UrzadzeniaLista:WczytajDane:End";
+    //qWarning()<<"Jestem w UrzadzeniaLista:WczytajDane:End";
 }
 
 void UrzadzeniaLista::iloscWierszy()

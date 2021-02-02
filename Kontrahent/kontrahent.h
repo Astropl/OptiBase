@@ -43,7 +43,7 @@ private slots:
 
     void on_lineEditWczytajUlica_editingFinished();
 
-    void on_comboBoxWczytajMiasta_textActivated(const QString &arg1);
+    void on_comboBoxWczytajMiasta_textActivated(const QString );
 
 private:
     Ui::Kontrahent *ui;

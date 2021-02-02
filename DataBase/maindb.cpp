@@ -167,7 +167,7 @@ int MainDb::pobierzUrzadzeniaId(int daneUrzadzeniaId)
 
     if (query.exec("SELECT * FROM urzadzenia")) {
         while (query.next()) {
-            qWarning() << query.value(5).toString();
+            //qWarning() << query.value(5).toString();
             //if (query.value(5).toString()!="")
             // {
             rows++;

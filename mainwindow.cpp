@@ -183,3 +183,10 @@ void MainWindow::on_pushButton_9_clicked()
 
 
 }
+
+void MainWindow::on_calendarWidget_clicked(const QDate &date)
+{
+    qWarning()<<"clicked in calndar";
+
+    //qWarning()<<ui->calendar
+}

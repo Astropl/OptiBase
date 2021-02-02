@@ -37,6 +37,8 @@ private slots:
 
     void on_pushButton_9_clicked();
     void statsy();
+    void on_calendarWidget_clicked(const QDate &date);
+
 private:
     Ui::MainWindow *ui;
 };

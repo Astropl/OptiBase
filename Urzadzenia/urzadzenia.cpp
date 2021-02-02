@@ -15,9 +15,9 @@
 #include <fstream>
 #include <iostream>
 #include <stdio.h>
+#include <QDebug>
 #include <QString>
 #include <QTimer>
-#include <QDebug>
 
 using namespace std;
 
@@ -26,7 +26,7 @@ QString zaznaczono;
 fstream plikUrzadzenia;
 int iloscUrzadzen = 0;
 QString QStringPobierzProducenta = "";
-QString QStringPobierzModel ="";
+QString QStringPobierzModel = "";
 int checkFlagsVariableProducent = 0;
 int checkFlagsVariableModel = 0;
 int pobierzProducentaId = 0;
@@ -47,18 +47,18 @@ Urzadzenia::Urzadzenia(QWidget *parent)
     connect(timer, SIGNAL(timeout()), this, SLOT(myfunctiontimer()));
     timer->start(1000);
     //===================
-    qWarning()<<"How Much Device";
+    //qWarning() << "How Much Device";
     howMuchDevice();
-    qWarning()<<"How Much Device:End";
-    qWarning()<<"initMenuUrzadzenia";
+    //qWarning() << "How Much Device:End";
+    //qWarning() << "initMenuUrzadzenia";
     initMenuUrzadzenia();
-    qWarning()<<"initMenuUrzadzenia:END";
-    qWarning()<<"wypelnijProducenta";
+    //qWarning() << "initMenuUrzadzenia:END";
+    //qWarning() << "wypelnijProducenta";
     wypelnijProducenta();
-    qWarning()<<"wypelnijProducenta:End";
-    qWarning()<<"wypelnijModel";
+    //qWarning() << "wypelnijProducenta:End";
+    //qWarning() << "wypelnijModel";
     wypelnijModel();
-    qWarning()<<"wypelnijModel:End";
+    //qWarning() << "wypelnijModel:End";
 
     countriesListModel = new QStringListModel(this);
 
@@ -75,7 +75,7 @@ Urzadzenia::Urzadzenia(QWidget *parent)
 }
 
 void Urzadzenia::wypelnijModel()
-{qWarning() <<"Jestem w Wypenij Model.";
+{ //qWarning() <<"Jestem w Wypenij Model.";
     //MainDb *mainDb =
     MainDb *mainDb = new MainDb(this);
     //qWarning() <<"Lece do MainDB->pobierz Id.";
@@ -84,10 +84,12 @@ void Urzadzenia::wypelnijModel()
     for (int i = 1; i <= pobierzModelId; i++) {
         QStringPobierzModel = mainDb->pobierzModel(QStringPobierzModel, i);
         ui->comboBox_2->addItem(QStringPobierzModel);
-        qDebug() << QStringPobierzModel;
+        //qDebug() << QStringPobierzModel;
     }
 
-qWarning() <<"Jestem w Wypenij Model:End";}
+    //qWarning() <<"Jestem w Wypenij Model:End";
+}
+
 QString Urzadzenia::zMainDb(QString testName)
 { //MainDb *mainDb = new MainDb(this);
 
@@ -96,18 +98,19 @@ QString Urzadzenia::zMainDb(QString testName)
     return 0;
 }
 void Urzadzenia::wypelnijProducenta()
-{qWarning() <<"Jestem w Wypenij Producenta.";
+{
+    qWarning() << "Jestem w Wypenij Producenta.";
     //MainDb *mainDb =
     MainDb *mainDb = new MainDb(this);
-   // qWarning() <<"Lece do MainDB->pobierz Id.";
+    // qWarning() <<"Lece do MainDB->pobierz Id.";
     pobierzProducentaId = mainDb->pobierzProducentaiD(pobierzProducentaId);
-   // qWarning() <<"Urzadzenia:: mam ilosc producentów z bazy danych:"<< pobierzProducentaId;
+    // qWarning() <<"Urzadzenia:: mam ilosc producentów z bazy danych:"<< pobierzProducentaId;
     for (int i = 1; i <= pobierzProducentaId; i++) {
         QStringPobierzProducenta = mainDb->pobierzProducenta(QStringPobierzProducenta, i);
         ui->comboBox->addItem(QStringPobierzProducenta);
-       // qDebug() << QStringPobierzProducenta;
+        // qDebug() << QStringPobierzProducenta;
     }
- qWarning() <<"Jestem w Wypenij Producenta:End";
+    qWarning() << "Jestem w Wypenij Producenta:End";
 }
 
 void Urzadzenia::initMenuUrzadzenia()
@@ -165,24 +168,24 @@ void Urzadzenia::initMenuUrzadzenia()
 }
 void Urzadzenia::howMuchDevice()
 {
-    qWarning()<<"Jestem w Urzadzenia:HowMuchDevice";
-int deviceCount=0;
-QString QDeviceCount ="";
-MainDb *mainDb = new MainDb (this);
+    qWarning() << "Jestem w Urzadzenia:HowMuchDevice";
+    int deviceCount = 0;
+    QString QDeviceCount = "";
+    MainDb *mainDb = new MainDb(this);
 
-deviceCount = mainDb ->isNumerSeryjnyTheSameId(deviceCount);
+    deviceCount = mainDb->isNumerSeryjnyTheSameId(deviceCount);
 
     ui->LblNumberAnaliz->setText(QString::number(deviceCount));
 
-//    if (deviceCount<10)
-//    {
-//        QDeviceCount = "000" + deviceCount;
+    //    if (deviceCount<10)
+    //    {
+    //        QDeviceCount = "000" + deviceCount;
 
-//    }
-//    qWarning ()<<"Device równa się "<<QDeviceCount;
+    //    }
+    //    qWarning ()<<"Device równa się "<<QDeviceCount;
     ui->lineEditNumber->setText(QString::number(deviceCount + 1));
 
-qWarning()<<"Jestem w Urzadzenia:HowMuchDevice:End";
+    qWarning() << "Jestem w Urzadzenia:HowMuchDevice:End";
 }
 void Urzadzenia::myfunctiontimer()
 {
@@ -300,105 +303,88 @@ void Urzadzenia::on_actionInformacja_triggered()
     info->show();
 }
 //Info do Gita
-void Urzadzenia::on_pushButton_clicked()// DODAJ urzadzena do Comboboxa
+void Urzadzenia::on_pushButton_clicked() // DODAJ urzadzena do Comboboxa
 {
-
     MainDb *mainDb = new MainDb(this);
- QString nrSeryjnyZLiniText = ui->lineEditNrSeryjny->text();
- QString nrSeryjnyZLini="";
- QString przypisany ="";
- int nrSeryjnyZLiniId=0;
+    QString nrSeryjnyZLiniText = ui->lineEditNrSeryjny->text();
+    QString nrSeryjnyZLini = "";
+    QString przypisany = "";
+    int nrSeryjnyZLiniId = 0;
     ui->comboBox_3->clear();
     // Dodaj do comboBoxa
     // Sprawdzić czysą takie same numery seryjne juz zapisany i dodawanay
     //-------------------
     //QString file3 = "C:/Defaults/Pliki/3.Urzadzenie.txt";
     //cout << "Dodoaj i sprawdz czy jest taki numer seryjny" << endl;
-//Wczytaj z Bazy i Dodoaj i sprawdz czy jest taki numer seryjny
+    //Wczytaj z Bazy i Dodoaj i sprawdz czy jest taki numer seryjny
 
+    //Sprawdzić w bazie czy jest taki numer seryjny
 
+    nrSeryjnyZLiniId = mainDb->isNumerSeryjnyTheSameId(nrSeryjnyZLiniId);
 
-
-//Sprawdzić w bazie czy jest taki numer seryjny
-
-    nrSeryjnyZLiniId= mainDb->isNumerSeryjnyTheSameId (nrSeryjnyZLiniId);
-
-
-    for (int i=1;i<=nrSeryjnyZLiniId;i++)
-    {
-        nrSeryjnyZLini= mainDb->isNumerSeryjnyTheSame(nrSeryjnyZLini,i);
+    for (int i = 1; i <= nrSeryjnyZLiniId; i++) {
+        nrSeryjnyZLini = mainDb->isNumerSeryjnyTheSame(nrSeryjnyZLini, i);
         ui->comboBox_3->addItem(nrSeryjnyZLini);
-         qDebug() << nrSeryjnyZLini;
-
+        qDebug() << nrSeryjnyZLini;
     }
 
     //Najpierw sprawdzam czy linia z numerem seryjnym nie jest pusta
 
-    if (nrSeryjnyZLiniText=="")
-    {
-         QMessageBox::information(this, "Ostrzeżenie", "Nie możesz pozostawić pustego numeru seryjnego.");
-
-    }
-    else
-    {
-
-
-
-    bool IsNrSeryjnySame=false;
-    for (int i = 0; i <= ui->comboBox_3->count() - 1; i++) {
-        QString nrSeryjny = ui->comboBox_3->itemText(i);
-
-        if (nrSeryjnyZLiniText == nrSeryjny) {
-            IsNrSeryjnySame = true;
-            i = ui->comboBox_3->count();
-            break;
-        } else {
-            IsNrSeryjnySame = false;
-        }
-    }
-    if (IsNrSeryjnySame == true) {
-
+    if (nrSeryjnyZLiniText == "") {
         QMessageBox::information(this,
                                  "Ostrzeżenie",
-                                 "Analizator o takim numerze seryjnym już jest w bazie");
+                                 "Nie możesz pozostawić pustego numeru seryjnego.");
+
     } else {
-        cout << "Dodaje i zapisuje" << endl;
+        bool IsNrSeryjnySame = false;
+        for (int i = 0; i <= ui->comboBox_3->count() - 1; i++) {
+            QString nrSeryjny = ui->comboBox_3->itemText(i);
 
-        ui->BtnUrzaZapisz->setEnabled(false);
-        //-----------------
-
-        QString dodajNapis = ui->lineEditNumber->text();
-        QString dodajNapis1 = "[IdUrzadzenia:" + dodajNapis + "]";
-        ui->comboBox_4->addItem(dodajNapis1);
-
-        ui->comboBox_4->addItem(ui->comboBox->currentText());
-        ui->comboBox_4->addItem(ui->comboBox_2->currentText());
-        ui->comboBox_4->addItem(ui->lineEditNrSeryjny->text());
-        ui->comboBox_4->addItem(""); // pusta linia do przypisania
-        ui->BtnUrzaZapisz->setEnabled(true);
-        ui->pushButton->setEnabled(false);
-        ui->label_4->setText("Producent: " + ui->comboBox->currentText());
-        ui->label_6->setText("Model: " + ui->comboBox_2->currentText());
-        ui->label_7->setText("Numer Seryjny: " + ui->lineEditNrSeryjny->text());
-        //Wysyłam do bazy w celu zapisania
-        QString daneModel="", daneProducent, daneNrSeryjny;
-        int iloscElementowWcombo;
-        iloscElementowWcombo = ui->comboBox_4->count();
-        int i =1;
-        //for (int i =1;i<=iloscElementowWcombo -1;i++)
-        { daneProducent = ui->comboBox_4->itemText(i);
-            daneModel = ui->comboBox_4->itemText(i+1);
-            daneNrSeryjny = ui->comboBox_4->itemText(i+2);
-             mainDb->addUrzadzenia(daneProducent, daneModel, daneNrSeryjny, przypisany);
+            if (nrSeryjnyZLiniText == nrSeryjny) {
+                IsNrSeryjnySame = true;
+                i = ui->comboBox_3->count();
+                break;
+            } else {
+                IsNrSeryjnySame = false;
+            }
         }
+        if (IsNrSeryjnySame == true) {
+            QMessageBox::information(this,
+                                     "Ostrzeżenie",
+                                     "Analizator o takim numerze seryjnym już jest w bazie");
+        } else {
+            cout << "Dodaje i zapisuje" << endl;
 
+            ui->BtnUrzaZapisz->setEnabled(false);
+            //-----------------
 
+            QString dodajNapis = ui->lineEditNumber->text();
+            QString dodajNapis1 = "[IdUrzadzenia:" + dodajNapis + "]";
+            ui->comboBox_4->addItem(dodajNapis1);
 
-
-
-
-    }}
-
+            ui->comboBox_4->addItem(ui->comboBox->currentText());
+            ui->comboBox_4->addItem(ui->comboBox_2->currentText());
+            ui->comboBox_4->addItem(ui->lineEditNrSeryjny->text());
+            ui->comboBox_4->addItem(""); // pusta linia do przypisania
+            ui->BtnUrzaZapisz->setEnabled(true);
+            ui->pushButton->setEnabled(false);
+            ui->label_4->setText("Producent: " + ui->comboBox->currentText());
+            ui->label_6->setText("Model: " + ui->comboBox_2->currentText());
+            ui->label_7->setText("Numer Seryjny: " + ui->lineEditNrSeryjny->text());
+            //Wysyłam do bazy w celu zapisania
+            QString daneModel = "", daneProducent, daneNrSeryjny;
+            int iloscElementowWcombo;
+            iloscElementowWcombo = ui->comboBox_4->count();
+            int i = 1;
+            //for (int i =1;i<=iloscElementowWcombo -1;i++)
+            {
+                daneProducent = ui->comboBox_4->itemText(i);
+                daneModel = ui->comboBox_4->itemText(i + 1);
+                daneNrSeryjny = ui->comboBox_4->itemText(i + 2);
+                mainDb->addUrzadzenia(daneProducent, daneModel, daneNrSeryjny, przypisany);
+            }
+        }
+    }
 }
 void Urzadzenia::on_actionOpcje_triggered()
 {
@@ -440,11 +426,10 @@ void Urzadzenia::on_comboBox_highlighted(const QString)
 void Urzadzenia::wczytajProducenta()
 {
     wypelnijProducenta();
-
 }
 void Urzadzenia::wczytajModel()
-{wypelnijModel();
-
+{
+    wypelnijModel();
 }
 void Urzadzenia::on_comboBox_2_highlighted(const QString)
 {
