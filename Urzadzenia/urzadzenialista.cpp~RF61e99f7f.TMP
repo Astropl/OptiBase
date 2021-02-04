@@ -291,7 +291,7 @@ MainDb *mainDb = new MainDb(this);
 void UrzadzeniaLista::on_pushButton_4_clicked()
 {
     //Edytuj
-    UrzadzeniaListaEdytuj *Ule = new UrzadzeniaListaEdytuj(this);
+    UrzadzeniaListaEdytuj *Ule = new MUrzadzeniaListaEdytuj(this);
     Ule->show();
 
 }
