@@ -18,10 +18,18 @@ public:
 
 public slots:
     void myfunctiontimer();
+    void setLabelsTrue();
 
+    void setLabelsFalse();
+    QVariant setLabelsInfo(QVariant lp, QVariant producent, QVariant model, QVariant nrSeryjny, QVariant przypisany, QVariant kontrahent);
+    void wypelnijProducenta();
+
+    void wypelnijModel();
 
 private slots:
     void on_pushButton_clicked();
+
+    void on_pushButton_3_clicked();
 
 private:
     Ui::UrzadzeniaListaEdytuj *ui;

@@ -171,22 +171,6 @@
     <property name="frameShadow">
      <enum>QFrame::Plain</enum>
     </property>
-    <widget class="QLabel" name="lblKontrh1_2">
-     <property name="geometry">
-      <rect>
-       <x>130</x>
-       <y>110</y>
-       <width>140</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="text">
-      <string>Kontrahent</string>
-     </property>
-    </widget>
     <widget class="QLabel" name="lblLp1">
      <property name="geometry">
       <rect>
@@ -219,38 +203,6 @@
       <string>Producent</string>
      </property>
     </widget>
-    <widget class="QLabel" name="lblLp2">
-     <property name="geometry">
-      <rect>
-       <x>130</x>
-       <y>10</y>
-       <width>140</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="text">
-      <string>Lp</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="lblNrsery2">
-     <property name="geometry">
-      <rect>
-       <x>130</x>
-       <y>70</y>
-       <width>140</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="text">
-      <string>Numer seryjny</string>
-     </property>
-    </widget>
     <widget class="QLabel" name="lblPrzypis1">
      <property name="geometry">
       <rect>
@@ -267,22 +219,6 @@
       <string>Przypisany</string>
      </property>
     </widget>
-    <widget class="QLabel" name="lblProd2">
-     <property name="geometry">
-      <rect>
-       <x>130</x>
-       <y>30</y>
-       <width>140</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="text">
-      <string>Producent</string>
-     </property>
-    </widget>
     <widget class="QLabel" name="lblModel1">
      <property name="geometry">
       <rect>
@@ -297,38 +233,6 @@
      </property>
      <property name="text">
       <string>Model</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="lblModel2">
-     <property name="geometry">
-      <rect>
-       <x>130</x>
-       <y>50</y>
-       <width>140</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="text">
-      <string>Model</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="lblPrzypis2">
-     <property name="geometry">
-      <rect>
-       <x>130</x>
-       <y>90</y>
-       <width>140</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="text">
-      <string>Przypisany</string>
      </property>
     </widget>
     <widget class="QLabel" name="lblKontrh1">
@@ -376,6 +280,66 @@
       <enum>Qt::Vertical</enum>
      </property>
     </widget>
+    <widget class="QLineEdit" name="lineEditKontrh2">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>110</y>
+       <width>180</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditLp2">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>10</y>
+       <width>180</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditNrsery2">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>70</y>
+       <width>180</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditPrzypis2">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>90</y>
+       <width>180</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBox">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>30</y>
+       <width>180</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBox_2">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>50</y>
+       <width>180</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
    </widget>
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
@@ -414,6 +378,42 @@
     </property>
     <property name="text">
      <string>Zapisz</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblNrsery2">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>50</y>
+      <width>140</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Panel</enum>
+    </property>
+    <property name="text">
+     <string>Numer seryjny</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEditProd2">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>250</y>
+      <width>180</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEditModel2">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>270</y>
+      <width>180</width>
+      <height>20</height>
+     </rect>
     </property>
    </widget>
   </widget>

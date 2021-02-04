@@ -291,7 +291,30 @@ MainDb *mainDb = new MainDb(this);
 void UrzadzeniaLista::on_pushButton_4_clicked()
 {
     //Edytuj
+    QString qLp="Test", qProducent="Test", qModel="Test", qNrSeryjny="Test", qPrzypisany="Test", qKontrahent="Test";
     UrzadzeniaListaEdytuj *Ule = new UrzadzeniaListaEdytuj(this);
+
+    int iloscColumn = model->columnCount();
+    int stringRowDosize = (ui->tableView->currentIndex().row())+1;
+    QModelIndex index = ui->tableView->selectionModel()->currentIndex();
+    QVariant vartosc = index.sibling(index.row(), index.column()).data();
+    QString QVartsoc = QVariant(vartosc).toString();
+    ui->label->setText(QVartsoc); //Pokazuje kliknietą komórkę.
+
+    QVariant tab[iloscColumn];
+    QVariant wyslij;
+    for (int i = 0; i <= iloscColumn; i++) {
+        tab[i] = index.sibling(stringRowDosize - 1, i).data();
+    }
+
+
+
+    Ule->setLabelsInfo (tab[0],
+                       tab[1],
+                       tab[2],
+                       tab[3],
+                       tab[4],
+                       tab[5] );
     Ule->show();
 
 }

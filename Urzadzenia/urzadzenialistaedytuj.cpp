@@ -13,6 +13,11 @@
 
 using namespace std;
 
+int pobierzProducentaIdEdytuj = 0;
+QString QStringPobierzProducentaEdytuj = "";
+int pobierzModelIdEdytuj = 0;
+QString QStringPobierzModelEdytuj = "";
+
 UrzadzeniaListaEdytuj::UrzadzeniaListaEdytuj(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::UrzadzeniaListaEdytuj)
@@ -24,6 +29,16 @@ UrzadzeniaListaEdytuj::UrzadzeniaListaEdytuj(QWidget *parent) :
     connect(timer, SIGNAL(timeout()), this, SLOT(myfunctiontimer()));
     timer->start(1000);
     //===================
+
+    ui->lineEditLp2->setText("L.P.");
+    ui->lineEditProd2->setText("Producent");
+    ui->lineEditModel2->setText("Model");
+    ui->lineEditNrsery2->setText("Numer Seryjny");
+    ui->lineEditPrzypis2->setText("Przypisany");
+    ui->lineEditKontrh2->setText("Kontrahent");
+    setLabelsFalse();
+    wypelnijProducenta();
+    wypelnijModel();
 }
 
 UrzadzeniaListaEdytuj::~UrzadzeniaListaEdytuj()
@@ -72,3 +87,75 @@ void UrzadzeniaListaEdytuj::myfunctiontimer()
 }
 
 
+
+void UrzadzeniaListaEdytuj::on_pushButton_3_clicked()//Edytyju
+{
+    setLabelsTrue();
+    MainDb *mainDb = new MainDb(this);
+
+
+    //Wczytac z MainDb urzadenia z którym zgadza się numer seryjny
+
+    //zapisac do MainDB . .najlepiej poprzez Update zgodnie z numerem seryjnym
+}
+
+
+void UrzadzeniaListaEdytuj::setLabelsTrue()
+{
+
+    //ui->lineEditLp2->setEnabled(true);
+    ui->lineEditProd2->setEnabled(true);
+    ui->lineEditModel2->setEnabled(true);
+    ui->lineEditNrsery2->setEnabled(true);
+    ui->comboBox->setEnabled(true);
+    ui->comboBox_2->setEnabled(true);
+    //ui->lineEditPrzypis2->setEnabled(true);
+   // ui->lineEditKontrh2->setEnabled(true);
+}
+void UrzadzeniaListaEdytuj::setLabelsFalse()
+{
+
+ ui->lineEditLp2->setEnabled(false);
+ ui->lineEditProd2->setEnabled(false);
+ ui->lineEditModel2->setEnabled(false);
+ ui->lineEditNrsery2->setEnabled(false);
+ ui->lineEditPrzypis2->setEnabled(false);
+ ui->lineEditKontrh2->setEnabled(false);
+ ui->comboBox->setEnabled(false);
+ ui->comboBox_2->setEnabled(false);
+}
+QVariant UrzadzeniaListaEdytuj::setLabelsInfo(QVariant lp, QVariant producent, QVariant model, QVariant nrSeryjny, QVariant przypisany, QVariant kontrahent)
+{
+    ui->lineEditLp2->setText(lp.toString());
+    ui->lineEditProd2->setText(producent.toString());
+    ui->lineEditModel2->setText(model.toString());
+    ui->lineEditNrsery2->setText(nrSeryjny.toString());
+    ui->lineEditPrzypis2->setText(przypisany.toString());
+    ui->lineEditKontrh2->setText(kontrahent.toString());
+
+    ui->lblNrsery2->setText(nrSeryjny.toString());
+    if (przypisany !="TAK")
+    {
+         ui->lineEditPrzypis2->setText("Brak Kontrahenta");
+    }
+    return 0;
+}
+
+void UrzadzeniaListaEdytuj::wypelnijProducenta()
+{
+    MainDb *mainDb = new MainDb(this);
+    pobierzProducentaIdEdytuj = mainDb->pobierzProducentaiD(pobierzProducentaIdEdytuj);
+    for (int i = 1; i <= pobierzProducentaIdEdytuj; i++) {
+        QStringPobierzProducentaEdytuj = mainDb->pobierzProducenta(QStringPobierzProducentaEdytuj, i);
+        ui->comboBox->addItem(QStringPobierzProducentaEdytuj);
+    }
+}
+void UrzadzeniaListaEdytuj::wypelnijModel()
+{
+    MainDb *mainDb = new MainDb(this);
+    pobierzModelIdEdytuj = mainDb->pobierzModeliD(pobierzModelIdEdytuj);
+    for (int i = 1; i <= pobierzModelIdEdytuj; i++) {
+        QStringPobierzModelEdytuj = mainDb->pobierzModel(QStringPobierzModelEdytuj, i);
+        ui->comboBox_2->addItem(QStringPobierzModelEdytuj);
+    }
+}
