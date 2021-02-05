@@ -19,6 +19,11 @@ public:
 
     void InitDB();
 
+
+public slots:
+    void myfunctiontimer();
+
+
 private slots:
     void CheckIsFileExist();
     void on_pushButton_clicked();
@@ -39,8 +44,12 @@ private slots:
     void statsy();
     void on_calendarWidget_clicked(const QDate &date);
 
+    void on_pushButton_10_clicked();
+
 private:
     Ui::MainWindow *ui;
+
+    QTimer *timer;
 };
 #endif // MAINWINDOW_H
 //Info do Gita

@@ -78,7 +78,10 @@ public:
     QString addPrzypomnienie(QString nrWpisu, QString dataWpisu,QString tematWpisu,QString trescWpisu,QString przypomnienie,QString dataNajblPrzypom,QString tekstPrzypom,QString nrSeryjny );
     int loadDataRemiderId(int dataRemiderId);
     QString loadDataRemider(QString remiderSelf, int i,int n,QString numerSeryjnydoPorownania);
-
+    QString addUrzadzeniaUpdate(QString ty1,
+                                        QString ty2,
+                                        QString ty3,
+                                        QString ty4);
     int iloscUruchomienSave (int iloscUruchomien);
     int iloscUruchomienFirst (int iloscUruchomienFirst);
 };

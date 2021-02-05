@@ -39,6 +39,8 @@ UrzadzeniaListaEdytuj::UrzadzeniaListaEdytuj(QWidget *parent) :
     setLabelsFalse();
     wypelnijProducenta();
     wypelnijModel();
+
+
 }
 
 UrzadzeniaListaEdytuj::~UrzadzeniaListaEdytuj()
@@ -91,12 +93,8 @@ void UrzadzeniaListaEdytuj::myfunctiontimer()
 void UrzadzeniaListaEdytuj::on_pushButton_3_clicked()//Edytyju
 {
     setLabelsTrue();
-    MainDb *mainDb = new MainDb(this);
 
 
-    //Wczytac z MainDb urzadenia z którym zgadza się numer seryjny
-
-    //zapisac do MainDB . .najlepiej poprzez Update zgodnie z numerem seryjnym
 }
 
 
@@ -138,6 +136,11 @@ QVariant UrzadzeniaListaEdytuj::setLabelsInfo(QVariant lp, QVariant producent, Q
     {
          ui->lineEditPrzypis2->setText("Brak Kontrahenta");
     }
+
+    qWarning()<<"producent to: "<<producent;
+    qWarning()<<"model to: "<<model;
+    ui->comboBox->setCurrentText(producent.toString());
+    ui->comboBox_2->setCurrentText(model.toString());
     return 0;
 }
 
@@ -158,4 +161,27 @@ void UrzadzeniaListaEdytuj::wypelnijModel()
         QStringPobierzModelEdytuj = mainDb->pobierzModel(QStringPobierzModelEdytuj, i);
         ui->comboBox_2->addItem(QStringPobierzModelEdytuj);
     }
+}
+void UrzadzeniaListaEdytuj::on_pushButton_4_clicked()
+{
+    MainDb *mainDb = new MainDb(this);
+
+
+    //Wczytac z MainDb urzadenia z którym zgadza się numer seryjny
+
+    //zapisac do MainDB . .najlepiej poprzez Update zgodnie z numerem seryjnym
+    QString producent;
+    QString model;
+    QString numerSeryjny;
+    QString numerSeryjnyOryginal;
+
+    //producent=ui->lineEditProd2->text();
+    producent=ui->comboBox->currentText();
+    //model=ui->lineEditModel2->text();
+    model=ui->comboBox_2->currentText();
+    numerSeryjny=ui->lineEditNrsery2->text();
+    numerSeryjnyOryginal=ui->lblNrsery2->text();
+
+    mainDb->addUrzadzeniaUpdate(producent,model,numerSeryjny,numerSeryjnyOryginal);
+    qWarning()<<"Update urzadzen udany";
 }

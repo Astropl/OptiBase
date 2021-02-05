@@ -860,6 +860,7 @@ void MainDb::dBUrzadzenia()
                "FOREIGN KEY (urzadzenia_producent_id) REFERENCES "
                "producenci(producent) ON DELETE SET NULL,"
                "FOREIGN KEY (urzadzenia_model_id) REFERENCES modele(model) ON DELETE SET NULL,"
+
                "FOREIGN KEY (kontrahent_id) REFERENCES kontrahenci(nazwaFirmy)ON DELETE SET NULL)");
     if (!query.isActive()) {
         qWarning() << "1. Tworzenie Tabeli:DBUrzadzenia- ERROR: " << query.lastError().text();
@@ -1307,5 +1308,30 @@ QString MainDb::dodajIloscTematow(QString qIloscTematow)
     QSqlQuery query;
     if (!query.exec("INSERT INTO tematDowpisu (temat) VALUES('" + qIloscTematow + "')"))
         qWarning() << "MainDB::iloscTematow - ERROR: " << query.lastError().text();
+    return 0;
+}
+
+
+QString MainDb::addUrzadzeniaUpdate(QString ty1,
+                                     QString ty2,
+                                     QString ty3,
+                                     QString ty4)
+{
+    QSqlQuery query;
+
+    qWarning() << "Edycja urzadzeń.";
+    query.exec("PRAGMA foreign_keys = OFF;"); // wyłączenia kluczy obcych
+qWarning() << "Edycja urzadzeń - OFF->Wyłaczenie sprawdzanie luczy obcych.";
+    if (!query.exec("UPDATE urzadzenia SET urzadzenia_producent_id ='" + ty1 + "', urzadzenia_model_id = '" + ty2
+                    + "', numerSeryjny ='" + ty3 +  "'   WHERE numerSeryjny = '" + ty4 + "' "))
+
+
+    {
+        qWarning() << "MainDB::Update Urzadzenia - ERROR: " << query.lastError().text();
+    } else {
+        qWarning() << "MainDB::Update Urzadzenia - Udane: " << query.lastError().text();
+    }
+    query.exec("PRAGMA foreign_keys = ON;"); // wyłączenia kluczy obcych
+qWarning() << "Edycja urzadzeń - ON->Właczenie sprawdzanie luczy obcych.";
     return 0;
 }
