@@ -365,6 +365,29 @@
      </rect>
     </property>
    </widget>
+   <widget class="QLineEdit" name="lineEditSzukaj">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>50</y>
+      <width>211</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_3">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>50</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PushButton</string>
+    </property>
+   </widget>
    <zorder>tableViewDB</zorder>
    <zorder>labelTest</zorder>
    <zorder>comboBox_4</zorder>
@@ -385,6 +408,8 @@
    <zorder>comboBox_7</zorder>
    <zorder>comboBox_8</zorder>
    <zorder>comboBox_9</zorder>
+   <zorder>lineEditSzukaj</zorder>
+   <zorder>pushButton_3</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

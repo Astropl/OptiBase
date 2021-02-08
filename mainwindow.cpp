@@ -6,11 +6,11 @@
 #include "Ustawienia/ustawienia.h"
 //#include "DataBase/dbmain.h"
 #include "DataBase/maindb.h"
+#include "DataBase/wpisy.h"
+#include "Timery/timedate.h"
+#include "Ustawienia/statystyki.h"
 #include "ui_mainwindow.h"
 #include <Info/info.h>
-#include "DataBase/wpisy.h"
-#include "Ustawienia/statystyki.h"
-#include "Timery/timedate.h"
 #include <baza.h>
 //#include <druga.h>
 //#include <trzecia.h>
@@ -19,13 +19,12 @@
 #include <direct.h>
 #include <fstream>
 #include <iostream>
+#include <windows.h>
 #include <QAction>
 #include <QApplication>
 #include <QMainWindow>
-#include <QTimer>
-#include <windows.h>
 #include <QTime>
-
+#include <QTimer>
 
 using namespace std;
 MainWindow::MainWindow(QWidget *parent)
@@ -46,7 +45,7 @@ MainWindow::MainWindow(QWidget *parent)
     CheckIsFileExist();
     InitDB();
     statsy();
-    ui->scrollArea_3->setFixedSize(1,1);
+    ui->scrollArea_3->setFixedSize(0, 0);
 }
 
 MainWindow::~MainWindow()
@@ -131,7 +130,7 @@ void MainWindow::initWindow()
 }
 void MainWindow::statsy()
 {
-    Statystyki *stats = new Statystyki (this);
+    Statystyki *stats = new Statystyki(this);
     stats->liczbaUruchomienFirst();
 }
 void MainWindow::openInfo()
@@ -205,16 +204,16 @@ void MainWindow::on_pushButton_2_clicked()
 }
 void MainWindow::on_pushButton_3_clicked()
 {
-//TODO: Zrobic
+    //TODO: Zrobic
 }
 void MainWindow::on_actionO_programie_triggered()
-{//qDebug()<<"on_actionO_programie_triggered";
+{ //qDebug()<<"on_actionO_programie_triggered";
     Info *info = new Info(this);
     info->show();
 }
 
 void MainWindow::on_actionOpcje_triggered()
-{//qDebug()<<"on_actionOpcje_triggered";
+{ //qDebug()<<"on_actionOpcje_triggered";
     Ustawienia *ustaw = new Ustawienia(this);
     ustaw->show();
 }
@@ -227,29 +226,35 @@ void MainWindow::on_pushButton_9_clicked()
     //cout << "Zapytanie w main glownym odpowiedz: " + zapytanie.toStdString() << endl;
     ui->comboBox->addItem(zapytanie);
     mainDb->PrzypiszTestowo();
-
-
 }
 
 void MainWindow::on_calendarWidget_clicked(const QDate &date)
 {
-    qWarning()<<"clicked in calndar";
+    qWarning() << "clicked in calndar";
 
     //qWarning()<<ui->calendar
 }
 
 void MainWindow::on_pushButton_10_clicked()
 {
-    //ScrollArea
-    ui->pushButton_10->setText("A");
-    for (int x =1;x<=211;x++)
+    if (ui->pushButton_10->text() == "V") {
+
+        ui->pushButton_10->setText("/\\");
+        for (int x = 1; x <= 211; x++) {
+            ui->scrollArea_3->setFixedSize(211, x);
+            QTime dieTime = QTime::currentTime().addMSecs(10);
+            while (QTime::currentTime() < dieTime)
+                QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+        }
+    }
+    else
     {
-        ui->scrollArea_3->setFixedSize(211,x);
-        //QObject().thread()->usleep(1000*1000*1)
-       // sleep(1000);
-        //_sleep(1);
-        QTime dieTime= QTime::currentTime().addMSecs(20) ;       //addSecs(1);
-        while (QTime::currentTime() < dieTime)
-            QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+        ui->pushButton_10->setText("V");
+        for (int y = 211; y >= 1; y--) {
+            ui->scrollArea_3->setFixedSize(211, y);
+            QTime dieTime = QTime::currentTime().addMSecs(10);
+            while (QTime::currentTime() < dieTime)
+                QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+        }
     }
 }

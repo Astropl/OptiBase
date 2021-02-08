@@ -53,6 +53,10 @@ private slots:
 
     void on_comboBox_9_activated(const QString &arg1);
 
+    void on_lineEditSzukaj_textEdited(const QString );
+
+    void on_pushButton_3_clicked();
+
 private:
     QTimer *timer;
     QStandardItemModel *model;
