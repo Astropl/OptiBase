@@ -119,6 +119,8 @@ void Baza::wczytajDane()
     ui->comboBox_7->setVisible(false);
     ui->comboBox_8->setVisible(false);
     ui->comboBox_9->setVisible(false);
+    ui->pushButton_3->setVisible(false);
+    ui->lineEditSzukaj->setVisible(false);
 
     // Wczytac z Bazy. Kontrahneci i Urzadzenia które mają zakładkę TAK
     QStandardItem *dodajItem = new QStandardItem("");
@@ -382,12 +384,14 @@ void Baza::on_checkBox_stateChanged() // Checked Mark Filtr :ON/OFF
     pusteRzedy1 = ui->label_2->text().toInt();
     //qWarning() << "checekd Mark Filtr ON:OFF";
     if (ui->checkBox->isChecked()) {
-        //qWarning() << "cKliknietey";
+        qWarning() << "cKliknietey";
         ui->comboBox_5->setVisible(true);
         ui->comboBox_6->setVisible(true);
         ui->comboBox_7->setVisible(true);
         ui->comboBox_8->setVisible(true);
         ui->comboBox_9->setVisible(true);
+        ui->pushButton_3->setVisible(true);
+        ui->lineEditSzukaj->setVisible(true);
         //filtrOn("Brak");
         fillComboBoxes();
     } else {
@@ -397,6 +401,8 @@ void Baza::on_checkBox_stateChanged() // Checked Mark Filtr :ON/OFF
         ui->comboBox_7->setVisible(false);
         ui->comboBox_8->setVisible(false);
         ui->comboBox_9->setVisible(false);
+        ui->pushButton_3->setVisible(false);
+        ui->lineEditSzukaj->setVisible(false);
         ui->comboBox_5->clear();
         ui->comboBox_6->clear();
         ui->comboBox_7->clear();
@@ -410,8 +416,12 @@ void Baza::on_checkBox_stateChanged() // Checked Mark Filtr :ON/OFF
 }
 void Baza::fillComboBoxes()
 {
-    bool jestItem;
+    //bool jestItem;
     pusteRzedy1 = ui->label_2->text().toInt();
+    int rowCount = model->rowCount();
+    QString fillCb5[rowCount];
+    qWarning() << "row count to: " << model->rowCount();
+    qWarning() << "rozmiar tablicyt to: " << fillCb5->size();
     ui->comboBox_5->addItem("Brak");
     ui->comboBox_6->addItem("Brak");
     //ui->comboBox_7->addItem("Brak");
@@ -423,38 +433,71 @@ void Baza::fillComboBoxes()
     for (int i = 0; i <= model->rowCount() - 1 - pusteRzedy1; i++) {
         //int iloscElemtowWCB5 = ui->comboBox_5->count();
 
+
         QStandardItem *item1 = model->item(i, 1);
         QStandardItem *item2 = model->item(i, 2);
         QStandardItem *item3 = model->item(i, 4);
         QStandardItem *item4 = model->item(i, 12);
         QStandardItem *item5 = model->item(i, 11);
-
-        //NOTE: Sprawdzam czy element jest juz na liscie w comboBox
-
-        //
-        ui->comboBox_5->addItem(item1->text());
-        ui->comboBox_6->addItem(item2->text());
-        // ui->comboBox_7->addItem(item3->text());
-        //        ui->comboBox_7->addItem("Brak");
-        //        ui->comboBox_7->addItem("TAK");
-        //        ui->comboBox_7->addItem("MAGAZYN");
-        ui->comboBox_8->addItem(item4->text());
-        ui->comboBox_9->addItem(item5->text());
+        qWarning()<< "dodaje do Fill to : "<<item1->text()<<" pod numerem: "<<i;
+        fillCb5[i].push_back( item1->text());
+        qWarning() << "rozmiar tablicy po dodaniu to: " << fillCb5->size();
     }
-    int iloscElemetowWCB5 = ui->comboBox_5->count();
 
-    for (int j = 0; j <= iloscElemetowWCB5; j++)
-
+    //* test
+    for (int test=0;test<=fillCb5->size();test++)
     {
-        //qWarning() << "wyraz do porowniaa to: " << ui->comboBox_5->itemText(j);
+        qWarning()<<"elementy to: "<< fillCb5[test];
+    }
+    //*test
+    //NOTE: Sprawdzam czy element jest juz na liscie w comboBox
 
-        for (int k = j + 1; k <= iloscElemetowWCB5; k++) {
-            if (ui->comboBox_5->itemText(j) == ui->comboBox_5->itemText(k)) {
-                ui->comboBox_5->removeItem(k);
+    //
+    // ui->comboBox_5->addItem(item1->text());
+
+    //qWarning()<<fillCb5->toStdString();
+    //qWarning() << "Dodoaje do FillcB5 na pozycji: " << fillCb5[i] << " wyraz: " << item1->text();
+    qWarning() << "rozmiar fllCb5 to: " <<fillCb5->size();
+
+    for (int e = 0; e <= fillCb5->size(); e++) {
+        for (int r = 1; r <= fillCb5->size(); r++) {
+            qWarning() << "Porownuje i: " << fillCb5[e] << "do r: " << fillCb5[r];
+
+            if (fillCb5[e] == fillCb5[r]) {
+                qWarning() << "znazlłem i kasuje i: " << fillCb5[e] << "do r: " << fillCb5[r];
+
+                fillCb5->remove(r);
+                //fillCb5[r].
             }
         }
+    }
+    qWarning() << "rozmiar tablicy: " << fillCb5->size();
+    for (int t = 0; t <= fillCb5->size(); t++) {
+        qWarning()<<"dodoaje do CB%: "<<fillCb5[t];
+        ui->comboBox_5->addItem(fillCb5[t]);
+    }
+    //ui->comboBox_6->addItem(item2->text());
+    // ui->comboBox_7->addItem(item3->text());
+    //        ui->comboBox_7->addItem("Brak");
+    //        ui->comboBox_7->addItem("TAK");
+    //        ui->comboBox_7->addItem("MAGAZYN");
+    //ui->comboBox_8->addItem(item4->text());
+    //ui->comboBox_9->addItem(item5->text());
 
-    } //
+    int iloscElemetowWCB5 = ui->comboBox_5->count();
+
+    //    for (int j = 0; j <= iloscElemetowWCB5; j++)
+
+    //    {
+    //        //qWarning() << "wyraz do porowniaa to: " << ui->comboBox_5->itemText(j);
+
+    //        for (int k = j + 1; k <= iloscElemetowWCB5; k++) {
+    //            if (ui->comboBox_5->itemText(j) == ui->comboBox_5->itemText(k)) {
+    //                ui->comboBox_5->removeItem(k);
+    //            }
+    //        }
+
+    //    } //
     int iloscElemetowWCB6 = ui->comboBox_6->count();
 
     for (int j = 0; j <= iloscElemetowWCB6; j++)
@@ -473,57 +516,58 @@ void Baza::fillComboBoxes()
 
     } //
 
-    int iloscElemetowWCB7 = ui->comboBox_7->count();
 
-    for (int j = 0; j <= iloscElemetowWCB7; j++)
+int iloscElemetowWCB7 = ui->comboBox_7->count();
 
-    {
-        //qWarning() << "wyraz do porowniaa to: " << ui->comboBox_6->itemText(j);
+for (int j = 0; j <= iloscElemetowWCB7; j++)
 
-        for (int k = j + 1; k <= iloscElemetowWCB7 - 1; k++) {
-            //qWarning() << "Porownuje : " << ui->comboBox_6->itemText(j)
-            //<< " z: " << ui->comboBox_6->itemText(k);
-            if (ui->comboBox_7->itemText(j) == ui->comboBox_7->itemText(k)) {
-                //qWarning() << "Usuwam : " << ui->comboBox_6->itemText(k);
-                ui->comboBox_7->removeItem(k);
-            }
+{
+    //qWarning() << "wyraz do porowniaa to: " << ui->comboBox_6->itemText(j);
+
+    for (int k = j + 1; k <= iloscElemetowWCB7 - 1; k++) {
+        //qWarning() << "Porownuje : " << ui->comboBox_6->itemText(j)
+        //<< " z: " << ui->comboBox_6->itemText(k);
+        if (ui->comboBox_7->itemText(j) == ui->comboBox_7->itemText(k)) {
+            //qWarning() << "Usuwam : " << ui->comboBox_6->itemText(k);
+            ui->comboBox_7->removeItem(k);
         }
+    }
 
-    } //
-    int iloscElemetowWCB8 = ui->comboBox_8->count();
+} //
+int iloscElemetowWCB8 = ui->comboBox_8->count();
 
-    for (int j = 0; j <= iloscElemetowWCB8; j++)
+for (int j = 0; j <= iloscElemetowWCB8; j++)
 
-    {
-        //qWarning() << "wyraz do porowniaa to: " << ui->comboBox_6->itemText(j);
+{
+    //qWarning() << "wyraz do porowniaa to: " << ui->comboBox_6->itemText(j);
 
-        for (int k = j + 1; k <= iloscElemetowWCB8 - 1; k++) {
-            //qWarning() << "Porownuje : " << ui->comboBox_6->itemText(j)
-            //<< " z: " << ui->comboBox_6->itemText(k);
-            if (ui->comboBox_8->itemText(j) == ui->comboBox_8->itemText(k)) {
-                //qWarning() << "Usuwam : " << ui->comboBox_6->itemText(k);
-                ui->comboBox_8->removeItem(k);
-            }
+    for (int k = j + 1; k <= iloscElemetowWCB8 - 1; k++) {
+        //qWarning() << "Porownuje : " << ui->comboBox_6->itemText(j)
+        //<< " z: " << ui->comboBox_6->itemText(k);
+        if (ui->comboBox_8->itemText(j) == ui->comboBox_8->itemText(k)) {
+            //qWarning() << "Usuwam : " << ui->comboBox_6->itemText(k);
+            ui->comboBox_8->removeItem(k);
         }
+    }
 
-    } //
-    int iloscElemetowWCB9 = ui->comboBox_9->count();
+} //
+int iloscElemetowWCB9 = ui->comboBox_9->count();
 
-    for (int j = 0; j <= iloscElemetowWCB9; j++)
+for (int j = 0; j <= iloscElemetowWCB9; j++)
 
-    {
-        //qWarning() << "wyraz do porowniaa to: " << ui->comboBox_6->itemText(j);
+{
+    //qWarning() << "wyraz do porowniaa to: " << ui->comboBox_6->itemText(j);
 
-        for (int k = j + 1; k <= iloscElemetowWCB9 - 1; k++) {
-            //qWarning() << "Porownuje : " << ui->comboBox_6->itemText(j)
-            //<< " z: " << ui->comboBox_6->itemText(k);
-            if (ui->comboBox_9->itemText(j) == ui->comboBox_9->itemText(k)) {
-                //qWarning() << "Usuwam : " << ui->comboBox_6->itemText(k);
-                ui->comboBox_9->removeItem(k);
-            }
+    for (int k = j + 1; k <= iloscElemetowWCB9 - 1; k++) {
+        //qWarning() << "Porownuje : " << ui->comboBox_6->itemText(j)
+        //<< " z: " << ui->comboBox_6->itemText(k);
+        if (ui->comboBox_9->itemText(j) == ui->comboBox_9->itemText(k)) {
+            //qWarning() << "Usuwam : " << ui->comboBox_6->itemText(k);
+            ui->comboBox_9->removeItem(k);
         }
+    }
 
-    } //
+} //
 }
 
 QString Baza::filtrOn(QString aktywnyProducent)
@@ -593,39 +637,53 @@ void Baza::on_comboBox_9_activated(const QString &arg1)
 }
 
 void Baza::on_lineEditSzukaj_textEdited(const QString) //szukaj
-{
-
-}
+{}
 
 void Baza::on_pushButton_3_clicked()
 {
-    int iloscColumn=model->columnCount()-1;
-    int iloscRzedow=model->rowCount()-1;
+    int iloscColumn = model->columnCount() - 1;
+    int iloscRzedow = model->rowCount() - 2;
 
-
-    for (int x=0;x<=iloscRzedow-1;x++)
-    {qWarning()<<" Ukrywam rzad: "<<x;
+    //int szukanyRzad[iloscRzedow];
+    qWarning() << "ilosc rzedów to: " << iloscRzedow;
+    for (int x = 0; x <= iloscRzedow; x++) {
+        qWarning() << " Ukrywam rzad: " << x;
         ui->tableViewDB->hideRow(x);
     }
 
     QString szukany = QString::fromStdString(ui->lineEditSzukaj->text().toStdString());
+    szukany = szukany.toLower();
     //string wpisany = ui->lineEditSzukaj->text().toStdString();
     //szukany =QString::QString(wpisany) wpisany
-    qWarning() << "Szukaj";
+    QString przeszukiwany;
+    qWarning() << "Szukaj wyrazu: " << szukany;
 
-    for (int i = 0; i <= model->rowCount() - 1; i++) {
-        QList<QStandardItem *> foundLst = model->findItems(szukany, Qt::MatchExactly, i);
-        int count = foundLst.count();
-        qDebug ()<<" znalazłem : "<<count<<" razy";
-        if (count > 0) {
-            for (int k = 0; k < count; k++) {
-                QModelIndex modelIndex = model->indexFromItem(foundLst[k]);
-                qDebug() << "column= " << i << "row=" << modelIndex.row();
-//                ((QStandardItemModel *) modelIndex.model())
-//                    ->item(modelIndex.row(), i)
-//                    ->setData(QBrush(Qt::green), Qt::BackgroundRole);
-                ui->tableViewDB->showRow(i-2);
+    for (int i = 0; i <= iloscRzedow; i++) {
+        for (int x = 0; x <= iloscColumn; x++) {
+            przeszukiwany = model->item(i, x)->text();
+            przeszukiwany = przeszukiwany.toLower();
+            qWarning() << "Jestem w: rzad: " << i << " kolumna: " << x
+                       << " wyraz: " << przeszukiwany;
+            if (przeszukiwany == szukany) {
+                qWarning() << " ************";
+                qWarning() << " JEST!!!!!!";
+                qWarning() << " ************";
+                //szukanyRzad[i] = i;
+                ui->tableViewDB->showRow(i);
             }
         }
     }
+
+    //    QList<QStandardItem *> foundLst = model->findItems(szukany, Qt::MatchExactly, i);
+    //    int count = foundLst.count();
+    //    qDebug ()<<" znalazłem : "<<count<<" razy";
+    //    if (count > 0) {
+    //        for (int k = 0; k < count; k++) {
+    //            QModelIndex modelIndex = model->indexFromItem(foundLst[k]);
+    //            qDebug() << "column= " << i << "row=" << modelIndex.row();
+    //            //                ((QStandardItemModel *) modelIndex.model())
+    //            //                    ->item(modelIndex.row(), i)
+    //            //                    ->setData(QBrush(Qt::green), Qt::BackgroundRole);
+    //            ui->tableViewDB->showRow(i-2);
+    //        }
 }

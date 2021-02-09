@@ -385,7 +385,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>PushButton</string>
+     <string>Szukaj</string>
     </property>
    </widget>
    <zorder>tableViewDB</zorder>
