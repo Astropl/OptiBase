@@ -37,6 +37,7 @@ private slots:
     void on_actionOpcje_triggered();
     void on_pushButton_8_clicked();
     void initWindow();
+    void InitToolbar();
     void openInfo();
     void openSettings();
 
@@ -45,6 +46,8 @@ private slots:
     void on_calendarWidget_clicked(const QDate &date);
 
     void on_pushButton_10_clicked();
+    void Dzienroku();
+    void on_pushButton_11_clicked();
 
 private:
     Ui::MainWindow *ui;

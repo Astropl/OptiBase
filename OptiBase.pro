@@ -29,6 +29,7 @@ SOURCES += \
     Kontrahent/kontrahentlista.cpp \
     Kontrahent/kontrahentshow.cpp \
     Kontrahent/tableviewlistakontrahentow.cpp \
+    Timery/dates.cpp \
     Timery/timedate.cpp \
     Urzadzenia/urzadzenia.cpp \
     Urzadzenia/urzadzeniadodajmodel.cpp \
@@ -37,6 +38,7 @@ SOURCES += \
     Urzadzenia/urzadzenialista.cpp \
     Urzadzenia/urzadzenialistaedytuj.cpp \
     Urzadzenia/urzadzenialistakontrahent.cpp \
+    Urzadzenia/urzadzeniaprzypominacz.cpp \
     Ustawienia/statystyki.cpp \
     Ustawienia/ustawienia.cpp \
     baza.cpp \
@@ -57,6 +59,7 @@ HEADERS += \
     Kontrahent/kontrahentlista.h \
     Kontrahent/kontrahentshow.h \
     Kontrahent/tableviewlistakontrahentow.h \
+    Timery/dates.h \
     Timery/timedate.h \
     Urzadzenia/urzadzenia.h \
     Urzadzenia/urzadzeniadodajmodel.h \
@@ -65,6 +68,7 @@ HEADERS += \
     Urzadzenia/urzadzenialista.h \
     Urzadzenia/urzadzenialistaedytuj.h \
     Urzadzenia/urzadzenialistakontrahent.h \
+    Urzadzenia/urzadzeniaprzypominacz.h \
     Ustawienia/statystyki.h \
     Ustawienia/ustawienia.h \
     baza.h \
@@ -88,6 +92,7 @@ FORMS += \
     Urzadzenia/urzadzenialista.ui \
     Urzadzenia/urzadzenialistaedytuj.ui \
     Urzadzenia/urzadzenialistakontrahent.ui \
+    Urzadzenia/urzadzeniaprzypominacz.ui \
     Ustawienia/statystyki.ui \
     Ustawienia/ustawienia.ui \
     baza.ui \
@@ -97,3 +102,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    Resources/DBIcon.jpg

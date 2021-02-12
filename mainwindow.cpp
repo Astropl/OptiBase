@@ -4,12 +4,16 @@
 #include "Kontrahent/kontrahentlista.h"
 #include "Urzadzenia/urzadzenialista.h"
 #include "Ustawienia/ustawienia.h"
+#include "Urzadzenia/urzadzeniaprzypominacz.h"
 //#include "DataBase/dbmain.h"
 #include "DataBase/maindb.h"
 #include "DataBase/wpisy.h"
 #include "Timery/timedate.h"
+#include "Timery/dates.h"
 #include "Ustawienia/statystyki.h"
 #include "ui_mainwindow.h"
+//#include "Resources/DBIcon.jpg"
+#include <QToolBar>
 #include <Info/info.h>
 #include <baza.h>
 //#include <druga.h>
@@ -25,6 +29,10 @@
 #include <QMainWindow>
 #include <QTime>
 #include <QTimer>
+
+
+int dzienRoku=0;
+
 
 using namespace std;
 MainWindow::MainWindow(QWidget *parent)
@@ -44,6 +52,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     CheckIsFileExist();
     InitDB();
+    InitToolbar();
     statsy();
     ui->scrollArea_3->setFixedSize(0, 0);
 }
@@ -128,6 +137,16 @@ void MainWindow::initWindow()
     connect(settingsOption, SIGNAL(triggered()), this, SLOT(on_actionOpcje_triggered()));
     connect(infoOProgramie, SIGNAL(triggered()), this, SLOT(on_actionO_programie_triggered()));
 }
+void MainWindow::InitToolbar()
+{
+    QPixmap dbIcon ("../Resources/DBIcon.jpg");
+    QToolBar * toolbar = addToolBar ("główny pasek narzędzi");
+    toolbar->addAction(QIcon (dbIcon),"Baza");
+
+    toolbar -> addSeparator();
+
+}
+
 void MainWindow::statsy()
 {
     Statystyki *stats = new Statystyki(this);
@@ -240,21 +259,38 @@ void MainWindow::on_pushButton_10_clicked()
     if (ui->pushButton_10->text() == "V") {
 
         ui->pushButton_10->setText("/\\");
-        for (int x = 1; x <= 211; x++) {
+        for (int x = 0; x <= 211; x++) {
             ui->scrollArea_3->setFixedSize(211, x);
-            QTime dieTime = QTime::currentTime().addMSecs(10);
+            QTime dieTime = QTime::currentTime().addMSecs(2);
             while (QTime::currentTime() < dieTime)
                 QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
         }
+        Dzienroku();
     }
+
     else
     {
         ui->pushButton_10->setText("V");
-        for (int y = 211; y >= 1; y--) {
+        for (int y = 211; y >= 0; y--) {
             ui->scrollArea_3->setFixedSize(211, y);
-            QTime dieTime = QTime::currentTime().addMSecs(10);
+            QTime dieTime = QTime::currentTime().addMSecs(2);
             while (QTime::currentTime() < dieTime)
                 QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
         }
     }
+}
+
+void MainWindow::Dzienroku()
+{
+    Dates *dates = new Dates(this);
+    dzienRoku = dates->DzienRoku(dzienRoku);
+    ui->label_5->setText(QString::number(dzienRoku));
+}
+
+void MainWindow::on_pushButton_11_clicked()
+{
+    //Przypominacz
+
+UrzadzeniaPrzypominacz *urzPrzy = new UrzadzeniaPrzypominacz(this);
+urzPrzy->show();
 }
