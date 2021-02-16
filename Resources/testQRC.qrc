@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/prefix1">
+        <file>DBIcon.png</file>
+        <file>DBIcon1.png</file>
+    </qresource>
+</RCC>

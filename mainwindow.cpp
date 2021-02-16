@@ -107,6 +107,7 @@ void MainWindow::initWindow()
 
     QAction *editKopiuj = new QAction(("&Kopiuj"), this);
     QAction *editWklej = new QAction(("&Wklej"), this);
+     QAction *editToolbar = new QAction(("Toolbar"), this);
 
     QAction *infoOProgramie = new QAction(("&O Programie"), this);
     QAction *infoOAutorze = new QAction(("O &Autorze"), this);
@@ -127,6 +128,8 @@ void MainWindow::initWindow()
 
     mainEdycja->addAction(editKopiuj);
     mainEdycja->addAction(editWklej);
+     mainEdycja->addAction(editToolbar);
+
     mainInfo->addAction(infoOProgramie);
     mainInfo->addAction(infoOAutorze);
     mainInfo->addAction(infoLog);
@@ -136,14 +139,21 @@ void MainWindow::initWindow()
     //connect(settingsOption, &QAction::triggered,this, SLOT (openInfo()));
     connect(settingsOption, SIGNAL(triggered()), this, SLOT(on_actionOpcje_triggered()));
     connect(infoOProgramie, SIGNAL(triggered()), this, SLOT(on_actionO_programie_triggered()));
+
+
 }
 void MainWindow::InitToolbar()
 {
-    QPixmap dbIcon ("../Resources/DBIcon.jpg");
-    QToolBar * toolbar = addToolBar ("główny pasek narzędzi");
-    toolbar->addAction(QIcon (dbIcon),"Baza");
-
-    toolbar -> addSeparator();
+    //QPixmap dbIcon (":/Resources/DBIcon.jpg");
+    QIcon dbIcon;
+    dbIcon.addPixmap(QPixmap("/Resources/DBIcon1.png"),QIcon::Normal);
+    //QPixmap dbIcon (":Resources/DBIcon1.png");
+    //QToolBar *toolbar = addToolBar ("główny pasek narzędzi");
+    QToolBar *toolBar= addToolBar (tr("this"));
+//Qt::ToolButtonFollowStyle;
+    toolBar->addAction(QIcon (dbIcon),"Baza");
+toolBar->addAction(QIcon (dbIcon),"Bazaouttjt");
+    toolBar -> addSeparator();
 
 }
 
@@ -293,4 +303,9 @@ void MainWindow::on_pushButton_11_clicked()
 
 UrzadzeniaPrzypominacz *urzPrzy = new UrzadzeniaPrzypominacz(this);
 urzPrzy->show();
+}
+
+void MainWindow::on_actionBaza_triggered()
+{
+    qDebug()<<"Ikonka baza z toolbara";
 }

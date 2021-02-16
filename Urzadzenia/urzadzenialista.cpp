@@ -401,7 +401,10 @@ void UrzadzeniaLista::on_checkBox_stateChanged()
 
 void UrzadzeniaLista::fillComboBoxes()
 {
-    bool jestItem;
+    vector <QString> vfillCb10;
+    vector <QString> vfillCb11;
+    vector <QString> vfillCb12;
+
     pusteRzedy = ui->label_3->text().toInt();
     ui->comboBox->addItem("Brak");
     ui->comboBox_2->addItem("Brak");
@@ -417,58 +420,83 @@ void UrzadzeniaLista::fillComboBoxes()
         //NOTE: Sprawdzam czy element jest juz na liscie w comboBox
 
         //
-        ui->comboBox->addItem(item1->text());
-        ui->comboBox_2->addItem(item2->text());
-        ui->comboBox_3->addItem(item3->text());
+        vfillCb10.push_back(item1->text());
+        vfillCb11.push_back(item2->text());
+        vfillCb12.push_back(item3->text());
+
     }
-    int iloscElemetowWCB2 = ui->comboBox_2->count();
+    sort(vfillCb10.begin(),vfillCb10.end());
+    vfillCb10.erase(unique(vfillCb10.begin(),vfillCb10.end()),vfillCb10.end());
+    sort(vfillCb11.begin(),vfillCb11.end());
+    vfillCb11.erase(unique(vfillCb11.begin(),vfillCb11.end()),vfillCb11.end());
+    sort(vfillCb12.begin(),vfillCb12.end());
+    vfillCb12.erase(unique(vfillCb12.begin(),vfillCb12.end()),vfillCb12.end());
 
-    for (int j = 0; j <= iloscElemetowWCB2; j++)
-
+    cout << "Po usunieciu duplikatow\n";
+    for(int k = 0; k < vfillCb10.size(); ++k)
     {
-        //qWarning() << "wyraz do porowniaa to: " << ui->comboBox_5->itemText(j);
-
-        for (int k =j+ 1; k <= iloscElemetowWCB2; k++) {
-            if (ui->comboBox_2->itemText(j) == ui->comboBox_2->itemText(k)) {
-                ui->comboBox_2->removeItem(k);
-            }
-        }
-
-    } //
-    int iloscElemetowWCB3 = ui->comboBox_3->count();
-
-    for (int j = 0; j <= iloscElemetowWCB3; j++)
-
+        ui->comboBox->addItem(vfillCb10[k]) ;
+    }
+    for(int k = 0; k < vfillCb11.size(); ++k)
     {
-        //qWarning() << "wyraz do porowniaa to: " << ui->comboBox_6->itemText(j);
-
-        for (int k =j+ 1; k <= iloscElemetowWCB3 - 1; k++) {
-            //qWarning() << "Porownuje : " << ui->comboBox_6->itemText(j)
-            //<< " z: " << ui->comboBox_6->itemText(k);
-            if (ui->comboBox_3->itemText(j) == ui->comboBox_3->itemText(k)) {
-                //qWarning() << "Usuwam : " << ui->comboBox_6->itemText(k);
-                ui->comboBox_3->removeItem(k);
-            }
-        }
-
-    } //
-    int iloscElemetowWCB0 = ui->comboBox->count();
-
-    for (int j = 0; j <= iloscElemetowWCB0; j++)
-
+        ui->comboBox_2->addItem(vfillCb11[k]) ;
+    }
+    for(int k = 0; k < vfillCb12.size(); ++k)
     {
-        //qWarning() << "wyraz do porowniaa to: " << ui->comboBox_6->itemText(j);
+        ui->comboBox_3->addItem(vfillCb12[k]) ;
+    }
 
-        for (int k =j+ 1; k <= iloscElemetowWCB0 - 1; k++) {
-            //qWarning() << "Porownuje : " << ui->comboBox_6->itemText(j)
-            //<< " z: " << ui->comboBox_6->itemText(k);
-            if (ui->comboBox->itemText(j) == ui->comboBox->itemText(k)) {
-                //qWarning() << "Usuwam : " << ui->comboBox_6->itemText(k);
-                ui->comboBox->removeItem(k);
-            }
-        }
 
-    } //
+
+
+    //int iloscElemetowWCB2 = ui->comboBox_2->count();
+
+//    for (int j = 0; j <= iloscElemetowWCB2; j++)
+
+//    {
+//        //qWarning() << "wyraz do porowniaa to: " << ui->comboBox_5->itemText(j);
+
+//        for (int k =j+ 1; k <= iloscElemetowWCB2; k++) {
+//            if (ui->comboBox_2->itemText(j) == ui->comboBox_2->itemText(k)) {
+//                ui->comboBox_2->removeItem(k);
+//            }
+//        }
+
+//    } //
+//    int iloscElemetowWCB3 = ui->comboBox_3->count();
+
+//    for (int j = 0; j <= iloscElemetowWCB3; j++)
+
+//    {
+//        //qWarning() << "wyraz do porowniaa to: " << ui->comboBox_6->itemText(j);
+
+//        for (int k =j+ 1; k <= iloscElemetowWCB3 - 1; k++) {
+//            //qWarning() << "Porownuje : " << ui->comboBox_6->itemText(j)
+//            //<< " z: " << ui->comboBox_6->itemText(k);
+//            if (ui->comboBox_3->itemText(j) == ui->comboBox_3->itemText(k)) {
+//                //qWarning() << "Usuwam : " << ui->comboBox_6->itemText(k);
+//                ui->comboBox_3->removeItem(k);
+//            }
+//        }
+
+//    } //
+//    int iloscElemetowWCB0 = ui->comboBox->count();
+
+//    for (int j = 0; j <= iloscElemetowWCB0; j++)
+
+//    {
+//        //qWarning() << "wyraz do porowniaa to: " << ui->comboBox_6->itemText(j);
+
+//        for (int k =j+ 1; k <= iloscElemetowWCB0 - 1; k++) {
+//            //qWarning() << "Porownuje : " << ui->comboBox_6->itemText(j)
+//            //<< " z: " << ui->comboBox_6->itemText(k);
+//            if (ui->comboBox->itemText(j) == ui->comboBox->itemText(k)) {
+//                //qWarning() << "Usuwam : " << ui->comboBox_6->itemText(k);
+//                ui->comboBox->removeItem(k);
+//            }
+//        }
+
+//    } //
 
 
 }

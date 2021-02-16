@@ -104,4 +104,9 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
-    Resources/DBIcon.jpg
+    DBIcon.png \
+    Resources/DBIcon.jpg \
+    Resources/DBIcon.png
+
+RESOURCES += \
+    Resources/testQRC.qrc

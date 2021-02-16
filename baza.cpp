@@ -422,10 +422,14 @@ void Baza::fillComboBoxes()
     pusteRzedy1 = ui->label_2->text().toInt();
     int rowCount = model->rowCount();
     vector <QString> vfillCb5;
+    vector <QString> vfillCb6;
+    vector <QString> vfillCb7;
+    vector <QString> vfillCb8;
+    vector <QString> vfillCb9;
 
-    QString fillCb5[rowCount];
+    //QString fillCb5[rowCount];
     qWarning() << "row count to: " << model->rowCount();
-    qWarning() << "rozmiar tablicyt to: " << fillCb5->size();
+    //qWarning() << "rozmiar tablicyt to: " << fillCb5->size();
     ui->comboBox_5->addItem("Brak");
     ui->comboBox_6->addItem("Brak");
     //ui->comboBox_7->addItem("Brak");
@@ -446,55 +450,56 @@ void Baza::fillComboBoxes()
         qWarning()<< "dodaje do Fill to : "<<item1->text()<<" pod numerem: "<<i;
         //fillCb5[i].push_back( item1->text());
         vfillCb5.push_back(item1->text());
+        vfillCb6.push_back(item2->text());
+        vfillCb7.push_back(item3->text());
+        vfillCb8.push_back(item4->text());
+        vfillCb9.push_back(item5->text());
         qWarning() << "rozmiar vtablicy po dodaniu to: " << vfillCb5.size();
     }
-
-    //* test
-    for (int test=0;test<=vfillCb5.size()-1;test++)
-    {//NOTE:sprawdzic czy wektor tez od size -1
-        qWarning()<<"elementy to: "<< vfillCb5[test];
+     cout << "Przed usunieciem duplikatow\n";
+//    for (int k =0;k<vfillCb5.size();++k)
+//    {
+//        qDebug() << vfillCb5[k] << "\n";
+//    }
+    sort(vfillCb5.begin(),vfillCb5.end());
+    vfillCb5.erase(unique(vfillCb5.begin(),vfillCb5.end()),vfillCb5.end());
+    sort(vfillCb6.begin(),vfillCb6.end());
+    vfillCb6.erase(unique(vfillCb6.begin(),vfillCb6.end()),vfillCb6.end());
+    sort(vfillCb7.begin(),vfillCb7.end());
+    vfillCb7.erase(unique(vfillCb7.begin(),vfillCb7.end()),vfillCb7.end());
+    sort(vfillCb8.begin(),vfillCb8.end());
+    vfillCb8.erase(unique(vfillCb8.begin(),vfillCb8.end()),vfillCb8.end());
+    sort(vfillCb9.begin(),vfillCb9.end());
+    vfillCb9.erase(unique(vfillCb9.begin(),vfillCb9.end()),vfillCb9.end());
+    cout << "Po usunieciu duplikatow\n";
+    for(int k = 0; k < vfillCb5.size(); ++k)
+    {
+        ui->comboBox_5->addItem(vfillCb5[k]) ;
     }
-    qWarning()<<" sprawdzic element tab[0]: "<<vfillCb5[0];
-    //*test
-    //NOTE: Sprawdzam czy element jest juz na liscie w comboBox
-
-    //
-    // ui->comboBox_5->addItem(item1->text());
-
-    //qWarning()<<fillCb5->toStdString();
-    //qWarning() << "Dodoaje do FillcB5 na pozycji: " << fillCb5[i] << " wyraz: " << item1->text();
-    qWarning() << "rozmiar fllCb5 to: " <<fillCb5->size();
-
-    for (int e = 0; e <= vfillCb5.size(); e++) {
-        for (int r = 1; r <= vfillCb5.size(); r++) {
-            qWarning() << "Porownuje e: " <<e<< vfillCb5[e] << "do r: " <<r<< vfillCb5[r];
-
-            if (vfillCb5[e] ==vfillCb5[r]) {
-                qWarning() << "znazlłem i kasuje i: " << vfillCb5[e] << "do r: " << vfillCb5[r];
-
-                //vfillCb5.remove(r);
-                //vfillCb5.remove(r);
-                //vfillCb5[r].remove(r);
-                vfillCb5.erase(vfillCb5.begin()+ r);
-                //vfillCb5.
-                //fillCb5[r].
-            }
-        }
+    for(int k = 0; k < vfillCb6.size(); ++k)
+    {
+        ui->comboBox_6->addItem(vfillCb6[k]) ;
     }
-    qWarning() << "rozmiar tablicy: " << vfillCb5.size();
-    for (int t = 0; t <= vfillCb5.size(); t++) {
-        qWarning()<<"dodoaje do CB%: "<<t<<vfillCb5[t];
-        ui->comboBox_5->addItem(vfillCb5[t]);
+    for(int k = 0; k < vfillCb7.size(); ++k)
+    {
+        ui->comboBox_7->addItem(vfillCb7[k]) ;
     }
-    //ui->comboBox_6->addItem(item2->text());
-    // ui->comboBox_7->addItem(item3->text());
-    //        ui->comboBox_7->addItem("Brak");
-    //        ui->comboBox_7->addItem("TAK");
-    //        ui->comboBox_7->addItem("MAGAZYN");
-    //ui->comboBox_8->addItem(item4->text());
-    //ui->comboBox_9->addItem(item5->text());
+    for(int k = 0; k < vfillCb8.size(); ++k)
+    {
+        ui->comboBox_8->addItem(vfillCb8[k]) ;
+    }
+    for(int k = 0; k < vfillCb5.size(); ++k)
+    {
+        ui->comboBox_9->addItem(vfillCb9[k]) ;
+    }
 
-    int iloscElemetowWCB5 = ui->comboBox_5->count();
+
+
+
+
+
+
+    //int iloscElemetowWCB5 = ui->comboBox_5->count();
 
     //    for (int j = 0; j <= iloscElemetowWCB5; j++)
 
@@ -508,7 +513,7 @@ void Baza::fillComboBoxes()
     //        }
 
     //    } //
-    int iloscElemetowWCB6 = ui->comboBox_6->count();
+    /*int iloscElemetowWCB6 = ui->comboBox_6->count();
 
     for (int j = 0; j <= iloscElemetowWCB6; j++)
 
@@ -524,60 +529,60 @@ void Baza::fillComboBoxes()
             }
         }
 
-    } //
+    } *///
 
 
-int iloscElemetowWCB7 = ui->comboBox_7->count();
+//int iloscElemetowWCB7 = ui->comboBox_7->count();
 
-for (int j = 0; j <= iloscElemetowWCB7; j++)
+//for (int j = 0; j <= iloscElemetowWCB7; j++)
 
-{
-    //qWarning() << "wyraz do porowniaa to: " << ui->comboBox_6->itemText(j);
+//{
+//    //qWarning() << "wyraz do porowniaa to: " << ui->comboBox_6->itemText(j);
 
-    for (int k = j + 1; k <= iloscElemetowWCB7 - 1; k++) {
-        //qWarning() << "Porownuje : " << ui->comboBox_6->itemText(j)
-        //<< " z: " << ui->comboBox_6->itemText(k);
-        if (ui->comboBox_7->itemText(j) == ui->comboBox_7->itemText(k)) {
-            //qWarning() << "Usuwam : " << ui->comboBox_6->itemText(k);
-            ui->comboBox_7->removeItem(k);
-        }
-    }
+//    for (int k = j + 1; k <= iloscElemetowWCB7 - 1; k++) {
+//        //qWarning() << "Porownuje : " << ui->comboBox_6->itemText(j)
+//        //<< " z: " << ui->comboBox_6->itemText(k);
+//        if (ui->comboBox_7->itemText(j) == ui->comboBox_7->itemText(k)) {
+//            //qWarning() << "Usuwam : " << ui->comboBox_6->itemText(k);
+//            ui->comboBox_7->removeItem(k);
+//        }
+//    }
 
-} //
-int iloscElemetowWCB8 = ui->comboBox_8->count();
+//} //
+//int iloscElemetowWCB8 = ui->comboBox_8->count();
 
-for (int j = 0; j <= iloscElemetowWCB8; j++)
+//for (int j = 0; j <= iloscElemetowWCB8; j++)
 
-{
-    //qWarning() << "wyraz do porowniaa to: " << ui->comboBox_6->itemText(j);
+//{
+//    //qWarning() << "wyraz do porowniaa to: " << ui->comboBox_6->itemText(j);
 
-    for (int k = j + 1; k <= iloscElemetowWCB8 - 1; k++) {
-        //qWarning() << "Porownuje : " << ui->comboBox_6->itemText(j)
-        //<< " z: " << ui->comboBox_6->itemText(k);
-        if (ui->comboBox_8->itemText(j) == ui->comboBox_8->itemText(k)) {
-            //qWarning() << "Usuwam : " << ui->comboBox_6->itemText(k);
-            ui->comboBox_8->removeItem(k);
-        }
-    }
+//    for (int k = j + 1; k <= iloscElemetowWCB8 - 1; k++) {
+//        //qWarning() << "Porownuje : " << ui->comboBox_6->itemText(j)
+//        //<< " z: " << ui->comboBox_6->itemText(k);
+//        if (ui->comboBox_8->itemText(j) == ui->comboBox_8->itemText(k)) {
+//            //qWarning() << "Usuwam : " << ui->comboBox_6->itemText(k);
+//            ui->comboBox_8->removeItem(k);
+//        }
+//    }
 
-} //
-int iloscElemetowWCB9 = ui->comboBox_9->count();
+//} //
+//int iloscElemetowWCB9 = ui->comboBox_9->count();
 
-for (int j = 0; j <= iloscElemetowWCB9; j++)
+//for (int j = 0; j <= iloscElemetowWCB9; j++)
 
-{
-    //qWarning() << "wyraz do porowniaa to: " << ui->comboBox_6->itemText(j);
+//{
+//    //qWarning() << "wyraz do porowniaa to: " << ui->comboBox_6->itemText(j);
 
-    for (int k = j + 1; k <= iloscElemetowWCB9 - 1; k++) {
-        //qWarning() << "Porownuje : " << ui->comboBox_6->itemText(j)
-        //<< " z: " << ui->comboBox_6->itemText(k);
-        if (ui->comboBox_9->itemText(j) == ui->comboBox_9->itemText(k)) {
-            //qWarning() << "Usuwam : " << ui->comboBox_6->itemText(k);
-            ui->comboBox_9->removeItem(k);
-        }
-    }
+//    for (int k = j + 1; k <= iloscElemetowWCB9 - 1; k++) {
+//        //qWarning() << "Porownuje : " << ui->comboBox_6->itemText(j)
+//        //<< " z: " << ui->comboBox_6->itemText(k);
+//        if (ui->comboBox_9->itemText(j) == ui->comboBox_9->itemText(k)) {
+//            //qWarning() << "Usuwam : " << ui->comboBox_6->itemText(k);
+//            ui->comboBox_9->removeItem(k);
+//        }
+//    }
 
-} //
+//} //
 }
 
 QString Baza::filtrOn(QString aktywnyProducent)
