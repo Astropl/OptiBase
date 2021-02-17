@@ -1,0 +1,80 @@
+id,nr_wpisu,data,temat,tresc,przypomnienie,data_przypomnienia,tekst_przypomnienia,urzadzenia_numer_seryjny
+1,2020/12/22/42,20201222,Instalacja,By³$em osobiœcie. Instalacja i szybkie szkolenie. Pani Asia bardzo zadowolona,TAK,2021:12:22,Zapytanie o przegl¹d,AP000363-20200720
+2,2020/12/22/18468,20201222,Testowo,Czy bêdzie siê wyswiet³a³a informacja,NIE,2020:12:22,,1adgsdgs1
+3,2020/12/22/6335,20201222,Testowo,Jeszcze inny analizator,TAK,2021:12:22,Brak przypomneineia,4hdgdhfgjhf4
+4,2020/12/22/26501,20201222,Drugi Wpis terstowy,Drugi Wpis terstowy,TAK,2020:12:22,Drugi Wpis terstowy,AP000363-20200720
+5,2021/01/08/42,20210108,Pomoc Techniczna,2020.12.26. Podes³anie linka do programu BodyPass,NIE,2021:1:8,,CDPL0002-20151028
+"6,2021/01/08/18468,20210108,Wysy³ka,""Dzisiaj wysy³ka."
+"+ Siedzisko+ Stolik"",NIE,2021:1:8,,BJ000011-20201020"
+7,2021/01/08/6335,20210108,Wysy³ka,Potwierdzam: wysz³o.,NIE,2021:1:8,,BJ000011-20201020
+"8,2021/01/11/42,20210111,Testowo,""hgfhfdhfdhfdh"
+hjvjgjf
+gjgfjghkhgk
+"gfjfgjghjhgjfgj"",NIE,2021:1:11,,BJ000011-20201020"
+"9,2021/01/11/43,20210111,Testowo,""hgfhfdhfdhfdh"
+hjvjgjf
+gjgfjghkhgk
+"gfjfgjghjhgjfgj"",NIE,2021:1:11,,BJ000011-20201020"
+"10,2021/01/11/44,20210111,Testowo,""hgfhfdhfdhfdh"
+hjvjgjf
+gjgfjghkhgk
+"gfjfgjghjhgjfgj"",NIE,2021:1:11,,BJ000011-20201020"
+"11,2021/01/11/98,20210111,Testowo,""hgfhfdhfdhfdh"
+hjvjgjf
+gjgfjghkhgk
+"gfjfgjghjhgjfgj"",NIE,2021:1:11,,BJ000011-20201020"
+"12,2021/01/11/99,20210111,Testowo,""hgfhfdhfdhfdh"
+hjvjgjf
+gjgfjghkhgk
+"gfjfgjghjhgjfgj"",NIE,2021:1:11,,BJ000011-20201020"
+"13,2021/01/11/100,20210111,Testowo,""hgfhfdhfdhfdh"
+hjvjgjf
+gjgfjghkhgk
+"gfjfgjghjhgjfgj"",NIE,2021:1:11,,BJ000011-20201020"
+"14,2021/01/11/101,20210111,Testowo,""hgfhfdhfdhfdh"
+hjvjgjf
+gjgfjghkhgk
+"gfjfgjghjhgjfgj"",NIE,2021:1:11,,BJ000011-20201020"
+"15,2021/01/11/102,20210111,Wydanie towaru,""2021.01.11"
+"Wydanie towaru. Pani Ola przyjecha³a osobiscie"",NIE,2021:1:11,,C200008190"
+"16,2021/01/11/103,20210111,Wydanie towaru,""2021.01.11"
+"Wydanie towaru. Pani Ola przyjecha³a osobiscie"",NIE,2021:1:11,,C19025800"
+17,2021/01/12/104,20210112,Wysy³ka,2021.01.13 - Dzisiaj Wysy³ka,TAK,2022:1:12,Przegl¹d,AN000108-20201005
+"18,2021/01/14/105,20210114,Testowo,""hgfhfdhfdhfdh"
+hjvjgjf
+gjgfjghkhgk
+"gfjfgjghjhgjfgj"",NIE,2021:1:14,,1adgsdgs1"
+19,2021/01/14/106,20210114,Testowo,dhhtjyj,NIE,2021:1:14,,1adgsdgs1
+20,2021/01/14/107,2021:01:14,Testowo,Tstowwo,NIE,2021:1:14,,2fhdhdr2
+21,2021/01/14/108,2021:01:14,Testowo,testowow,NIE,2021:1:14,,C19025800
+22,2021/01/14/109,2021:01:14,Testowo,testrewe,TAK,2021:01:14,hnghfhfh,C19025800
+23,2021/01/15/110,2021:01:15,Testowo,Znów test,NIE,2021:01:15,,C19025800
+"24,2021/01/15/111,2021:01:15,Testowo dla przypomnienia,""hgfhfdhfdhfdh"
+hjvjgjf
+gjgfjghkhgk
+"gfjfgjghjhgjfgj"",NIE,2021:01:15,,C19025800"
+"25,2021/01/15/112,2021:01:15,Testowo,""hgfhfdhfdhfdh"
+hjvjgjf
+gjgfjghkhgk
+"gfjfgjghjhgjfgj"",TAK,2021:01:15,bsdfbfdbdf,C19025800"
+"26,2021/01/15/113,2021:01:15,Testowo,""hgfhfdhfdhfdh"
+hjvjgjf
+gjgfjghkhgk
+"gfjfgjghjhgjfgj"",NIE,2021:01:15,,C19025800"
+"27,2021/01/15/114,2021:01:15,Bez Przypom.,""hgfhfdhfdhfdh"
+hjvjgjf
+gjgfjghkhgk
+"gfjfgjghjhgjfgj"",NIE,2021:01:15,,C19025800"
+"28,2021/01/15/115,2021:01:15,Testowo bez Przy,""hgfhfdhfdhfdh"
+hjvjgjf
+gjgfjghkhgk
+"gfjfgjghjhgjfgj"",NIE,2021:01:15,,C19025800"
+"29,2021/01/15/116,2021:01:15,Testowo z bez,""hgfhfdhfdhfdh"
+hjvjgjf
+gjgfjghkhgk
+"gfjfgjghjhgjfgj"",NIE,,,C19025800"
+"30,2021/01/15/117,2021:01:15,Testowo z ,""hgfhfdhfdhfdh"
+hjvjgjf
+gjgfjghkhgk
+"gfjfgjghjhgjfgj"",TAK,,,C19025800"
+31,2021/01/20/118,2021:01:20,Wysy³ka,Dzisiaj wysy³ka.,TAK,2021:01:20,Przegl¹d,AN000118-20201102
