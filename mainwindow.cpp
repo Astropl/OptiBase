@@ -3,19 +3,19 @@
 //#include "Files/checkfiles1.h"
 #include "Kontrahent/kontrahentlista.h"
 #include "Urzadzenia/urzadzenialista.h"
-#include "Ustawienia/ustawienia.h"
 #include "Urzadzenia/urzadzeniaprzypominacz.h"
+#include "Ustawienia/ustawienia.h"
 //#include "DataBase/dbmain.h"
 #include "DataBase/maindb.h"
 #include "DataBase/wpisy.h"
-#include "Timery/timedate.h"
 #include "Timery/dates.h"
+#include "Timery/timedate.h"
 #include "Ustawienia/statystyki.h"
 #include "ui_mainwindow.h"
 //#include "Resources/DBIcon.jpg"
-#include <QToolBar>
 #include <Info/info.h>
 #include <baza.h>
+#include <QToolBar>
 //#include <druga.h>
 //#include <trzecia.h>
 #include <Kontrahent/kontrahent.h>
@@ -30,9 +30,10 @@
 #include <QTime>
 #include <QTimer>
 
+#include <QDir>
+#include <QToolButton>
 
-int dzienRoku=0;
-
+int dzienRoku = 0;
 
 using namespace std;
 MainWindow::MainWindow(QWidget *parent)
@@ -107,7 +108,7 @@ void MainWindow::initWindow()
 
     QAction *editKopiuj = new QAction(("&Kopiuj"), this);
     QAction *editWklej = new QAction(("&Wklej"), this);
-     QAction *editToolbar = new QAction(("Toolbar"), this);
+    QAction *editToolbar = new QAction(("Toolbar"), this);
 
     QAction *infoOProgramie = new QAction(("&O Programie"), this);
     QAction *infoOAutorze = new QAction(("O &Autorze"), this);
@@ -128,7 +129,7 @@ void MainWindow::initWindow()
 
     mainEdycja->addAction(editKopiuj);
     mainEdycja->addAction(editWklej);
-     mainEdycja->addAction(editToolbar);
+    mainEdycja->addAction(editToolbar);
 
     mainInfo->addAction(infoOProgramie);
     mainInfo->addAction(infoOAutorze);
@@ -139,22 +140,37 @@ void MainWindow::initWindow()
     //connect(settingsOption, &QAction::triggered,this, SLOT (openInfo()));
     connect(settingsOption, SIGNAL(triggered()), this, SLOT(on_actionOpcje_triggered()));
     connect(infoOProgramie, SIGNAL(triggered()), this, SLOT(on_actionO_programie_triggered()));
-
-
 }
 void MainWindow::InitToolbar()
 {
+    QString dirPath = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/";
     //QPixmap dbIcon (":/Resources/DBIcon.jpg");
-    QIcon dbIcon;
-    dbIcon.addPixmap(QPixmap("/Resources/DBIcon1.png"),QIcon::Normal);
+    QIcon dbIcon, dbIcon1;
+    //imageFileName = trayPath;
+    dbIcon.addPixmap(QPixmap(dirPath + "/DBIcon.png"), QIcon::Normal);
+    dbIcon1.addPixmap(QPixmap(dirPath + "/Remider.png"), QIcon::Normal);
+    qDebug() << QDir::current();
+    qDebug() << QDir::currentPath();
+
     //QPixmap dbIcon (":Resources/DBIcon1.png");
     //QToolBar *toolbar = addToolBar ("główny pasek narzędzi");
-    QToolBar *toolBar= addToolBar (tr("this"));
-//Qt::ToolButtonFollowStyle;
-    toolBar->addAction(QIcon (dbIcon),"Baza");
-toolBar->addAction(QIcon (dbIcon),"Bazaouttjt");
-    toolBar -> addSeparator();
-
+    QToolBar *toolBar = addToolBar(tr("this"));
+    //Qt::ToolButtonFollowStyle;
+    QToolButton *buttonBaza = new QToolButton;
+    QToolButton *buttonRemider = new QToolButton;
+    buttonBaza->setIcon(QIcon(dirPath + "/DBIcon.png"));
+    buttonBaza->setText("Bazownk");
+    buttonRemider->setIcon(QIcon(dirPath + "/DBIcon.png"));
+    buttonRemider->setText("Przypominacz");
+    toolBar->addWidget(buttonBaza);
+    toolBar->addWidget(buttonRemider);
+    //    toolBar->addAction(QIcon(dbIcon), "Baza");
+    //    toolBar->addAction(QIcon(dbIcon1), "Bazaouttjt");
+    toolBar->addSeparator();
+    //TODO: Podpiąc sloty
+    //connect(toolBar, SIGNAL(triggered()), this, SLOT(clickButtonBaza()));
+    connect(buttonBaza, SIGNAL(clicked()), this, SLOT(clickButtonBaza()));
+    connect(buttonRemider, SIGNAL(clicked()), this, SLOT(clickButtonRemider()));
 }
 
 void MainWindow::statsy()
@@ -267,8 +283,8 @@ void MainWindow::on_calendarWidget_clicked(const QDate &date)
 void MainWindow::on_pushButton_10_clicked()
 {
     if (ui->pushButton_10->text() == "V") {
-Dzienroku();
-ZnakZodiaku();
+        Dzienroku();
+        ZnakZodiaku();
         ui->pushButton_10->setText("/\\");
         for (int x = 0; x <= 211; x++) {
             ui->scrollArea_3->setFixedSize(211, x);
@@ -279,8 +295,7 @@ ZnakZodiaku();
 
     }
 
-    else
-    {
+    else {
         ui->pushButton_10->setText("V");
         for (int y = 211; y >= 0; y--) {
             ui->scrollArea_3->setFixedSize(211, y);
@@ -301,24 +316,28 @@ void MainWindow::ZnakZodiaku()
 {
     //Label-7 -> nak zodiaku
 
-    QString znakzodiaku="";
+    QString znakzodiaku = "";
     Dates *dates = new Dates(this);
-    qWarning () <<" Lece do Dates";
+    qWarning() << " Lece do Dates";
     znakzodiaku = dates->znakZodiaku(znakzodiaku);
     //if
-    qWarning ()<<" Po przyjsciu daje nam : "<<znakzodiaku;
+    qWarning() << " Po przyjsciu daje nam : " << znakzodiaku;
     ui->label_7->setText(znakzodiaku);
 }
 void MainWindow::on_pushButton_11_clicked()
 {
     //Przypominacz
 
-UrzadzeniaPrzypominacz *urzPrzy = new UrzadzeniaPrzypominacz(this);
-urzPrzy->show();
+    UrzadzeniaPrzypominacz *urzPrzy = new UrzadzeniaPrzypominacz(this);
+    urzPrzy->show();
 }
 
-void MainWindow::on_actionBaza_triggered()
+void MainWindow::clickButtonBaza()
 {
-    qDebug()<<"Ikonka baza z toolbara";
+    qDebug() << "Ikonka baza z toolbara";
+}
+void MainWindow::clickButtonRemider()
+{
+    qDebug() << "Ikonka Remider z toolbara";
 }
 // do gita

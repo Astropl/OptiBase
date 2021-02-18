@@ -952,23 +952,12 @@ void MainDb::dBBaza()
     //qWarning("Tworzenie tabeli Urzadzenia ");
     qWarning("Tworzenie tabeli Głownej Bazy ");
     query.exec("CREATE TABLE IF NOT EXISTS dbbaza  (id INTEGER PRIMARY KEY, "
-               "dbbaza_urzadzenia_id TEXT, "
-               "dbbaza_kontrahent_id TEXT, "
+               "dbbaza_urzadzenia_id TEXT UNIQUE, "
+               "dbbaza_kontrahent_id TEXT UNIQUE, "
                "FOREIGN KEY (dbbaza_urzadzenia_id) REFERENCES urzadzenia(id),"
                "FOREIGN KEY (dbbaza_kontrahent_id) REFERENCES kontrahenci(id))");
 
-    //    query.exec(
-    //        "CREATE TABLE IF NOT EXISTS dbbaza  (id INTEGER PRIMARY KEY, "
-    //        "dbbaza_urzadzenia_producent_id TEXT, "
-    //        "dbbaza_urzadzenia_model_id TEXT, "
-    //        "dbbaza_urzadzenia_numerSeryjny TEXT UNIQUE, "
-    //        "dbbaza_urzadzenia_przypisany TEXT, "
-    //        "testowa TEXT, "
-    //        "FOREIGN KEY (dbbaza_urzadzenia_producent_id) REFERENCES "
-    //        "urzadzenia(urzadzenia_producent_id),"
-    //        "FOREIGN KEY (dbbaza_urzadzenia_model_id) REFERENCES urzadzenia(urzadzenia_model_id) ON DELETE SET NULL,"
-    //        "FOREIGN KEY (dbbaza_urzadzenia_numerSeryjny) REFERENCES urzadzenia(numerSeryjny) ON DELETE SET NULL,"
-    //        "FOREIGN KEY (dbbaza_urzadzenia_przypisany) REFERENCES urzadzenia(przypisany) ON DELETE SET NULL)");
+
 
     if (!query.isActive())
         qWarning() << " Tworzenie Tabeli DB - ERROR: " << query.lastError().text();
@@ -977,8 +966,7 @@ void MainDb::dBBaza()
             "INSERT INTO dbbaza (dbbaza_urzadzenia_id, dbbaza_kontrahent_id ) VALUES(2, 1)"))
         qWarning() << "MainWindow::DatabasePopulate Tabela DB- ERROR: " << query.lastError().text();
 
-    //    if (!query.exec("INSERT INTO panstwa (panstwo) VALUES('Nuemcy')"))
-    //        qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
+
 }
 void MainDb::dBKraj()
 {

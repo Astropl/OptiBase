@@ -19,7 +19,6 @@ public:
 
     void InitDB();
 
-
 public slots:
     void myfunctiontimer();
     void ZnakZodiaku();
@@ -49,8 +48,9 @@ private slots:
     void Dzienroku();
     void on_pushButton_11_clicked();
 
-    void on_actionBaza_triggered();
-
+    // void on_actionBaza_triggered();
+    void clickButtonBaza();
+    void clickButtonRemider();
 private:
     Ui::MainWindow *ui;
 
