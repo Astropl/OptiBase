@@ -1,20 +1,24 @@
 #include "wpisy.h"
-#include "ui_wpisy.h"
-#include <QTableView>
-#include <QDebug>
-#include "Timery/timedate.h"
-#include "time.h"
 #include "DataBase/maindb.h"
-#include <Info/info.h>
-#include "Ustawienia/ustawienia.h"
+#include "Timery/timedate.h"
 #include "Ustawienia/statystyki.h"
+#include "Ustawienia/ustawienia.h"
+#include "time.h"
+#include "ui_wpisy.h"
+#include <Info/info.h>
+#include <algorithm>
 #include <iostream>
+#include <vector>
+#include <QDebug>
+#include <QString>
+#include <QTableView>
 #include <QTimer>
 
+using namespace std;
 
-Wpisy::Wpisy(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::Wpisy)
+Wpisy::Wpisy(QWidget *parent)
+    : QMainWindow(parent)
+    , ui(new Ui::Wpisy)
 {
     ui->setupUi(this);
     //qDebug()<<"Jstem w Wpisy";
@@ -24,11 +28,8 @@ Wpisy::Wpisy(QWidget *parent) :
     timer->start(1000);
     //===================
 
-
     initWindow();
     showTable();
-
-
 }
 
 Wpisy::~Wpisy()
@@ -70,8 +71,6 @@ void Wpisy::myfunctiontimer()
 
     ui->labelDzien->setText(stringDzienTygodnia);
 }
-
-
 
 void Wpisy::initWindow()
 {
@@ -115,7 +114,7 @@ void Wpisy::initWindow()
     connect(infoOProgramie, SIGNAL(triggered()), this, SLOT(on_actionO_programie_triggered()));
 }
 void Wpisy::on_pushButton_clicked()
-{//Zamknij
+{ //Zamknij
     timer->stop();
 
     destroy();
@@ -135,7 +134,6 @@ void Wpisy::showTable()
     model->setHeaderData(7, Qt::Horizontal, "Tekst Przypomnienia");      // Imie
     model->setHeaderData(8, Qt::Horizontal, "Numer seryjny urządzenia"); // Imie
 
-
     int rowDoSize = model->rowCount();
     for (int i = 0; i <= rowDoSize; i++) {
         ui->tableView->setRowHeight(i, 20);
@@ -143,10 +141,7 @@ void Wpisy::showTable()
     ui->tableView->horizontalHeader()->setSectionResizeMode(
         QHeaderView::ResizeToContents); // Rozszerza kolumny do najdłuzszego itema w kolumnie.
     ui->tableView->sortByColumn(2,
-                                Qt::SortOrder(
-                                    1)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy
-
-
+                                Qt::SortOrder(1)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy
 
     loadWpis();
 
@@ -155,7 +150,11 @@ void Wpisy::showTable()
 
 void Wpisy::loadWpis()
 {
-    model->sort(0,Qt::DescendingOrder);
+    ui->comboBox->setVisible(false);
+    ui->comboBox_2->setVisible(false);
+    ui->comboBox_3->setVisible(false);
+
+    model->sort(0, Qt::DescendingOrder);
     MainDb *mainDb = new MainDb(this);
     QStandardItem *dodajItem = new QStandardItem();
 
@@ -164,18 +163,12 @@ void Wpisy::loadWpis()
 
     iloscWpisow = mainDb->loadDataRemiderId(iloscWpisow);
     //qDebug()<<" Ilosc wpisów: "<<iloscWpisow;
-    for(int i =1; i<=iloscWpisow;i++)
-    {
-        for( int d=0;d<=8;d++)
-        {
-            pobierzWpisy= mainDb->loadDataRemiderAll(pobierzWpisy, i,d);
+    for (int i = 1; i <= iloscWpisow; i++) {
+        for (int d = 0; d <= 8; d++) {
+            pobierzWpisy = mainDb->loadDataRemiderAll(pobierzWpisy, i, d);
             //qDebug()<<"Dodoaje item wiersz: "<< i <<" , d: "<<d<<" o nazwie: "<<pobierzWpisy;
             dodajItem = new QStandardItem(pobierzWpisy);
-            model->setItem(i-1,d,dodajItem);
-
-
-
-
+            model->setItem(i - 1, d, dodajItem);
         }
     }
     int rowDoSize = model->rowCount();
@@ -185,9 +178,7 @@ void Wpisy::loadWpis()
     ui->tableView->horizontalHeader()->setSectionResizeMode(
         QHeaderView::ResizeToContents); // Rozszerza kolumny do najdłuzszego itema w kolumnie.
     ui->tableView->sortByColumn(2,
-                                Qt::SortOrder(
-                                    1)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy
-
+                                Qt::SortOrder(1)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy
 }
 
 void Wpisy::openInfo()
@@ -202,6 +193,106 @@ void Wpisy::openSettings()
 }
 void Wpisy::statsy()
 {
-    Statystyki *stats = new Statystyki (this);
+    Statystyki *stats = new Statystyki(this);
     stats->liczbaUruchomienFirst();
+}
+void Wpisy::on_checkBox_stateChanged()
+{
+    if (ui->checkBox->isChecked()) {
+        //Klikniety
+
+        ui->comboBox->setVisible(true);
+        ui->comboBox_2->setVisible(true);
+        ui->comboBox_3->setVisible(true);
+        fillComboBoxes();
+
+    } else {
+        //nie klikniety
+        ui->comboBox->setVisible(false);
+        ui->comboBox_2->setVisible(false);
+        ui->comboBox_3->setVisible(false);
+        ui->comboBox->clear();
+        ui->comboBox_2->clear();
+        ui->comboBox_3->clear();
+
+        filtrOn("Brak");
+    }
+}
+void Wpisy::fillComboBoxes()
+{
+    ui->comboBox->addItem("Brak");
+    ui->comboBox_2->addItem("Brak");
+    ui->comboBox_3->addItem("Brak");
+
+    vector<QString> vfillCb0;
+    vector<QString> vfillCb2;
+    vector<QString> vfillCb3;
+
+    for (int i = 0; i <= model->rowCount() - 1; i++) {
+        QStandardItem *item0 = model->item(i, 3); //temat
+        QStandardItem *item2 = model->item(i, 2); //data wpsiu
+        QStandardItem *item3 = model->item(i, 8); // numer seryjny
+
+        vfillCb0.push_back(item0->text());
+        vfillCb2.push_back(item2->text());
+        vfillCb3.push_back(item3->text());
+    }
+
+    sort(vfillCb0.begin(), vfillCb0.end());
+    vfillCb0.erase(unique(vfillCb0.begin(), vfillCb0.end()), vfillCb0.end());
+    sort(vfillCb2.begin(), vfillCb2.end());
+    vfillCb2.erase(unique(vfillCb2.begin(), vfillCb2.end()), vfillCb2.end());
+    sort(vfillCb3.begin(), vfillCb3.end());
+    vfillCb3.erase(unique(vfillCb3.begin(), vfillCb3.end()), vfillCb3.end());
+
+    for (int k = 0; k < vfillCb0.size(); ++k) {
+        ui->comboBox->addItem(vfillCb0[k]);
+    }
+    for (int k = 0; k < vfillCb2.size(); ++k) {
+        ui->comboBox_2->addItem(vfillCb2[k]);
+    }
+    for (int k = 0; k < vfillCb3.size(); ++k) {
+        ui->comboBox_3->addItem(vfillCb3[k]);
+    }
+}
+void Wpisy::on_comboBox_activated(const QString) {
+    QString aktywnyFiltr = ui->comboBox->currentText();
+    filtrOn(aktywnyFiltr);
+}
+
+void Wpisy::on_comboBox_3_activated(const QString) {
+    QString aktywnyFiltr = ui->comboBox_3->currentText();
+    filtrOn(aktywnyFiltr);
+}
+
+void Wpisy::on_comboBox_2_activated(const QString) {
+    QString aktywnyFiltr = ui->comboBox_2->currentText();
+    filtrOn(aktywnyFiltr);
+}
+
+QString Wpisy::filtrOn(QString aktywnyFiltr)
+{
+    for (int k = 0; k <= model->rowCount() - 1; k++) {
+        //Ukrywam rzedy
+
+        ui->tableView->hideRow(k);
+    }
+
+    // "Jestem w filtrze";
+    qDebug ()<< "aktywny filtr to: "<< aktywnyFiltr;
+    QString filter = aktywnyFiltr;
+    for (int i = 0; i <= model->rowCount() - 1; i++) {
+        for (int j = 0; j <= model->columnCount() - 1; j++) {
+            QStandardItem *item = model->item(i, j);
+            if (filter == "Brak") {
+                ui->tableView->showRow(i);
+            } else {
+                if (item->text().contains(filter)) {
+                    ui->tableView->showRow(i);
+                }
+            }
+        }
+    }
+
+    return 0;
 }

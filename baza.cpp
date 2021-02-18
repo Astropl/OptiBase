@@ -505,6 +505,7 @@ QString Baza::filtrOn(QString aktywnyProducent)
         }
 
     }
+    return 0;
 }
 
 void Baza::on_comboBox_5_activated(const QString)
