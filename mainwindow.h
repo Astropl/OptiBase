@@ -51,6 +51,7 @@ private slots:
     // void on_actionBaza_triggered();
     void clickButtonBaza();
     void clickButtonRemider();
+    void clickButtonWpis();
 private:
     Ui::MainWindow *ui;
 

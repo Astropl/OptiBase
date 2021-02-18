@@ -143,34 +143,39 @@ void MainWindow::initWindow()
 }
 void MainWindow::InitToolbar()
 {
-    QString dirPath = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/";
-    //QPixmap dbIcon (":/Resources/DBIcon.jpg");
+    QString dirPath = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/Resources";
+
     QIcon dbIcon, dbIcon1;
-    //imageFileName = trayPath;
+
     dbIcon.addPixmap(QPixmap(dirPath + "/DBIcon.png"), QIcon::Normal);
     dbIcon1.addPixmap(QPixmap(dirPath + "/Remider.png"), QIcon::Normal);
-    qDebug() << QDir::current();
-    qDebug() << QDir::currentPath();
+    //    qDebug() << QDir::current();
+    //    qDebug() << QDir::currentPath();
 
-    //QPixmap dbIcon (":Resources/DBIcon1.png");
-    //QToolBar *toolbar = addToolBar ("główny pasek narzędzi");
     QToolBar *toolBar = addToolBar(tr("this"));
-    //Qt::ToolButtonFollowStyle;
-    QToolButton *buttonBaza = new QToolButton;
-    QToolButton *buttonRemider = new QToolButton;
+
+    QToolButton *buttonBaza = new QToolButton();
+    QToolButton *buttonRemider = new QToolButton();
+    QToolButton *buttonWpis = new QToolButton();
+
     buttonBaza->setIcon(QIcon(dirPath + "/DBIcon.png"));
     buttonBaza->setText("Bazownk");
-    buttonRemider->setIcon(QIcon(dirPath + "/DBIcon.png"));
+    buttonRemider->setIcon(QIcon(dirPath + "/Remider.png"));
     buttonRemider->setText("Przypominacz");
+    buttonWpis->setIcon(QIcon(dirPath + "/Wpisy.png"));
+    buttonWpis->setText("Wpisy");
+    //buttonBaza->setT
+
     toolBar->addWidget(buttonBaza);
-    toolBar->addWidget(buttonRemider);
-    //    toolBar->addAction(QIcon(dbIcon), "Baza");
-    //    toolBar->addAction(QIcon(dbIcon1), "Bazaouttjt");
     toolBar->addSeparator();
-    //TODO: Podpiąc sloty
-    //connect(toolBar, SIGNAL(triggered()), this, SLOT(clickButtonBaza()));
+    toolBar->addWidget(buttonRemider);
+    toolBar->addSeparator();
+    toolBar->addWidget(buttonWpis);
+    toolBar->addSeparator();
+
     connect(buttonBaza, SIGNAL(clicked()), this, SLOT(clickButtonBaza()));
     connect(buttonRemider, SIGNAL(clicked()), this, SLOT(clickButtonRemider()));
+    connect(buttonWpis, SIGNAL(clicked()), this, SLOT(clickButtonWpis()));
 }
 
 void MainWindow::statsy()
@@ -339,5 +344,9 @@ void MainWindow::clickButtonBaza()
 void MainWindow::clickButtonRemider()
 {
     qDebug() << "Ikonka Remider z toolbara";
+}
+void MainWindow::clickButtonWpis()
+{
+    qDebug() << "Ikonka Wpisy z toolbara";
 }
 // do gita
