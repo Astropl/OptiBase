@@ -146,17 +146,20 @@ void MainWindow::InitToolbar()
     QString dirPath = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/Resources";
 
     QIcon dbIcon, dbIcon1;
+    QToolBar *toolBar = addToolBar(tr("Pasek"));
+    toolBar->setOrientation(Qt::Horizontal);
+    toolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 
-    dbIcon.addPixmap(QPixmap(dirPath + "/DBIcon.png"), QIcon::Normal);
-    dbIcon1.addPixmap(QPixmap(dirPath + "/Remider.png"), QIcon::Normal);
+    //    dbIcon.addPixmap(QPixmap(dirPath + "/DBIcon.png"), QIcon::Normal);
+    //    dbIcon1.addPixmap(QPixmap(dirPath + "/Remider.png"), QIcon::Normal);
     //    qDebug() << QDir::current();
     //    qDebug() << QDir::currentPath();
-
-    QToolBar *toolBar = addToolBar(tr("this"));
 
     QToolButton *buttonBaza = new QToolButton();
     QToolButton *buttonRemider = new QToolButton();
     QToolButton *buttonWpis = new QToolButton();
+
+    //toolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 
     buttonBaza->setIcon(QIcon(dirPath + "/DBIcon.png"));
     buttonBaza->setText("Bazownk");
@@ -166,16 +169,42 @@ void MainWindow::InitToolbar()
     buttonWpis->setText("Wpisy");
     //buttonBaza->setT
 
-    toolBar->addWidget(buttonBaza);
-    toolBar->addSeparator();
-    toolBar->addWidget(buttonRemider);
-    toolBar->addSeparator();
-    toolBar->addWidget(buttonWpis);
+    //    QAction *a1Action = addWidget(buttonBaza);
+    //    QAction *a1Action = addWidget(buttonBaza);
+    //addAction(buttonBaza);
+
+    QAction *a1 = new QAction;
+    a1->setIcon(QIcon(dirPath + "/DBIcon.png"));
+    a1->setText("Baza");
+    toolBar->addAction(a1);
     toolBar->addSeparator();
 
-    connect(buttonBaza, SIGNAL(clicked()), this, SLOT(clickButtonBaza()));
-    connect(buttonRemider, SIGNAL(clicked()), this, SLOT(clickButtonRemider()));
-    connect(buttonWpis, SIGNAL(clicked()), this, SLOT(clickButtonWpis()));
+    QAction *a2 = new QAction;
+    a2->setIcon(QIcon(dirPath + "/Remider.png"));
+    a2->setText("Przypominacz");
+    toolBar->addAction(a2);
+    toolBar->addSeparator();
+
+    QAction *a3 = new QAction;
+    a3->setIcon(QIcon(dirPath + "/Wpisy.png"));
+    a3->setText("Wpisy");
+    toolBar->addAction(a3);
+    toolBar->addSeparator();
+
+    //    toolBar->addWidget(buttonBaza);
+    //    toolBar->addSeparator();
+    //    toolBar->addWidget(buttonRemider);
+    //    toolBar->addSeparator();
+    //    toolBar->addWidget(buttonWpis);
+    //    toolBar->addSeparator();
+
+    //    connect(buttonBaza, SIGNAL(clicked()), this, SLOT(clickButtonBaza()));
+    //    connect(buttonRemider, SIGNAL(clicked()), this, SLOT(clickButtonRemider()));
+    //    connect(buttonWpis, SIGNAL(clicked()), this, SLOT(clickButtonWpis()));
+
+    connect(a1, SIGNAL(triggered ()), this, SLOT(clickButtonBaza()));
+    connect(a2, SIGNAL(triggered()), this, SLOT(clickButtonRemider()));
+    connect(a3, SIGNAL(triggered()), this, SLOT(clickButtonWpis()));
 }
 
 void MainWindow::statsy()

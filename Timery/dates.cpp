@@ -34,6 +34,7 @@ QString Dates::znakZodiaku(QString d)
     //miesiac =4;
     //dzien = 1;
     //Koniec testów
+    miesiac = miesiac+1;
     qWarning() << "miesiac z ....: " << d;
     //Wodnik
     if (((miesiac == 1) || (miesiac == 2)) && ((dzien >= 20) || (dzien <= 18))) {
@@ -85,5 +86,6 @@ QString Dates::znakZodiaku(QString d)
         qWarning() << "Mamy cosik";
         d = "cosik";
     }
+    qWarning() << "data i miesiac: "<<dzien<<" "<<miesiac;
     return d;
 }
