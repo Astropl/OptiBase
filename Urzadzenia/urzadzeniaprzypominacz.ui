@@ -156,6 +156,26 @@
      <zorder>labelDzien</zorder>
     </widget>
    </widget>
+   <widget class="QTableView" name="tbPrzypominacz">
+    <property name="geometry">
+     <rect>
+      <x>25</x>
+      <y>160</y>
+      <width>350</width>
+      <height>331</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QTableView" name="tbWazneDaty">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>160</y>
+      <width>350</width>
+      <height>331</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

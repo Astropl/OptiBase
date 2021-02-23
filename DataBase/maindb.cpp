@@ -426,7 +426,7 @@ QString MainDb::addPrzypomnienie(QString nrWpisu,
                     "data_przypomnienia, tekst_przypomnienia, urzadzenia_numer_seryjny) VALUES('"
                     + nrWpisu + "','" + dataWpisu + "','" + tematWpisu + "','" + trescWpisu + "','"
                     + przypomnienie + "','" + dataNajblPrzypom + "','" + tekstPrzypom + "','"
-                    + nrSeryjny + "' )")) {
+                    + nrSeryjny + "')")) {
         qWarning() << "MainDB::Dodoanie Przypomnienia - ERROR: " << query.lastError().text();
     } else {
         qWarning() << "MainDB::Dodoanie Przypomnienia - Udane: " << query.lastError().text();
@@ -799,6 +799,47 @@ QString MainDb::pobierzUrzKont(QString daneProducent, int i, int d)
     }
     return 0;
 }
+int MainDb::pobierzWazneDatyiD(int iloscWpisow)
+
+{
+    QSqlQuery query;
+    //qWarning() << "Jestem w MainDB->pobierz Id.";
+    //QString testName;
+    int rows = 0;
+    iloscWpisow=rows;
+    //TODO: pobrac z Bazy producenta
+
+    if (query.exec("SELECT * FROM dBWazneDaty")) {
+        while (query.next()) {
+            //qWarning() << query.value(1).toString();
+            rows++;
+        }
+        //qWarning() << "row to: " << rows;
+    }
+    //qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
+    return rows;
+}
+QString MainDb::pobierzWazneDaty(QString daneProducent, int i, int d)
+
+{
+    QSqlQuery query;
+    // QString testName;
+    //qWarning() << "Pobrana ilosc producentow z ::Urzadzenia::" << i;
+
+    QString inti = QString::number(i);
+
+    QString name;
+    daneProducent=name;
+    if (query.exec("SELECT * FROM dBWazneDaty where id =" + inti)) {
+        while (query.next()) {
+            //qWarning() << query.value(d).toString();
+            name = query.value(d).toString();
+        }
+        //qWarning() << "udalo sie? : pozniej " << name;
+        return name;
+    }
+    return 0;
+}
 
 void MainDb::DatabaseConnect()
 {
@@ -843,6 +884,7 @@ void MainDb::DatabasePopulate()
     dBPrzypomnienie();
     dBStatistisc();
     dBInfoOTemacie();
+    dBWazneDaty();
 
     //QSqlQuery query;
 }
@@ -987,6 +1029,26 @@ void MainDb::dBKraj()
     }
 
     qWarning("Tworzenie tabeli Kraj - Zakończone");
+}
+void MainDb::dBWazneDaty()
+{
+    QSqlQuery query;
+    query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
+    qWarning("Tworzenie tabeli Wazne Daty ");
+    query.exec(
+        "CREATE TABLE IF NOT EXISTS dBWazneDaty  (id INTEGER PRIMARY KEY, data TEXT, temat TEXT, info TEXT UNIQUE )");
+
+    if (!query.isActive())
+        qWarning() << " Tworzenie Tabeli - ERROR: " << query.lastError().text();
+
+    if (!query.exec("INSERT INTO dBWazneDaty (data, temat, info) VALUES('2022.01.01', 'Nowy Rok', 'Pierwszy Dzień Roku')")) {
+        qWarning() << "MainWindow::dBWazneDaty - ERROR: " << query.lastError().text();
+    }
+//    if (!query.exec("INSERT INTO panstwa (panstwo) VALUES('Nuemcy')")) {
+//        qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
+//    }
+
+    qWarning("Tworzenie tabeli Wazne Daty - Zakończone");
 }
 
 void MainDb::dBInfoOTemacie()

@@ -369,13 +369,16 @@ void MainWindow::on_pushButton_11_clicked()
 void MainWindow::clickButtonBaza()
 {
     qDebug() << "Ikonka baza z toolbara";
+    on_pushButton_clicked();
 }
 void MainWindow::clickButtonRemider()
 {
     qDebug() << "Ikonka Remider z toolbara";
+    on_pushButton_11_clicked();
 }
 void MainWindow::clickButtonWpis()
 {
     qDebug() << "Ikonka Wpisy z toolbara";
+    on_pushButton_2_clicked();
 }
 // do gita

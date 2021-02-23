@@ -23,6 +23,7 @@ public:
     void dBBaza();
     void dBPrzypomnienie();
     void dBStatistisc();
+    void dBWazneDaty();
     void PrzypiszTestowo();
     void dBInfoOTemacie();
     QString ObliczCzasUruchomien(QString DbSec, QString DbMin, QString DbGodz, QString DbDni);
@@ -84,6 +85,11 @@ public:
                                         QString ty4);
     int iloscUruchomienSave (int iloscUruchomien);
     int iloscUruchomienFirst (int iloscUruchomienFirst);
+    int pobierzWazneDatyiD(int iloscWpisow);
+
+
+    QString pobierzWazneDaty(QString daneProducent, int i, int d);
+
 };
 
 #endif // MAINDB_H

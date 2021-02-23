@@ -2,6 +2,8 @@
 #define URZADZENIAPRZYPOMINACZ_H
 
 #include <QMainWindow>
+#include <QStandardItemModel>
+
 
 namespace Ui {
 class UrzadzeniaPrzypominacz;
@@ -21,10 +23,16 @@ private slots:
 
 public slots:
 void myfunctiontimer();
+void initMenu();
+void wczytajDane();
+
+
 
 private:
     Ui::UrzadzeniaPrzypominacz *ui;
     QTimer *timer;
+    QStandardItemModel *model1;
+    QStandardItemModel *model2;
 };
 
 #endif // URZADZENIAPRZYPOMINACZ_H

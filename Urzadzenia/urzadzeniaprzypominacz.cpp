@@ -22,7 +22,8 @@ UrzadzeniaPrzypominacz::UrzadzeniaPrzypominacz(QWidget *parent) :
     connect(timer, SIGNAL(timeout()), this, SLOT(myfunctiontimer()));
     timer->start(1000);
    //===================
-
+    initMenu();
+    wczytajDane();
 
 }
 
@@ -38,6 +39,66 @@ void UrzadzeniaPrzypominacz::on_pushButton_clicked()
     destroy();
 }
 
+
+void UrzadzeniaPrzypominacz::initMenu()
+{
+    setWindowTitle("OptiBase v 1.0:Przypomnienia dat");
+
+
+
+}
+
+void UrzadzeniaPrzypominacz::wczytajDane()
+{
+    MainDb *mainDb = new MainDb(this);
+    model1 = new QStandardItemModel(0, 4, this);
+    model2 = new QStandardItemModel(0, 4, this);
+    ui->tbPrzypominacz->setModel(model1);
+    //QModelIndex *index;
+    ui->tbWazneDaty->setModel(model2);
+    //tbPrzypominacz tbWazneDaty
+
+    model1->setHeaderData(0, Qt::Horizontal, "L.P.");
+    model1->setHeaderData(1, Qt::Horizontal, "Data");
+    model1->setHeaderData(2, Qt::Horizontal, "Temat");
+    model1->setHeaderData(3, Qt::Horizontal, "Tekst");
+
+    model2->setHeaderData(0, Qt::Horizontal, "L.P.");
+    model2->setHeaderData(1, Qt::Horizontal, "Data");
+    model2->setHeaderData(2, Qt::Horizontal, "Temat");
+    model2->setHeaderData(3, Qt::Horizontal, "Tekst");
+
+    //***************
+    //Wazne daty//
+
+     QStandardItem *dodajItem1 = new QStandardItem();
+    QStandardItem *dodajItem2 = new QStandardItem();
+
+    int pobierzDatyId =0, pobierzWazneDatyId=0;
+
+    QString QSpobierzDaty ="", QSpobierzWazneDaty="";
+
+    pobierzWazneDatyId= mainDb->pobierzWazneDatyiD(pobierzWazneDatyId);
+
+    for (int i=1;i<= pobierzWazneDatyId;i++)
+    {
+        for (int d =0;d<=3;d++)
+        {
+            QSpobierzWazneDaty = mainDb->pobierzWazneDaty(QSpobierzWazneDaty, i,d );
+            dodajItem2 = new QStandardItem(QSpobierzWazneDaty);
+            model2->setItem(i-1,d, dodajItem2);
+        }
+    }
+
+    ui->tbPrzypominacz->horizontalHeader()->setSectionResizeMode(
+        QHeaderView::ResizeToContents); // Rozszerza kolumny do najdłuzszego itema w kolumnie.
+    ui->tbPrzypominacz->sortByColumn(1,
+                                Qt::SortOrder(0)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy
+    ui->tbWazneDaty->horizontalHeader()->setSectionResizeMode(
+        QHeaderView::ResizeToContents); // Rozszerza kolumny do najdłuzszego itema w kolumnie.
+    ui->tbWazneDaty->sortByColumn(1,
+                                     Qt::SortOrder(0)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy
+}
 void UrzadzeniaPrzypominacz::myfunctiontimer()
 {
     time_t czas;

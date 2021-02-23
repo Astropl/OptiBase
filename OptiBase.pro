@@ -29,6 +29,7 @@ SOURCES += \
     Kontrahent/kontrahentlista.cpp \
     Kontrahent/kontrahentshow.cpp \
     Kontrahent/tableviewlistakontrahentow.cpp \
+    Timery/addspecialdates.cpp \
     Timery/dates.cpp \
     Timery/timedate.cpp \
     Urzadzenia/urzadzenia.cpp \
@@ -59,6 +60,7 @@ HEADERS += \
     Kontrahent/kontrahentlista.h \
     Kontrahent/kontrahentshow.h \
     Kontrahent/tableviewlistakontrahentow.h \
+    Timery/addspecialdates.h \
     Timery/dates.h \
     Timery/timedate.h \
     Urzadzenia/urzadzenia.h \
@@ -85,6 +87,7 @@ FORMS += \
     Kontrahent/kontrahentinfododajwpis.ui \
     Kontrahent/kontrahentlista.ui \
     Kontrahent/kontrahentshow.ui \
+    Timery/addspecialdates.ui \
     Urzadzenia/urzadzenia.ui \
     Urzadzenia/urzadzeniadodajmodel.ui \
     Urzadzenia/urzadzeniadodajnrseryjny.ui \
