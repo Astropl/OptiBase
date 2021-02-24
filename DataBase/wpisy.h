@@ -26,7 +26,7 @@ public slots:
 
     void openSettings();
     void statsy();
-    void loadInfoOTemacie();
+   // void loadInfoOTemacie();
 
 private slots:
     void on_pushButton_clicked();

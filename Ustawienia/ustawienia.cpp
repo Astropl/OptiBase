@@ -3,8 +3,8 @@
 #include "time.h"
 #include "ui_ustawienia.h"
 #include "Ustawienia/statystyki.h"
-
-#include "Timery/addspecialdates.h"
+#include "Timery/addspecialdatesimportant.h"
+//#include "Timery/addspecialdates.h"
 #include <ctime>
 #include <direct.h> //biblio do stworzenia katalogu poprzez mkdir
 #include <fstream>
@@ -177,7 +177,7 @@ void Ustawienia::on_pushButton_4_clicked()
 void Ustawienia::on_pushButton_5_clicked()
 {
     qWarning()<<" Wazne daty add";
-    AddSpecialDates *asd = new AddSpecialDates(this);
+    AddSpecialDatesImportant *asd = new AddSpecialDatesImportant(this);
     asd->show();
 
 
