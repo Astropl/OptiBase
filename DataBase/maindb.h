@@ -89,7 +89,7 @@ public:
 
 
     QString pobierzWazneDaty(QString daneProducent, int i, int d);
-
+    QString pobierzWazneDatyZapis(QString data, QString temat , QString info );
 };
 
 #endif // MAINDB_H

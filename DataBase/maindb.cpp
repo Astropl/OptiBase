@@ -124,7 +124,7 @@ void MainDb::dBKontrahent()
                "FOREIGN KEY (urzadzenia_numer_seryjny ) REFERENCES urzadzenia (numerSeryjny)  )");
 
     if (!query.isActive()) {
-         qWarning() << " Tworzenie Tabeli - ERROR: " << query.lastError().text();
+        qWarning() << " Tworzenie Tabeli - ERROR: " << query.lastError().text();
     }
     if (!query.exec("INSERT INTO kontrahenci (nazwaFirmy , imie , nazwisko , kontrahent_panstwo_id "
                     ", kontrahent_wojewodztwo_id , kontrahent_miasto_id , kodPocztowy , ulica , "
@@ -134,7 +134,7 @@ void MainDb::dBKontrahent()
                     "'692717987' , '723508531' , 'serwis@vbody.pl' , 'www.vitako.pl')")) {
         qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
     }
-     qWarning("Tworzenie tabeli Kontrahent - Zakończone ");
+    qWarning("Tworzenie tabeli Kontrahent - Zakończone ");
 }
 QString MainDb::pobierzUrzadzenia(QString daneUrzadzenia, int i, int d)
 {
@@ -515,7 +515,7 @@ int MainDb::pobierzKrajId(int rows) //int MainDb::pobierzKrajId(int pobierzKrajI
 
     if (query.exec("SELECT * FROM panstwa")) {
         while (query.next()) {
-           // qWarning() << query.value(1).toString();
+            // qWarning() << query.value(1).toString();
             rows++;
         }
         //qWarning() << "row to: " << rows;
@@ -609,7 +609,7 @@ QString MainDb::loadDataRemiderAll(QString remiderSelf, int i, int n)
 {
     QSqlQuery query;
     QString name;
-    remiderSelf=name;
+    remiderSelf = name;
     QString inti = QString::number(i);
     QString ninti = QString::number(n); //+ "'"
     if (query.exec("SELECT * FROM dBPrzypomnienie WHERE id =" + inti)) {
@@ -689,10 +689,10 @@ QString MainDb::pobierzMiasto(QString daneModel, int i)
     QString inti = QString::number(i);
 
     QString name;
-    daneModel=name;
+    daneModel = name;
     if (query.exec("SELECT * FROM miasta where id =" + inti)) {
         while (query.next()) {
-           // qWarning() << query.value(1).toString();
+            // qWarning() << query.value(1).toString();
             name = query.value(1).toString();
         }
         //qWarning() << "udalo sie? : pozniej " << name;
@@ -745,7 +745,7 @@ QString MainDb::pobierzProducenta(QString daneProducent, int i)
     QString inti = QString::number(i);
 
     QString name;
-    daneProducent=name;
+    daneProducent = name;
     if (query.exec("SELECT * FROM producenci where id =" + inti)) {
         while (query.next()) {
             // qWarning() << "Producent : " << query.value(1).toString();
@@ -765,7 +765,7 @@ int MainDb::pobierzUrzKontiD(int daneProducentId)
     //qWarning() << "Jestem w MainDB->pobierz Id.";
     //QString testName;
     int rows = 0;
-    daneProducentId=rows;
+    daneProducentId = rows;
     //TODO: pobrac z Bazy producenta
 
     if (query.exec("SELECT * FROM producenci")) {
@@ -782,13 +782,13 @@ QString MainDb::pobierzUrzKont(QString daneProducent, int i, int d)
 
 {
     QSqlQuery query;
-   // QString testName;
+    // QString testName;
     //qWarning() << "Pobrana ilosc producentow z ::Urzadzenia::" << i;
 
     QString inti = QString::number(i);
 
     QString name;
-    daneProducent=name;
+    daneProducent = name;
     if (query.exec("SELECT * FROM producenci where id =" + inti)) {
         while (query.next()) {
             //qWarning() << query.value(d).toString();
@@ -806,7 +806,7 @@ int MainDb::pobierzWazneDatyiD(int iloscWpisow)
     //qWarning() << "Jestem w MainDB->pobierz Id.";
     //QString testName;
     int rows = 0;
-    iloscWpisow=rows;
+    iloscWpisow = rows;
     //TODO: pobrac z Bazy producenta
 
     if (query.exec("SELECT * FROM dBWazneDaty")) {
@@ -829,7 +829,7 @@ QString MainDb::pobierzWazneDaty(QString daneProducent, int i, int d)
     QString inti = QString::number(i);
 
     QString name;
-    daneProducent=name;
+    daneProducent = name;
     if (query.exec("SELECT * FROM dBWazneDaty where id =" + inti)) {
         while (query.next()) {
             //qWarning() << query.value(d).toString();
@@ -837,6 +837,18 @@ QString MainDb::pobierzWazneDaty(QString daneProducent, int i, int d)
         }
         //qWarning() << "udalo sie? : pozniej " << name;
         return name;
+    }
+    return 0;
+}
+QString MainDb::pobierzWazneDatyZapis(QString data, QString temat, QString info)
+{
+    QSqlQuery query;
+    query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
+    if (!query.exec("INSERT INTO dBWazneDaty (data, temat, info) VALUES('" + data + "','" + temat
+                    + "','" + info + "')")) {
+        qWarning() << "MainDB::Dodoanie Wazne Daty - ERROR: " << query.lastError().text();
+    } else {
+        qWarning() << "MainDB::Dodoanie Wazne Daty - Udane: " << query.lastError().text();
     }
     return 0;
 }
@@ -999,16 +1011,12 @@ void MainDb::dBBaza()
                "FOREIGN KEY (dbbaza_urzadzenia_id) REFERENCES urzadzenia(id),"
                "FOREIGN KEY (dbbaza_kontrahent_id) REFERENCES kontrahenci(id))");
 
-
-
     if (!query.isActive())
         qWarning() << " Tworzenie Tabeli DB - ERROR: " << query.lastError().text();
 
     if (!query.exec(
             "INSERT INTO dbbaza (dbbaza_urzadzenia_id, dbbaza_kontrahent_id ) VALUES(2, 1)"))
         qWarning() << "MainWindow::DatabasePopulate Tabela DB- ERROR: " << query.lastError().text();
-
-
 }
 void MainDb::dBKraj()
 {
@@ -1035,18 +1043,19 @@ void MainDb::dBWazneDaty()
     QSqlQuery query;
     query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
     qWarning("Tworzenie tabeli Wazne Daty ");
-    query.exec(
-        "CREATE TABLE IF NOT EXISTS dBWazneDaty  (id INTEGER PRIMARY KEY, data TEXT, temat TEXT, info TEXT UNIQUE )");
+    query.exec("CREATE TABLE IF NOT EXISTS dBWazneDaty  (id INTEGER PRIMARY KEY, data TEXT, temat "
+               "TEXT, info TEXT UNIQUE )");
 
     if (!query.isActive())
         qWarning() << " Tworzenie Tabeli - ERROR: " << query.lastError().text();
 
-    if (!query.exec("INSERT INTO dBWazneDaty (data, temat, info) VALUES('2022.01.01', 'Nowy Rok', 'Pierwszy Dzień Roku')")) {
+    if (!query.exec("INSERT INTO dBWazneDaty (data, temat, info) VALUES('2022.01.01', 'Nowy Rok', "
+                    "'Pierwszy Dzień Roku')")) {
         qWarning() << "MainWindow::dBWazneDaty - ERROR: " << query.lastError().text();
     }
-//    if (!query.exec("INSERT INTO panstwa (panstwo) VALUES('Nuemcy')")) {
-//        qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
-//    }
+    //    if (!query.exec("INSERT INTO panstwa (panstwo) VALUES('Nuemcy')")) {
+    //        qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
+    //    }
 
     qWarning("Tworzenie tabeli Wazne Daty - Zakończone");
 }
@@ -1361,20 +1370,16 @@ QString MainDb::dodajIloscTematow(QString qIloscTematow)
     return 0;
 }
 
-
-QString MainDb::addUrzadzeniaUpdate(QString ty1,
-                                     QString ty2,
-                                     QString ty3,
-                                     QString ty4)
+QString MainDb::addUrzadzeniaUpdate(QString ty1, QString ty2, QString ty3, QString ty4)
 {
     QSqlQuery query;
 
     qWarning() << "Edycja urzadzeń.";
     query.exec("PRAGMA foreign_keys = OFF;"); // wyłączenia kluczy obcych
-qWarning() << "Edycja urzadzeń - OFF->Wyłaczenie sprawdzanie luczy obcych.";
-    if (!query.exec("UPDATE urzadzenia SET urzadzenia_producent_id ='" + ty1 + "', urzadzenia_model_id = '" + ty2
-                    + "', numerSeryjny ='" + ty3 +  "'   WHERE numerSeryjny = '" + ty4 + "' "))
-
+    qWarning() << "Edycja urzadzeń - OFF->Wyłaczenie sprawdzanie luczy obcych.";
+    if (!query.exec("UPDATE urzadzenia SET urzadzenia_producent_id ='" + ty1
+                    + "', urzadzenia_model_id = '" + ty2 + "', numerSeryjny ='" + ty3
+                    + "'   WHERE numerSeryjny = '" + ty4 + "' "))
 
     {
         qWarning() << "MainDB::Update Urzadzenia - ERROR: " << query.lastError().text();
@@ -1382,6 +1387,6 @@ qWarning() << "Edycja urzadzeń - OFF->Wyłaczenie sprawdzanie luczy obcych.";
         qWarning() << "MainDB::Update Urzadzenia - Udane: " << query.lastError().text();
     }
     query.exec("PRAGMA foreign_keys = ON;"); // wyłączenia kluczy obcych
-qWarning() << "Edycja urzadzeń - ON->Właczenie sprawdzanie luczy obcych.";
+    qWarning() << "Edycja urzadzeń - ON->Właczenie sprawdzanie luczy obcych.";
     return 0;
 }
