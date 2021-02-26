@@ -1,30 +1,27 @@
 #include "urzadzeniaprzypominacz.h"
-#include "ui_urzadzeniaprzypominacz.h"
 #include "DataBase/maindb.h"
+#include "Timery/timedate.h"
+#include "Ustawienia/ustawienia.h"
+#include "ui_urzadzeniaprzypominacz.h"
+#include <iostream>
 #include <QDebug>
 #include <QString>
 #include <QTimer>
-#include <iostream>
-#include "Timery/timedate.h"
-#include "Ustawienia/ustawienia.h"
-
 
 using namespace std;
 
-
-UrzadzeniaPrzypominacz::UrzadzeniaPrzypominacz(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::UrzadzeniaPrzypominacz)
+UrzadzeniaPrzypominacz::UrzadzeniaPrzypominacz(QWidget *parent)
+    : QMainWindow(parent)
+    , ui(new Ui::UrzadzeniaPrzypominacz)
 {
     ui->setupUi(this);
     //---------Sekcja generacji timera
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(myfunctiontimer()));
     timer->start(1000);
-   //===================
+    //===================
     initMenu();
     wczytajDane();
-
 }
 
 UrzadzeniaPrzypominacz::~UrzadzeniaPrzypominacz()
@@ -39,29 +36,30 @@ void UrzadzeniaPrzypominacz::on_pushButton_clicked()
     destroy();
 }
 
-
 void UrzadzeniaPrzypominacz::initMenu()
 {
     setWindowTitle("OptiBase v 1.0:Przypomnienia dat");
-
-
-
 }
 
 void UrzadzeniaPrzypominacz::wczytajDane()
 {
     MainDb *mainDb = new MainDb(this);
-    model1 = new QStandardItemModel(0, 4, this);
+    model1 = new QStandardItemModel(0, 8, this);
     model2 = new QStandardItemModel(0, 4, this);
     ui->tbPrzypominacz->setModel(model1);
     //QModelIndex *index;
     ui->tbWazneDaty->setModel(model2);
     //tbPrzypominacz tbWazneDaty
 
-    model1->setHeaderData(0, Qt::Horizontal, "L.P.");
-    model1->setHeaderData(1, Qt::Horizontal, "Data");
-    model1->setHeaderData(2, Qt::Horizontal, "Temat");
-    model1->setHeaderData(3, Qt::Horizontal, "Tekst");
+    //    model1->setHeaderData(0, Qt::Horizontal, "L.P.");
+    //    model1->setHeaderData(1, Qt::Horizontal, "Nr Wpisu");
+    //    model1->setHeaderData(3, Qt::Horizontal, "Data");
+    //    model1->setHeaderData(4, Qt::Horizontal, "Temat");
+    //    model1->setHeaderData(5, Qt::Horizontal, "Tekst");
+    //    model1->setHeaderData(6, Qt::Horizontal, "Przypomnienie");
+    //    model1->setHeaderData(7, Qt::Horizontal, "Data Przypomnienia");
+    //    model1->setHeaderData(8, Qt::Horizontal, "Tekst przypomnienia");
+    //    model1->setHeaderData(9, Qt::Horizontal, "Numer seyjny urządzenia");
 
     model2->setHeaderData(0, Qt::Horizontal, "L.P.");
     model2->setHeaderData(1, Qt::Horizontal, "Data");
@@ -71,33 +69,83 @@ void UrzadzeniaPrzypominacz::wczytajDane()
     //***************
     //Wazne daty//
 
-     QStandardItem *dodajItem1 = new QStandardItem();
+    QStandardItem *dodajItem1 = new QStandardItem();
     QStandardItem *dodajItem2 = new QStandardItem();
 
-    int pobierzDatyId =0, pobierzWazneDatyId=0;
+    int pobierzNormalneDatyId = 0, pobierzWazneDatyId = 0;
 
-    QString QSpobierzDaty ="", QSpobierzWazneDaty="";
+    QString QSpobierzDaty = "", QSpobierzWazneDaty = "";
 
-    pobierzWazneDatyId= mainDb->pobierzWazneDatyiD(pobierzWazneDatyId);
+    pobierzWazneDatyId = mainDb->pobierzWazneDatyiD(pobierzWazneDatyId);
 
-    for (int i=1;i<= pobierzWazneDatyId;i++)
-    {
-        for (int d =0;d<=3;d++)
-        {
-            QSpobierzWazneDaty = mainDb->pobierzWazneDaty(QSpobierzWazneDaty, i,d );
+    for (int i = 1; i <= pobierzWazneDatyId; i++) {
+        for (int d = 0; d <= 3; d++) {
+            QSpobierzWazneDaty = mainDb->pobierzWazneDaty(QSpobierzWazneDaty, i, d);
             dodajItem2 = new QStandardItem(QSpobierzWazneDaty);
-            model2->setItem(i-1,d, dodajItem2);
+
+            model2->setItem(i - 1, d, dodajItem2);
         }
     }
+    //****************
+    pobierzNormalneDatyId = mainDb->loadDataRemiderId(pobierzNormalneDatyId);
+
+    for (int i = 1; i <= pobierzNormalneDatyId; i++) {
+        for (int d = 0; d <= 8; d++) {
+            QSpobierzDaty = mainDb->loadDataRemiderAll(QSpobierzDaty, i, d);
+            dodajItem1 = new QStandardItem(QSpobierzDaty);
+            if (d==0)
+            {
+                model1->setItem(i - 1, 0, dodajItem1);
+            }
+            else if (d == 1) {
+                model1->setItem(i - 1, 4, dodajItem1);
+            } else if (d == 2) {
+                model1->setItem(i - 1, 5, dodajItem1);
+            } else if (d == 3) {
+                model1->setItem(i - 1, 6, dodajItem1);
+            } else if (d == 4) {
+                model1->setItem(i - 1, 7, dodajItem1);
+            } else if (d == 5) {
+                model1->setItem(i - 1, 8, dodajItem1);
+            } else if (d == 6) {
+                model1->setItem(i - 1, 1, dodajItem1);
+            } else if (d == 7) {
+                model1->setItem(i - 1, 2, dodajItem1);
+            } else if (d == 8) {
+                model1->setItem(i - 1, 3, dodajItem1);
+
+            } /*else {
+                model1->setItem(i - 1, d, dodajItem1);
+            }*/
+        }
+    }
+    //*****************
+
+    //
 
     ui->tbPrzypominacz->horizontalHeader()->setSectionResizeMode(
         QHeaderView::ResizeToContents); // Rozszerza kolumny do najdłuzszego itema w kolumnie.
     ui->tbPrzypominacz->sortByColumn(1,
-                                Qt::SortOrder(0)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy
+                                     Qt::SortOrder(
+                                         0)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy
     ui->tbWazneDaty->horizontalHeader()->setSectionResizeMode(
         QHeaderView::ResizeToContents); // Rozszerza kolumny do najdłuzszego itema w kolumnie.
     ui->tbWazneDaty->sortByColumn(1,
-                                     Qt::SortOrder(0)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy
+                                  Qt::SortOrder(
+                                      0)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy
+
+    model1->setHeaderData(0, Qt::Horizontal, "L.P.");
+    model1->setHeaderData(1, Qt::Horizontal, "Data Przypomnienia");      //Nr Wpisu
+    model1->setHeaderData(6, Qt::Horizontal, "Temat");                   //Data
+    model1->setHeaderData(7, Qt::Horizontal, "Tekst");                   //Temat
+    model1->setHeaderData(8, Qt::Horizontal, "Przypomnienie");           //Tekst
+    model1->setHeaderData(4, Qt::Horizontal, "Data ");      //Przypomnienie
+    model1->setHeaderData(5, Qt::Horizontal, "Nr Wpisu");                //Data Przypomnienia
+    model1->setHeaderData(2, Qt::Horizontal, "Tekst przypomnienia");     //Tekst przypomnienia
+    model1->setHeaderData(3, Qt::Horizontal, "Numer seyjny urządzenia"); //Numer seyjny urządzenia
+
+    ui->tbWazneDaty->setShowGrid(true);
+    ui->tbPrzypominacz->setShowGrid(true);
 }
 void UrzadzeniaPrzypominacz::myfunctiontimer()
 {

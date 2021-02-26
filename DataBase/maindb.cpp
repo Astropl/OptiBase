@@ -1053,7 +1053,7 @@ void MainDb::dBWazneDaty()
     if (!query.isActive())
         qWarning() << " Tworzenie Tabeli - ERROR: " << query.lastError().text();
 
-    if (!query.exec("INSERT INTO dBWazneDaty (data, temat, info) VALUES('2022.01.01', 'Nowy Rok', "
+    if (!query.exec("INSERT INTO dBWazneDaty (data, temat, info) VALUES('2022/01/01', 'Nowy Rok', "
                     "'Pierwszy Dzień Roku')")) {
         qWarning() << "MainWindow::dBWazneDaty - ERROR: " << query.lastError().text();
     }

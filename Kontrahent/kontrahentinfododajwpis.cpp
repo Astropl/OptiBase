@@ -115,7 +115,7 @@ void KontrahentInfoDodajWpis::on_pushButton_2_clicked()
     QString przypomnienieTemp;
     QString dataNajblPrzypom;
     QString nrWpisu = ui->label_2->text();
-    QString dataWpisu = ui->label_4->text() + ":" + ui->label_5->text() + ":" + ui->label_6->text()
+    QString dataWpisu = ui->label_4->text() + "/" + ui->label_5->text() + "/" + ui->label_6->text()
                         + " | " + ui->label_14->text();
     QString tematWpisu = ui->label_15->text();
     //QString tematWpisu = "tempoczasowy";
@@ -322,7 +322,7 @@ int KontrahentInfoDodajWpis::dodajDateKolejnegoWpisu(int dzienKolejny,
     qStrMiesiac = timeDate->changeStringsMiesiac(miesiacKolejny);
 
     QString nrWpisuKolejnego;
-    nrWpisuKolejnego = QString::number(rokKolejny) + ":" + qStrMiesiac + ":" + qStrDzien;
+    nrWpisuKolejnego = QString::number(rokKolejny) + "/" + qStrMiesiac + "/" + qStrDzien;
 
     ui->label_11->setText(nrWpisuKolejnego);
     return 0;
