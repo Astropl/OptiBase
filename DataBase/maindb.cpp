@@ -8,6 +8,7 @@
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QSqlRecord>
+#include <QDateEdit>
 
 using namespace std;
 
@@ -840,11 +841,14 @@ QString MainDb::pobierzWazneDaty(QString daneProducent, int i, int d)
     }
     return 0;
 }
-QString MainDb::pobierzWazneDatyZapis(QString data, QString temat, QString info)
+QString MainDb::pobierzWazneDatyZapis(QString qdata, QString temat, QString info)
 {
     QSqlQuery query;
+    //QString sdata = qdata.toString();
+    qWarning()<<"Z poprzedniego qData: "<<qdata;
+   // qWarning()<<"Po zamianiae na string sdata: "<<sdata;
     query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
-    if (!query.exec("INSERT INTO dBWazneDaty (data, temat, info) VALUES('" + data + "','" + temat
+    if (!query.exec("INSERT INTO dBWazneDaty (data, temat, info) VALUES('" + qdata + "','" + temat
                     + "','" + info + "')")) {
         qWarning() << "MainDB::Dodoanie Wazne Daty - ERROR: " << query.lastError().text();
     } else {
@@ -1044,7 +1048,7 @@ void MainDb::dBWazneDaty()
     query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
     qWarning("Tworzenie tabeli Wazne Daty ");
     query.exec("CREATE TABLE IF NOT EXISTS dBWazneDaty  (id INTEGER PRIMARY KEY, data TEXT, temat "
-               "TEXT, info TEXT UNIQUE )");
+               "TEXT, info TEXT)");
 
     if (!query.isActive())
         qWarning() << " Tworzenie Tabeli - ERROR: " << query.lastError().text();
