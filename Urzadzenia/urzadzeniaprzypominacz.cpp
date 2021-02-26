@@ -47,27 +47,14 @@ void UrzadzeniaPrzypominacz::wczytajDane()
     model1 = new QStandardItemModel(0, 8, this);
     model2 = new QStandardItemModel(0, 4, this);
     ui->tbPrzypominacz->setModel(model1);
-    //QModelIndex *index;
-    ui->tbWazneDaty->setModel(model2);
-    //tbPrzypominacz tbWazneDaty
 
-    //    model1->setHeaderData(0, Qt::Horizontal, "L.P.");
-    //    model1->setHeaderData(1, Qt::Horizontal, "Nr Wpisu");
-    //    model1->setHeaderData(3, Qt::Horizontal, "Data");
-    //    model1->setHeaderData(4, Qt::Horizontal, "Temat");
-    //    model1->setHeaderData(5, Qt::Horizontal, "Tekst");
-    //    model1->setHeaderData(6, Qt::Horizontal, "Przypomnienie");
-    //    model1->setHeaderData(7, Qt::Horizontal, "Data Przypomnienia");
-    //    model1->setHeaderData(8, Qt::Horizontal, "Tekst przypomnienia");
-    //    model1->setHeaderData(9, Qt::Horizontal, "Numer seyjny urządzenia");
+    ui->tbWazneDaty->setModel(model2);
 
     model2->setHeaderData(0, Qt::Horizontal, "L.P.");
     model2->setHeaderData(1, Qt::Horizontal, "Data");
     model2->setHeaderData(2, Qt::Horizontal, "Temat");
     model2->setHeaderData(3, Qt::Horizontal, "Tekst");
 
-    //***************
-    //Wazne daty//
 
     QStandardItem *dodajItem1 = new QStandardItem();
     QStandardItem *dodajItem2 = new QStandardItem();
@@ -86,18 +73,16 @@ void UrzadzeniaPrzypominacz::wczytajDane()
             model2->setItem(i - 1, d, dodajItem2);
         }
     }
-    //****************
+
     pobierzNormalneDatyId = mainDb->loadDataRemiderId(pobierzNormalneDatyId);
 
     for (int i = 1; i <= pobierzNormalneDatyId; i++) {
         for (int d = 0; d <= 8; d++) {
             QSpobierzDaty = mainDb->loadDataRemiderAll(QSpobierzDaty, i, d);
             dodajItem1 = new QStandardItem(QSpobierzDaty);
-            if (d==0)
-            {
+            if (d == 0) {
                 model1->setItem(i - 1, 0, dodajItem1);
-            }
-            else if (d == 1) {
+            } else if (d == 1) {
                 model1->setItem(i - 1, 4, dodajItem1);
             } else if (d == 2) {
                 model1->setItem(i - 1, 5, dodajItem1);
@@ -113,15 +98,9 @@ void UrzadzeniaPrzypominacz::wczytajDane()
                 model1->setItem(i - 1, 2, dodajItem1);
             } else if (d == 8) {
                 model1->setItem(i - 1, 3, dodajItem1);
-
-            } /*else {
-                model1->setItem(i - 1, d, dodajItem1);
-            }*/
+            }
         }
     }
-    //*****************
-
-    //
 
     ui->tbPrzypominacz->horizontalHeader()->setSectionResizeMode(
         QHeaderView::ResizeToContents); // Rozszerza kolumny do najdłuzszego itema w kolumnie.
@@ -139,7 +118,7 @@ void UrzadzeniaPrzypominacz::wczytajDane()
     model1->setHeaderData(6, Qt::Horizontal, "Temat");                   //Data
     model1->setHeaderData(7, Qt::Horizontal, "Tekst");                   //Temat
     model1->setHeaderData(8, Qt::Horizontal, "Przypomnienie");           //Tekst
-    model1->setHeaderData(4, Qt::Horizontal, "Data ");      //Przypomnienie
+    model1->setHeaderData(4, Qt::Horizontal, "Data ");                   //Przypomnienie
     model1->setHeaderData(5, Qt::Horizontal, "Nr Wpisu");                //Data Przypomnienia
     model1->setHeaderData(2, Qt::Horizontal, "Tekst przypomnienia");     //Tekst przypomnienia
     model1->setHeaderData(3, Qt::Horizontal, "Numer seyjny urządzenia"); //Numer seyjny urządzenia
@@ -180,4 +159,3 @@ void UrzadzeniaPrzypominacz::myfunctiontimer()
 
     ui->labelDzien->setText(stringDzienTygodnia);
 }
-// do gita
