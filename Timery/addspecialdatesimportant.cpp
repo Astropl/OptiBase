@@ -69,7 +69,7 @@ void AddSpecialDatesImportant::on_calendarWidget_clicked(const QDate)
     //connect(calendar, calendar->selectedDate(), this, &AddSpecialDatesImportant::testcos);
     //ui->lineEdit->setEnabled(false);
 
-    QString da=ui->calendarWidget->selectedDate().toString("yyyy/MM/dd");
+    QString da=ui->calendarWidget->selectedDate().toString("yyyy.MM.dd");
     qWarning()<<"on calnendar click: "<<da;
     ui->lineEdit->setText(da);
     //ui->lineEdit->setText(ui->calendarWidget->selectedDate().toString());
