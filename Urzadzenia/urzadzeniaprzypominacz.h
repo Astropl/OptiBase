@@ -21,11 +21,14 @@ private slots:
     void on_pushButton_clicked();
 
 
+    void on_checkBox_stateChanged(int arg1);
+
 public slots:
 void myfunctiontimer();
 void initMenu();
 void wczytajDane();
-
+void changeCheckBoxaFalse();
+void changeCheckBoxaTrue();
 
 
 private:

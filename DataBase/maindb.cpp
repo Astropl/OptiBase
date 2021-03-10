@@ -311,16 +311,16 @@ QString MainDb::addKontrahenciUpdate(QString tym1,
                     + "', adresEmail = '" + tym12 + "', stronaUrl = '" + tym13
                     + "'   WHERE nazwaFirmy = '" + tym1 + "' "))
 
-    // kontrahent_panstwo_id TEXT, "
-    //               "kontrahent_wojewodztwo_id TEXT, kontrahent_miasto_id TEXT, kodPocztowy TEXT, "
-    //               "ulica TEXT, nrDomu INTEGER, telefon TEXT, "
-    //               "telefonPrywatny TEXT, adresEmail TEXT, stronaUrl TEXT, urzadzenia_numer_seryjny "
-    //               "TEXT, FOREIGN KEY "
-    //               "(kontrahent_panstwo_id) REFERENCES panstwa(panstwo), FOREIGN KEY "
-    //               "(kontrahent_wojewodztwo_id) REFERENCES wojewodztwa (wojewodztwo), "
-    //               "FOREIGN KEY "
-    //               "(kontrahent_miasto_id) REFERENCES miasta (miasto), "
-    //               "FOREIGN KEY (urzadzenia_numer_seryjny ) REFERENCES urzadzenia (numerSeryjny) //
+        // kontrahent_panstwo_id TEXT, "
+        //               "kontrahent_wojewodztwo_id TEXT, kontrahent_miasto_id TEXT, kodPocztowy TEXT, "
+        //               "ulica TEXT, nrDomu INTEGER, telefon TEXT, "
+        //               "telefonPrywatny TEXT, adresEmail TEXT, stronaUrl TEXT, urzadzenia_numer_seryjny "
+        //               "TEXT, FOREIGN KEY "
+        //               "(kontrahent_panstwo_id) REFERENCES panstwa(panstwo), FOREIGN KEY "
+        //               "(kontrahent_wojewodztwo_id) REFERENCES wojewodztwa (wojewodztwo), "
+        //               "FOREIGN KEY "
+        //               "(kontrahent_miasto_id) REFERENCES miasta (miasto), "
+        //               "FOREIGN KEY (urzadzenia_numer_seryjny ) REFERENCES urzadzenia (numerSeryjny) //
     {
         //qWarning() << "MainDB::Update Urzadzenia - ERROR: " << query.lastError().text();
     } else {
@@ -441,7 +441,7 @@ QString MainDb::addModel(QString daneModel)
     //TODO: dodoac do Bazy producenta
     QSqlQuery query;
     query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
-                                             //    qWarning() << ("Dodoaje do bazy " + daneModel);
+    //    qWarning() << ("Dodoaje do bazy " + daneModel);
     if (!query.exec("INSERT INTO modele (model) VALUES('" + daneModel + "')")) {
         //        qWarning() << "MainDB::addModel - ERROR: " << query.lastError().text();
     }
@@ -846,7 +846,7 @@ QString MainDb::pobierzWazneDatyZapis(QString qdata, QString temat, QString info
     QSqlQuery query;
     //QString sdata = qdata.toString();
     qWarning()<<"Z poprzedniego qData: "<<qdata;
-   // qWarning()<<"Po zamianiae na string sdata: "<<sdata;
+    // qWarning()<<"Po zamianiae na string sdata: "<<sdata;
     query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
     if (!query.exec("INSERT INTO dBWazneDaty (data, temat, info) VALUES('" + qdata + "','" + temat
                     + "','" + info + "')")) {
@@ -864,7 +864,7 @@ void MainDb::DatabaseConnect()
     if (QSqlDatabase::isDriverAvailable(DRIVER)) {
         QSqlDatabase db = QSqlDatabase::addDatabase(DRIVER);
         db.setDatabaseName(
-            "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/DataBase/2020.12.21.db");
+                    "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/DataBase/2020.12.21.db");
         qWarning(" Powstała baza");
 
         if (db.open()) {
@@ -937,7 +937,7 @@ void MainDb::dBProducent()
     qWarning("Tworzenie tabeli Producent ");
 
     query.exec(
-        "CREATE TABLE IF NOT EXISTS producenci  (id INTEGER PRIMARY KEY, producent TEXT UNIQUE )");
+                "CREATE TABLE IF NOT EXISTS producenci  (id INTEGER PRIMARY KEY, producent TEXT UNIQUE )");
 
     if (!query.isActive()) {
         qWarning() << " Tworzenie Tabeli - ERROR: " << query.lastError().text();
@@ -1019,7 +1019,7 @@ void MainDb::dBBaza()
         qWarning() << " Tworzenie Tabeli DB - ERROR: " << query.lastError().text();
 
     if (!query.exec(
-            "INSERT INTO dbbaza (dbbaza_urzadzenia_id, dbbaza_kontrahent_id ) VALUES(2, 1)"))
+                "INSERT INTO dbbaza (dbbaza_urzadzenia_id, dbbaza_kontrahent_id ) VALUES(2, 1)"))
         qWarning() << "MainWindow::DatabasePopulate Tabela DB- ERROR: " << query.lastError().text();
 }
 void MainDb::dBKraj()
@@ -1028,7 +1028,7 @@ void MainDb::dBKraj()
     query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
     qWarning("Tworzenie tabeli Kraj ");
     query.exec(
-        "CREATE TABLE IF NOT EXISTS panstwa  (id INTEGER PRIMARY KEY, panstwo TEXT UNIQUE )");
+                "CREATE TABLE IF NOT EXISTS panstwa  (id INTEGER PRIMARY KEY, panstwo TEXT UNIQUE )");
 
     if (!query.isActive())
         qWarning() << " Tworzenie Tabeli - ERROR: " << query.lastError().text();
@@ -1048,7 +1048,7 @@ void MainDb::dBWazneDaty()
     query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
     qWarning("Tworzenie tabeli Wazne Daty ");
     query.exec("CREATE TABLE IF NOT EXISTS dBWazneDaty  (id INTEGER PRIMARY KEY, data TEXT, temat "
-               "TEXT, info TEXT)");
+               "TEXT, info TEXT UNIQUE)");
 
     if (!query.isActive())
         qWarning() << " Tworzenie Tabeli - ERROR: " << query.lastError().text();
@@ -1070,7 +1070,7 @@ void MainDb::dBInfoOTemacie()
     query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
     //qWarning("Tworzenie tabeli Info O Temacie ");
     query.exec(
-        "CREATE TABLE IF NOT EXISTS tematDowpisu  (id INTEGER PRIMARY KEY, temat TEXT UNIQUE )");
+                "CREATE TABLE IF NOT EXISTS tematDowpisu  (id INTEGER PRIMARY KEY, temat TEXT UNIQUE )");
 
     if (!query.isActive())
         qWarning() << " Tworzenie Tabeli:tematDowpisu - ERROR: " << query.lastError().text();
@@ -1213,11 +1213,11 @@ void MainDb::PrzypiszTestowo()
 
     //dodaje kontrahentow
     if (!query.exec(
-            "INSERT INTO  kontrahenci (nazwaFirmy , imie , nazwisko , kontrahent_panstwo_id , "
-            "kontrahent_wojewodztwo_id , kontrahent_miasto_id , kodPocztowy , ulica , nrdomu , "
-            "telefon , telefonPrywatny , adresEmail , stronaUrl ) VALUES('MarPaw10', 'Paw', 'Mar', "
-            "'Polska', 'Zachodniopomorskie' , 'Szczecin', '70-890', 'Maciejowicka', '20/123', "
-            "'512052411', '723508531', 'serwsi@vbody.pl', 'www.vitako.pl')")) {
+                "INSERT INTO  kontrahenci (nazwaFirmy , imie , nazwisko , kontrahent_panstwo_id , "
+                "kontrahent_wojewodztwo_id , kontrahent_miasto_id , kodPocztowy , ulica , nrdomu , "
+                "telefon , telefonPrywatny , adresEmail , stronaUrl ) VALUES('MarPaw10', 'Paw', 'Mar', "
+                "'Polska', 'Zachodniopomorskie' , 'Szczecin', '70-890', 'Maciejowicka', '20/123', "
+                "'512052411', '723508531', 'serwsi@vbody.pl', 'www.vitako.pl')")) {
         //qWarning() << "MainDB::Dodoanie TestowoKontrahenta - ERROR: " << query.lastError().text();
     }
     //query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
@@ -1326,7 +1326,7 @@ QString MainDb::pobierzNumerWpisu(QString QnrWpisu)
     QSqlQuery query;
 
     if (query.exec(
-            "SELECT * FROM dBPrzypomnienie WHERE id =(SELECT max(id) FROM dBPrzypomnienie)")) {
+                "SELECT * FROM dBPrzypomnienie WHERE id =(SELECT max(id) FROM dBPrzypomnienie)")) {
         while (query.next()) {
             QnrWpisu = query.value(1).toString(); //QnrWpisu = query.value(4).toInt();
         }

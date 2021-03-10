@@ -41,9 +41,35 @@ void UrzadzeniaPrzypominacz::initMenu()
     setWindowTitle("OptiBase v 1.0:Przypomnienia dat");
 }
 
+void UrzadzeniaPrzypominacz::changeCheckBoxaFalse()
+{
+    ui->checkBox->setChecked(false);
+     ui->radioButton->setVisible(false);
+        ui->radioButton_2->setVisible(false);
+        ui->radioButton_3->setVisible(false);
+    ui->radioButton->setChecked(true);
+     ui->radioButton_2->setChecked(false);
+      ui->radioButton_3->setChecked(false);
+    //checkBox
+
+}
+void UrzadzeniaPrzypominacz::changeCheckBoxaTrue()
+{
+    ui->checkBox->setChecked(true);
+     ui->radioButton->setVisible(true);
+        ui->radioButton_2->setVisible(true);
+        ui->radioButton_3->setVisible(true);
+    ui->radioButton->setChecked(true);
+     ui->radioButton_2->setChecked(false);
+      ui->radioButton_3->setChecked(false);
+    //checkBox
+
+}
+
 void UrzadzeniaPrzypominacz::wczytajDane()
 {
     MainDb *mainDb = new MainDb(this);
+    changeCheckBoxaFalse();
     model1 = new QStandardItemModel(0, 8, this);
     model2 = new QStandardItemModel(0, 4, this);
     ui->tbPrzypominacz->setModel(model1);
@@ -82,40 +108,45 @@ QString dataBrak;
             if (dodajItem1->text() == "BRAK")
 
             {
-                d=8;
-                ui->tbPrzypominacz->hideRow(i);
+                d=9;
+
+                ui->tbPrzypominacz->hideRow(i+1);
 
                         //dataBrak = model1->item(i, 1)->text();
                       // qWarning() << "Item do porwniania: " << dataBrak;
-                qWarning ()<<"nic nie robie";
+                qWarning ()<<"Ukrywam rzad: "<<i<<"Bo item :"<<dodajItem1->text();
                 //if (dataBrak.compare("BRAK")) {
                     //           ui->tbPrzypominacz->hideRow(i);
                     //ui->tbPrzypominacz->hideRow(i);
+                continue;
             } else {
                 if (d == 0) {
-                    model1->setItem(i - 1, 0, dodajItem1);
+                    model1->setItem(i+1, 0, dodajItem1);
                 } else if (d == 1) {
-                    model1->setItem(i - 1, 4, dodajItem1);
+                    model1->setItem(i+1, 4, dodajItem1);
                 } else if (d == 2) {
-                    model1->setItem(i - 1, 5, dodajItem1);
+                    model1->setItem(i+1 , 5, dodajItem1);
                 } else if (d == 3) {
-                    model1->setItem(i - 1, 6, dodajItem1);
+                    model1->setItem(i+1 , 6, dodajItem1);
                 } else if (d == 4) {
-                    model1->setItem(i - 1, 7, dodajItem1);
+                    model1->setItem(i+1 , 7, dodajItem1);
                 } else if (d == 5) {
-                    model1->setItem(i - 1, 8, dodajItem1);
+                    model1->setItem(i+1 , 8, dodajItem1);
                 } else if (d == 6) {
-                    model1->setItem(i - 1, 1, dodajItem1);
+                    model1->setItem(i+1 , 1, dodajItem1);
                 } else if (d == 7) {
-                    model1->setItem(i - 1, 2, dodajItem1);
+                    model1->setItem(i+1 , 2, dodajItem1);
                 } else if (d == 8) {
-                    model1->setItem(i - 1, 3, dodajItem1);
+                    model1->setItem(i+1 , 3, dodajItem1);
                 }
+                qWarning ()<<"Dodoaje item: "<<dodajItem1->text();
             }
         }
     }
 
-
+//******************8
+   // ui->tbPrzypominacz->hideRow(1);
+    //*******************88
 ui->tbPrzypominacz->horizontalHeader()->setSectionResizeMode(
     QHeaderView::ResizeToContents); // Rozszerza kolumny do najdłuzszego itema w kolumnie.
 ui->tbPrzypominacz->sortByColumn(
@@ -192,4 +223,18 @@ void UrzadzeniaPrzypominacz::myfunctiontimer()
     ui->labelDaty->setText(QString::number(rok) + "." + qStrMiesiac + "." + qStrDzien);
 
     ui->labelDzien->setText(stringDzienTygodnia);
+}
+
+void UrzadzeniaPrzypominacz::on_checkBox_stateChanged(int arg1)
+{
+    // zmiana checkboxa
+    if (ui->checkBox->isChecked())
+    {
+        changeCheckBoxaTrue();
+    }
+    else
+    {
+        changeCheckBoxaFalse();
+    }
+
 }
