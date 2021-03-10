@@ -238,3 +238,39 @@ void UrzadzeniaPrzypominacz::on_checkBox_stateChanged(int arg1)
     }
 
 }
+
+//void UrzadzeniaPrzypominacz::on_radioButton_toggled(bool checked)
+//{
+//    qWarning()<<"Togled: Pierwszy nacisniety";
+
+//}
+
+//void UrzadzeniaPrzypominacz::on_radioButton_2_toggled(bool checked)
+//{
+//    qWarning()<<"Togled:Drugi nacisniety";
+//}
+
+//void UrzadzeniaPrzypominacz::on_radioButton_3_toggled(bool checked)
+//{
+//    qWarning()<<"Togled:trzeci nacisniety";
+//}
+
+void UrzadzeniaPrzypominacz::on_radioButton_clicked(bool checked)
+{
+      qWarning()<<"Clicked: Pierwszy nacisniety";
+}
+
+//void UrzadzeniaPrzypominacz::on_radioButton_2_clicked()
+//{
+
+//}
+
+void UrzadzeniaPrzypominacz::on_radioButton_2_clicked(bool checked)
+{
+    qWarning()<<"Clicked: Drugi nacisniety";
+}
+
+void UrzadzeniaPrzypominacz::on_radioButton_3_clicked(bool checked)
+{
+    qWarning()<<"Clicked: Trzeci nacisniety";
+}
