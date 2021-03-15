@@ -92,12 +92,12 @@ void UrzadzeniaPrzypominacz::wczytajDane()
 
     pobierzWazneDatyId = mainDb->pobierzWazneDatyiD(pobierzWazneDatyId);
 
-    for (int i = 1; i <= pobierzWazneDatyId; i++) {
+    for (int i = 0; i <= pobierzWazneDatyId; i++) {
         for (int d = 0; d <= 3; d++) {
             QSpobierzWazneDaty = mainDb->pobierzWazneDaty(QSpobierzWazneDaty, i, d);
             dodajItem2 = new QStandardItem(QSpobierzWazneDaty);
             // if (dodajIt)
-            model2->setItem(i - 1, d, dodajItem2);
+            model2->setItem(i, d, dodajItem2);// model2->setItem(i - 1, d, dodajItem2);
         }
     }
 
@@ -111,8 +111,8 @@ void UrzadzeniaPrzypominacz::wczytajDane()
 
             {
                 d=9;
-
-                ui->tbPrzypominacz->hideRow(i+1);
+qWarning() << "Ukrywam rzad: " << i-1;
+                ui->tbPrzypominacz->hideRow(i-1); //i+1
 
                 //dataBrak = model1->item(i, 1)->text();
                 // qWarning() << "Item do porwniania: " << dataBrak;
@@ -123,25 +123,25 @@ void UrzadzeniaPrzypominacz::wczytajDane()
                 continue;
             } else {
                 if (d == 0) {
-                    model1->setItem(i+1, 0, dodajItem1);
+                    model1->setItem(i-1, 0, dodajItem1);
                 } else if (d == 1) {
-                    model1->setItem(i+1, 4, dodajItem1);
+                    model1->setItem(i-1, 4, dodajItem1);
                 } else if (d == 2) {
-                    model1->setItem(i+1 , 5, dodajItem1);
+                    model1->setItem(i-1 , 5, dodajItem1);
                 } else if (d == 3) {
-                    model1->setItem(i+1 , 6, dodajItem1);
+                    model1->setItem(i-1 , 6, dodajItem1);
                 } else if (d == 4) {
-                    model1->setItem(i+1 , 7, dodajItem1);
+                    model1->setItem(i-1 , 7, dodajItem1);
                 } else if (d == 5) {
-                    model1->setItem(i+1 , 8, dodajItem1);
+                    model1->setItem(i-1 , 8, dodajItem1);
                 } else if (d == 6) {
-                    model1->setItem(i+1 , 1, dodajItem1);
+                    model1->setItem(i-1 , 1, dodajItem1);
                 } else if (d == 7) {
-                    model1->setItem(i+1 , 2, dodajItem1);
+                    model1->setItem(i-1 , 2, dodajItem1);
                 } else if (d == 8) {
-                    model1->setItem(i+1 , 3, dodajItem1);
+                    model1->setItem(i-1 , 3, dodajItem1);
                 }
-                //qWarning ()<<"Dodoaje item: "<<dodajItem1->text();
+                qWarning ()<<"Dodoaje item do rzedu: " <<i-1<<" "<<dodajItem1->text() ;
             }
         }
     }
@@ -284,16 +284,17 @@ void UrzadzeniaPrzypominacz::on_radioButton_2_clicked(bool checked)
     year=atoi( syear.c_str());
 
 //ilosc wpisów w tablei
-    int iloscWierszy =  model1->rowCount()-1;
+    int iloscWierszy =  model1->rowCount();
 QString datazTabeli1;
 int tempower=0;
     qWarning()<<"Ilosc wierszy w  me=odelu 1: "<< iloscWierszy;
     for (int x=0;x<=iloscWierszy ;x++ ) {
-        if(model1->item(x,5)->text()=="TAK")
-        {tempower++;
+     qWarning()<<"item z tebali: "<<"x: "<<x<<" "<<model1->item(x,8)->text();
+        if(model1->item(x,8)->text()=="TAK")
+        {//tempower++;
             //dodoad do iloscwierszy
         }else{
-            tempower--;
+            //tempower--;
             //odjąc od iloscwiersy
         }
     }
@@ -302,11 +303,11 @@ int tempower=0;
 
 
 
-    for(int i =0; i<=iloscWierszy;i++)
-    {
-        datazTabeli1=model1->item(i,1)->text();
-        qWarning()<<"item z tebali: "<<"i: "<<i<<" "<<datazTabeli1;
-    }
+//    for(int i =0; i<=iloscWierszy;i++)
+//    {
+//        datazTabeli1=model1->item(i,1)->text();
+//        qWarning()<<"item z tebali: "<<"i: "<<i<<" "<<datazTabeli1;
+//    }
     //Zamianiec na Date te sringi
 
     // porównac z datą obecną

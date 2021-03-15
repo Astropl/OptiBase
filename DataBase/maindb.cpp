@@ -611,7 +611,11 @@ QString MainDb::loadDataRemiderAll(QString remiderSelf, int i, int n)
     QSqlQuery query;
     QString name;
     remiderSelf = name;
+    qWarning ()<<"Inti przed "<<i;
+//i++;
+//n++;
     QString inti = QString::number(i);
+     qWarning ()<<"Inti po "<<inti;
     QString ninti = QString::number(n); //+ "'"
     if (query.exec("SELECT * FROM dBPrzypomnienie WHERE id =" + inti)) {
         while (query.next()) {
@@ -675,7 +679,7 @@ int MainDb::loadDataRemiderId(int rows)
             rows++;
         }
     }
-
+qWarning()<<"Ilosc rzedów w normlane daty to: "<<rows;
     return rows;
 }
 //*********************
