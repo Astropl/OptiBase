@@ -284,21 +284,28 @@ void UrzadzeniaPrzypominacz::on_radioButton_2_clicked(bool checked)
     year=atoi( syear.c_str());
 
 //ilosc wpisów w tablei
-    int iloscWierszy =  model1->rowCount();
+    int iloscWierszy =  model1->rowCount()-1;
 QString datazTabeli1;
-int tempower=0;
+//int tempower=0;
     qWarning()<<"Ilosc wierszy w  me=odelu 1: "<< iloscWierszy;
-    for (int x=0;x<=iloscWierszy ;x++ ) {
-     qWarning()<<"item z tebali: "<<"x: "<<x<<" "<<model1->item(x,8)->text();
-        if(model1->item(x,8)->text()=="TAK")
-        {//tempower++;
-            //dodoad do iloscwierszy
-        }else{
-            //tempower--;
-            //odjąc od iloscwiersy
-        }
-    }
-     qWarning()<<"tempower: "<<tempower;
+//    for (int x=1;x<=iloscWierszy ;x++ ) {
+//     qWarning()<<"item z tebali: x: "<<x-1<<" "<<model1->item(x-1,1)->text();
+
+
+////        if(model1->item(x,1)->text()=="TAK")
+////        {//tempower++;
+////            //dodoad do iloscwierszy
+////        }else{
+////            //tempower--;
+////            //odjąc od iloscwiersy
+////        }
+//    }
+
+ui->tbPrzypominacz->setAlternatingRowColors(true);
+//ui->tbPrzypominacz->verticalHeader()->count();
+
+
+     qWarning()<<"Po petli ilosc wwierszy z innej metody "<<ui->tbPrzypominacz->verticalHeader()->count();
     //Wyciganac po koleji wszytskie
 
 
