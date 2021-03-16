@@ -11,6 +11,9 @@
 #include <QDate>
 
 using namespace std;
+int hidenNormalDate =0;
+int showenNormalDate =0;
+
 
 UrzadzeniaPrzypominacz::UrzadzeniaPrzypominacz(QWidget *parent)
     : QMainWindow(parent)
@@ -111,7 +114,8 @@ void UrzadzeniaPrzypominacz::wczytajDane()
 
             {
                 d=9;
-qWarning() << "Ukrywam rzad: " << i-1;
+                hidenNormalDate++;
+                qWarning() << "Ukrywam rzad: " << i-1;
                 ui->tbPrzypominacz->hideRow(i-1); //i+1
 
                 //dataBrak = model1->item(i, 1)->text();
@@ -269,8 +273,8 @@ void UrzadzeniaPrzypominacz::on_radioButton_2_clicked(bool checked)
     string SDataTemp;
     dataTemp = "2021/05/12";
     SDataTemp = dataTemp.toStdString();
-    int day, month, year;
-    string sday, smonth, syear;
+    int day, month, year, dayTabela, monthTabela, yearTabela;
+    string sday, smonth, syear, sdayTabela, smonthTabela, syearTabela;
     sday = SDataTemp.substr(8,2);
     qWarning()<<"Dzien:" << sday.c_str();
     day=atoi( sday.c_str());
@@ -283,38 +287,55 @@ void UrzadzeniaPrzypominacz::on_radioButton_2_clicked(bool checked)
     qWarning()<<"rok:" << syear.c_str();
     year=atoi( syear.c_str());
 
-//ilosc wpisów w tablei
-    int iloscWierszy =  model1->rowCount()-1;
-QString datazTabeli1;
-//int tempower=0;
+    //ilosc wpisów w tablei
+    int iloscWierszy =  model1->rowCount();
+    QString datazTabeli1;
+    //int tempower=0;
+
     qWarning()<<"Ilosc wierszy w  me=odelu 1: "<< iloscWierszy;
-//    for (int x=1;x<=iloscWierszy ;x++ ) {
-//     qWarning()<<"item z tebali: x: "<<x-1<<" "<<model1->item(x-1,1)->text();
+    qWarning()<<"ilosc ukrytych wierszu  me=odelu 1: "<< hidenNormalDate;
+    showenNormalDate= iloscWierszy-hidenNormalDate;
+    qWarning()<<"Ilosc wierszy odkrytych  me=odelu 1: "<< showenNormalDate;
 
+    for (int x=1;x<=showenNormalDate ;x++ ) {
 
-////        if(model1->item(x,1)->text()=="TAK")
-////        {//tempower++;
-////            //dodoad do iloscwierszy
-////        }else{
-////            //tempower--;
-////            //odjąc od iloscwiersy
-////        }
-//    }
+        datazTabeli1 = model1->item(x-1,1)->text();
+        qWarning()<<"item z tebali: x: "<<x-1<<" "<<datazTabeli1;
+        //QString na string
+        syearTabela = datazTabeli1.toStdString();
+        syearTabela = syearTabela.substr(0,4);
+        qWarning()<<"Rok z tabeli to: "<<syearTabela.c_str();
 
-ui->tbPrzypominacz->setAlternatingRowColors(true);
-//ui->tbPrzypominacz->verticalHeader()->count();
+        smonthTabela = datazTabeli1.toStdString();
+       smonthTabela = smonthTabela.substr(5,2);
+        qWarning()<<"Rok z tabeli to: "<<smonthTabela.c_str();
 
+        sdayTabela = datazTabeli1.toStdString();
+       sdayTabela = sdayTabela.substr(8,2);
+        sdayTabela=atoi(sdayTabela.c_str());
+       qWarning()<<"Rok z tabeli to: "<<sdayTabela.c_str();
 
-     qWarning()<<"Po petli ilosc wwierszy z innej metody "<<ui->tbPrzypominacz->verticalHeader()->count();
+     //   if (sdayTabela>day)
+        {
+
+        }
+
+    }
+
+    ui->tbPrzypominacz->setAlternatingRowColors(true);
+    //ui->tbPrzypominacz->verticalHeader()->count();
+    //ui->tbPrzypominacz->verticalHeader->
+
+    qWarning()<<"Po petli ilosc wwierszy z innej metody "<<ui->tbPrzypominacz->verticalHeader()->count();
     //Wyciganac po koleji wszytskie
 
 
 
-//    for(int i =0; i<=iloscWierszy;i++)
-//    {
-//        datazTabeli1=model1->item(i,1)->text();
-//        qWarning()<<"item z tebali: "<<"i: "<<i<<" "<<datazTabeli1;
-//    }
+    //    for(int i =0; i<=iloscWierszy;i++)
+    //    {
+    //        datazTabeli1=model1->item(i,1)->text();
+    //        qWarning()<<"item z tebali: "<<"i: "<<i<<" "<<datazTabeli1;
+    //    }
     //Zamianiec na Date te sringi
 
     // porównac z datą obecną
