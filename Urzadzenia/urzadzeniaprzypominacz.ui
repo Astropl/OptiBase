@@ -165,6 +165,15 @@
       <height>331</height>
      </rect>
     </property>
+    <property name="alternatingRowColors">
+     <bool>true</bool>
+    </property>
+    <property name="selectionBehavior">
+     <enum>QAbstractItemView::SelectRows</enum>
+    </property>
+    <property name="sortingEnabled">
+     <bool>true</bool>
+    </property>
    </widget>
    <widget class="QTableView" name="tbWazneDaty">
     <property name="geometry">

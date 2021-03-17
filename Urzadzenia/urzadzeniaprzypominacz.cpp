@@ -13,7 +13,7 @@
 using namespace std;
 int hidenNormalDate =0;
 int showenNormalDate =0;
-
+QDate dataAll=QDate::currentDate();
 
 UrzadzeniaPrzypominacz::UrzadzeniaPrzypominacz(QWidget *parent)
     : QMainWindow(parent)
@@ -72,7 +72,8 @@ void UrzadzeniaPrzypominacz::changeCheckBoxaTrue()
 }
 
 void UrzadzeniaPrzypominacz::wczytajDane()
-{
+{hidenNormalDate=0;
+    showenNormalDate =0;
     MainDb *mainDb = new MainDb(this);
     changeCheckBoxaFalse();
     model1 = new QStandardItemModel(0, 8, this);
@@ -196,6 +197,14 @@ void UrzadzeniaPrzypominacz::wczytajDane()
     ui->tbPrzypominacz->sortByColumn(
                 1,
                 Qt::SortOrder(0)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy //Od daty
+    ui->tbPrzypominacz->horizontalHeader()->setSectionResizeMode(
+        QHeaderView::ResizeToContents); // Rozszerza kolumny do najdłuzszego itema w kolumnie.
+    ui->tbWazneDaty->horizontalHeader()->setSectionResizeMode(
+        QHeaderView::ResizeToContents); // Rozszerza kolumny do najdłuzszego itema w kolumnie.
+
+ui->tbPrzypominacz->setSortingEnabled(true);
+ui->tbWazneDaty->setSortingEnabled(true);
+
 }
 void UrzadzeniaPrzypominacz::myfunctiontimer()
 {
@@ -250,13 +259,38 @@ void UrzadzeniaPrzypominacz::on_checkBox_stateChanged(int arg1)
 void UrzadzeniaPrzypominacz::on_radioButton_clicked(bool checked)
 {
     qWarning()<<"Clicked: Pierwszy nacisniety";
+    int iloscWierszy =  model1->rowCount();
+    QString datazTabeli1;
+    showenNormalDate= iloscWierszy-hidenNormalDate;
+    qWarning()<<"iloscWierszy"<<iloscWierszy;
+    qWarning()<<"hidenNormalDatey"<<hidenNormalDate;
+    qWarning()<<"showenNormalDate"<<showenNormalDate;
+
+    for (int x=1;x<=showenNormalDate ;x++ ) {
+
+        datazTabeli1 = model1->item(x-1,1)->text();
+        qWarning()<<"item z tebali: x: "<<x-1<<" "<<datazTabeli1;
+        QDate mojaData = QDate::fromString(datazTabeli1,"yyyy/MM/dd");
+        qWarning ()<<"Data z komopa: i z tabeli"<<dataAll<<" "<<mojaData;
+
+
+        //if(x<=10)
+        // {
+        qWarning()<<"Wszytskie zprzypominaną datą";
+        ui->tbPrzypominacz->showRow(x-1);
+        //        }else{
+        //            qWarning()<<" dzisiaj jest wczesniej niz z tabelki";
+        //            ui->tbPrzypominacz->hideRow(x-1);
+        //        }
+
+    }
 }
 
 
 
 void UrzadzeniaPrzypominacz::on_radioButton_2_clicked(bool checked)
-{QString qStringDateFromLabel;
-    QDate qDateDateFromLabel;
+{//QString qStringDateFromLabel;
+    //QDate qDateDateFromLabel;
     //     qStringDateFromLabel = ui->labelDaty->text();
     //     qDateDateFromLabel = QDate::fromString(qStringDateFromLabel,"yyyy/MM/dd");
     //    qWarning()<<"Clicked: Drugi nacisniety";
@@ -265,8 +299,8 @@ void UrzadzeniaPrzypominacz::on_radioButton_2_clicked(bool checked)
     //     qWarning()<<QDate::fromString(qStringDateFromLabel,"yyyy/MM/dd");
     //     ui->label->setText(qStringDateFromLabel);
 
-    QDate dataAll;
-    dataAll=QDate::currentDate();
+
+
     qWarning()<<dataAll;
     ui->label->setText(dataAll.toString());
     QString dataTemp;
@@ -301,23 +335,35 @@ void UrzadzeniaPrzypominacz::on_radioButton_2_clicked(bool checked)
 
         datazTabeli1 = model1->item(x-1,1)->text();
         qWarning()<<"item z tebali: x: "<<x-1<<" "<<datazTabeli1;
-        //QString na string
-        syearTabela = datazTabeli1.toStdString();
-        syearTabela = syearTabela.substr(0,4);
-        qWarning()<<"Rok z tabeli to: "<<syearTabela.c_str();
+        //        //QString na string
+        //        syearTabela = datazTabeli1.toStdString();
+        //        syearTabela = syearTabela.substr(0,4);
+        //        yearTabela=atoi(syearTabela.c_str());
+        //        qWarning()<<"Rok z tabeli to: "<<syearTabela.c_str();
 
-        smonthTabela = datazTabeli1.toStdString();
-       smonthTabela = smonthTabela.substr(5,2);
-        qWarning()<<"Rok z tabeli to: "<<smonthTabela.c_str();
+        //        smonthTabela = datazTabeli1.toStdString();
+        //       smonthTabela = smonthTabela.substr(5,2);
+        //       monthTabela =atoi(smonthTabela.c_str());
+        //        qWarning()<<"Rok z tabeli to: "<<smonthTabela.c_str();
 
-        sdayTabela = datazTabeli1.toStdString();
-       sdayTabela = sdayTabela.substr(8,2);
-        sdayTabela=atoi(sdayTabela.c_str());
-       qWarning()<<"Rok z tabeli to: "<<sdayTabela.c_str();
+        //        sdayTabela = datazTabeli1.toStdString();
+        //       sdayTabela = sdayTabela.substr(8,2);
+        //        dayTabela=atoi(sdayTabela.c_str());
+        //       qWarning()<<"Rok z tabeli to: "<<sdayTabela.c_str();
 
-     //   if (sdayTabela>day)
+
+        //QDate *mojaData = new QDate (yearTabela,monthTabela,dayTabela,"yyyy/MM/dd");
+        QDate mojaData = QDate::fromString(datazTabeli1,"yyyy/MM/dd");
+        qWarning ()<<"Data z komopa: i z tabeli"<<dataAll<<" "<<mojaData;
+
+
+        if(mojaData>=dataAll)
         {
-
+            qWarning()<<"data z tabelki jest pozniej niz dzisiaj";
+            ui->tbPrzypominacz->showRow(x-1);
+        }else{
+            qWarning()<<" dzisiaj jest wczesniej niz z tabelki";
+            ui->tbPrzypominacz->hideRow(x-1);
         }
 
     }
@@ -352,4 +398,44 @@ void UrzadzeniaPrzypominacz::on_radioButton_2_clicked(bool checked)
 void UrzadzeniaPrzypominacz::on_radioButton_3_clicked(bool checked)
 {
     qWarning()<<"Clicked: Trzeci nacisniety";
+
+    int iloscWierszy =  model1->rowCount();
+    QString datazTabeli1;
+    showenNormalDate= iloscWierszy-hidenNormalDate;
+    qWarning()<<"iloscWierszy"<<iloscWierszy;
+    qWarning()<<"hidenNormalDatey"<<hidenNormalDate;
+    qWarning()<<"showenNormalDate"<<showenNormalDate;
+int tymczasowaNa10=1;
+    for (int x=1;x<=showenNormalDate ;x++ ) {
+
+        datazTabeli1 = model1->item(x-1,1)->text();
+        qWarning()<<"item z tebali: x: "<<x-1<<" "<<datazTabeli1;
+        QDate mojaData = QDate::fromString(datazTabeli1,"yyyy/MM/dd");
+        qWarning ()<<"Data z komopa: i z tabeli"<<dataAll<<" "<<mojaData;
+
+
+        if(mojaData>=dataAll)
+
+        {
+            if(tymczasowaNa10<=10)
+            {
+
+
+
+                qWarning()<<"data z tabelki jest pozniej niz dzisiaj";
+                ui->tbPrzypominacz->showRow(x-1);
+            }else{
+                qWarning()<<" dzisiaj jest wczesniej niz z tabelki";
+                ui->tbPrzypominacz->hideRow(x-1);
+            }
+        tymczasowaNa10++;
+        }
+        else
+        {
+            ui->tbPrzypominacz->hideRow(x-1);
+        }
+
+
+    }
+
 }
