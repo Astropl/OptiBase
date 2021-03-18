@@ -638,7 +638,7 @@ QString MainDb::loadDataRemider(QString remiderSelf, int i, int n, QString numer
     //qWarning() << "Pobrana ilosc wpisu z ::dBPrzypomnienie::" << i;
 
     QString inti = QString::number(i);
-    QString ninti = QString::number(n);
+    //QString ninti = QString::number(n);
     QString name;
 
     //qWarning ()<<"Numer seryjny z Kontrahent Info przy Id: "<<i<<" "<<numerSeryjnydoPorownania;

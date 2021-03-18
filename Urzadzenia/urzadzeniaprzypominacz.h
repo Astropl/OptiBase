@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QStandardItemModel>
+//#include <QStandardItem>
 
 
 namespace Ui {
@@ -39,13 +40,16 @@ public slots:
     void wczytajDane();
     void changeCheckBoxaFalse();
     void changeCheckBoxaTrue();
+    void wczytajDoPrzypominacza();
+    void wczytajDoWazneDaty();
 
-
+//QStandardItem *item ;
 private:
     Ui::UrzadzeniaPrzypominacz *ui;
     QTimer *timer;
     QStandardItemModel *model1;
     QStandardItemModel *model2;
+   // QStandardItem *item ;
 };
 
 #endif // URZADZENIAPRZYPOMINACZ_H
