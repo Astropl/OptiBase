@@ -158,6 +158,19 @@
      <string>Zapisz i Wyjdz</string>
     </property>
    </widget>
+   <widget class="QLabel" name="lblCheckOkNo">
+    <property name="geometry">
+     <rect>
+      <x>680</x>
+      <y>440</y>
+      <width>50</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

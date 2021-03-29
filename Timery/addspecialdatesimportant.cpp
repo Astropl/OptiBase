@@ -157,6 +157,11 @@ void AddSpecialDatesImportant::initMenu()
 
     connect(settingsOption, SIGNAL(triggered()), this, SLOT(openSettings()));
     connect(infoOProgramie, SIGNAL(triggered()), this, SLOT(openInfo()));
+
+    QString dirPath = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/Resources";
+    QPixmap pix1(dirPath+ "/CheckFalse.png");
+
+    ui->lblCheckOkNo->setPixmap(pix1.scaled(ui->lblCheckOkNo->size(),Qt::KeepAspectRatio));// Skaluje pnp do wymierów labela
 }
 void AddSpecialDatesImportant::openInfo()
 {
@@ -186,6 +191,17 @@ void AddSpecialDatesImportant::on_pushButton_2_clicked() //Zapiszi wyjdz
     tematWazneDaty = ui->lineEdit_2->text();
     infoWazneDaty = ui->lineEdit_3->text();
     mainDb->pobierzWazneDatyZapis(dataWazneDaty, tematWazneDaty, infoWazneDaty);
+
+    //QIcon iconOk;
+    //.*********************************************
+    // Ikonka check OK /NO
+    QString dirPath = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/Resources";
+    QPixmap pix1(dirPath+ "/CheckOk.png");
+
+    ui->lblCheckOkNo->setPixmap(pix1.scaled(ui->lblCheckOkNo->size(),Qt::KeepAspectRatio));// Skaluje pnp do wymierów labela
+    // end Ikonka Check Ok/NO
+    //**********************************************
+
 
     // mainDb->pobierzWazneDatyZapis(dataWazneDaty, tematWazneDaty, infoWazneDaty);
 }

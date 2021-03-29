@@ -80,7 +80,7 @@ void UrzadzeniaLista::initMenuUrzadzeniaLista()
     QAction *settingsOption = new QAction(("&Opcje"), this);
 
     auto mainfile = menuBar()->addMenu("Plik");
-   // auto mainEdycja = menuBar()->addMenu("Edycja");
+    // auto mainEdycja = menuBar()->addMenu("Edycja");
     auto mainInfo = menuBar()->addMenu("Informacje");
     auto mainSettings = menuBar()->addMenu("Ustawienia");
 
@@ -112,11 +112,19 @@ void UrzadzeniaLista::initMenuUrzadzeniaLista()
 
     ui->label->setVisible(false);
     ui->label_2->setVisible(false);
+
+//    ui->label_4->setText(ui->comboBox->currentText());
+//    ui->label_5->setText(ui->comboBox_2->currentText());
+//    ui->label_6->setText(ui->comboBox_3->currentText());
+
+    ui->label_4->setText("Brak");
+    ui->label_5->setText("Brak");
+    ui->label_6->setText("Brak");
 }
 void UrzadzeniaLista::wczytajDane()
 {//qWarning()<<"Jestem w UrzadzeniaLista:WczytajDane";
     MainDb *mainDb = new MainDb(this);
-ui->checkBox->setChecked(false);
+    ui->checkBox->setChecked(false);
     // QString file1 = "C:/Defaults/Pliki/1.DB.txt";
     //QString file2 = "C:/Defaults/Pliki/2.Kontrahent.txt";
     //QString file3 = "C:/Defaults/Pliki/3.Urzadzenie.txt";
@@ -129,7 +137,7 @@ ui->checkBox->setChecked(false);
     model->setHeaderData(2, Qt::Horizontal, "Model");
     model->setHeaderData(3, Qt::Horizontal, "Nr Seryjny");
     model->setHeaderData(4, Qt::Horizontal, "Przypisany");
-     model->setHeaderData(5, Qt::Horizontal, "Kontrahent");
+    model->setHeaderData(5, Qt::Horizontal, "Kontrahent");
 
     //    model->setHeaderData(5, Qt::Horizontal, "Kontrahent");
     //    model->setHeaderData(6, Qt::Horizontal, "Imię");
@@ -168,7 +176,7 @@ ui->checkBox->setChecked(false);
         ui->tableView->setRowHeight(i, 20);
     }
     ui->tableView->horizontalHeader()->setSectionResizeMode(
-        QHeaderView::ResizeToContents); // Rozszerza kolumny do najdłuzszego itema w kolumnie.
+                QHeaderView::ResizeToContents); // Rozszerza kolumny do najdłuzszego itema w kolumnie.
     ui->tableView->sortByColumn(0,
                                 Qt::SortOrder(0)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy
 
@@ -223,6 +231,9 @@ void UrzadzeniaLista::myfunctiontimer()
 void UrzadzeniaLista::on_pushButton_clicked()
 {
     //Odswiez
+    ui->label_4->setText(ui->comboBox->currentText());
+    ui->label_5->setText(ui->comboBox_2->currentText());
+    ui->label_6->setText(ui->comboBox_3->currentText());
 
     wczytajDane();
 }
@@ -237,14 +248,14 @@ void UrzadzeniaLista::on_pushButton_3_clicked()
 {
     //Usuń
     // usunać zaznaczony rząd
-MainDb *mainDb = new MainDb(this);
+    MainDb *mainDb = new MainDb(this);
     QMessageBox msgBox;
     if (QMessageBox::question(this,
                               "Ostrzeżenie",
                               "Czy na pewno chcesz usunąć zaznaczony rekord?.",
                               QMessageBox::Ok | QMessageBox::Cancel)
-        == QMessageBox::Ok)
-    //(QMessageBox::Ok)
+            == QMessageBox::Ok)
+        //(QMessageBox::Ok)
     {
         int iloscColumn = model->columnCount();
         QString qIloscColumn;
@@ -267,7 +278,7 @@ MainDb *mainDb = new MainDb(this);
         }
 
 
- //TODO: usunać z bazy danych urzadzenie  o takim numerze seryjnym
+        //TODO: usunać z bazy danych urzadzenie  o takim numerze seryjnym
         QString QNumerSeryjny="";
         //QVariant VNumerSeryjny = index.sibling(index.row(), index.column()).data();
         QVariant VNumerSeryjny = index.sibling(index.row(), (3)).data();
@@ -310,11 +321,11 @@ void UrzadzeniaLista::on_pushButton_4_clicked()
 
 
     Ule->setLabelsInfo (tab[0],
-                       tab[1],
-                       tab[2],
-                       tab[3],
-                       tab[4],
-                       tab[5] );
+            tab[1],
+            tab[2],
+            tab[3],
+            tab[4],
+            tab[5] );
     Ule->show();
 
 }
@@ -384,7 +395,7 @@ void UrzadzeniaLista::on_checkBox_stateChanged()
         //filtrOn("Brak");
         fillComboBoxes();
     } else {
-       // qWarning() << "NIE Klikniety";
+        // qWarning() << "NIE Klikniety";
         ui->comboBox->setVisible(false);
         ui->comboBox_2->setVisible(false);
         ui->comboBox_3->setVisible(false);
@@ -392,7 +403,7 @@ void UrzadzeniaLista::on_checkBox_stateChanged()
         ui->comboBox_2->clear();
         ui->comboBox_3->clear();
         for (int i = 0; i <= model->rowCount() - 1 - pusteRzedy; i++) {
-           // qWarning() << "Wejscie do odkrycia rzedów numer : " << i;
+            // qWarning() << "Wejscie do odkrycia rzedów numer : " << i;
             ui->tableView->showRow(i);
         }
     }
@@ -451,52 +462,52 @@ void UrzadzeniaLista::fillComboBoxes()
 
     //int iloscElemetowWCB2 = ui->comboBox_2->count();
 
-//    for (int j = 0; j <= iloscElemetowWCB2; j++)
+    //    for (int j = 0; j <= iloscElemetowWCB2; j++)
 
-//    {
-//        //qWarning() << "wyraz do porowniaa to: " << ui->comboBox_5->itemText(j);
+    //    {
+    //        //qWarning() << "wyraz do porowniaa to: " << ui->comboBox_5->itemText(j);
 
-//        for (int k =j+ 1; k <= iloscElemetowWCB2; k++) {
-//            if (ui->comboBox_2->itemText(j) == ui->comboBox_2->itemText(k)) {
-//                ui->comboBox_2->removeItem(k);
-//            }
-//        }
+    //        for (int k =j+ 1; k <= iloscElemetowWCB2; k++) {
+    //            if (ui->comboBox_2->itemText(j) == ui->comboBox_2->itemText(k)) {
+    //                ui->comboBox_2->removeItem(k);
+    //            }
+    //        }
 
-//    } //
-//    int iloscElemetowWCB3 = ui->comboBox_3->count();
+    //    } //
+    //    int iloscElemetowWCB3 = ui->comboBox_3->count();
 
-//    for (int j = 0; j <= iloscElemetowWCB3; j++)
+    //    for (int j = 0; j <= iloscElemetowWCB3; j++)
 
-//    {
-//        //qWarning() << "wyraz do porowniaa to: " << ui->comboBox_6->itemText(j);
+    //    {
+    //        //qWarning() << "wyraz do porowniaa to: " << ui->comboBox_6->itemText(j);
 
-//        for (int k =j+ 1; k <= iloscElemetowWCB3 - 1; k++) {
-//            //qWarning() << "Porownuje : " << ui->comboBox_6->itemText(j)
-//            //<< " z: " << ui->comboBox_6->itemText(k);
-//            if (ui->comboBox_3->itemText(j) == ui->comboBox_3->itemText(k)) {
-//                //qWarning() << "Usuwam : " << ui->comboBox_6->itemText(k);
-//                ui->comboBox_3->removeItem(k);
-//            }
-//        }
+    //        for (int k =j+ 1; k <= iloscElemetowWCB3 - 1; k++) {
+    //            //qWarning() << "Porownuje : " << ui->comboBox_6->itemText(j)
+    //            //<< " z: " << ui->comboBox_6->itemText(k);
+    //            if (ui->comboBox_3->itemText(j) == ui->comboBox_3->itemText(k)) {
+    //                //qWarning() << "Usuwam : " << ui->comboBox_6->itemText(k);
+    //                ui->comboBox_3->removeItem(k);
+    //            }
+    //        }
 
-//    } //
-//    int iloscElemetowWCB0 = ui->comboBox->count();
+    //    } //
+    //    int iloscElemetowWCB0 = ui->comboBox->count();
 
-//    for (int j = 0; j <= iloscElemetowWCB0; j++)
+    //    for (int j = 0; j <= iloscElemetowWCB0; j++)
 
-//    {
-//        //qWarning() << "wyraz do porowniaa to: " << ui->comboBox_6->itemText(j);
+    //    {
+    //        //qWarning() << "wyraz do porowniaa to: " << ui->comboBox_6->itemText(j);
 
-//        for (int k =j+ 1; k <= iloscElemetowWCB0 - 1; k++) {
-//            //qWarning() << "Porownuje : " << ui->comboBox_6->itemText(j)
-//            //<< " z: " << ui->comboBox_6->itemText(k);
-//            if (ui->comboBox->itemText(j) == ui->comboBox->itemText(k)) {
-//                //qWarning() << "Usuwam : " << ui->comboBox_6->itemText(k);
-//                ui->comboBox->removeItem(k);
-//            }
-//        }
+    //        for (int k =j+ 1; k <= iloscElemetowWCB0 - 1; k++) {
+    //            //qWarning() << "Porownuje : " << ui->comboBox_6->itemText(j)
+    //            //<< " z: " << ui->comboBox_6->itemText(k);
+    //            if (ui->comboBox->itemText(j) == ui->comboBox->itemText(k)) {
+    //                //qWarning() << "Usuwam : " << ui->comboBox_6->itemText(k);
+    //                ui->comboBox->removeItem(k);
+    //            }
+    //        }
 
-//    } //
+    //    } //
 
 
 }
@@ -505,6 +516,7 @@ void UrzadzeniaLista::on_comboBox_activated(const QString &arg1)
     //qWarning() << "Activatefd w CB5: " << ui->comboBox_5->currentText();
     QString aktywnyProducent = ui->comboBox->currentText();
     filtrOn(aktywnyProducent);
+    ui->label_4->setText(ui->comboBox->currentText());
 }
 
 void UrzadzeniaLista::on_comboBox_2_activated(const QString &arg1)
@@ -512,12 +524,14 @@ void UrzadzeniaLista::on_comboBox_2_activated(const QString &arg1)
     //qWarning() << "Activatefd w CB6: " << ui->comboBox_6->currentText();
     QString aktywnyProducent = ui->comboBox_2->currentText();
     filtrOn(aktywnyProducent);
+    ui->label_5->setText(ui->comboBox_2->currentText());
 }
 void UrzadzeniaLista::on_comboBox_3_activated(const QString &arg1)
 {
     //qWarning() << "Activatefd w CB6: " << ui->comboBox_6->currentText();
     QString aktywnyProducent = ui->comboBox_3->currentText();
     filtrOn(aktywnyProducent);
+    ui->label_6->setText(ui->comboBox_3->currentText());
 }
 QString UrzadzeniaLista::filtrOn(QString aktywnyProducent)
 {

@@ -220,7 +220,7 @@ void Baza::wczytajDane()
     ui->tableViewDB->sortByColumn(0,
                                   Qt::SortOrder(
                                       0)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy
-
+ui->tableViewDB->setAlternatingRowColors(true);
 
 
     tempUrzadz = "";

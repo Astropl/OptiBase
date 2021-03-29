@@ -15,6 +15,7 @@ int hidenNormalDate =0;
 int showenNormalDate =0;
 int hidenImportantDate=0;
 int showenImportantDate =0;
+int iloscRzedowWWazneDaty =0;
 QDate dataAll=QDate::currentDate();
 
 UrzadzeniaPrzypominacz::UrzadzeniaPrzypominacz(QWidget *parent)
@@ -123,11 +124,11 @@ void UrzadzeniaPrzypominacz::wczytajDoPrzypominacza()
     }
 
 
-//    ui->tbPrzypominacz->horizontalHeader()->setSectionResizeMode(
-//                QHeaderView::ResizeToContents); // Rozszerza kolumny do najdłuzszego itema w kolumnie.
-//    ui->tbPrzypominacz->sortByColumn(
-//                0,
-//                Qt::SortOrder(0)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy // od Lp
+    //    ui->tbPrzypominacz->horizontalHeader()->setSectionResizeMode(
+    //                QHeaderView::ResizeToContents); // Rozszerza kolumny do najdłuzszego itema w kolumnie.
+    //    ui->tbPrzypominacz->sortByColumn(
+    //                0,
+    //                Qt::SortOrder(0)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy // od Lp
 
 
     model1->setHeaderData(0, Qt::Horizontal, "L.P.");
@@ -150,16 +151,16 @@ void UrzadzeniaPrzypominacz::wczytajDoPrzypominacza()
                 Qt::SortOrder(0)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy //Od daty
     ui->tbPrzypominacz->horizontalHeader()->setSectionResizeMode(
                 QHeaderView::ResizeToContents); // Rozszerza kolumny do najdłuzszego itema w kolumnie.
-ui->tbPrzypominacz->setAlternatingRowColors(true);
+    ui->tbPrzypominacz->setAlternatingRowColors(true);
 
     ui->tbPrzypominacz->setSortingEnabled(true);
-//model1->setRowCount(1)->QColor
-//******************
-//    QStandardItem *item = new QStandardItem("");
-//    item->setData(Qt::gray, Qt::BackgroundColorRole);
+    //model1->setRowCount(1)->QColor
+    //******************
+    //    QStandardItem *item = new QStandardItem("");
+    //    item->setData(Qt::gray, Qt::BackgroundColorRole);
 
-//QColor rowColor = Qt::blue;
-//model1->setData((ui->tbPrzypominacz->rowAt(3)), rowColor,Qt::BackgroundRole);
+    //QColor rowColor = Qt::blue;
+    //model1->setData((ui->tbPrzypominacz->rowAt(3)), rowColor,Qt::BackgroundRole);
 
     //************
 
@@ -169,21 +170,40 @@ void UrzadzeniaPrzypominacz::wczytajDoWazneDaty()
 {int   pobierzWazneDatyId = 0;
     hidenImportantDate=0;
     showenImportantDate =0;
+    int iloscWaznychDni =0;
     QString QSpobierzWazneDaty = "";
     MainDb *mainDb = new MainDb(this);
     model2 = new QStandardItemModel(0, 4, this);
     ui->tbWazneDaty->setModel(model2);
 
-
+    QStandardItem *dodajItem3= new QStandardItem();
     QStandardItem *dodajItem2 = new QStandardItem();
     pobierzWazneDatyId = mainDb->pobierzWazneDatyiD(pobierzWazneDatyId);
 
     for (int i = 1; i <= pobierzWazneDatyId; i++) {
-        for (int d = 0; d <= 3; d++) {
+        for (int d = 0; d <= 4; d++) {
             QSpobierzWazneDaty = mainDb->pobierzWazneDaty(QSpobierzWazneDaty, i, d);
-            dodajItem2 = new QStandardItem(QSpobierzWazneDaty);
 
-            model2->setItem(i-1, d, dodajItem2);// model2->setItem(i - 1, d, dodajItem2);
+
+
+
+            if (d==4)
+            {
+
+
+                dodajItem2= new QStandardItem("Nowa obliczona data");
+                //pobrac pierwsza date
+
+                //porownac z dzisiajsza
+                //wpisac ile zostalo lub ukryc
+
+
+                model2->setItem(i-1,d,dodajItem2);
+            }
+            else
+            {dodajItem2 = new QStandardItem(QSpobierzWazneDaty);
+                model2->setItem(i-1, d, dodajItem2);// model2->setItem(i - 1, d, dodajItem2);
+            }
         }
     }
 
@@ -192,7 +212,39 @@ void UrzadzeniaPrzypominacz::wczytajDoWazneDaty()
     model2->setHeaderData(1, Qt::Horizontal, "Data");
     model2->setHeaderData(2, Qt::Horizontal, "Temat");
     model2->setHeaderData(3, Qt::Horizontal, "Tekst");
+    model2->setHeaderData(4, Qt::Horizontal, "Pozostało dni");
     //****************
+
+    iloscRzedowWWazneDaty =PrzelecWazneDni(iloscRzedowWWazneDaty);
+    qWarning() <<"z głownego Ilosc rzedow to: "<<iloscRzedowWWazneDaty;
+    QString datazTabeli2;
+    for (int x =1;x<= iloscRzedowWWazneDaty;x++)
+    {
+        datazTabeli2=model2->item(x-1,1)->text();
+        qWarning()<<"item z tebali: x: "<<x-1<<" "<<datazTabeli2;
+        int mojaData2IleDni;
+        qWarning ()<<" z tabeli na string"<<datazTabeli2;
+        QDate mojaData2 = QDate::fromString(datazTabeli2,"yyyy/MM/dd");
+        qWarning ()<<"Data z komopa: i z tabeli"<<dataAll<<" "<<mojaData2;
+        mojaData2IleDni=(dataAll.daysTo(mojaData2));
+        qWarning ()<<"Roznica dni to: "<<mojaData2IleDni;
+
+QString variantMojaData2IleDni = QString::number(mojaData2IleDni);
+
+
+        if(mojaData2>=dataAll)
+        { dodajItem3 = new QStandardItem(variantMojaData2IleDni );
+            qWarning()<<"data z tabelki jest pozniej niz dzisiaj. Pokazuje"<<dodajItem3;
+            ui->tbWazneDaty->showRow(x-1);
+            qWarning()<<(dodajItem3);
+            model2->setItem(x-1,4, dodajItem3);
+        }else{
+            dodajItem3 = new QStandardItem(variantMojaData2IleDni);
+               ui->tbWazneDaty->hideRow(x-1);
+            qWarning()<<" dzisiaj jest wczesniej niz z tabelki. chowam"<<dodajItem3;
+            model2->setItem(x-1,4, dodajItem3);
+        }
+    }
 
 
     ui->tbWazneDaty->horizontalHeader()->setSectionResizeMode(
@@ -203,8 +255,24 @@ void UrzadzeniaPrzypominacz::wczytajDoWazneDaty()
 
     ui->tbWazneDaty->setSortingEnabled(true);
     ui->tbWazneDaty->setAlternatingRowColors(true);
-}
 
+
+}
+int UrzadzeniaPrzypominacz::PrzelecWazneDni(int iloscWaznychDni)
+{ qWarning()<< " Jestem w przelec daty ";
+    //Ilosc rzedów
+
+    iloscRzedowWWazneDaty = model2->rowCount();
+    qWarning ()<<"Ilosc rzedow: "<<iloscRzedowWWazneDaty;
+    iloscWaznychDni=iloscRzedowWWazneDaty;
+    //Wyciagnac 1 kolumnę
+
+    // Przeliczyć na datę i odjąc od dzisiajeszej
+
+    // Wysswietlic w 4 kolumnie
+
+    return iloscWaznychDni;
+}
 void UrzadzeniaPrzypominacz::wczytajDane()
 {wczytajDoPrzypominacza();
     wczytajDoWazneDaty();
@@ -356,4 +424,9 @@ void UrzadzeniaPrzypominacz::on_radioButton_3_clicked(bool checked)
             ui->tbPrzypominacz->hideRow(x-1);
         }
     }
+}
+
+void UrzadzeniaPrzypominacz::on_pushButton_2_clicked() //Szczegóły urzadzenia
+{
+    //Szczegóły
 }

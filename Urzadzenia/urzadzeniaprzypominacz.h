@@ -20,19 +20,12 @@ public:
 
 private slots:
     void on_pushButton_clicked();
-
-
     void on_checkBox_stateChanged(int arg1);
-
-
-
     void on_radioButton_clicked(bool checked);
-
-
-
     void on_radioButton_2_clicked(bool checked);
-
     void on_radioButton_3_clicked(bool checked);
+
+    void on_pushButton_2_clicked();
 
 public slots:
     void myfunctiontimer();
@@ -42,6 +35,7 @@ public slots:
     void changeCheckBoxaTrue();
     void wczytajDoPrzypominacza();
     void wczytajDoWazneDaty();
+    int PrzelecWazneDni(int iloscWaznychDni);
 
 //QStandardItem *item ;
 private:

@@ -454,6 +454,19 @@ przypomnienia:</string>
      <string>Info: Temat</string>
     </property>
    </widget>
+   <widget class="QLabel" name="lblCheckOkNo">
+    <property name="geometry">
+     <rect>
+      <x>610</x>
+      <y>460</y>
+      <width>50</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
    <zorder>label_9</zorder>
    <zorder>label_13</zorder>
    <zorder>label</zorder>
@@ -478,6 +491,7 @@ przypomnienia:</string>
    <zorder>label_14</zorder>
    <zorder>comboBox_2</zorder>
    <zorder>label_15</zorder>
+   <zorder>lblCheckOkNo</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

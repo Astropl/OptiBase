@@ -53,7 +53,7 @@ KontrahentInfoDodajWpis::KontrahentInfoDodajWpis(QWidget *parent)
     init();
     ui->comboBox->setCurrentIndex(-1);
     initMenu();
-     loadInfoOTemacie();
+    loadInfoOTemacie();
 }
 
 void KontrahentInfoDodajWpis::loadInfoOTemacie()
@@ -116,7 +116,7 @@ void KontrahentInfoDodajWpis::on_pushButton_2_clicked()
     QString dataNajblPrzypom;
     QString nrWpisu = ui->label_2->text();
     QString dataWpisu = ui->label_4->text() + "/" + ui->label_5->text() + "/" + ui->label_6->text()
-                        + " | " + ui->label_14->text();
+            + " | " + ui->label_14->text();
     QString tematWpisu = ui->label_15->text();
     //QString tematWpisu = "tempoczasowy";
     //TODO: Zamienic teamt wpisu na prawdziwy temat z comboBoxa_2
@@ -147,6 +147,10 @@ void KontrahentInfoDodajWpis::on_pushButton_2_clicked()
                              dataNajblPrzypom,
                              tekstPrzypom,
                              nrSeryjny);
+    QString dirPath = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/Resources";
+    QPixmap pix1(dirPath+ "/CheckOk.png");
+
+    ui->lblCheckOkNo->setPixmap(pix1.scaled(ui->lblCheckOkNo->size(),Qt::KeepAspectRatio));// Skaluje pnp do wymierów labela
 }
 
 void KontrahentInfoDodajWpis::on_pushButton_clicked()
@@ -395,6 +399,17 @@ void KontrahentInfoDodajWpis::initMenu()
     //            this,
     //            SLOT(on_actionDodaj_Producenta_triggered()));
     //    connect(edycjaDodajModel, SIGNAL(triggered()), this, SLOT(on_actionDodaj_Model_triggered()));
+
+    //QIcon iconOk;
+    //.*********************************************
+    // Ikonka check OK /NO
+    QString dirPath = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/Resources";
+    QPixmap pix1(dirPath+ "/CheckFalse.png");
+
+    ui->lblCheckOkNo->setPixmap(pix1.scaled(ui->lblCheckOkNo->size(),Qt::KeepAspectRatio));// Skaluje pnp do wymierów labela
+    // end Ikonka Check Ok/NO
+    //**********************************************
+
 }
 
 
@@ -403,27 +418,27 @@ void KontrahentInfoDodajWpis::openDodajTemat()
     //qDebug() << "Info o temacie";
     //QMasage box. info i dodoajemy do bazy
 
-//    //QMessageBox::question(this,
-//                             "Ostrzeżenie",
-//                             "Ten Kraj już znajduj się na liście.");
-//    //***********************************
-//    // QDialogBox???
- MainDb *mainDb = new MainDb(this);
+    //    //QMessageBox::question(this,
+    //                             "Ostrzeżenie",
+    //                             "Ten Kraj już znajduj się na liście.");
+    //    //***********************************
+    //    // QDialogBox???
+    MainDb *mainDb = new MainDb(this);
     bool ok;
     QString infoTemat = QInputDialog::getText(0, "Wprowadź nowy temat", "Wprowadź nowy temat", QLineEdit::Normal,"",&ok);
     if (ok && !infoTemat.isEmpty())
     {
         //qDebug()<<"Cos jest";
-       // qDebug()<<infoTemat;
+        // qDebug()<<infoTemat;
         ui->comboBox_2->addItem(infoTemat);
         mainDb->dodajIloscTematow(infoTemat);
     }else
     {
-       // qDebug()<<"pusrt";
-       // qDebug()<<infoTemat;
+        // qDebug()<<"pusrt";
+        // qDebug()<<infoTemat;
         QMessageBox::information(this,
-                                     "Ostrzeżenie",
-                                     "Nie wprowaziłes żadnego tematu.");
+                                 "Ostrzeżenie",
+                                 "Nie wprowaziłes żadnego tematu.");
     }
 
     ui->label_15->setText("Temat: "+infoTemat);
@@ -442,5 +457,5 @@ void KontrahentInfoDodajWpis::openSettings()
 
 void KontrahentInfoDodajWpis::on_comboBox_2_textActivated(const QString )
 {
-     ui->label_15->setText("Temat: "+ui->comboBox_2->currentText());
+    ui->label_15->setText("Temat: "+ui->comboBox_2->currentText());
 }
