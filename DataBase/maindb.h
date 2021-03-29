@@ -86,7 +86,7 @@ public:
     int iloscUruchomienSave (int iloscUruchomien);
     int iloscUruchomienFirst (int iloscUruchomienFirst);
     int pobierzWazneDatyiD(int iloscWpisow);
-
+QString pobierzWazneDatyAddYear(QString data, QString futureData);
 
     QString pobierzWazneDaty(QString daneProducent, int i, int d);
     QString pobierzWazneDatyZapis(QString qdata, QString temat , QString info );

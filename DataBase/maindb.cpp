@@ -845,6 +845,23 @@ QString MainDb::pobierzWazneDaty(QString daneProducent, int i, int d)
     }
     return 0;
 }
+QString MainDb::pobierzWazneDatyAddYear(QString data, QString futureData)
+{
+    qWarning()<<" Pokaz wczeniej i pozniej:"<< data<< futureData;
+QSqlQuery query;
+if (!query.exec("UPDATE dBWazneDaty SET data ='" + futureData +"' WHERE data ='"+ data +"'"))
+{
+    qWarning() << "MainDB::Update WazneDaty - ERROR: " << query.lastError().text();
+} else {
+    qWarning() << "MainDB::Update WazneDaty - Udane: " << query.lastError().text();
+}
+
+
+
+
+    return 0;
+}
+
 QString MainDb::pobierzWazneDatyZapis(QString qdata, QString temat, QString info)
 {
     QSqlQuery query;

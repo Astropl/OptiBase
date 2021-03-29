@@ -192,11 +192,6 @@ void UrzadzeniaPrzypominacz::wczytajDoWazneDaty()
 
 
                 dodajItem2= new QStandardItem("Nowa obliczona data");
-                //pobrac pierwsza date
-
-                //porownac z dzisiajsza
-                //wpisac ile zostalo lub ukryc
-
 
                 model2->setItem(i-1,d,dodajItem2);
             }
@@ -243,6 +238,15 @@ QString variantMojaData2IleDni = QString::number(mojaData2IleDni);
                ui->tbWazneDaty->hideRow(x-1);
             qWarning()<<" dzisiaj jest wczesniej niz z tabelki. chowam"<<dodajItem3;
             model2->setItem(x-1,4, dodajItem3);
+
+            QDate datazTabeli2AddsYear= QDate::fromString(datazTabeli2,"yyyy/MM/dd" );
+            datazTabeli2AddsYear = datazTabeli2AddsYear.addYears(1);
+            qWarning ()<<"Data wczesniej i pozniej: "<<datazTabeli2<<datazTabeli2AddsYear;
+
+            QString QSdatazTabeli2AddsYear = datazTabeli2AddsYear.toString("yyyy/MM/dd");
+            mainDb->pobierzWazneDatyAddYear(datazTabeli2,QSdatazTabeli2AddsYear);
+
+
         }
     }
 
