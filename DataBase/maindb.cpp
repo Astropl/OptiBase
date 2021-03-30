@@ -727,17 +727,17 @@ int MainDb::pobierzProducentaiD(int daneProducentId)
     //qWarning() << "Jestem w MainDB->pobierz Id.";
     QString testName;
     int rows = 0;
-    //TODO: pobrac z Bazy producenta
+
 
     if (query.exec("SELECT * FROM producenci")) {
         while (query.next()) {
-            //qWarning() << query.value(1).toString();
+
             rows++;
         }
-        //qWarning() << "row to: " << rows;
+
     }
     daneProducentId = rows;
-    //qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
+
     return rows;
 }
 QString MainDb::pobierzProducenta(QString daneProducent, int i)

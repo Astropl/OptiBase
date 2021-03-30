@@ -22,7 +22,7 @@ using namespace std;
 fstream fileUrzadzeniaLista, fileUrzadzeniaLista2;
 int rowDoSize = 0, iTabelaPustychRzedow = 0;
 int pusteRzedy = (rowDoSize) - (iTabelaPustychRzedow);
-
+QString aktywnyProducent="";
 
 UrzadzeniaLista::UrzadzeniaLista(QWidget *parent)
     : QMainWindow(parent)
@@ -113,24 +113,23 @@ void UrzadzeniaLista::initMenuUrzadzeniaLista()
     ui->label->setVisible(false);
     ui->label_2->setVisible(false);
 
-//    ui->label_4->setText(ui->comboBox->currentText());
-//    ui->label_5->setText(ui->comboBox_2->currentText());
-//    ui->label_6->setText(ui->comboBox_3->currentText());
+    //    ui->label_4->setText(ui->comboBox->currentText());
+    //    ui->label_5->setText(ui->comboBox_2->currentText());
+    //    ui->label_6->setText(ui->comboBox_3->currentText());
 
     ui->label_4->setText("Brak");
     ui->label_5->setText("Brak");
     ui->label_6->setText("Brak");
 }
 void UrzadzeniaLista::wczytajDane()
-{//qWarning()<<"Jestem w UrzadzeniaLista:WczytajDane";
+{ qWarning ()<<"1";
     MainDb *mainDb = new MainDb(this);
-    ui->checkBox->setChecked(false);
-    // QString file1 = "C:/Defaults/Pliki/1.DB.txt";
-    //QString file2 = "C:/Defaults/Pliki/2.Kontrahent.txt";
-    //QString file3 = "C:/Defaults/Pliki/3.Urzadzenie.txt";
+
+
+
     model = new QStandardItemModel(1, 6, this);
     ui->tableView->setModel(model);
-    //QModelIndex *index;
+qWarning ()<<"2";
 
     model->setHeaderData(0, Qt::Horizontal, "L.P.");
     model->setHeaderData(1, Qt::Horizontal, "Producent");
@@ -138,21 +137,8 @@ void UrzadzeniaLista::wczytajDane()
     model->setHeaderData(3, Qt::Horizontal, "Nr Seryjny");
     model->setHeaderData(4, Qt::Horizontal, "Przypisany");
     model->setHeaderData(5, Qt::Horizontal, "Kontrahent");
+qWarning ()<<"3";
 
-    //    model->setHeaderData(5, Qt::Horizontal, "Kontrahent");
-    //    model->setHeaderData(6, Qt::Horizontal, "Imię");
-    //    model->setHeaderData(7, Qt::Horizontal, "Nazwisko");
-
-    //    model->setHeaderData(8, Qt::Horizontal, "Kraj");
-    //    model->setHeaderData(9, Qt::Horizontal, "Region");
-    //        model->setHeaderData(10, Qt::Horizontal, "Miasto");
-    //        model->setHeaderData(11, Qt::Horizontal, "Kod Pocztowy");
-    //        model->setHeaderData(12, Qt::Horizontal, "Ulica");
-    //        model->setHeaderData(13, Qt::Horizontal, "Nr domu/mieszkania");
-    //        model->setHeaderData(14, Qt::Horizontal, "Telefon");
-    //        model->setHeaderData(15, Qt::Horizontal, "Telefon prywatny");
-    //        model->setHeaderData(16, Qt::Horizontal, "Adres E-mail");
-    //        model->setHeaderData(17, Qt::Horizontal, "Strona URL");
     //---------------------------------------------------------------
     //ui->tableView->setColumnHidden(0,true); //Ukrywam kolumne z LP
     //---------------------------------------------------------------
@@ -161,7 +147,7 @@ void UrzadzeniaLista::wczytajDane()
     int pobierzUrzId = 0;
 
     QString pobierzUrz = "";
-
+qWarning ()<<"4";
     pobierzUrzId = mainDb->pobierzUrzadzeniaId(pobierzUrzId);
     for (int i = 1; i <= pobierzUrzId; i++) {
         for (int d = 0; d <= 5; d++) {
@@ -170,7 +156,7 @@ void UrzadzeniaLista::wczytajDane()
             model->setItem(i - 1, d, dodajItem);
         }
     }
-
+qWarning ()<<"5";
     int rowDoSize = model->rowCount();
     for (int i = 0; i <= rowDoSize; i++) {
         ui->tableView->setRowHeight(i, 20);
@@ -184,7 +170,42 @@ void UrzadzeniaLista::wczytajDane()
     //ui->tableView->setRowHeight(2,20);
     //ui->tableView->setRowHeight(3,20);
     iloscWierszy();
-    //qWarning()<<"Jestem w UrzadzeniaLista:WczytajDane:End";
+    qWarning ()<<"6";
+
+    for(int f=0;f<=model->rowCount()-1;f++)
+    {
+        ui->tableView->showRow(f);
+    }
+
+
+    if ( ui->label_4->text()!="Brak" || ui->label_5->text()!="Brak" || ui->label_6->text()!="Brak")
+    {
+        ui->checkBox->setChecked(true);
+
+        if (ui->comboBox->currentText()!="Brak")
+        {qWarning ()<<"7";
+            aktywnyProducent=ui->comboBox->currentText();
+
+        }
+        else if (ui->comboBox_2->currentText()!="Brak")
+        {qWarning ()<<"8";
+            aktywnyProducent=ui->comboBox_2->currentText();
+        }
+        else if (ui->comboBox_3->currentText()!="Brak")
+        {qWarning ()<<"9";
+            aktywnyProducent=ui->comboBox_3->currentText();
+        }
+        qWarning ()<<"10";
+        qWarning ()<<"Aktywny producent to: "<<aktywnyProducent;
+        filtrOn(aktywnyProducent);
+        qWarning ()<<"11";
+    }
+    else
+    {
+        qWarning ()<<"Którys label ma brak";
+        ui->checkBox->setChecked(false);
+    }
+qWarning ()<<"12 end";
 }
 
 void UrzadzeniaLista::iloscWierszy()
@@ -278,9 +299,9 @@ void UrzadzeniaLista::on_pushButton_3_clicked()
         }
 
 
-        //TODO: usunać z bazy danych urzadzenie  o takim numerze seryjnym
+
         QString QNumerSeryjny="";
-        //QVariant VNumerSeryjny = index.sibling(index.row(), index.column()).data();
+
         QVariant VNumerSeryjny = index.sibling(index.row(), (3)).data();
 
 
@@ -352,7 +373,7 @@ void UrzadzeniaLista::on_pushButton_6_clicked()
         QMessageBox::information(this,
                                  "Ostrzeżenie",
                                  "Ten analizator jest juz przypisany do konkretnego kontrahenta. "
-                                 "Nie możesz go przypisać do innego.");
+                                         "Nie możesz go przypisać do innego.");
 
     } else {
         //cout << "nie przypisany" << endl;
@@ -457,64 +478,11 @@ void UrzadzeniaLista::fillComboBoxes()
         ui->comboBox_3->addItem(vfillCb12[k]) ;
     }
 
-
-
-
-    //int iloscElemetowWCB2 = ui->comboBox_2->count();
-
-    //    for (int j = 0; j <= iloscElemetowWCB2; j++)
-
-    //    {
-    //        //qWarning() << "wyraz do porowniaa to: " << ui->comboBox_5->itemText(j);
-
-    //        for (int k =j+ 1; k <= iloscElemetowWCB2; k++) {
-    //            if (ui->comboBox_2->itemText(j) == ui->comboBox_2->itemText(k)) {
-    //                ui->comboBox_2->removeItem(k);
-    //            }
-    //        }
-
-    //    } //
-    //    int iloscElemetowWCB3 = ui->comboBox_3->count();
-
-    //    for (int j = 0; j <= iloscElemetowWCB3; j++)
-
-    //    {
-    //        //qWarning() << "wyraz do porowniaa to: " << ui->comboBox_6->itemText(j);
-
-    //        for (int k =j+ 1; k <= iloscElemetowWCB3 - 1; k++) {
-    //            //qWarning() << "Porownuje : " << ui->comboBox_6->itemText(j)
-    //            //<< " z: " << ui->comboBox_6->itemText(k);
-    //            if (ui->comboBox_3->itemText(j) == ui->comboBox_3->itemText(k)) {
-    //                //qWarning() << "Usuwam : " << ui->comboBox_6->itemText(k);
-    //                ui->comboBox_3->removeItem(k);
-    //            }
-    //        }
-
-    //    } //
-    //    int iloscElemetowWCB0 = ui->comboBox->count();
-
-    //    for (int j = 0; j <= iloscElemetowWCB0; j++)
-
-    //    {
-    //        //qWarning() << "wyraz do porowniaa to: " << ui->comboBox_6->itemText(j);
-
-    //        for (int k =j+ 1; k <= iloscElemetowWCB0 - 1; k++) {
-    //            //qWarning() << "Porownuje : " << ui->comboBox_6->itemText(j)
-    //            //<< " z: " << ui->comboBox_6->itemText(k);
-    //            if (ui->comboBox->itemText(j) == ui->comboBox->itemText(k)) {
-    //                //qWarning() << "Usuwam : " << ui->comboBox_6->itemText(k);
-    //                ui->comboBox->removeItem(k);
-    //            }
-    //        }
-
-    //    } //
-
-
 }
 void UrzadzeniaLista::on_comboBox_activated(const QString &arg1)
 {
     //qWarning() << "Activatefd w CB5: " << ui->comboBox_5->currentText();
-    QString aktywnyProducent = ui->comboBox->currentText();
+    aktywnyProducent = ui->comboBox->currentText();
     filtrOn(aktywnyProducent);
     ui->label_4->setText(ui->comboBox->currentText());
 }
@@ -522,31 +490,31 @@ void UrzadzeniaLista::on_comboBox_activated(const QString &arg1)
 void UrzadzeniaLista::on_comboBox_2_activated(const QString &arg1)
 {
     //qWarning() << "Activatefd w CB6: " << ui->comboBox_6->currentText();
-    QString aktywnyProducent = ui->comboBox_2->currentText();
+     aktywnyProducent = ui->comboBox_2->currentText();
     filtrOn(aktywnyProducent);
     ui->label_5->setText(ui->comboBox_2->currentText());
 }
 void UrzadzeniaLista::on_comboBox_3_activated(const QString &arg1)
 {
     //qWarning() << "Activatefd w CB6: " << ui->comboBox_6->currentText();
-    QString aktywnyProducent = ui->comboBox_3->currentText();
+    aktywnyProducent = ui->comboBox_3->currentText();
     filtrOn(aktywnyProducent);
     ui->label_6->setText(ui->comboBox_3->currentText());
 }
 QString UrzadzeniaLista::filtrOn(QString aktywnyProducent)
 {
     for (int k = 0; k <= model->rowCount() - 1; k++) {
-        //qWarning() << "Ukrywam rzad : " << k;
+        qWarning() << "Ukrywam rzad : " << k;
 
         ui->tableView->hideRow(k);
     }
 
-    //qWarning() << "Jestem w filtrze";
+    qWarning() << "Jestem w filtrze";
     QString filter = aktywnyProducent;
 
     //qWarning() << " Odkrywam takie co mają w nazwie Jawon";
     pusteRzedy = ui->label_2->text().toInt();
-    //qWarning() << "Puste rzedy to : " << pusteRzedy;
+    qWarning() << "Puste rzedy to : " << pusteRzedy;
     //for (int i =0; i<=model ->rowCount()-1;i++)// pusteRzedy
     for (int i = 0; i <= model->rowCount() - 1 - pusteRzedy; i++) // pusteRzedy
     {
@@ -563,6 +531,8 @@ QString UrzadzeniaLista::filtrOn(QString aktywnyProducent)
                 }
             }
         }
+        qWarning ()<<"12 filtron";
         //TODO: Jakis problem przy wyswietlaniu powyzej 12 linii. ( czyli 13) tam gdzie mam puste czyli nulle.
     }
+    return 0;
 }

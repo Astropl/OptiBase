@@ -123,14 +123,6 @@ void UrzadzeniaPrzypominacz::wczytajDoPrzypominacza()
         }
     }
 
-
-    //    ui->tbPrzypominacz->horizontalHeader()->setSectionResizeMode(
-    //                QHeaderView::ResizeToContents); // Rozszerza kolumny do najdłuzszego itema w kolumnie.
-    //    ui->tbPrzypominacz->sortByColumn(
-    //                0,
-    //                Qt::SortOrder(0)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy // od Lp
-
-
     model1->setHeaderData(0, Qt::Horizontal, "L.P.");
     model1->setHeaderData(1, Qt::Horizontal, "Data Przypomnienia");      //Nr Wpisu
     model1->setHeaderData(6, Qt::Horizontal, "Temat");                   //Data
@@ -224,7 +216,7 @@ void UrzadzeniaPrzypominacz::wczytajDoWazneDaty()
         mojaData2IleDni=(dataAll.daysTo(mojaData2));
         qWarning ()<<"Roznica dni to: "<<mojaData2IleDni;
 
-QString variantMojaData2IleDni = QString::number(mojaData2IleDni);
+        QString variantMojaData2IleDni = QString::number(mojaData2IleDni);
 
 
         if(mojaData2>=dataAll)
@@ -235,7 +227,7 @@ QString variantMojaData2IleDni = QString::number(mojaData2IleDni);
             model2->setItem(x-1,4, dodajItem3);
         }else{
             dodajItem3 = new QStandardItem(variantMojaData2IleDni);
-               ui->tbWazneDaty->hideRow(x-1);
+            ui->tbWazneDaty->hideRow(x-1);
             qWarning()<<" dzisiaj jest wczesniej niz z tabelki. chowam"<<dodajItem3;
             model2->setItem(x-1,4, dodajItem3);
 
@@ -250,16 +242,16 @@ QString variantMojaData2IleDni = QString::number(mojaData2IleDni);
         }
     }
 
-
-    ui->tbWazneDaty->horizontalHeader()->setSectionResizeMode(
-                QHeaderView::ResizeToContents); // Rozszerza kolumny do najdłuzszego itema w kolumnie.
+    ui->tbWazneDaty->setShowGrid(true);
     ui->tbWazneDaty->sortByColumn(1,
                                   Qt::SortOrder(0)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy
-    ui->tbWazneDaty->setShowGrid(true);
-
-    ui->tbWazneDaty->setSortingEnabled(true);
+    ui->tbWazneDaty->horizontalHeader()->setSectionResizeMode(
+                QHeaderView::ResizeToContents); // Rozszerza kolumny do najdłuzszego itema w kolumnie.
     ui->tbWazneDaty->setAlternatingRowColors(true);
-
+    ui->tbWazneDaty->setSortingEnabled(true);
+    //model2->setSelectionBehavior(QAbstractItemView::SelectRows);
+    QModelIndex index= ui->tbWazneDaty->model()->index(0,0);
+    ui->tbWazneDaty->selectionModel()->select(index,QItemSelectionModel::ClearAndSelect|QItemSelectionModel::Rows);
 
 }
 int UrzadzeniaPrzypominacz::PrzelecWazneDni(int iloscWaznychDni)
@@ -269,11 +261,6 @@ int UrzadzeniaPrzypominacz::PrzelecWazneDni(int iloscWaznychDni)
     iloscRzedowWWazneDaty = model2->rowCount();
     qWarning ()<<"Ilosc rzedow: "<<iloscRzedowWWazneDaty;
     iloscWaznychDni=iloscRzedowWWazneDaty;
-    //Wyciagnac 1 kolumnę
-
-    // Przeliczyć na datę i odjąc od dzisiajeszej
-
-    // Wysswietlic w 4 kolumnie
 
     return iloscWaznychDni;
 }
