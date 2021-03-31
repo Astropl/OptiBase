@@ -1,5 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
+//#ifndef QT_NO_PRINTER
 
 #include <QMainWindow>
 
@@ -46,6 +47,7 @@ private slots:
 
     void on_pushButton_10_clicked();
     void Dzienroku();
+    void ShowImportantDate();
     void on_pushButton_11_clicked();
 
     // void on_actionBaza_triggered();

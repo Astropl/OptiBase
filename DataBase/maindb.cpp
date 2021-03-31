@@ -725,7 +725,7 @@ int MainDb::pobierzProducentaiD(int daneProducentId)
 {
     QSqlQuery query;
     //qWarning() << "Jestem w MainDB->pobierz Id.";
-    QString testName;
+   // QString testName;
     int rows = 0;
 
 
@@ -829,7 +829,7 @@ QString MainDb::pobierzWazneDaty(QString daneProducent, int i, int d)
 {
     QSqlQuery query;
     // QString testName;
-    //qWarning() << "Pobrana ilosc producentow z ::Urzadzenia::" << i;
+    //qWarning() << "Pobrana ilosc waznych dat::" << i;
 
     QString inti = QString::number(i);
 

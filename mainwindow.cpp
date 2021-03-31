@@ -33,6 +33,10 @@
 #include <QDir>
 #include <QToolButton>
 
+#include <QtWidgets>
+//#include <QPrinter>
+#include <QFileDialog>
+
 int dzienRoku = 0;
 
 using namespace std;
@@ -56,6 +60,10 @@ MainWindow::MainWindow(QWidget *parent)
     InitToolbar();
     statsy();
     ui->scrollArea_3->setFixedSize(0, 0);
+
+
+
+
 }
 
 MainWindow::~MainWindow()
@@ -319,6 +327,7 @@ void MainWindow::on_pushButton_10_clicked()
     if (ui->pushButton_10->text() == "V") {
         Dzienroku();
         ZnakZodiaku();
+        ShowImportantDate();
         ui->pushButton_10->setText("/\\");
         for (int x = 0; x <= 211; x++) {
             ui->scrollArea_3->setFixedSize(211, x);
@@ -339,7 +348,27 @@ void MainWindow::on_pushButton_10_clicked()
         }
     }
 }
+void MainWindow::ShowImportantDate()
+{int   pobierzWazneDatyId = 0;
+    QString QSpobierzWazneDaty = "";
+    // dodoaj do kalnedarza w main wazną datę
+    MainDb *mainDb = new MainDb(this);
+    pobierzWazneDatyId = mainDb->pobierzWazneDatyiD(pobierzWazneDatyId);
+    for (int i = 1; i <= pobierzWazneDatyId; i++) {
+        for (int d = 0; d <= 3; d++) {
+            QSpobierzWazneDaty = mainDb->pobierzWazneDaty(QSpobierzWazneDaty, i, d);
 
+            ui->comboBox_2->addItem(QSpobierzWazneDaty);
+
+            //TODO: Dodoac do kalendarza w main pierwszą wazną datę
+
+        }
+    }
+
+
+
+
+}
 void MainWindow::Dzienroku()
 {
     Dates *dates = new Dates(this);
