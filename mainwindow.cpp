@@ -365,9 +365,28 @@ void MainWindow::ShowImportantDate()
         }
     }
 
+    int iloscWcomboBox = ui->comboBox_2->count();
+    qWarning()<<" Ilosc w ComboBox: "<<iloscWcomboBox;
 
 
 
+    for (int k=iloscWcomboBox-1;k>=0;k--)
+    {
+        //modulo 0
+        int module = k%4;
+        qWarning ()<<"Itrm: "<<ui->comboBox_2->itemText(k);
+        qWarning()<<" modulo: "<<module;
+
+        if (module ==0)
+        {
+            ui->comboBox_2->removeItem(k);
+        }
+        if (module ==1)
+        {
+            qWarning()<<" Data to: "<<ui->comboBox_2->itemText(k);
+        }
+    }
+    ui->comboBox_2->update();
 }
 void MainWindow::Dzienroku()
 {
