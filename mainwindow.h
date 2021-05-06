@@ -54,6 +54,8 @@ private slots:
     void clickButtonBaza();
     void clickButtonRemider();
     void clickButtonWpis();
+
+    void initCalendarScroll();
 private:
     Ui::MainWindow *ui;
 

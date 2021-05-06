@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>600</height>
+    <height>362</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>660</x>
-      <y>520</y>
+      <x>590</x>
+      <y>270</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -383,8 +383,8 @@
    <widget class="QLabel" name="lblNrsery2">
     <property name="geometry">
      <rect>
-      <x>410</x>
-      <y>50</y>
+      <x>160</x>
+      <y>220</y>
       <width>140</width>
       <height>20</height>
      </rect>
@@ -414,6 +414,19 @@
       <width>180</width>
       <height>20</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblCheckOkNo">
+    <property name="geometry">
+     <rect>
+      <x>490</x>
+      <y>160</y>
+      <width>50</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
     </property>
    </widget>
   </widget>

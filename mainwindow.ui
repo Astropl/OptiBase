@@ -404,17 +404,27 @@
        <string>Najblizszy Wazny Dzień</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_9">
+     <widget class="QLabel" name="label_10">
       <property name="geometry">
        <rect>
         <x>30</x>
-        <y>120</y>
+        <y>180</y>
         <width>141</width>
         <height>16</height>
        </rect>
       </property>
       <property name="text">
-       <string>Za kilka dni: </string>
+       <string>Nastepny:</string>
+      </property>
+     </widget>
+     <widget class="QTextBrowser" name="textBrowser">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>120</y>
+        <width>181</width>
+        <height>51</height>
+       </rect>
       </property>
      </widget>
     </widget>
@@ -445,11 +455,24 @@
    <widget class="QComboBox" name="comboBox_2">
     <property name="geometry">
      <rect>
-      <x>548</x>
-      <y>320</y>
+      <x>550</x>
+      <y>450</y>
       <width>221</width>
       <height>22</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_9">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>250</y>
+      <width>141</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Za kilka dni: </string>
     </property>
    </widget>
   </widget>

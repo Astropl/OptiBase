@@ -983,7 +983,7 @@ void MainDb::dBModel()
         qWarning() << " Tworzenie Tabeli - ERROR: " << query.lastError().text();
     }
 
-    if (!query.exec("INSERT INTO modele (model) VALUES('IOI 353')")) {
+    if (!query.exec("INSERT INTO modele (model) VALUES('IOI353')")) {
         qWarning() << "MainWindow::DatabasePopulate - ERROR: " << query.lastError().text();
     }
     //query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych

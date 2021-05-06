@@ -34,21 +34,21 @@ UrzadzeniaLista::UrzadzeniaLista(QWidget *parent)
     connect(timer, SIGNAL(timeout()), this, SLOT(myfunctiontimer()));
     timer->start(1000);
     //===================
-    QString file1 = "C:/Defaults/Pliki/1.DB.txt";
-    QString file2 = "C:/Defaults/Pliki/2.Kontrahent.txt";
-    QString file3 = "C:/Defaults/Pliki/3.Urzadzenie.txt";
-    QString file4 = "C:/Defaults/Pliki/4.ZapisKraj.txt";
-    QString file5 = "C:/Defaults/Pliki/5.ZapisMiasta.txt";
-    QString file6 = "C:/Defaults/Pliki/6.ZapisWojewodztwa.txt";
-    QString file7 = "C:/Defaults/Pliki/7.ZapisProducenta.txt";
-    QString file8 = "C:/Defaults/Pliki/8.ZapisModel.txt";
-    QString file9 = "C:/Defaults/Pliki/9.ZapisNrSeryjny.txt";
-    QString file10 = "C:/Defaults/Pliki/10.CheckFlagsInMiasto.txt";
-    QString file11 = "C:/Defaults/Pliki/11.CheckFlagsInKraj.txt";
-    QString file12 = "C:/Defaults/Pliki/12.CheckFlagsInWojewodztwa.txt";
-    QString file13 = "C:/Defaults/Pliki/13.CheckFlagsInKrajKontrahentShow.txt";
-    QString file14 = "C:/Defaults/Pliki/14.CheckFlagsInMiastoKontrahentShow.txt";
-    QString file15 = "C:/Defaults/Pliki/15.CheckFlagsInWojewodztwoKontrahentShow.txt";
+//    QString file1 = "C:/Defaults/Pliki/1.DB.txt";
+//    QString file2 = "C:/Defaults/Pliki/2.Kontrahent.txt";
+//    QString file3 = "C:/Defaults/Pliki/3.Urzadzenie.txt";
+//    QString file4 = "C:/Defaults/Pliki/4.ZapisKraj.txt";
+//    QString file5 = "C:/Defaults/Pliki/5.ZapisMiasta.txt";
+//    QString file6 = "C:/Defaults/Pliki/6.ZapisWojewodztwa.txt";
+//    QString file7 = "C:/Defaults/Pliki/7.ZapisProducenta.txt";
+//    QString file8 = "C:/Defaults/Pliki/8.ZapisModel.txt";
+//    QString file9 = "C:/Defaults/Pliki/9.ZapisNrSeryjny.txt";
+//    QString file10 = "C:/Defaults/Pliki/10.CheckFlagsInMiasto.txt";
+//    QString file11 = "C:/Defaults/Pliki/11.CheckFlagsInKraj.txt";
+//    QString file12 = "C:/Defaults/Pliki/12.CheckFlagsInWojewodztwa.txt";
+//    QString file13 = "C:/Defaults/Pliki/13.CheckFlagsInKrajKontrahentShow.txt";
+//    QString file14 = "C:/Defaults/Pliki/14.CheckFlagsInMiastoKontrahentShow.txt";
+//    QString file15 = "C:/Defaults/Pliki/15.CheckFlagsInWojewodztwoKontrahentShow.txt";
     initMenuUrzadzeniaLista();
     wczytajDane();
 }
@@ -112,6 +112,10 @@ void UrzadzeniaLista::initMenuUrzadzeniaLista()
 
     ui->label->setVisible(false);
     ui->label_2->setVisible(false);
+ui->label_3->setVisible(false);
+ui->label_4->setVisible(false);
+ui->label_5->setVisible(false);
+ui->label_6->setVisible(false);
 
     //    ui->label_4->setText(ui->comboBox->currentText());
     //    ui->label_5->setText(ui->comboBox_2->currentText());
@@ -120,16 +124,25 @@ void UrzadzeniaLista::initMenuUrzadzeniaLista()
     ui->label_4->setText("Brak");
     ui->label_5->setText("Brak");
     ui->label_6->setText("Brak");
+    ui->comboBox->setVisible(false);
+    ui->comboBox_2->setVisible(false);
+    ui->comboBox_3->setVisible(false);
+    ui->comboBox->clear();
+    ui->comboBox_2->clear();
+    ui->comboBox_3->clear();
+    ui->checkBox->setChecked(false);
+    ui->chbLast10->setChecked(false);
+     ui->chbLast10->setVisible(false);
 }
 void UrzadzeniaLista::wczytajDane()
-{ qWarning ()<<"1";
+{ //qWarning ()<<"1";
     MainDb *mainDb = new MainDb(this);
 
 
 
     model = new QStandardItemModel(1, 6, this);
     ui->tableView->setModel(model);
-qWarning ()<<"2";
+//qWarning ()<<"2";
 
     model->setHeaderData(0, Qt::Horizontal, "L.P.");
     model->setHeaderData(1, Qt::Horizontal, "Producent");
@@ -137,7 +150,7 @@ qWarning ()<<"2";
     model->setHeaderData(3, Qt::Horizontal, "Nr Seryjny");
     model->setHeaderData(4, Qt::Horizontal, "Przypisany");
     model->setHeaderData(5, Qt::Horizontal, "Kontrahent");
-qWarning ()<<"3";
+//qWarning ()<<"3";
 
     //---------------------------------------------------------------
     //ui->tableView->setColumnHidden(0,true); //Ukrywam kolumne z LP
@@ -147,7 +160,7 @@ qWarning ()<<"3";
     int pobierzUrzId = 0;
 
     QString pobierzUrz = "";
-qWarning ()<<"4";
+//qWarning ()<<"4";
     pobierzUrzId = mainDb->pobierzUrzadzeniaId(pobierzUrzId);
     for (int i = 1; i <= pobierzUrzId; i++) {
         for (int d = 0; d <= 5; d++) {
@@ -156,7 +169,7 @@ qWarning ()<<"4";
             model->setItem(i - 1, d, dodajItem);
         }
     }
-qWarning ()<<"5";
+//qWarning ()<<"5";
     int rowDoSize = model->rowCount();
     for (int i = 0; i <= rowDoSize; i++) {
         ui->tableView->setRowHeight(i, 20);
@@ -170,7 +183,7 @@ qWarning ()<<"5";
     //ui->tableView->setRowHeight(2,20);
     //ui->tableView->setRowHeight(3,20);
     iloscWierszy();
-    qWarning ()<<"6";
+    //qWarning ()<<"6";
 
     for(int f=0;f<=model->rowCount()-1;f++)
     {
@@ -183,29 +196,29 @@ qWarning ()<<"5";
         ui->checkBox->setChecked(true);
 
         if (ui->comboBox->currentText()!="Brak")
-        {qWarning ()<<"7";
+        {//qWarning ()<<"7";
             aktywnyProducent=ui->comboBox->currentText();
 
         }
         else if (ui->comboBox_2->currentText()!="Brak")
-        {qWarning ()<<"8";
+        {//qWarning ()<<"8";
             aktywnyProducent=ui->comboBox_2->currentText();
         }
         else if (ui->comboBox_3->currentText()!="Brak")
-        {qWarning ()<<"9";
+        {//qWarning ()<<"9";
             aktywnyProducent=ui->comboBox_3->currentText();
         }
-        qWarning ()<<"10";
-        qWarning ()<<"Aktywny producent to: "<<aktywnyProducent;
+        //qWarning ()<<"10";
+        //qWarning ()<<"Aktywny producent to: "<<aktywnyProducent;
         filtrOn(aktywnyProducent);
-        qWarning ()<<"11";
+        //qWarning ()<<"11";
     }
     else
     {
-        qWarning ()<<"Którys label ma brak";
+       // qWarning ()<<"Którys label ma brak";
         ui->checkBox->setChecked(false);
     }
-qWarning ()<<"12 end";
+//qWarning ()<<"12 end";
 }
 
 void UrzadzeniaLista::iloscWierszy()
@@ -414,7 +427,7 @@ void UrzadzeniaLista::on_checkBox_stateChanged()
         ui->comboBox_2->setVisible(true);
         ui->comboBox_3->setVisible(true);
         //filtrOn("Brak");
-        fillComboBoxes();
+        ui->chbLast10->setVisible(true);        fillComboBoxes();
     } else {
         // qWarning() << "NIE Klikniety";
         ui->comboBox->setVisible(false);
@@ -423,6 +436,8 @@ void UrzadzeniaLista::on_checkBox_stateChanged()
         ui->comboBox->clear();
         ui->comboBox_2->clear();
         ui->comboBox_3->clear();
+         ui->chbLast10->setVisible(false);
+         ui->chbLast10->setChecked(false);
         for (int i = 0; i <= model->rowCount() - 1 - pusteRzedy; i++) {
             // qWarning() << "Wejscie do odkrycia rzedów numer : " << i;
             ui->tableView->showRow(i);
@@ -464,7 +479,7 @@ void UrzadzeniaLista::fillComboBoxes()
     sort(vfillCb12.begin(),vfillCb12.end());
     vfillCb12.erase(unique(vfillCb12.begin(),vfillCb12.end()),vfillCb12.end());
 
-    cout << "Po usunieciu duplikatow\n";
+    //cout << "Po usunieciu duplikatow\n";
     for(int k = 0; k < vfillCb10.size(); ++k)
     {
         ui->comboBox->addItem(vfillCb10[k]) ;
@@ -504,17 +519,17 @@ void UrzadzeniaLista::on_comboBox_3_activated(const QString &arg1)
 QString UrzadzeniaLista::filtrOn(QString aktywnyProducent)
 {
     for (int k = 0; k <= model->rowCount() - 1; k++) {
-        qWarning() << "Ukrywam rzad : " << k;
+        //qWarning() << "Ukrywam rzad : " << k;
 
         ui->tableView->hideRow(k);
     }
 
-    qWarning() << "Jestem w filtrze";
+   // qWarning() << "Jestem w filtrze";
     QString filter = aktywnyProducent;
 
     //qWarning() << " Odkrywam takie co mają w nazwie Jawon";
     pusteRzedy = ui->label_2->text().toInt();
-    qWarning() << "Puste rzedy to : " << pusteRzedy;
+    //qWarning() << "Puste rzedy to : " << pusteRzedy;
     //for (int i =0; i<=model ->rowCount()-1;i++)// pusteRzedy
     for (int i = 0; i <= model->rowCount() - 1 - pusteRzedy; i++) // pusteRzedy
     {
@@ -531,8 +546,40 @@ QString UrzadzeniaLista::filtrOn(QString aktywnyProducent)
                 }
             }
         }
-        qWarning ()<<"12 filtron";
+        //qWarning ()<<"12 filtron";
         //TODO: Jakis problem przy wyswietlaniu powyzej 12 linii. ( czyli 13) tam gdzie mam puste czyli nulle.
     }
     return 0;
+}
+void UrzadzeniaLista::on_chbLast10_stateChanged() // last 10
+{
+    // Ostatnie 10.
+    if (ui->chbLast10->isChecked())
+    {
+        qWarning ()<<"Swieci";
+// Przelec po wszytskich. Oceń ile ich jest. ukryh wszytskie wyswietl w petli ostanie 10 od tyłu
+        for(int f=0;f<=model->rowCount()-1;f++)
+        {
+            ui->tableView->hideRow(f);
+        }
+
+        for (int g=model->rowCount()-1;g>=(model->rowCount() -1) -10; g--)
+        {
+
+            //
+             ui->tableView->showRow(g);
+        }
+
+
+    }
+    else
+    {
+        qWarning ()<<"NIE Swieci";
+
+        for(int f=0;f<=model->rowCount()-1;f++)
+        {
+            ui->tableView->showRow(f);
+        }
+    }
+
 }

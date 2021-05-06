@@ -36,6 +36,7 @@ UrzadzeniaListaEdytuj::UrzadzeniaListaEdytuj(QWidget *parent) :
     ui->lineEditNrsery2->setText("Numer Seryjny");
     ui->lineEditPrzypis2->setText("Przypisany");
     ui->lineEditKontrh2->setText("Kontrahent");
+    initFrame();
     setLabelsFalse();
     wypelnijProducenta();
     wypelnijModel();
@@ -48,10 +49,25 @@ UrzadzeniaListaEdytuj::~UrzadzeniaListaEdytuj()
     delete ui;
 }
 
-void UrzadzeniaListaEdytuj::on_pushButton_clicked()
+void UrzadzeniaListaEdytuj::on_pushButton_clicked() //Zamknij
 {
     destroy();
 
+}
+void UrzadzeniaListaEdytuj::initFrame()
+{
+    ui->lineEditModel2->setVisible(false);
+    ui->lineEditProd2->setVisible(false);
+    ui->lblNrsery2->setVisible(false);
+
+    // Ikonka check OK /NO
+    QString dirPath = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/Resources";
+    QPixmap pix1(dirPath+ "/YesRed.png");
+
+    ui->lblCheckOkNo->setPixmap(pix1.scaled(ui->lblCheckOkNo->size(),Qt::KeepAspectRatio));// Skaluje pnp do wymierów labela
+    // end Ikonka Check Ok/NO
+ui->pushButton_3->setEnabled(true); //Edytuj
+ui->pushButton_4->setEnabled(false); //Zapisz
 }
 
 void UrzadzeniaListaEdytuj::myfunctiontimer()
@@ -93,22 +109,25 @@ void UrzadzeniaListaEdytuj::myfunctiontimer()
 void UrzadzeniaListaEdytuj::on_pushButton_3_clicked()//Edytyju
 {
     setLabelsTrue();
+    QString dirPath = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/Resources";
+    QPixmap pix1(dirPath+ "/YesYellow.png");
 
-
+    ui->lblCheckOkNo->setPixmap(pix1.scaled(ui->lblCheckOkNo->size(),Qt::KeepAspectRatio));// Skaluje pnp do wymierów labela
+ui->pushButton_4->setEnabled(true); //Zapisz
+ui->pushButton_3->setEnabled(false); //Zapisz
 }
 
 
 void UrzadzeniaListaEdytuj::setLabelsTrue()
 {
 
-    //ui->lineEditLp2->setEnabled(true);
+
     ui->lineEditProd2->setEnabled(true);
     ui->lineEditModel2->setEnabled(true);
     ui->lineEditNrsery2->setEnabled(true);
     ui->comboBox->setEnabled(true);
     ui->comboBox_2->setEnabled(true);
-    //ui->lineEditPrzypis2->setEnabled(true);
-   // ui->lineEditKontrh2->setEnabled(true);
+
 }
 void UrzadzeniaListaEdytuj::setLabelsFalse()
 {
@@ -125,8 +144,7 @@ void UrzadzeniaListaEdytuj::setLabelsFalse()
 QVariant UrzadzeniaListaEdytuj::setLabelsInfo(QVariant lp, QVariant producent, QVariant model, QVariant nrSeryjny, QVariant przypisany, QVariant kontrahent)
 {
     ui->lineEditLp2->setText(lp.toString());
-    ui->lineEditProd2->setText(producent.toString());
-    ui->lineEditModel2->setText(model.toString());
+
     ui->lineEditNrsery2->setText(nrSeryjny.toString());
     ui->lineEditPrzypis2->setText(przypisany.toString());
     ui->lineEditKontrh2->setText(kontrahent.toString());
@@ -137,8 +155,8 @@ QVariant UrzadzeniaListaEdytuj::setLabelsInfo(QVariant lp, QVariant producent, Q
          ui->lineEditPrzypis2->setText("Brak Kontrahenta");
     }
 
-    qWarning()<<"producent to: "<<producent;
-    qWarning()<<"model to: "<<model;
+//    qWarning()<<"producent to: "<<producent;
+//    qWarning()<<"model to: "<<model;
     ui->comboBox->setCurrentText(producent.toString());
     ui->comboBox_2->setCurrentText(model.toString());
     return 0;
@@ -162,8 +180,8 @@ void UrzadzeniaListaEdytuj::wypelnijModel()
         ui->comboBox_2->addItem(QStringPobierzModelEdytuj);
     }
 }
-void UrzadzeniaListaEdytuj::on_pushButton_4_clicked()
-{
+void UrzadzeniaListaEdytuj::on_pushButton_4_clicked()//Zapisz
+{ui->pushButton_4->setEnabled(false);
     MainDb *mainDb = new MainDb(this);
 
 
@@ -175,13 +193,17 @@ void UrzadzeniaListaEdytuj::on_pushButton_4_clicked()
     QString numerSeryjny;
     QString numerSeryjnyOryginal;
 
-    //producent=ui->lineEditProd2->text();
+
     producent=ui->comboBox->currentText();
-    //model=ui->lineEditModel2->text();
+
     model=ui->comboBox_2->currentText();
     numerSeryjny=ui->lineEditNrsery2->text();
     numerSeryjnyOryginal=ui->lblNrsery2->text();
 
     mainDb->addUrzadzeniaUpdate(producent,model,numerSeryjny,numerSeryjnyOryginal);
-    qWarning()<<"Update urzadzen udany";
+    //qWarning()<<"Update urzadzen udany";
+    QString dirPath = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/Resources";
+    QPixmap pix1(dirPath+ "/CheckOk.png");
+
+    ui->lblCheckOkNo->setPixmap(pix1.scaled(ui->lblCheckOkNo->size(),Qt::KeepAspectRatio));// Skaluje pnp do wymierów labela
 }

@@ -88,6 +88,11 @@ void KontrahentInfoDodajWpis::checkedCheckBox()
     ui->label_10->setVisible(true);
     ui->label_11->setVisible(true);
     ui->label_9->setVisible(true);
+    ui->checkBox_2->setVisible(true);
+    ui->checkBox_3->setVisible(true);
+    ui->checkBox_4->setVisible(true);
+    ui->checkBox_5->setVisible(true);
+    ui->checkBox_6->setVisible(true);
 }
 void KontrahentInfoDodajWpis::uncheckedCheckBox()
 {
@@ -98,6 +103,11 @@ void KontrahentInfoDodajWpis::uncheckedCheckBox()
     ui->label_10->setVisible(false);
     ui->label_11->setVisible(false);
     ui->label_9->setVisible(false);
+    ui->checkBox_2->setVisible(false);
+    ui->checkBox_3->setVisible(false);
+    ui->checkBox_4->setVisible(false);
+    ui->checkBox_5->setVisible(false);
+    ui->checkBox_6->setVisible(false);
 }
 
 KontrahentInfoDodajWpis::~KontrahentInfoDodajWpis()

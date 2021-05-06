@@ -60,7 +60,7 @@ MainWindow::MainWindow(QWidget *parent)
     InitToolbar();
     statsy();
     ui->scrollArea_3->setFixedSize(0, 0);
-
+    initCalendarScroll();
 
 
 
@@ -70,6 +70,28 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+
+
+//
+void MainWindow::initCalendarScroll()
+{
+    int   pobierzWazneDatyId = 0;
+    QString QSpobierzWazneDaty = "";
+    MainDb *mainDb = new MainDb(this);
+    pobierzWazneDatyId = mainDb->pobierzWazneDatyiD(pobierzWazneDatyId);
+    for (int i = 1; i <= pobierzWazneDatyId; i++) {
+        for (int d = 0; d <= 3; d++) {
+            QSpobierzWazneDaty = mainDb->pobierzWazneDaty(QSpobierzWazneDaty, i, d);
+
+            ui->comboBox_2->addItem(QSpobierzWazneDaty);
+
+            //TODO: Dodoac do kalendarza w main pierwszą wazną datę
+
+        }
+    }
+}
+//
 
 void MainWindow::myfunctiontimer()
 {
@@ -148,6 +170,8 @@ void MainWindow::initWindow()
     //connect(settingsOption, &QAction::triggered,this, SLOT (openInfo()));
     connect(settingsOption, SIGNAL(triggered()), this, SLOT(on_actionOpcje_triggered()));
     connect(infoOProgramie, SIGNAL(triggered()), this, SLOT(on_actionO_programie_triggered()));
+
+    ui->comboBox_2->setVisible(false);
 }
 void MainWindow::InitToolbar()
 {
@@ -349,44 +373,83 @@ void MainWindow::on_pushButton_10_clicked()
     }
 }
 void MainWindow::ShowImportantDate()
-{int   pobierzWazneDatyId = 0;
-    QString QSpobierzWazneDaty = "";
+{
+    QDate DataToday=QDate::currentDate();
+    QDate QDatazComba;
+    QString SDatazComba;
+
+
+    int ileDni, ileDni2;
+    int tymczasowaIleDni=365;
+    int tymczasoweK;
+    QString stringDoDaty="";
+    int module;
+    QString doSetText;
+    QString doSetText1;
     // dodoaj do kalnedarza w main wazną datę
-    MainDb *mainDb = new MainDb(this);
-    pobierzWazneDatyId = mainDb->pobierzWazneDatyiD(pobierzWazneDatyId);
-    for (int i = 1; i <= pobierzWazneDatyId; i++) {
-        for (int d = 0; d <= 3; d++) {
-            QSpobierzWazneDaty = mainDb->pobierzWazneDaty(QSpobierzWazneDaty, i, d);
 
-            ui->comboBox_2->addItem(QSpobierzWazneDaty);
-
-            //TODO: Dodoac do kalendarza w main pierwszą wazną datę
-
-        }
-    }
 
     int iloscWcomboBox = ui->comboBox_2->count();
+    int tablicaIntow[iloscWcomboBox];
     qWarning()<<" Ilosc w ComboBox: "<<iloscWcomboBox;
-
-
 
     for (int k=iloscWcomboBox-1;k>=0;k--)
     {
         //modulo 0
-        int module = k%4;
+        module = k%4;
         qWarning ()<<"Itrm: "<<ui->comboBox_2->itemText(k);
         qWarning()<<" modulo: "<<module;
 
-        if (module ==0)
-        {
-            ui->comboBox_2->removeItem(k);
-        }
+//        if (module ==0)
+//        {
+//            ui->comboBox_2->removeItem(k);
+//        }
         if (module ==1)
         {
             qWarning()<<" Data to: "<<ui->comboBox_2->itemText(k);
+            //TODO:: Tutuaj obliczamy date.....
+
+            SDatazComba = ui->comboBox_2->itemText(k);
+            QDatazComba = QDate::fromString(SDatazComba,"yyyy/MM/dd");
+            qWarning ()<<"Data z komopa: i z tabeli"<<DataToday<<" "<<QDatazComba;
+
+            //            if (QDatazComba<DataToday)
+            //            {
+            //                ui->comboBox_2->removeItem(k);
+            //                ui->comboBox_2->removeItem(k+1);
+            //            }
+
+            ileDni = DataToday.daysTo(QDatazComba);
+            qWarning ()<<"Ile dni do"<<ileDni;
+
+            if (tymczasowaIleDni>ileDni)
+            {
+                tymczasowaIleDni = ileDni;
+                tablicaIntow[k]= ileDni;
+                qDebug()<<sizeof(tablicaIntow);
+                qWarning ()<<"Najmniejsza ilosc dni to"<<tymczasowaIleDni;
+                tymczasoweK = k;
+                qWarning ()<<"Najmniejsza ilosc dni to"<<ui->comboBox_2->itemText(k);
+                stringDoDaty = ui->comboBox_2->itemText(k+2);
+            }
+            doSetText = "Za " + QString::number(tymczasowaIleDni);
+            doSetText1 = doSetText + " dni: ";
+
+
+            ui->label_9->setText(doSetText1 + stringDoDaty);
+ui->textBrowser->setText(doSetText1 + stringDoDaty);
+//ui->textBrowser->setEnabled(false);
+//ui->textBrowser->setFo
         }
     }
     ui->comboBox_2->update();
+    // Sprawdzam tablice intów
+int rozmiarTablicy = sizeof(tablicaIntow);
+qDebug()<<"rozmiar tablicy to: "<<rozmiarTablicy;
+    for (int r=0;r<=rozmiarTablicy-1 ;r++)
+    {
+        qDebug()<<" nr" << r << " to: "<< tablicaIntow[r] ;
+    }
 }
 void MainWindow::Dzienroku()
 {

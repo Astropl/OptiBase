@@ -157,6 +157,14 @@ void Urzadzenia::initMenuUrzadzenia()
             this,
             SLOT(on_actionDodaj_Producenta_triggered()));
     connect(edycjaDodajModel, SIGNAL(triggered()), this, SLOT(on_actionDodaj_Model_triggered()));
+
+    // Ikonka check OK /NO
+    QString dirPath = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/Resources";
+    QPixmap pix1(dirPath+ "/YesRed.png");
+
+    ui->lblCheckOkNo->setPixmap(pix1.scaled(ui->lblCheckOkNo->size(),Qt::KeepAspectRatio));// Skaluje pnp do wymierów labela
+    // end Ikonka Check Ok/NO
+    //**********************************************
 }
 void Urzadzenia::howMuchDevice()
 {
@@ -178,6 +186,8 @@ void Urzadzenia::howMuchDevice()
     ui->lineEditNumber->setText(QString::number(deviceCount + 1));
 
     qWarning() << "Jestem w Urzadzenia:HowMuchDevice:End";
+
+
 }
 void Urzadzenia::myfunctiontimer()
 {
@@ -232,6 +242,13 @@ void Urzadzenia::on_BtnUrzaZapisz_clicked()
     //plikUrzadzenia << "" << endl; //- Tutuaj wrzucam pustą linię na info o przypsianiu
     plikUrzadzenia.close();
     ui->BtnUrzaZapisz->setEnabled(false);
+    // Ikonka check OK /NO
+    QString dirPath = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/Resources";
+    QPixmap pix1(dirPath+ "/CheckOk.png");
+
+    ui->lblCheckOkNo->setPixmap(pix1.scaled(ui->lblCheckOkNo->size(),Qt::KeepAspectRatio));// Skaluje pnp do wymierów labela
+    // end Ikonka Check Ok/NO
+    //**********************************************
 }
 
 void Urzadzenia::on_BtnUrzaZamknij_clicked()
@@ -377,6 +394,11 @@ void Urzadzenia::on_pushButton_clicked() // DODAJ urzadzena do Comboboxa
             }
         }
     }
+    QString dirPath = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/Resources";
+    QPixmap pix1(dirPath+ "/YesYellow.png");
+
+    ui->lblCheckOkNo->setPixmap(pix1.scaled(ui->lblCheckOkNo->size(),Qt::KeepAspectRatio));//Skaluje pnp do wymierów labela
+
 }
 void Urzadzenia::on_actionOpcje_triggered()
 {

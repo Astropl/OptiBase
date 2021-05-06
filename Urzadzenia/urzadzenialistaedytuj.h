@@ -25,7 +25,7 @@ public slots:
     void wypelnijProducenta();
 
     void wypelnijModel();
-
+void initFrame();
 private slots:
     void on_pushButton_clicked();
 
