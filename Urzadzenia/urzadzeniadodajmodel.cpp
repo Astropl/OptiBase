@@ -30,6 +30,13 @@ UrzadzeniaDodajModel::UrzadzeniaDodajModel(QWidget *parent)
         ui->comboBoxDodajModel->addItem(QStringPobierzModel);
         qDebug() << QStringPobierzModel;
     }
+    // Ikonka check OK /NO
+    QString dirPath = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/Resources";
+    QPixmap pix1(dirPath+ "/YesRed.png");
+
+    ui->lblCheckOkNo->setPixmap(pix1.scaled(ui->lblCheckOkNo->size(),Qt::KeepAspectRatio));// Skaluje pnp do wymierów labela
+    // end Ikonka Check Ok/NO
+    //**********************************************
 }
 
 UrzadzeniaDodajModel::~UrzadzeniaDodajModel()
@@ -53,6 +60,10 @@ void UrzadzeniaDodajModel::on_pushButton_clicked()
         //wyswietl info ze pusty label
         QMessageBox::information(this, "Ostrzeżenie", "Nie możesz wprowdzić pustego modelu.");
     }
+    QString dirPath = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/Resources";
+    QPixmap pix1(dirPath+ "/YesYellow.png");
+
+    ui->lblCheckOkNo->setPixmap(pix1.scaled(ui->lblCheckOkNo->size(),Qt::KeepAspectRatio));//Skaluje pnp do wymierów labela
 }
 
 void UrzadzeniaDodajModel::on_pushButton_2_clicked()
@@ -69,5 +80,13 @@ void UrzadzeniaDodajModel::on_pushButton_2_clicked()
 
         mainDb -> addModel (daneModel);
     }
+
+    // Ikonka check OK /NO
+    QString dirPath = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/Resources";
+    QPixmap pix1(dirPath+ "/CheckOk.png");
+
+    ui->lblCheckOkNo->setPixmap(pix1.scaled(ui->lblCheckOkNo->size(),Qt::KeepAspectRatio));// Skaluje pnp do wymierów labela
+    // end Ikonka Check Ok/NO
+    //**********************************************
     destroy();
 }

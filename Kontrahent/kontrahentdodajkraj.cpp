@@ -35,7 +35,13 @@ KontrahentDodajKraj::KontrahentDodajKraj(QWidget *parent)
 
     ui->pushButton->setEnabled(false); // Przycisk Zapisz
 
+    // Ikonka check OK /NO
+    QString dirPath = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/Resources";
+    QPixmap pix1(dirPath+ "/YesRed.png");
 
+    ui->lblCheckOkNo->setPixmap(pix1.scaled(ui->lblCheckOkNo->size(),Qt::KeepAspectRatio));// Skaluje pnp do wymierów labela
+    // end Ikonka Check Ok/NO
+    //**********************************************
 
 }
 
@@ -116,6 +122,11 @@ void KontrahentDodajKraj::on_pushButton_2_clicked()
     ui->lineEditDodajKraj->setText("");
     ui->pushButton->setEnabled(true); // Przycisk Zapisz
     ui->pushButton_2->setEnabled(false); // Przycisk Dodaj
+
+    QString dirPath = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/Resources";
+    QPixmap pix1(dirPath+ "/YesYellow.png");
+
+    ui->lblCheckOkNo->setPixmap(pix1.scaled(ui->lblCheckOkNo->size(),Qt::KeepAspectRatio));//Skaluje pnp do wymierów labela
 }
 
 void KontrahentDodajKraj::on_pushButton_clicked()
@@ -151,6 +162,13 @@ void KontrahentDodajKraj::on_pushButton_clicked()
     checkFlagsinKraj << "1";
     checkFlagsinKraj.close();
     ui->pushButton->setEnabled(false); // Przycisk Zapisz
+    // Ikonka check OK /NO
+    QString dirPath = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/Resources";
+    QPixmap pix1(dirPath+ "/CheckOk.png");
+
+    ui->lblCheckOkNo->setPixmap(pix1.scaled(ui->lblCheckOkNo->size(),Qt::KeepAspectRatio));// Skaluje pnp do wymierów labela
+    // end Ikonka Check Ok/NO
+    //**********************************************
 }
 
 void KontrahentDodajKraj::on_pushButton_3_clicked()

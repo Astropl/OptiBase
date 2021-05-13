@@ -74,6 +74,14 @@ Kontrahent::Kontrahent(QWidget *parent)
     ui->comboBoxWczytajMiasta->setCurrentText("Brak");
     //    iloscKontrahentow++;
     //    ui->lineEditWczytajNumer->setText(QString::number(iloscKontrahentow));
+
+    // Ikonka check OK /NO
+    QString dirPath = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/Resources";
+    QPixmap pix1(dirPath+ "/YesRed.png");
+
+    ui->lblCheckOkNo->setPixmap(pix1.scaled(ui->lblCheckOkNo->size(),Qt::KeepAspectRatio));// Skaluje pnp do wymierów labela
+    // end Ikonka Check Ok/NO
+    //**********************************************
 }
 
 Kontrahent::~Kontrahent()
@@ -136,6 +144,9 @@ void Kontrahent::initMenuKontrahent()
             this,
             SLOT(on_actionDodaj_Wojewodztwo_triggered()));
     connect(edycjaDodajMiasto, SIGNAL(triggered()), this, SLOT(on_actionDodaj_Miasto_triggered()));
+
+    ui->lineEditWczytajKraj->setVisible(false);
+    ui->label_16->setVisible(false);
 }
 void Kontrahent::howMuchKontrahent()
 {
@@ -354,6 +365,14 @@ void Kontrahent::on_pushButton_clicked()//zapisz
     }
     plikKontrahent.close();
     ui->lineEditWczytajNumer->setText(QString::number(iloscKontrahentow));
+
+    // Ikonka check OK /NO
+    QString dirPath = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/Resources";
+    QPixmap pix1(dirPath+ "/CheckOk.png");
+
+    ui->lblCheckOkNo->setPixmap(pix1.scaled(ui->lblCheckOkNo->size(),Qt::KeepAspectRatio));// Skaluje pnp do wymierów labela
+    // end Ikonka Check Ok/NO
+    //**********************************************
 }
 
 void Kontrahent::on_pushButton_2_clicked()//exit

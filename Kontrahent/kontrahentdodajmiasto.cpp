@@ -37,7 +37,13 @@ KontrahentDodajMiasto::KontrahentDodajMiasto(QWidget *parent)
 
     loadMiasto();
     ui->pushButton->setEnabled(false); // Przycisk Zapisz
+    // Ikonka check OK /NO
+    QString dirPath = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/Resources";
+    QPixmap pix1(dirPath+ "/YesRed.png");
 
+    ui->lblCheckOkNo->setPixmap(pix1.scaled(ui->lblCheckOkNo->size(),Qt::KeepAspectRatio));// Skaluje pnp do wymierów labela
+    // end Ikonka Check Ok/NO
+    //**********************************************
 
 }
 

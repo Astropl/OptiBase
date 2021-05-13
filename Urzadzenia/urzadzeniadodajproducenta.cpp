@@ -34,7 +34,13 @@ UrzadzeniaDodajProducenta::UrzadzeniaDodajProducenta(QWidget *parent)
         ui->comboBoxDodajProdcuenta->addItem(QStringPobierzProducenta);
         qDebug() << QStringPobierzProducenta;
     }
+    // Ikonka check OK /NO
+    QString dirPath = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/Resources";
+    QPixmap pix1(dirPath+ "/YesRed.png");
 
+    ui->lblCheckOkNo->setPixmap(pix1.scaled(ui->lblCheckOkNo->size(),Qt::KeepAspectRatio));// Skaluje pnp do wymierów labela
+    // end Ikonka Check Ok/NO
+    //**********************************************
 
 }
 
@@ -83,6 +89,13 @@ void UrzadzeniaDodajProducenta::on_pushButton_2_clicked()
 //        mainDb -> addProducent (daneProducent);
 //    }
 //    plikProducent.close();
+        // Ikonka check OK /NO
+        QString dirPath = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/Resources";
+        QPixmap pix1(dirPath+ "/CheckOk.png");
+
+        ui->lblCheckOkNo->setPixmap(pix1.scaled(ui->lblCheckOkNo->size(),Qt::KeepAspectRatio));// Skaluje pnp do wymierów labela
+        // end Ikonka Check Ok/NO
+        //**********************************************
     destroy();
 }
 
@@ -100,5 +113,10 @@ void UrzadzeniaDodajProducenta::on_pushButton_clicked()
         //wyswietl info ze pusty label
         QMessageBox::information(this, "Ostrzeżenie", "Nie możesz wprowdzić pustego modelu.");
     }
+
+    QString dirPath = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/Resources";
+    QPixmap pix1(dirPath+ "/YesYellow.png");
+
+    ui->lblCheckOkNo->setPixmap(pix1.scaled(ui->lblCheckOkNo->size(),Qt::KeepAspectRatio));//Skaluje pnp do wymierów labela
 }
 //Info do Gita
