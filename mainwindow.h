@@ -56,6 +56,10 @@ private slots:
     void clickButtonWpis();
 
     void initCalendarScroll();
+
+
+    void on_btnMagazyn_clicked();
+
 private:
     Ui::MainWindow *ui;
 

@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     DataBase/checkfiles.cpp \
+    DataBase/magazyn.cpp \
     DataBase/maindb.cpp \
     DataBase/wpisy.cpp \
     Info/info.cpp \
@@ -48,6 +49,7 @@ SOURCES += \
 
 HEADERS += \
     DataBase/checkfiles.h \
+    DataBase/magazyn.h \
     DataBase/maindb.h \
     DataBase/wpisy.h \
     Info/info.h \
@@ -77,6 +79,7 @@ HEADERS += \
     mainwindow.h
 
 FORMS += \
+    DataBase/magazyn.ui \
     DataBase/wpisy.ui \
     Info/info.ui \
     Kontrahent/kontrahent.ui \

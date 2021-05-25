@@ -99,6 +99,13 @@ void KontrahentDodajMiasto::on_pushButton_clicked() //zapisz
                   | ios::trunc); //ios::app dopisuje a ios::trunc zawartos usunieta i zastąpiona nową.
     checkFlagsinMiasta << "1";
     checkFlagsinMiasta.close();
+    // Ikonka check OK /NO
+    QString dirPath = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/Resources";
+    QPixmap pix1(dirPath+ "/CheckOk.png");
+
+    ui->lblCheckOkNo->setPixmap(pix1.scaled(ui->lblCheckOkNo->size(),Qt::KeepAspectRatio));// Skaluje pnp do wymierów labela
+    // end Ikonka Check Ok/NO
+    //**********************************************
 }
 
 void KontrahentDodajMiasto::on_pushButton_2_clicked() //dodoaj do comboboxa
@@ -123,7 +130,7 @@ void KontrahentDodajMiasto::on_pushButton_2_clicked() //dodoaj do comboboxa
                      //<< ui->comboBoxDodajMiasto->itemText(i).toStdString() << endl;
                 porownanieMiast = false;
 
-                //Wrzucic do tabeli. Przeleciec tabele. jezeli bedzie wyraz z listy zakonczyc. Jezeli nie dodoać do combo boa.
+                //Wrzucic do tabeli. Przeleciec tabele. jezeli bedzie wyraz z listy zakonczyc. Jezeli nie dodoać do combo boxa.
 
             } else {
                 msgBox.setText("Te miasto jezst juz na liscie");
@@ -153,6 +160,11 @@ void KontrahentDodajMiasto::on_pushButton_2_clicked() //dodoaj do comboboxa
     ui->lineEditDodajMiasto->setText("");
     ui->pushButton->setEnabled(true); // Przycisk Zapisz
     ui->pushButton_2->setEnabled(false); // Przycisk Dodaj
+
+    QString dirPath = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/Resources";
+    QPixmap pix1(dirPath+ "/YesYellow.png");
+
+    ui->lblCheckOkNo->setPixmap(pix1.scaled(ui->lblCheckOkNo->size(),Qt::KeepAspectRatio));//Skaluje pnp do wymierów labela
 }
 
 void KontrahentDodajMiasto::on_comboBoxDodajMiasto_activated(const QString)

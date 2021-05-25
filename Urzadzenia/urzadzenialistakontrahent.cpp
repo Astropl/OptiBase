@@ -12,7 +12,7 @@
 using namespace std;
 
 fstream fileDB, plikUrzadzeniaKontrahentLista, fileUrzadzenia;
-
+QString dirPath = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/Resources";
 UrzadzeniaListaKontrahent::UrzadzeniaListaKontrahent(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::UrzadzeniaListaKontrahent)
@@ -44,6 +44,13 @@ UrzadzeniaListaKontrahent::UrzadzeniaListaKontrahent(QWidget *parent)
 
     ui->pushButton_3->setEnabled(false);
     ui->pushButton->setEnabled(true);
+    // Ikonka check OK /NO
+    QString dirPath = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/Resources";
+    QPixmap pix1(dirPath+ "/YesRed.png");
+
+    ui->lblCheckOkNo->setPixmap(pix1.scaled(ui->lblCheckOkNo->size(),Qt::KeepAspectRatio));// Skaluje pnp do wymierów labela
+    // end Ikonka Check Ok/NO
+    //**********************************************
 }
 
 UrzadzeniaListaKontrahent::~UrzadzeniaListaKontrahent()
@@ -102,6 +109,13 @@ void UrzadzeniaListaKontrahent::initMenuUrzadzeniaListaKontrahent()
     //            this,
     //            SLOT(on_actionDodaj_Producenta_triggered()));
     //    connect(edycjaDodajModel, SIGNAL(triggered()), this, SLOT(on_actionDodaj_Model_triggered()));
+
+    ui->lblNrKontr->setVisible(false);
+    ui->labelTest->setVisible(false);
+    ui->lblNrUrza->setVisible(false);
+    ui->comboBox->setVisible(false);
+    ui->comboBox_2->setVisible(false);
+    ui->comboBox_3->setVisible(false);
 }
 void UrzadzeniaListaKontrahent::on_pushButton_clicked()// Przypisz
 {
@@ -121,6 +135,13 @@ void UrzadzeniaListaKontrahent::on_pushButton_clicked()// Przypisz
     }
     ui->pushButton_3->setEnabled(true);
     ui->pushButton->setEnabled(false);
+    // Ikonka check OK /NO
+    //QString dirPath = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/Resources";
+    QPixmap pix1(dirPath+ "/YesYellow.png");
+
+    ui->lblCheckOkNo->setPixmap(pix1.scaled(ui->lblCheckOkNo->size(),Qt::KeepAspectRatio));// Skaluje pnp do wymierów labela
+    // end Ikonka Check Ok/NO
+    //**********************************************
 }
 
 void UrzadzeniaListaKontrahent::on_pushButton_2_clicked()//zamknij
@@ -196,7 +217,8 @@ void UrzadzeniaListaKontrahent::wczytajDane()
     }
     ui->tableView->horizontalHeader()->setSectionResizeMode(
         QHeaderView::ResizeToContents); // Rozszerza kolumny do najdłuzszego itema w kolumnie.
-    ui->tableView->sortByColumn(0,
+    ui->tableView->setSortingEnabled(true);
+    ui->tableView->sortByColumn(1,
                                 Qt::SortOrder(0)); // Pierwsza cyfea mowi od jakiej kolumny sortujemy
 
     iloscWierszy();
@@ -261,4 +283,9 @@ MainDb *mainDb = new MainDb(this);
     ui->comboBox->clear();
     ui->comboBox_2->clear();
     ui->comboBox_3->clear();
+
+    QPixmap pix1(dirPath+ "/CheckOk.png");
+
+    ui->lblCheckOkNo->setPixmap(pix1.scaled(ui->lblCheckOkNo->size(),Qt::KeepAspectRatio));// Skaluje pnp do wymierów labela
+
 }

@@ -11,6 +11,7 @@
 #include "Timery/dates.h"
 #include "Timery/timedate.h"
 #include "Ustawienia/statystyki.h"
+#include "DataBase/magazyn.h"
 #include "ui_mainwindow.h"
 //#include "Resources/DBIcon.jpg"
 #include <Info/info.h>
@@ -493,3 +494,11 @@ void MainWindow::clickButtonWpis()
     on_pushButton_2_clicked();
 }
 // do gita
+
+
+void MainWindow::on_btnMagazyn_clicked()// magazyn
+
+{
+    Magazyn *magazyn = new Magazyn(this);
+    magazyn->show();
+}
