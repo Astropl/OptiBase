@@ -1224,7 +1224,7 @@ void MainDb::PrzypiszTestowo()
     }
     //----------------------------------------------------------------------------
     //dodaje Modele
-    if (!query.exec("INSERT INTO modele (model) VALUES('IOI 353')")) {
+    if (!query.exec("INSERT INTO modele (model) VALUES('IOI353')")) {
         //qWarning() << "MainDB::Dodoanie Modelu - ERROR: " << query.lastError().text();
     }
     if (!query.exec("INSERT INTO modele (model) VALUES('BC-310')")) {

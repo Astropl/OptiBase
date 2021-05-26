@@ -226,7 +226,7 @@ void KontrahentLista::myfunctiontimer()
     ui->labelDzien->setText(stringDzienTygodnia);
 }
 
-void KontrahentLista::on_pushButton_2_clicked()
+void KontrahentLista::on_pushButton_2_clicked() //Exit
 {
     timer->stop();
     destroy();
