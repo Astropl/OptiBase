@@ -110,12 +110,12 @@ void UrzadzeniaLista::initMenuUrzadzeniaLista()
     //            SLOT(on_actionDodaj_Producenta_triggered()));
     //    connect(edycjaDodajModel, SIGNAL(triggered()), this, SLOT(on_actionDodaj_Model_triggered()));
 
-    ui->label->setVisible(false);
-    ui->label_2->setVisible(false);
-ui->label_3->setVisible(false);
-ui->label_4->setVisible(false);
-ui->label_5->setVisible(false);
-ui->label_6->setVisible(false);
+//   // ui->label->setVisible(false);
+//    ui->label_2->setVisible(false);
+//ui->label_3->setVisible(false);
+//ui->label_4->setVisible(false);
+//ui->label_5->setVisible(false);
+//ui->label_6->setVisible(false);
 
     //    ui->label_4->setText(ui->comboBox->currentText());
     //    ui->label_5->setText(ui->comboBox_2->currentText());
@@ -124,15 +124,15 @@ ui->label_6->setVisible(false);
     ui->label_4->setText("Brak");
     ui->label_5->setText("Brak");
     ui->label_6->setText("Brak");
-    ui->comboBox->setVisible(false);
-    ui->comboBox_2->setVisible(false);
-    ui->comboBox_3->setVisible(false);
+//    ui->comboBox->setVisible(false);
+//    ui->comboBox_2->setVisible(false);
+//    ui->comboBox_3->setVisible(false);
     ui->comboBox->clear();
     ui->comboBox_2->clear();
     ui->comboBox_3->clear();
     ui->checkBox->setChecked(false);
     ui->chbLast10->setChecked(false);
-     ui->chbLast10->setVisible(false);
+  //   ui->chbLast10->setVisible(false);
 }
 void UrzadzeniaLista::wczytajDane()
 { //qWarning ()<<"1";
@@ -377,34 +377,46 @@ void UrzadzeniaLista::on_pushButton_6_clicked()
     // Zaznacz jakiegos
     //Dopisz do TABELI z urzadzeniami
     //Zapisz w pliku BDMain
-
+cout <<"1"<<endl;
     QModelIndex index = ui->tableView->selectionModel()->currentIndex();
     QVariant vartosc = index.sibling(index.row(), index.column()).data();
     QString QVartsoc = QVariant(vartosc).toString();
     ui->label->setText(QVartsoc); //Pokazuje kliknietą komórkę.
+    cout <<"2"<<endl;
     if (QVariant(vartosc).toString() == "Przypisany") {
+        cout <<"2.1"<<endl;
         QMessageBox::information(this,
                                  "Ostrzeżenie",
                                  "Ten analizator jest juz przypisany do konkretnego kontrahenta. "
                                          "Nie możesz go przypisać do innego.");
 
     } else {
+        cout <<"2.2"<<endl;
         //cout << "nie przypisany" << endl;
 
         UrzadzeniaListaKontrahent *urzkl = new UrzadzeniaListaKontrahent(this);
+        cout <<"2.3"<<endl;
         int iloscColumn = model->columnCount();
-
+        cout <<" Ilosc kolumn : "<<endl;
+        cout << iloscColumn <<endl;
         int stringrowDoSize = (ui->tableView->currentIndex().row()) + 1;
-        QVariant tab[iloscColumn];
+        cout <<" stringrowDoSize : "<<endl;
+        cout << stringrowDoSize <<endl;
+        cout <<"2.4"<<endl;
+        QVariant tab[model->columnCount()]; //QVariant tab[iloscColumn];
+        cout <<" Ilosc kolumn w tab: "<<endl;
+        qWarning ()<< (tab[iloscColumn].toString());
+        cout <<"2.5"<<endl;
         QVariant wyslij;
-        for (int i = 0; i <= iloscColumn; i++) {
+        for (int i = 0; i <= iloscColumn-1; i++) {
             tab[i] = index.sibling(stringrowDoSize - 1, i).data();
         }
-
+cout <<"2.6"<<endl;
         urzkl->wyswietl(tab[0], tab[1], tab[2], tab[3]);
 
         urzkl->show();
     }
+    cout <<"3 end"<<endl;
 }
 void UrzadzeniaLista::openInfo()
 {
@@ -481,6 +493,7 @@ void UrzadzeniaLista::fillComboBoxes()
 
     //cout << "Po usunieciu duplikatow\n";
     for(int k = 0; k < vfillCb10.size(); ++k)
+    //for(int k = 0; k < vfillCb10.size(); ++k)
     {
         ui->comboBox->addItem(vfillCb10[k]) ;
     }

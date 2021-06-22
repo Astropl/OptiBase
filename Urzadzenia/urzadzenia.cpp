@@ -409,16 +409,17 @@ void Urzadzenia::on_actionOpcje_triggered()
 void Urzadzenia::on_comboBox_highlighted(const QString)
 {
     // Odswiiez producenta
+   // cout <<"1"<<endl;
     fstream checkFlags;
     QString file16 = "16.CheckFlagsInProducentUrzadzenia.txt";
     CheckFiles *checkFiles = new CheckFiles(this);
-
+//cout <<"2"<<endl;
     checkFlagsVariableProducent = checkFiles->checkFlagsProducent(checkFlagsVariableProducent);
-
+//cout <<"3"<<endl;
     if (checkFlagsVariableProducent != 0) {
         cout << "textHighlighted odwiezam producenta" << endl;
         QStringList listaProducent = QStringList();
-
+//cout <<"4"<<endl;
         ui->comboBox->clear();
         //wczytajProducenta();
         wypelnijProducenta();
@@ -431,10 +432,12 @@ void Urzadzenia::on_comboBox_highlighted(const QString)
         for (int kZmienna = 0; kZmienna <= listaProducent.count() - 1; kZmienna++) {
             ui->comboBox->addItem(listaProducent.at(kZmienna));
         }
+        //cout <<"5"<<endl;
     }
-    checkFlags.open(file16.toStdString(), ios::out | ios::trunc);
-    checkFlags << "0" << endl;
-    checkFlags.close();
+//    checkFlags.open(file16.toStdString(), ios::out | ios::trunc);
+//    checkFlags << "0" << endl;
+//    checkFlags.close();
+    //cout <<"6 END"<<endl;
 }
 
 void Urzadzenia::wczytajProducenta()
@@ -448,34 +451,41 @@ void Urzadzenia::wczytajModel()
 void Urzadzenia::on_comboBox_2_highlighted(const QString)
 {
     // odwiez model.
-
+cout <<"1"<<endl;
     fstream checkFlags;
     QString file17 = "17.CheckFlagsInModelUrzadzenia.txt";
     CheckFiles *checkFiles = new CheckFiles(this);
-
+cout <<"2"<<endl;
     checkFlagsVariableModel = checkFiles->checkFlagsModel(checkFlagsVariableModel);
+cout <<"3"<<endl;
+cout <<checkFlagsVariableModel<<endl;
 
     if (checkFlagsVariableModel != 0) {
         cout << "textHighlighted odswierzam /model" << endl;
         QStringList listaModel = QStringList();
 
         ui->comboBox_2->clear();
+        cout <<"4"<<endl;
         //wczytajModel();
         wypelnijModel();
+        cout <<"5"<<endl;
         int ostatniindex = ui->comboBox_2->count() - 1;
         for (int iZmienna = 0; iZmienna <= ostatniindex; iZmienna++) {
             listaModel.push_back(ui->comboBox_2->itemText(iZmienna).toUtf8());
         }
+        cout <<"6"<<endl;
         sort(listaModel.begin(), listaModel.end());
         ui->comboBox_2->clear();
         for (int kZmienna = 0; kZmienna <= listaModel.count() - 1; kZmienna++) {
             ui->comboBox_2->addItem(listaModel.at(kZmienna));
         }
     }
+    cout <<"7"<<endl;
     checkFlags.open(file17.toStdString(), ios::out | ios::trunc);
     checkFlags << "0" << endl;
     checkFlags.close();
     ui->pushButton->setEnabled(true);
+    cout <<"8 End"<<endl;
 }
 void Urzadzenia::openInfo()
 {

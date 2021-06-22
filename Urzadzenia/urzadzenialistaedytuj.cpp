@@ -159,7 +159,7 @@ QVariant UrzadzeniaListaEdytuj::setLabelsInfo(QVariant lp, QVariant producent, Q
 //    qWarning()<<"model to: "<<model;
     ui->comboBox->setCurrentText(producent.toString());
     ui->comboBox_2->setCurrentText(model.toString());
-    return 0;
+    return lp;
 }
 
 void UrzadzeniaListaEdytuj::wypelnijProducenta()

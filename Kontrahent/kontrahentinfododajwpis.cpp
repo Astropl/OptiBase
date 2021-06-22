@@ -34,7 +34,7 @@ int miesiac, miesiacKolejny;
 int rok, rokKolejny;
 int dzienTygodnia;
 int idWpisu = 1002;
-
+ QString dataWpisu;
 fstream fileWpis;
 bool przypomnienie = false;
 string przypomnienieId;
@@ -54,6 +54,8 @@ KontrahentInfoDodajWpis::KontrahentInfoDodajWpis(QWidget *parent)
     ui->comboBox->setCurrentIndex(-1);
     initMenu();
     loadInfoOTemacie();
+    dataWpisu = ui->label_4->text() + "/" + ui->label_5->text() + "/" + ui->label_6->text()
+             + " | " + ui->label_14->text();
 }
 
 void KontrahentInfoDodajWpis::loadInfoOTemacie()
@@ -125,7 +127,7 @@ void KontrahentInfoDodajWpis::on_pushButton_2_clicked()
     QString przypomnienieTemp;
     QString dataNajblPrzypom;
     QString nrWpisu = ui->label_2->text();
-    QString dataWpisu = ui->label_4->text() + "/" + ui->label_5->text() + "/" + ui->label_6->text()
+   dataWpisu = ui->label_4->text() + "/" + ui->label_5->text() + "/" + ui->label_6->text()
             + " | " + ui->label_14->text();
     QString tematWpisu = ui->label_15->text();
     //QString tematWpisu = "tempoczasowy";
@@ -468,4 +470,25 @@ void KontrahentInfoDodajWpis::openSettings()
 void KontrahentInfoDodajWpis::on_comboBox_2_textActivated(const QString )
 {
     ui->label_15->setText("Temat: "+ui->comboBox_2->currentText());
+
+    QString aktualData = "";
+
+
+    ui->textEdit->setPlainText(ui->comboBox_2->currentText() + ": " +dataWpisu);
+
+}
+
+
+
+void KontrahentInfoDodajWpis::on_pushButton_3_clicked() // Dodoaj Przypomnienie
+{
+
+
+
+
+}
+
+void KontrahentInfoDodajWpis::on_pushButton_4_clicked() //Wyczysc Przypomnienie
+{
+
 }

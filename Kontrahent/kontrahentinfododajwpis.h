@@ -60,6 +60,12 @@ private slots:
 
     void on_comboBox_2_textActivated(const QString);
 
+    //void on_comboBox_2_activated(const QString &arg1);
+
+    void on_pushButton_3_clicked();
+
+    void on_pushButton_4_clicked();
+
 private:
     Ui::KontrahentInfoDodajWpis *ui;
     QStandardItemModel *model;

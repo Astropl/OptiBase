@@ -301,6 +301,7 @@ int CheckFiles::checkFlagsWojewodztwa(int checkFlagsVarriableWojewodztwo)
     }
 
     file.close();
+    return 0;
 }
 int CheckFiles::checkFlagsMiasto(int checkFlagsVarriableMiasto)
 {
@@ -324,6 +325,7 @@ int CheckFiles::checkFlagsMiasto(int checkFlagsVarriableMiasto)
     }
 
     file.close();
+    return 0;
 }
 
 int CheckFiles::checkFlagsKraj(int checkFlagsVarriableKraj) //int checkFlagsVarriableKraj
@@ -348,7 +350,7 @@ int CheckFiles::checkFlagsKraj(int checkFlagsVarriableKraj) //int checkFlagsVarr
     }
 
     file.close();
-    //return 0;
+    return 0;
 }
 int CheckFiles::checkFlagsProducent(int checkFlagsVarriableProducent)
 {
@@ -372,6 +374,7 @@ int CheckFiles::checkFlagsProducent(int checkFlagsVarriableProducent)
     }
 
     file.close();
+    return checkFlagsVarriableProducent;
 }
 int CheckFiles::checkFlagsModel(int checkFlagsVarriableModel)
 {
@@ -395,4 +398,5 @@ int CheckFiles::checkFlagsModel(int checkFlagsVarriableModel)
     }
 
     file.close();
+    return checkFlagsVarriableModel;
 }

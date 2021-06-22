@@ -23,14 +23,13 @@ public slots:
     void setLabelsFalse();
     QVariant setLabelsInfo(QVariant lp, QVariant producent, QVariant model, QVariant nrSeryjny, QVariant przypisany, QVariant kontrahent);
     void wypelnijProducenta();
-
     void wypelnijModel();
-void initFrame();
+    void initFrame();
+
+
 private slots:
     void on_pushButton_clicked();
-
     void on_pushButton_3_clicked();
-
     void on_pushButton_4_clicked();
 
 private:

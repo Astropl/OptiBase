@@ -532,6 +532,45 @@ przypomnienia:</string>
      <string>Odebrac od klienta</string>
     </property>
    </widget>
+   <widget class="QGroupBox" name="groupBox">
+    <property name="geometry">
+     <rect>
+      <x>570</x>
+      <y>330</y>
+      <width>151</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string/>
+    </property>
+    <widget class="QPushButton" name="pushButton_3">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>131</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Dodaj Przypomnienie</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_4">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>40</y>
+       <width>131</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Wyczyść Przypomnienie</string>
+     </property>
+    </widget>
+   </widget>
    <zorder>label_9</zorder>
    <zorder>label_13</zorder>
    <zorder>label</zorder>
@@ -562,6 +601,7 @@ przypomnienia:</string>
    <zorder>checkBox_4</zorder>
    <zorder>checkBox_5</zorder>
    <zorder>checkBox_6</zorder>
+   <zorder>groupBox</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

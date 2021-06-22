@@ -21,18 +21,15 @@ public slots:
     void wczytajDane();
     void myfunctiontimer();
     void initMenu();
-
     void statsy();
-
     void openInfo();
-
     void openSettings();
     void fillComboBoxes();
     void on_checkBox_stateChanged();
+
 private slots:
     void on_btnExit_clicked();
-
-    void on_checkBox_stateChanged(int arg1);
+    //void on_checkBox_stateChanged(int arg1);
 
 private:
     Ui::Magazyn *ui;
