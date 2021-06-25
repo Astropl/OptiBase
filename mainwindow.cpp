@@ -380,7 +380,7 @@ void MainWindow::ShowImportantDate()
     QString SDatazComba;
 
 
-    int ileDni, ileDni2;
+    int ileDni;// ileDni2;
     int tymczasowaIleDni=365;
     int tymczasoweK;
     QString stringDoDaty="";

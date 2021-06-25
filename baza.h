@@ -57,6 +57,8 @@ private slots:
 
     void on_pushButton_3_clicked();
 
+   //void on_comboBox_5_highlighted(const QString &arg1);
+
 private:
     QTimer *timer;
     QStandardItemModel *model;

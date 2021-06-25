@@ -509,7 +509,8 @@ QString Baza::filtrOn(QString aktywnyProducent)
 }
 
 void Baza::on_comboBox_5_activated(const QString)
-{
+{//Producent d combo boxa
+
 
     QString aktywnyProducent = ui->comboBox_5->currentText();
     filtrOn(aktywnyProducent);
@@ -580,3 +581,4 @@ void Baza::on_pushButton_3_clicked()
 
 }
 // do gita
+
