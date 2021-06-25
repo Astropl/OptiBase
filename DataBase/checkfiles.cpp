@@ -285,8 +285,8 @@ int CheckFiles::checkFlagsWojewodztwa(int checkFlagsVarriableWojewodztwo)
     //cout<<" W checkfiles1:: checkFlags Wojewdoztwa"<<endl;
     file.open(file12.toStdString(),
               ios::in); //ios::app dopisuje a ios::trunc zawartos usunieta i zastąpiona nową.
-    string linia;       // Wczytuje  tutuaj flage do Wczytywania miast
-
+    string linia ;       // Wczytuje  tutuaj flage do Wczytywania miast
+checkFlagsVarriableWojewodztwo = 6;
     int nr_lini = 1;
     while (getline(file, linia)) {
         //cout << linia << endl;
@@ -301,12 +301,13 @@ int CheckFiles::checkFlagsWojewodztwa(int checkFlagsVarriableWojewodztwo)
     }
 
     file.close();
-    return 0;
+    //return 0;
+   return checkFlagsVarriableWojewodztwo;
 }
 int CheckFiles::checkFlagsMiasto(int checkFlagsVarriableMiasto)
 {
     //cout << " W CheckFiles1: CheckFlags" << endl;
-
+checkFlagsVarriableMiasto = 6;
     file.open(file10.toStdString(),
               ios::in); //ios::app dopisuje a ios::trunc zawartos usunieta i zastąpiona nową.
     string linia;       // Wczytuje  tutuaj flage do Wczytywania miast
@@ -325,13 +326,14 @@ int CheckFiles::checkFlagsMiasto(int checkFlagsVarriableMiasto)
     }
 
     file.close();
-    return 0;
+    //return 0;
+    return checkFlagsVarriableMiasto;
 }
 
 int CheckFiles::checkFlagsKraj(int checkFlagsVarriableKraj) //int checkFlagsVarriableKraj
 {
     //cout << " W CheckFiles1: CheckFlags" << endl;
-
+checkFlagsVarriableKraj =6;
     file.open(file11.toStdString(),
               ios::in); //ios::app dopisuje a ios::trunc zawartos usunieta i zastąpiona nową.
     string linia;       // Wczytuje  tutuaj flage do Wczytywania miast
@@ -350,7 +352,8 @@ int CheckFiles::checkFlagsKraj(int checkFlagsVarriableKraj) //int checkFlagsVarr
     }
 
     file.close();
-    return 0;
+    //return 0;
+    return checkFlagsVarriableKraj;
 }
 int CheckFiles::checkFlagsProducent(int checkFlagsVarriableProducent)
 {

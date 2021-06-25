@@ -20,7 +20,7 @@ public:
 
 private slots:
     void on_pushButton_clicked();
-    void on_checkBox_stateChanged(int arg1);
+    void on_checkBox_stateChanged(); //int arg1
     void on_radioButton_clicked(bool checked);
     void on_radioButton_2_clicked(bool checked);
     void on_radioButton_3_clicked(bool checked);

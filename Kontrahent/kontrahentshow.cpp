@@ -222,7 +222,7 @@ void KontrahentShow::on_pushButton_3_clicked() //ZAPISZ?
 
     // pobrac kontarhanta
 
-    int iloscKontrahentow = 0, i = 0, d = 0;
+    int iloscKontrahentow = 0,  d = 0; //i = 0,
     QString QKontrahent = "";
     iloscKontrahentow = mainDb->pobierzKontrahentaId(iloscKontrahentow);
 

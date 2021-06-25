@@ -123,9 +123,9 @@ void Magazyn::wczytajDane()
     ui->label_3->setVisible(false);
 
     // Wczytac z Bazy. Kontrahneci i Urzadzenia które mają zakładkę TAK
-    QStandardItem *dodajItem = new QStandardItem("");
-    MainDb *mainDb = new MainDb(this);
-    int pobierzUrzKontId = 0;
+//    QStandardItem *dodajItem = new QStandardItem("");
+//    MainDb *mainDb = new MainDb(this);
+//    int pobierzUrzKontId = 0;
 
     QString QStringPobierzUrzKont = "";
     model = new QStandardItemModel(1, 21, this); //było 14

@@ -58,7 +58,7 @@ void AddSpecialDatesImportant::createDatesGroupBox()
 void AddSpecialDatesImportant::on_calendarWidget_clicked(const QDate)
 {
     qWarning() << "on_calendarWidget_clicked(const QDate";
-    QDate dataCurrent = QDate();
+   // QDate dataCurrent = QDate();
 
     // dataCurrent->DateFormat("dd.MM.yyyy");
     calendar->setSelectedDate(calendar->selectedDate());

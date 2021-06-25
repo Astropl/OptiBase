@@ -283,20 +283,20 @@ void KontrahentLista::on_pushButton_3_clicked()
         tab[i] = index.sibling(stringrowDoSize - 1, i).data();
     }
 
-    kontrShow->wyswietl(tab[0],
-                        tab[1],
-                        tab[2],
-                        tab[3],
-                        tab[4],
-                        tab[5],
-                        tab[6],
-                        tab[7],
-                        tab[8],
-                        tab[9],
-                        tab[10],
-                        tab[11],
-                        tab[12],
-                        tab[13]);
+    kontrShow->wyswietl(tab[0].toString(),
+                        tab[1].toString(),
+                        tab[2].toString(),
+                        tab[3].toString(),
+                        tab[4].toString(),
+                        tab[5].toString(),
+                        tab[6].toString(),
+                        tab[7].toString(),
+                        tab[8].toString(),
+                        tab[9].toString(),
+                        tab[10].toString(),
+                        tab[11].toString(),
+                        tab[12].toString(),
+                        tab[13].toString());
 
     kontrShow->show();
 }

@@ -48,10 +48,13 @@ private slots:
     void wczytajModel();
     void on_comboBox_highlighted(const QString);
     void on_comboBox_2_highlighted(const QString);
+    void on_comboBox_highlightedExit(int checkFlagsVariableProducent);
     void initMenuUrzadzenia();
     void openInfo();
-
+void on_comboBox_2_highlightedExit(int checkFlagsVariableModel);
     void openSettings();
+
+    //void on_comboBox_activated(const QString &arg1);
 
 public:
     Ui::Urzadzenia *ui;

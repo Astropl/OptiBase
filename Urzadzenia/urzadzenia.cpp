@@ -77,21 +77,15 @@ Urzadzenia::Urzadzenia(QWidget *parent)
 void Urzadzenia::wypelnijModel()
 {
     MainDb *mainDb = new MainDb(this);
-
-    pobierzModelId = mainDb->pobierzModeliD(pobierzModelId);
-
-    for (int i = 1; i <= pobierzModelId; i++) {
+pobierzModelId = mainDb->pobierzModeliD(pobierzModelId);
+ for (int i = 1; i <= pobierzModelId; i++) {
         QStringPobierzModel = mainDb->pobierzModel(QStringPobierzModel, i);
         ui->comboBox_2->addItem(QStringPobierzModel);
-
     }
-
 }
 
 QString Urzadzenia::zMainDb(QString testName)
-{ //MainDb *mainDb = new MainDb(this);
-
-    //pobierzProducenta = mainDb->pobierzProducenta(pobierzProducenta);
+{
     ui->comboBox->addItem(testName);
     return 0;
 }
@@ -168,7 +162,7 @@ void Urzadzenia::initMenuUrzadzenia()
 }
 void Urzadzenia::howMuchDevice()
 {
-    qWarning() << "Jestem w Urzadzenia:HowMuchDevice";
+    //qWarning() << "Jestem w Urzadzenia:HowMuchDevice";
     int deviceCount = 0;
     QString QDeviceCount = "";
     MainDb *mainDb = new MainDb(this);
@@ -185,9 +179,7 @@ void Urzadzenia::howMuchDevice()
     //    qWarning ()<<"Device równa się "<<QDeviceCount;
     ui->lineEditNumber->setText(QString::number(deviceCount + 1));
 
-    qWarning() << "Jestem w Urzadzenia:HowMuchDevice:End";
-
-
+    //qWarning() << "Jestem w Urzadzenia:HowMuchDevice:End";
 }
 void Urzadzenia::myfunctiontimer()
 {
@@ -231,7 +223,7 @@ Urzadzenia::~Urzadzenia()
 void Urzadzenia::on_BtnUrzaZapisz_clicked()
 { //ZAPISZ
     QString file3 = "C:/Defaults/Pliki/3.Urzadzenie.txt";
-    cout << "Zapisz" << endl;
+    //cout << "Zapisz" << endl;
 
     plikUrzadzenia.open(file3.toStdString(), ios::out | ios::app);
 
@@ -255,6 +247,10 @@ void Urzadzenia::on_BtnUrzaZamknij_clicked()
 {
     timer->stop();
     iloscUrzadzen = 0;
+    checkFlagsVariableProducent =0;
+    on_comboBox_highlightedExit(checkFlagsVariableProducent);
+    checkFlagsVariableModel =0;
+    on_comboBox_2_highlightedExit(checkFlagsVariableModel);
     destroy();
 }
 
@@ -334,7 +330,7 @@ void Urzadzenia::on_pushButton_clicked() // DODAJ urzadzena do Comboboxa
     for (int i = 1; i <= nrSeryjnyZLiniId; i++) {
         nrSeryjnyZLini = mainDb->isNumerSeryjnyTheSame(nrSeryjnyZLini, i);
         ui->comboBox_3->addItem(nrSeryjnyZLini);
-        qDebug() << nrSeryjnyZLini;
+        //qDebug() << nrSeryjnyZLini;
     }
 
     //Najpierw sprawdzam czy linia z numerem seryjnym nie jest pusta
@@ -362,7 +358,7 @@ void Urzadzenia::on_pushButton_clicked() // DODAJ urzadzena do Comboboxa
                                      "Ostrzeżenie",
                                      "Analizator o takim numerze seryjnym już jest w bazie");
         } else {
-            cout << "Dodaje i zapisuje" << endl;
+            //cout << "Dodaje i zapisuje" << endl;
 
             ui->BtnUrzaZapisz->setEnabled(false);
             //-----------------
@@ -398,26 +394,38 @@ void Urzadzenia::on_pushButton_clicked() // DODAJ urzadzena do Comboboxa
     QPixmap pix1(dirPath+ "/YesYellow.png");
 
     ui->lblCheckOkNo->setPixmap(pix1.scaled(ui->lblCheckOkNo->size(),Qt::KeepAspectRatio));//Skaluje pnp do wymierów labela
-
 }
 void Urzadzenia::on_actionOpcje_triggered()
 {
     Ustawienia *ustaw = new Ustawienia(this);
     ustaw->show();
 }
-
+void Urzadzenia::on_comboBox_highlightedExit(int checkFlagsVariableProducent)
+{
+     MainDb *mainDb = new MainDb(this);
+    checkFlagsVariableProducent = mainDb->checkFlagsProducentInsert1(checkFlagsVariableProducent);
+    //cout <<"checkFlagsVariableProducent o zmianue";
+   // cout<<checkFlagsVariableProducent<<endl;
+}
 void Urzadzenia::on_comboBox_highlighted(const QString)
 {
+    MainDb *mainDb = new MainDb(this);
     // Odswiiez producenta
    // cout <<"1"<<endl;
-    fstream checkFlags;
-    QString file16 = "16.CheckFlagsInProducentUrzadzenia.txt";
-    CheckFiles *checkFiles = new CheckFiles(this);
+    //fstream checkFlags;
+   // QString file16 = "16.CheckFlagsInProducentUrzadzenia.txt";
+   // CheckFiles *checkFiles = new CheckFiles(this);
 //cout <<"2"<<endl;
-    checkFlagsVariableProducent = checkFiles->checkFlagsProducent(checkFlagsVariableProducent);
+    //checkFlagsVariableProducent = checkFiles->checkFlagsProducent(checkFlagsVariableProducent);
 //cout <<"3"<<endl;
-    if (checkFlagsVariableProducent != 0) {
-        cout << "textHighlighted odwiezam producenta" << endl;
+    checkFlagsVariableProducent = mainDb->checkFlagsProducent(checkFlagsVariableProducent);
+    if (checkFlagsVariableProducent == 0) {
+
+
+
+   // cout<<"on_comboBox_highlighted producent. Pobieram checkFlagsVariableProducent: ";
+    //cout<< checkFlagsVariableProducent<<endl;
+      //  cout << "textHighlighted odwiezam producenta" << endl;
         QStringList listaProducent = QStringList();
 //cout <<"4"<<endl;
         ui->comboBox->clear();
@@ -432,14 +440,16 @@ void Urzadzenia::on_comboBox_highlighted(const QString)
         for (int kZmienna = 0; kZmienna <= listaProducent.count() - 1; kZmienna++) {
             ui->comboBox->addItem(listaProducent.at(kZmienna));
         }
-        //cout <<"5"<<endl;
+        checkFlagsVariableProducent =1;
+        on_comboBox_highlightedExit(checkFlagsVariableProducent);
     }
+
+
 //    checkFlags.open(file16.toStdString(), ios::out | ios::trunc);
 //    checkFlags << "0" << endl;
 //    checkFlags.close();
     //cout <<"6 END"<<endl;
 }
-
 void Urzadzenia::wczytajProducenta()
 {
     wypelnijProducenta();
@@ -451,41 +461,52 @@ void Urzadzenia::wczytajModel()
 void Urzadzenia::on_comboBox_2_highlighted(const QString)
 {
     // odwiez model.
-cout <<"1"<<endl;
-    fstream checkFlags;
-    QString file17 = "17.CheckFlagsInModelUrzadzenia.txt";
-    CheckFiles *checkFiles = new CheckFiles(this);
-cout <<"2"<<endl;
-    checkFlagsVariableModel = checkFiles->checkFlagsModel(checkFlagsVariableModel);
-cout <<"3"<<endl;
-cout <<checkFlagsVariableModel<<endl;
+//cout <<"1"<<endl;
+//    fstream checkFlags;
+//    QString file17 = "17.CheckFlagsInModelUrzadzenia.txt";
+//    CheckFiles *checkFiles = new CheckFiles(this);
+//cout <<"2"<<endl;
+//    checkFlagsVariableModel = checkFiles->checkFlagsModel(checkFlagsVariableModel);
+//cout <<"3"<<endl;
+//cout <<checkFlagsVariableModel<<endl;
 
-    if (checkFlagsVariableModel != 0) {
-        cout << "textHighlighted odswierzam /model" << endl;
+    MainDb *mainDb = new MainDb(this);
+    checkFlagsVariableModel = mainDb->checkFlagsModel(checkFlagsVariableModel);
+    if (checkFlagsVariableModel == 0) {
+       // cout << "textHighlighted odswierzam /model" << endl;
         QStringList listaModel = QStringList();
 
         ui->comboBox_2->clear();
-        cout <<"4"<<endl;
+       // cout <<"4"<<endl;
         //wczytajModel();
         wypelnijModel();
-        cout <<"5"<<endl;
+      //  cout <<"5"<<endl;
         int ostatniindex = ui->comboBox_2->count() - 1;
         for (int iZmienna = 0; iZmienna <= ostatniindex; iZmienna++) {
             listaModel.push_back(ui->comboBox_2->itemText(iZmienna).toUtf8());
         }
-        cout <<"6"<<endl;
+      //  cout <<"6"<<endl;
         sort(listaModel.begin(), listaModel.end());
         ui->comboBox_2->clear();
         for (int kZmienna = 0; kZmienna <= listaModel.count() - 1; kZmienna++) {
             ui->comboBox_2->addItem(listaModel.at(kZmienna));
         }
+        checkFlagsVariableModel =1;
+        on_comboBox_2_highlightedExit(checkFlagsVariableModel);
     }
-    cout <<"7"<<endl;
-    checkFlags.open(file17.toStdString(), ios::out | ios::trunc);
-    checkFlags << "0" << endl;
-    checkFlags.close();
+//    cout <<"7"<<endl;
+//    checkFlags.open(file17.toStdString(), ios::out | ios::trunc);
+//    checkFlags << "0" << endl;
+//    checkFlags.close();
     ui->pushButton->setEnabled(true);
-    cout <<"8 End"<<endl;
+//    cout <<"8 End"<<endl;
+}
+void Urzadzenia::on_comboBox_2_highlightedExit(int checkFlagsVariableModel)
+{
+     MainDb *mainDb = new MainDb(this);
+    checkFlagsVariableModel = mainDb->checkFlagsModelInsert1(checkFlagsVariableModel);
+   // cout <<"checkFlagsVariableProducent o zmianue";
+  //  cout<<checkFlagsVariableModel<<endl;
 }
 void Urzadzenia::openInfo()
 {
@@ -497,3 +518,4 @@ void Urzadzenia::openSettings()
     Ustawienia *ustaw = new Ustawienia(this);
     ustaw->show();
 }
+

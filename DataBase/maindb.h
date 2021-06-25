@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include <QObject>
 #include <QWidget>
+//#include <QSqlQuery>
+
+
 class MainDb : public QMainWindow
 {
 public:
@@ -26,6 +29,12 @@ public:
     void dBWazneDaty();
     void PrzypiszTestowo();
     void dBInfoOTemacie();
+    void dBCheckInit();
+    int checkFlagsProducent(int checkFlagsVariableProducent);
+    int checkFlagsProducentInsert1(int checkFlagsVariableProducent);
+int checkFlagsModel(int checkFlagsVariableModel);
+int checkFlagsModelInsert1(int checkFlagsVariableModel);
+
     QString ObliczCzasUruchomien(QString DbSec, QString DbMin, QString DbGodz, QString DbDni);
     int PobierzCzasUruchomien(int DbSec,int dBMin,int DbGodz, int DbDni);
 
@@ -91,5 +100,5 @@ QString pobierzWazneDatyAddYear(QString data, QString futureData);
     QString pobierzWazneDaty(QString daneProducent, int i, int d);
     QString pobierzWazneDatyZapis(QString qdata, QString temat , QString info );
 };
-
+//QSqlQuery query;
 #endif // MAINDB_H

@@ -304,7 +304,7 @@ void UrzadzeniaPrzypominacz::myfunctiontimer()
     ui->labelDzien->setText(stringDzienTygodnia);
 }
 
-void UrzadzeniaPrzypominacz::on_checkBox_stateChanged(int arg1)
+void UrzadzeniaPrzypominacz::on_checkBox_stateChanged()//(int arg1
 {
     // zmiana checkboxa
     if (ui->checkBox->isChecked())

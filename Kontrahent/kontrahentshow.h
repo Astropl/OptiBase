@@ -16,6 +16,12 @@ public:
     ~KontrahentShow();
 
 public slots:
+
+    //KontrahentShow(QString pierwszazmienna);
+    void showCities(); //jest
+    void showWojewodztwa(); //jest
+    void showKraj(); //jest
+    void unblock(); //jest
     QVariant wyswietl(QVariant p1,
                       QVariant p2,
                       QVariant p3,
@@ -29,21 +35,15 @@ public slots:
                       QVariant p11,
                       QVariant p12,
                       QVariant p13,
-                      QVariant p14);
-    //KontrahentShow(QString pierwszazmienna);
-    void showCities();
-    void showWojewodztwa();
-    void showKraj();
-    void unblock();
-
+                      QVariant p14); //jest
 private slots:
-    void on_pushButton_2_clicked();
-    void on_pushButton_clicked();
-    void on_pushButton_3_clicked();
-    void on_pushButton_4_clicked();
-    void on_comboBoxKraj_highlighted(const QString);
-    void on_comboBoxWojewodztwa_highlighted(const QString);
-    void on_comboBoxMiasta_highlighted(const QString);
+    void on_pushButton_2_clicked();//jest
+    void on_pushButton_clicked(); //jest
+    void on_pushButton_3_clicked(); //jest
+    void on_pushButton_4_clicked(); //jest
+    void on_comboBoxKraj_highlighted(const QString); //jest
+    void on_comboBoxWojewodztwa_highlighted(const QString); //jest
+    void on_comboBoxMiasta_highlighted(const QString); //jest
 
 private:
     Ui::KontrahentShow *ui;
