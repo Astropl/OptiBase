@@ -66,6 +66,18 @@ private slots:
 
     void on_pushButton_4_clicked();
 
+    void on_pushButton_5_clicked();
+
+    void on_checkBox_2_stateChanged();
+
+    void on_checkBox_4_stateChanged();
+
+    void on_checkBox_5_stateChanged();
+
+    void on_checkBox_6_stateChanged();
+
+    void on_checkBox_3_stateChanged();
+
 private:
     Ui::KontrahentInfoDodajWpis *ui;
     QStandardItemModel *model;

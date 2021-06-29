@@ -571,6 +571,19 @@ przypomnienia:</string>
      </property>
     </widget>
    </widget>
+   <widget class="QPushButton" name="pushButton_5">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>410</y>
+      <width>101</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Wyczyść Treść</string>
+    </property>
+   </widget>
    <zorder>label_9</zorder>
    <zorder>label_13</zorder>
    <zorder>label</zorder>
@@ -602,6 +615,7 @@ przypomnienia:</string>
    <zorder>checkBox_5</zorder>
    <zorder>checkBox_6</zorder>
    <zorder>groupBox</zorder>
+   <zorder>pushButton_5</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

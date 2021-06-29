@@ -20,12 +20,10 @@ AddSpecialDatesImportant::AddSpecialDatesImportant(QWidget *parent)
 
     createDatesGroupBox();
 }
-
 AddSpecialDatesImportant::~AddSpecialDatesImportant()
 {
     delete ui;
 }
-
 void AddSpecialDatesImportant::createDatesGroupBox()
 {
     //    minimumDateEdit = new QDateEdit;
@@ -54,7 +52,6 @@ void AddSpecialDatesImportant::createDatesGroupBox()
     //    connect(maximumDateEdit, &QDateEdit::dateChanged,
     //            this, &QCalendarWidget::maximumDateChanged);
 }
-
 void AddSpecialDatesImportant::on_calendarWidget_clicked(const QDate)
 {
     qWarning() << "on_calendarWidget_clicked(const QDate";
@@ -79,7 +76,6 @@ void AddSpecialDatesImportant::selectedDateChanged()
     qWarning() << "selectedDateChanged";
     currentDateEdit->setDate(calendar->selectedDate());
 }
-
 void AddSpecialDatesImportant::initShow()
 {
     //QCalendarWidget *calendar = new QCalendarWidget;

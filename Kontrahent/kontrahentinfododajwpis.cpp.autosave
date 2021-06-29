@@ -34,7 +34,7 @@ int miesiac, miesiacKolejny;
 int rok, rokKolejny;
 int dzienTygodnia;
 int idWpisu = 1002;
- QString dataWpisu;
+QString dataWpisu;
 fstream fileWpis;
 bool przypomnienie = false;
 string przypomnienieId;
@@ -55,7 +55,7 @@ KontrahentInfoDodajWpis::KontrahentInfoDodajWpis(QWidget *parent)
     initMenu();
     loadInfoOTemacie();
     dataWpisu = ui->label_4->text() + "/" + ui->label_5->text() + "/" + ui->label_6->text()
-             + " | " + ui->label_14->text();
+            + " | " + ui->label_14->text();
 }
 
 void KontrahentInfoDodajWpis::loadInfoOTemacie()
@@ -66,11 +66,11 @@ void KontrahentInfoDodajWpis::loadInfoOTemacie()
     int iloscTematow =0;
     QString qIloscTematow ="";
     iloscTematow = mainDb->pobierzIloscTematowiD(iloscTematow);
-
+    
     //qDebug()<<"Info o ilosci wpisów do Tematu: "<< iloscTematow;
     for(int i=1;i<=iloscTematow;i++)
     {
-
+        
         qIloscTematow =  mainDb->pobierzIloscTematow(qIloscTematow,i);
         //qDebug()<<"Info o ilosci wpisów do Tematu: "<< iloscTematow<<" i teamt to: "<<qIloscTematow;
         ui->comboBox_2->addItem(qIloscTematow);
@@ -120,14 +120,14 @@ KontrahentInfoDodajWpis::~KontrahentInfoDodajWpis()
 void KontrahentInfoDodajWpis::on_pushButton_2_clicked()
 {
     //Zapisz
-
+    
     // Dojdz do bazy i zapisz w bazie dane z kontrahent dodaj wpis
-
+    
     MainDb *mainDb = new MainDb(this);
     QString przypomnienieTemp;
     QString dataNajblPrzypom;
     QString nrWpisu = ui->label_2->text();
-   dataWpisu = ui->label_4->text() + "/" + ui->label_5->text() + "/" + ui->label_6->text()
+    dataWpisu = ui->label_4->text() + "/" + ui->label_5->text() + "/" + ui->label_6->text()
             + " | " + ui->label_14->text();
     QString tematWpisu = ui->label_15->text();
     //QString tematWpisu = "tempoczasowy";
@@ -144,13 +144,13 @@ void KontrahentInfoDodajWpis::on_pushButton_2_clicked()
         //qWarning ()<<"Data przypomnieniea NIE";
         dataNajblPrzypom = ui->label_11->text();
     }
-
+    
     QString przypomnienie = przypomnienieTemp;
-
+    
     QString tekstPrzypom = ui->textEdit_2->toPlainText();
     QString nrSeryjny = ui->label_12->text();
     //qWarning() << "Data przypomnieniea NIE i wydruk zniej " << dataNajblPrzypom;
-
+    
     mainDb->addPrzypomnienie(nrWpisu,
                              dataWpisu,
                              tematWpisu,
@@ -161,7 +161,7 @@ void KontrahentInfoDodajWpis::on_pushButton_2_clicked()
                              nrSeryjny);
     QString dirPath = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/Resources";
     QPixmap pix1(dirPath+ "/CheckOk.png");
-
+    
     ui->lblCheckOkNo->setPixmap(pix1.scaled(ui->lblCheckOkNo->size(),Qt::KeepAspectRatio));// Skaluje pnp do wymierów labela
 }
 
@@ -190,37 +190,37 @@ void KontrahentInfoDodajWpis::init()
     miesiac = miesiac + 1;
     rok = rok + 1900;
     dzienTygodnia = dzienTygodnia + 1;
-
+    
     qStrMin = timeDate->changeStringsMin(minuta);
     qStrSek = timeDate->changeStringsSek(sekunda);
     qStrDzien = timeDate->changeStringsDzien(dzien);
     qStrGodz = timeDate->changeStringsGodz(godzina);
     qStrMiesiac = timeDate->changeStringsMiesiac(miesiac);
     //stringDzienTygodnia = timeDate->changeStringsDzienTygodnia(dzienTygodnia);
-
+    
     //idWpisu = rand() %1000000 +1;
     //TODO: nowa funkcja wczytująca numer wpisu.
     //Wyodrebnic koncówke
     // zaminic na int
     // dodac kolejny numer
     // zapisac całosc.
-
+    
     ui->label_14->setText(qStrGodz + ":" + qStrMin);
     QString QnrWpisu;
     QnrWpisu = mainDb->pobierzNumerWpisu(QnrWpisu);
     //QnrWpisu = mainDb ->pobierzNumerWpisu(QnrWpisu.toUtf8().constData());
     //qWarning() << "KontrahentInfododoajWpis::QNumr wpsiu rowna się " << QnrWpisu;
-
+    
     string str0 = QnrWpisu.toStdString();
     std::string str1 = str0.substr(0, 3);
     std::string str2 = str0.substr(5, 2);
     std::string str3 = str0.substr(0, 4);
     std::string str4 = str0.substr(11, 4);
-
+    
     //qWarning() << str4.c_str();
     int IntNrwpisu = atoi(str4.c_str());
     IntNrwpisu++;
-
+    
     nrWpisu = QString::number(rok) + "/" + qStrMiesiac + "/" + qStrDzien + "/"
               + QString::number(IntNrwpisu);
     ui->label_2->setText(nrWpisu);
@@ -232,14 +232,14 @@ void KontrahentInfoDodajWpis::init()
 void KontrahentInfoDodajWpis::on_checkBox_stateChanged(int arg1)
 {
     //CheckBox zmiania
-
+    
     if (arg1 == 2) //if (ui->checkBox->isChecked())
     {              //Zaznaczony
-
+        
         checkedCheckBox();
         przypomnienie = true;
         //cout << "Arg: " << arg1 << endl;
-
+        
     } else if (arg1 == 0) {
         //Niezaznaczony
         przypomnienie = false;
@@ -253,7 +253,7 @@ void KontrahentInfoDodajWpis::myfunctiontimer()
     //  //  time_t czas;
     //    tm timeinfo;
     //    QString qStrMin, qStrGodz, qStrSek, qStrDzien, qStrMiesiac, stringDzienTygodnia;
-
+    
     TimeDate *timeDate = new TimeDate();
     //myfunctiontimerDoDaty(godzina,minuta,sekunda,dzien,miesiac,rok,dzienTygodnia);
     time(&czas);
@@ -268,17 +268,17 @@ void KontrahentInfoDodajWpis::myfunctiontimer()
     miesiac = miesiac + 1;
     rok = rok + 1900;
     dzienTygodnia = dzienTygodnia + 1;
-
+    
     qStrMin = timeDate->changeStringsMin(minuta);
     qStrSek = timeDate->changeStringsSek(sekunda);
     qStrDzien = timeDate->changeStringsDzien(dzien);
     qStrGodz = timeDate->changeStringsGodz(godzina);
     qStrMiesiac = timeDate->changeStringsMiesiac(miesiac);
     stringDzienTygodnia = timeDate->changeStringsDzienTygodnia(dzienTygodnia);
-
+    
     ui->labelZegara->setText(qStrGodz + ":" + qStrMin + ":" + qStrSek);
     ui->labelDaty->setText(QString::number(rok) + "." + qStrMiesiac + "." + qStrDzien);
-
+    
     ui->labelDzien->setText(stringDzienTygodnia);
 }
 
@@ -287,11 +287,11 @@ void KontrahentInfoDodajWpis::on_comboBox_currentTextChanged(const QString) //(c
     dzienKolejny = dzien;
     miesiacKolejny = miesiac;
     rokKolejny = rok;
-
+    
     if (ui->comboBox->currentText().toStdString() == "Co 1 dzień") {
         cout << "Co 1 dzień" << endl;
         //Dodac do dnia 1 dzien. Jezeli wychodzi po za miesiac to dodoac mc
-
+        
         dzienKolejny = dzienKolejny + 1;
         if (dzienKolejny >= 30) {
             dzienKolejny = 1;
@@ -332,28 +332,28 @@ int KontrahentInfoDodajWpis::dodajDateKolejnegoWpisu(int dzienKolejny,
                                                      int rokKolejny)
 {
     TimeDate *timeDate = new TimeDate();
-
+    
     qStrDzien = timeDate->changeStringsDzien(dzienKolejny);
-
+    
     qStrMiesiac = timeDate->changeStringsMiesiac(miesiacKolejny);
-
+    
     QString nrWpisuKolejnego;
     nrWpisuKolejnego = QString::number(rokKolejny) + "/" + qStrMiesiac + "/" + qStrDzien;
-
+    
     ui->label_11->setText(nrWpisuKolejnego);
     return 0;
 }
 QString KontrahentInfoDodajWpis::setSettingsId(QString NrSeryjny)
 {
     ui->label_12->setText(NrSeryjny);
-
+    
     return 0;
 }
 void KontrahentInfoDodajWpis::on_comboBox_currentIndexChanged(const QString)
 {
     //Zmiana daty przypomnienia
     //qWarning() << "Zmiana na : " << ui->comboBox->currentText();
-
+    
 }
 
 void KontrahentInfoDodajWpis::initMenu()
@@ -365,63 +365,63 @@ void KontrahentInfoDodajWpis::initMenu()
     //    QAction *fileEksport = new QAction(("&Eksport"), this);
     // QAction *fileseparator = new QAction(("----------"), this);
     QAction *fileWyjscie = new QAction(("&Wyjście"), this);
-
+    
     QAction *edycjaDodajInfoTemat = new QAction(("Dodaj Info o Temacie"), this);
     //    QAction *edycjaDodajModel = new QAction(("Dodaj Model"), this);
-
+    
     //    QAction *editKopiuj = new QAction(("&Kopiuj"), this);
     //    QAction *editWklej = new QAction(("&Wklej"), this);
-
+    
     QAction *infoOProgramie = new QAction(("&O Programie"), this);
     QAction *infoOAutorze = new QAction(("O &Autorze"), this);
     QAction *infoLog = new QAction(("&Log"), this);
-
+    
     QAction *settingsOption = new QAction(("&Opcje"), this);
-
+    
     auto mainfile = menuBar()->addMenu("Plik");
     auto mainEdycja = menuBar()->addMenu("Edycja");
     auto mainInfo = menuBar()->addMenu("Informacje");
     auto mainSettings = menuBar()->addMenu("Ustawienia");
-
+    
     //    mainfile->addAction(fileSave);
     //    mainfile->addAction(fileEksport);
-
+    
     mainfile->addSeparator();
     mainfile->addAction(fileWyjscie);
-
+    
     mainEdycja->addAction(edycjaDodajInfoTemat);
     //    mainEdycja->addAction(edycjaDodajModel);
-
+    
     //    mainEdycja->addAction(editKopiuj);
     //    mainEdycja->addAction(editWklej);
     mainInfo->addAction(infoOProgramie);
     mainInfo->addAction(infoOAutorze);
     mainInfo->addAction(infoLog);
-
+    
     mainSettings->addAction(settingsOption);
-
+    
     //connect(settingsOption, &QAction::triggered,this, SLOT (openInfo()));
     connect(settingsOption, SIGNAL(triggered()), this, SLOT(openSettings()));
     connect(infoOProgramie, SIGNAL(triggered()), this, SLOT(openInfo()));
-
+    
     connect(edycjaDodajInfoTemat, SIGNAL(triggered()), this, SLOT(openDodajTemat()));
-
+    
     //    connect(edycjaDodajProducenta,
     //            SIGNAL(triggered()),
     //            this,
     //            SLOT(on_actionDodaj_Producenta_triggered()));
     //    connect(edycjaDodajModel, SIGNAL(triggered()), this, SLOT(on_actionDodaj_Model_triggered()));
-
+    
     //QIcon iconOk;
     //.*********************************************
     // Ikonka check OK /NO
     QString dirPath = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/Resources";
     QPixmap pix1(dirPath+ "/CheckFalse.png");
-
+    
     ui->lblCheckOkNo->setPixmap(pix1.scaled(ui->lblCheckOkNo->size(),Qt::KeepAspectRatio));// Skaluje pnp do wymierów labela
     // end Ikonka Check Ok/NO
     //**********************************************
-
+    
 }
 
 
@@ -429,7 +429,7 @@ void KontrahentInfoDodajWpis::openDodajTemat()
 { //QMessageBox msgBox;
     //qDebug() << "Info o temacie";
     //QMasage box. info i dodoajemy do bazy
-
+    
     //    //QMessageBox::question(this,
     //                             "Ostrzeżenie",
     //                             "Ten Kraj już znajduj się na liście.");
@@ -444,7 +444,8 @@ void KontrahentInfoDodajWpis::openDodajTemat()
         // qDebug()<<infoTemat;
         ui->comboBox_2->addItem(infoTemat);
         mainDb->dodajIloscTematow(infoTemat);
-    }else
+    }
+    else
     {
         // qDebug()<<"pusrt";
         // qDebug()<<infoTemat;
@@ -452,7 +453,6 @@ void KontrahentInfoDodajWpis::openDodajTemat()
                                  "Ostrzeżenie",
                                  "Nie wprowaziłes żadnego tematu.");
     }
-
     ui->label_15->setText("Temat: "+infoTemat);
 }
 
@@ -470,27 +470,23 @@ void KontrahentInfoDodajWpis::openSettings()
 void KontrahentInfoDodajWpis::on_comboBox_2_textActivated(const QString )
 {
     ui->label_15->setText("Temat: "+ui->comboBox_2->currentText());
-
     QString aktualData = "";
-
-
-    ui->textEdit->setPlainText(ui->comboBox_2->currentText() + ": " +dataWpisu);
-
+     ui->textEdit->setPlainText(ui->comboBox_2->currentText() + ": " +dataWpisu);    
 }
 
 
 
 void KontrahentInfoDodajWpis::on_pushButton_3_clicked() // Dodoaj Przypomnienie
 {
-
-
-
-
+    
+    
+    
+    
 }
 
 void KontrahentInfoDodajWpis::on_pushButton_4_clicked() //Wyczysc Przypomnienie
 {
-ui->textEdit_2->clear();
+    ui->textEdit_2->clear();
 }
 
 void KontrahentInfoDodajWpis::on_pushButton_5_clicked()
@@ -501,26 +497,33 @@ void KontrahentInfoDodajWpis::on_pushButton_5_clicked()
 void KontrahentInfoDodajWpis::on_checkBox_2_stateChanged()
 {
     // Przypomnienie: Przegląd techniczny
-
     if (ui->checkBox_2->isChecked())
-    {
+    {QString getTextFromTextEdit="Przegląd Techniczny: ";
         cout<<"zaznaczony"<<endl;
+        
+        addTextEdit2(getTextFromTextEdit);
         ui->textEdit_2->setPlainText("Przegląd Techniczny: ");
     }
     else
     {
         cout<<"NIE zaznaczony"<<endl;
     }
+    
+}
 
+QString KontrahentInfoDodajWpis::addTextEdit2(QString getTextFromTextEdit)
+{
+    QString allTexTEdit;
+    allTexTEdit = ui->textEdit_2->
 }
 
 void KontrahentInfoDodajWpis::on_checkBox_4_stateChanged()
 {
-   // Przypomnienie: Koniec Gwarancji
+    // Przypomnienie: Koniec Gwarancji
     if (ui->checkBox_4->isChecked())
     {
         cout<<"zaznaczony"<<endl;
-         ui->textEdit_2->setPlainText("Koniec Gwarancji: ");
+        ui->textEdit_2->setPlainText("Koniec Gwarancji: ");
     }
     else
     {
@@ -530,7 +533,7 @@ void KontrahentInfoDodajWpis::on_checkBox_4_stateChanged()
 
 void KontrahentInfoDodajWpis::on_checkBox_5_stateChanged()
 {
-     // Przypomnienie: Wysłac
+    // Przypomnienie: Wysłac
     if (ui->checkBox_5->isChecked())
     {
         cout<<"zaznaczony"<<endl;
@@ -544,11 +547,11 @@ void KontrahentInfoDodajWpis::on_checkBox_5_stateChanged()
 
 void KontrahentInfoDodajWpis::on_checkBox_6_stateChanged()
 {
-     // Przypomnienie: Odebrać od klienta
+    // Przypomnienie: Odebrać od klienta
     if (ui->checkBox_6->isChecked())
     {
         cout<<"zaznaczony"<<endl;
-         ui->textEdit_2->setPlainText("Odebrać od klienta: ");
+        ui->textEdit_2->setPlainText("Odebrać od klienta: ");
     }
     else
     {
@@ -558,11 +561,11 @@ void KontrahentInfoDodajWpis::on_checkBox_6_stateChanged()
 
 void KontrahentInfoDodajWpis::on_checkBox_3_stateChanged()
 {
-     // Przypomnienie: Inne
+    // Przypomnienie: Inne
     if (ui->checkBox_3->isChecked())
     {
         cout<<"zaznaczony"<<endl;
-         ui->textEdit_2->setPlainText("Inne: ");
+        ui->textEdit_2->setPlainText("Inne: ");
     }
     else
     {
