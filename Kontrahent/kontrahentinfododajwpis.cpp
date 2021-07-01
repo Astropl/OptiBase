@@ -34,7 +34,7 @@ int miesiac, miesiacKolejny;
 int rok, rokKolejny;
 int dzienTygodnia;
 int idWpisu = 1002;
- QString dataWpisu;
+QString dataWpisu;
 fstream fileWpis;
 bool przypomnienie = false;
 string przypomnienieId;
@@ -55,7 +55,7 @@ KontrahentInfoDodajWpis::KontrahentInfoDodajWpis(QWidget *parent)
     initMenu();
     loadInfoOTemacie();
     dataWpisu = ui->label_4->text() + "/" + ui->label_5->text() + "/" + ui->label_6->text()
-             + " | " + ui->label_14->text();
+            + " | " + ui->label_14->text();
 }
 
 void KontrahentInfoDodajWpis::loadInfoOTemacie()
@@ -127,7 +127,7 @@ void KontrahentInfoDodajWpis::on_pushButton_2_clicked()
     QString przypomnienieTemp;
     QString dataNajblPrzypom;
     QString nrWpisu = ui->label_2->text();
-   dataWpisu = ui->label_4->text() + "/" + ui->label_5->text() + "/" + ui->label_6->text()
+    dataWpisu = ui->label_4->text() + "/" + ui->label_5->text() + "/" + ui->label_6->text()
             + " | " + ui->label_14->text();
     QString tematWpisu = ui->label_15->text();
     //QString tematWpisu = "tempoczasowy";
@@ -444,7 +444,8 @@ void KontrahentInfoDodajWpis::openDodajTemat()
         // qDebug()<<infoTemat;
         ui->comboBox_2->addItem(infoTemat);
         mainDb->dodajIloscTematow(infoTemat);
-    }else
+    }
+    else
     {
         // qDebug()<<"pusrt";
         // qDebug()<<infoTemat;
@@ -452,7 +453,6 @@ void KontrahentInfoDodajWpis::openDodajTemat()
                                  "Ostrzeżenie",
                                  "Nie wprowaziłes żadnego tematu.");
     }
-
     ui->label_15->setText("Temat: "+infoTemat);
 }
 
@@ -470,12 +470,8 @@ void KontrahentInfoDodajWpis::openSettings()
 void KontrahentInfoDodajWpis::on_comboBox_2_textActivated(const QString )
 {
     ui->label_15->setText("Temat: "+ui->comboBox_2->currentText());
-
     QString aktualData = "";
-
-
     ui->textEdit->setPlainText(ui->comboBox_2->currentText() + ": " +dataWpisu);
-
 }
 
 
@@ -490,7 +486,12 @@ void KontrahentInfoDodajWpis::on_pushButton_3_clicked() // Dodoaj Przypomnienie
 
 void KontrahentInfoDodajWpis::on_pushButton_4_clicked() //Wyczysc Przypomnienie
 {
-ui->textEdit_2->clear();
+    ui->textEdit_2->clear();
+    ui->checkBox_2->setChecked(false);
+    ui->checkBox_3->setChecked(false);
+    ui->checkBox_4->setChecked(false);
+    ui->checkBox_5->setChecked(false);
+    ui->checkBox_6->setChecked(false);
 }
 
 void KontrahentInfoDodajWpis::on_pushButton_5_clicked()
@@ -501,11 +502,13 @@ void KontrahentInfoDodajWpis::on_pushButton_5_clicked()
 void KontrahentInfoDodajWpis::on_checkBox_2_stateChanged()
 {
     // Przypomnienie: Przegląd techniczny
-
     if (ui->checkBox_2->isChecked())
-    {
+    {QString getTextFromTextEdit=": Przegląd Techniczny\n";
+        //QString getTextFromTextEditWithData=dataWpisu;
         cout<<"zaznaczony"<<endl;
-        ui->textEdit_2->setPlainText("Przegląd Techniczny: ");
+        getTextFromTextEdit = dataWpisu+getTextFromTextEdit;
+        addTextEdit2(getTextFromTextEdit);
+        // ui->textEdit_2->setPlainText("Przegląd Techniczny: ");
     }
     else
     {
@@ -514,13 +517,27 @@ void KontrahentInfoDodajWpis::on_checkBox_2_stateChanged()
 
 }
 
+QString KontrahentInfoDodajWpis::addTextEdit2(QString getTextFromTextEdit)
+{
+    QString allTexTEdit;
+    allTexTEdit = ui->textEdit_2->toPlainText();
+    ui->textEdit_2->clear();
+    ui->textEdit_2->setPlainText(allTexTEdit + getTextFromTextEdit);
+    return 0;
+
+}
+
 void KontrahentInfoDodajWpis::on_checkBox_4_stateChanged()
 {
-   // Przypomnienie: Koniec Gwarancji
+    // Przypomnienie: Koniec Gwarancji
     if (ui->checkBox_4->isChecked())
-    {
+    {QString getTextFromTextEdit=": Koniec Gwarancji\n";
+        //QString getTextFromTextEditWithData=dataWpisu;
         cout<<"zaznaczony"<<endl;
-         ui->textEdit_2->setPlainText("Koniec Gwarancji: ");
+        getTextFromTextEdit = dataWpisu+getTextFromTextEdit;
+        addTextEdit2(getTextFromTextEdit);
+        cout<<"zaznaczony"<<endl;
+        // ui->textEdit_2->setPlainText("Koniec Gwarancji: ");
     }
     else
     {
@@ -530,11 +547,15 @@ void KontrahentInfoDodajWpis::on_checkBox_4_stateChanged()
 
 void KontrahentInfoDodajWpis::on_checkBox_5_stateChanged()
 {
-     // Przypomnienie: Wysłac
+    // Przypomnienie: Wysłac
     if (ui->checkBox_5->isChecked())
-    {
+    {QString getTextFromTextEdit=": Wysłać\n";
+        //QString getTextFromTextEditWithData=dataWpisu;
         cout<<"zaznaczony"<<endl;
-        ui->textEdit_2->setPlainText("Wysłać: ");
+        getTextFromTextEdit = dataWpisu+getTextFromTextEdit;
+        addTextEdit2(getTextFromTextEdit);
+        cout<<"zaznaczony"<<endl;
+        // ui->textEdit_2->setPlainText("Wysłać: ");
     }
     else
     {
@@ -544,11 +565,15 @@ void KontrahentInfoDodajWpis::on_checkBox_5_stateChanged()
 
 void KontrahentInfoDodajWpis::on_checkBox_6_stateChanged()
 {
-     // Przypomnienie: Odebrać od klienta
+    // Przypomnienie: Odebrać od klienta
     if (ui->checkBox_6->isChecked())
-    {
+    {QString getTextFromTextEdit=": Odebrać od klienta\n";
+        //QString getTextFromTextEditWithData=dataWpisu;
         cout<<"zaznaczony"<<endl;
-         ui->textEdit_2->setPlainText("Odebrać od klienta: ");
+        getTextFromTextEdit = dataWpisu+getTextFromTextEdit;
+        addTextEdit2(getTextFromTextEdit);
+        cout<<"zaznaczony"<<endl;
+        //ui->textEdit_2->setPlainText("Odebrać od klienta: ");
     }
     else
     {
@@ -558,11 +583,15 @@ void KontrahentInfoDodajWpis::on_checkBox_6_stateChanged()
 
 void KontrahentInfoDodajWpis::on_checkBox_3_stateChanged()
 {
-     // Przypomnienie: Inne
+    // Przypomnienie: Inne
     if (ui->checkBox_3->isChecked())
-    {
+    {QString getTextFromTextEdit=": Inne\n";
+        //QString getTextFromTextEditWithData=dataWpisu;
         cout<<"zaznaczony"<<endl;
-         ui->textEdit_2->setPlainText("Inne: ");
+        getTextFromTextEdit = dataWpisu+getTextFromTextEdit;
+        addTextEdit2(getTextFromTextEdit);
+        cout<<"zaznaczony"<<endl;
+        //ui->textEdit_2->setPlainText("Inne: ");
     }
     else
     {

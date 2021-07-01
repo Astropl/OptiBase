@@ -77,6 +77,7 @@ private slots:
     void on_checkBox_6_stateChanged();
 
     void on_checkBox_3_stateChanged();
+    QString addTextEdit2(QString getTextFromTextEdit);
 
 private:
     Ui::KontrahentInfoDodajWpis *ui;
