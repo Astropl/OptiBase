@@ -170,6 +170,10 @@ void Magazyn::wczytajDane()
 
             //ui->comboBox_4->addItem(dodajItem->text());
 
+
+
+
+
             model->setItem(i - 1, d, dodajItem);
         }
     }
@@ -292,7 +296,7 @@ void Magazyn::wczytajDane()
             //tablicaModeli[a][licznikDrugiej] = modelUrzadzenia;
             qWarning()<<"4";
             //hashMap.(element,0);
-            if (element.contains( modelUrzadzenia))
+            if (element== modelUrzadzenia) //element.contains( modelUrzadzenia) // lub compare
             {qWarning()<<"5";
                 licznikDrugiej++;
                 //qWarning()<<tablicaModeli[a][licznikDrugiej];
@@ -300,7 +304,7 @@ void Magazyn::wczytajDane()
                 hashMap[(element)]=licznikDrugiej;
                 //hashMap(element,licznikDrugiej);
                 qWarning()<<"6";
-                qWarning()<<hashMap<<endl;;
+                qWarning()<<hashMap;
             }
 
 
@@ -310,6 +314,13 @@ void Magazyn::wczytajDane()
     qWarning()<<"end";
 //HashMapa works
     //Teraz kasuje listę w tabeli i wpisać tylko moel z producentem i ile razy wystepuje.
+
+
+    for (int j=0;j<=rowDoSize;j++)
+    {
+        model->removeRows(j,rowDoSize);
+    }
+
 
 }
 void Magazyn::myfunctiontimer()
@@ -387,4 +398,22 @@ void Magazyn::fillComboBoxes()
 {
 
 
+}
+
+void Magazyn::on_radioButton_clicked()
+{
+    // Radio Wszystkie
+    cout<<"Radio Wszystkie"<<endl;
+}
+
+void Magazyn::on_radioButton_2_clicked()
+{
+    // Radio Magazyn
+    cout<<"Radio Magazyn"<<endl;
+}
+
+void Magazyn::on_radioButton_3_clicked()
+{
+    // Radio Klient
+    cout<<"Radio Wklient"<<endl;
 }

@@ -549,11 +549,11 @@ QString UrzadzeniaLista::filtrOn(QString aktywnyProducent)
         for (int j = 0; j <= model->columnCount() - 1; j++) {
             QStandardItem *item = model->item(i, j);
             //qWarning() << " Wyswietlam i: " << i << " j: " << j << " wyraz to: " << item->text();
-
+QString qItem = (item->text());
             if (filter == "Brak") {
                 ui->tableView->showRow(i);
             } else {
-                if (item->text().contains(filter)) {
+                if ((qItem)==filter) { //item->text().contains(filter)
                     //qWarning() << "Wiersz: " << i << " zawiera: " << filter;
                     ui->tableView->showRow(i);
                 }
