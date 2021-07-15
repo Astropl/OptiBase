@@ -497,7 +497,7 @@ QString Baza::filtrOn(QString aktywnyProducent)
             if (filter == "Brak") {
                 ui->tableViewDB->showRow(i);
             } else {
-                if (item->text().contains(filter)) {
+                if (item->text()==(filter)) { // if (item->text().contains(filter)) {
                     //qWarning() << "Wiersz: " << i << " zawiera: " << filter;
                     ui->tableViewDB->showRow(i);
                 }

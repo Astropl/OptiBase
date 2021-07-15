@@ -289,3 +289,21 @@ MainDb *mainDb = new MainDb(this);
     ui->lblCheckOkNo->setPixmap(pix1.scaled(ui->lblCheckOkNo->size(),Qt::KeepAspectRatio));// Skaluje pnp do wymierów labela
 
 }
+
+void UrzadzeniaListaKontrahent::on_pushButton_4_clicked()//Przypisz na Magazyn
+{
+    cout<<"Ustaw na magazyn"<<endl;
+    QString ustawiony = "MAGAZYN";
+    for (int i =0;i<= model->rowCount()-1;i++)
+    {
+       QStandardItem *itemSzukany = model->item(i,1);
+       QString QitemSzukany = itemSzukany->text();
+
+       if (ustawiony==QitemSzukany)
+       {
+       cout<<"znalazłem Magazyb"<<endl;
+           ui->tableView->selectRow(i);
+       }
+    }
+    //long skue = ui->tableView->find("MAGAZYN");
+}

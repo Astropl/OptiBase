@@ -138,9 +138,9 @@ void Magazyn::wczytajDane()
     model->setHeaderData(0, Qt::Horizontal, "L.P.");
     model->setHeaderData(1, Qt::Horizontal, "Producent");           //nazwa
     model->setHeaderData(2, Qt::Horizontal, "Model");               // Imie
-    model->setHeaderData(3, Qt::Horizontal, "Nr Seryjny");          // Imie
-    model->setHeaderData(4, Qt::Horizontal, "Przypisany ?");        // Imie
-    model->setHeaderData(5, Qt::Horizontal, "Kontrahent");    // Imie
+    model->setHeaderData(3, Qt::Horizontal, "Ile sztuk");          // Imie
+    model->setHeaderData(4, Qt::Horizontal, "Magazyn");        // Imie
+    model->setHeaderData(5, Qt::Horizontal, "klient");    // Imie
     //    model->setHeaderData(6, Qt::Horizontal, "LP Kontrahenta");      //Nazwisko
     //    model->setHeaderData(7, Qt::Horizontal, "Nazwa");               //Kraj
     //    model->setHeaderData(8, Qt::Horizontal, "Imie");                //Region
@@ -156,6 +156,7 @@ void Magazyn::wczytajDane()
     //    model->setHeaderData(18, Qt::Horizontal, "Adres E-mail");       //Adres E-mail
     //    model->setHeaderData(19, Qt::Horizontal, "Strona URL");         //Strona URL
     //    model->setHeaderData(20, Qt::Horizontal, "Numer Seryjny z Przypisania");
+
     QStandardItem *dodajItem = new QStandardItem();
     QString pobierzNumerSeryjny = "";
     int pobierzUrzId = 0;
@@ -163,20 +164,28 @@ void Magazyn::wczytajDane()
 
     //Wczytac wszytskie urzadzenia
     pobierzUrzId = mainDb->pobierzUrzadzeniaId(pobierzUrzId);
+    QString tablicaZsql [pobierzUrzId][6] ;
     for (int i = 1; i <= pobierzUrzId; i++) {
         for (int d = 0; d <= 5; d++) {
             pobierzUrz = mainDb->pobierzUrzadzenia(pobierzUrz, i, d); //(pobierzUrz, i, d
             dodajItem = new QStandardItem(pobierzUrz);
 
-            //ui->comboBox_4->addItem(dodajItem->text());
+            //model->setItem(i - 1, d, dodajItem);
 
-
-
-
-
-            model->setItem(i - 1, d, dodajItem);
+            tablicaZsql[i-1][d]=dodajItem->text();
+            if (d==2)
+            {
+                ui->comboBox_4->addItem(dodajItem->text());
+            }
         }
     }
+
+    //int roztemo = sizeOf(tablicaZsql[][]);
+
+
+
+
+
 
     int rowDoSize = model->rowCount();
     for (int i = 0; i <= rowDoSize; i++) {
@@ -187,33 +196,67 @@ void Magazyn::wczytajDane()
     ui->tableView->sortByColumn(0,
                                 Qt::SortOrder(0));
 
+
+
+
+    // sprawdzam poproawnos tablicy
+    for (int f=0;f<=pobierzUrzId-1 ;f++ ) {
+       for (int w =0;w<=ui->comboBox_4->count()-1 ;w++ )
+
+            {
+
+                if (ui->comboBox_4->itemText(w+1)==tablicaZsql[f][w])
+                {
+                    qWarning ()<<"Dodaje :" + tablicaZsql[f][w];
+                }
+                else
+                {
+                    qWarning ()<< " Nie dodoaje bo sa juz "+ tablicaZsql[f][w];
+                }
+
+
+            }
+
+            //cout<<(tablicaZsql[f][d]).toStdString()<<endl;
+        }
+
+
+
     //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&7
     //Sprawdzam tak: pobieram do stringa wartos z tabelą. I wrzucam ją do comboboxa.
     // Pobieram drugą i sprawdzam czy taka jest w combo boxie. Jezeli nie to dodaję.
     // Jezeli jest to biorę drugąwartośc z tablei a stringa nie dodoaję.
-    QModelIndex index = ui->tableView->selectionModel()->currentIndex();
-    for (int k =0;k<=rowDoSize-1;k++)
-    {
-        //    QVariant tempSend = index.sibling(k, 2).data();
-        //     QString QVartsoc = QVariant(tempSend).toString();
-        //    cout<<QVartsoc.toStdString()<<endl;
 
-        QStandardItem *itemTemp = model->item(k,2);
-        qWarning()<<itemTemp->text();
-        // QStandardItem *itemTemp1 = model->item(k+1,2);
 
-        //        if (itemTemp==itemTemp1)
-        //        {
-        //            //nic nie rob
-        //            cout<<" Równe"<<endl;
-        //        }
-        //        else
-        //        {
-        //cout<<" NIE równe"<<endl;
-        ui->comboBox_4->addItem(itemTemp->text());
-        //        }
+    ///00000000000000000000000000000000000000000000
 
-    }
+    //    QModelIndex index = ui->tableView->selectionModel()->currentIndex();
+    //    for (int k =0;k<=rowDoSize-1;k++)
+    //    {
+    //        //    QVariant tempSend = index.sibling(k, 2).data();
+    //        //     QString QVartsoc = QVariant(tempSend).toString();
+    //        //    cout<<QVartsoc.toStdString()<<endl;
+
+    //        QStandardItem *itemTemp = model->item(k,2);
+    //        //qWarning()<<itemTemp->text();
+    //        // QStandardItem *itemTemp1 = model->item(k+1,2);
+
+    //        //        if (itemTemp==itemTemp1)
+    //        //        {
+    //        //            //nic nie rob
+    //        //            cout<<" Równe"<<endl;
+    //        //        }
+    //        //        else
+    //        //        {
+    //        //cout<<" NIE równe"<<endl;
+    //        ui->comboBox_4->addItem(itemTemp->text());
+    ///00000000000000000000000000000000000000000000000000000
+
+
+
+    //        }
+
+    //}
 
 
 
@@ -265,61 +308,130 @@ void Magazyn::wczytajDane()
 
     //        }
     // }
+    //**********&&&&&&&&&&&&&&&&&77
+    //    map <QString, int> hashMap;
+    //    int licznikDrugiej =0;
+    //    //QString tablicaModeli[ui->comboBox_4->count() ][100]; //= new QString[ui->comboBox_4->size()];
+    //    QString rozmiarComboBoxa = QString::number(ui->comboBox_4->count()-1);
+    //    qWarning()<<"Rozmiar tablicy to: "+rozmiarComboBoxa;
+    //    //int licznikDrugiej =0;
+    //    QString element;
+    //    QString modelUrzadzenia;
+    //    //Zapetlam mape
+    //    for (int g=0; g<=rozmiarComboBoxa; g++)
+    //    {
+    //        //hashMap["pierwzycos"] = 1;
+    //        hashMap[(ui->comboBox_4->itemText(g))]=0;
+    //    }
+    //    //End
+    //    QString rozmiarTabeli = QString::number(rowDoSize);
+    //    qWarning ()<<"Rozmiara combo: " + rozmiarComboBoxa;
+    //    qWarning ()<<"Rozmiara tabeli: " + rozmiarTabeli;
+    //    for (int a=0;a<=ui->comboBox_4->count()-1;a++)
+    //    {qWarning()<<"1";
+    //        element = ui->comboBox_4->itemText(a);
+    //        qWarning()<<"2";
+    //        for (int k=0; k<=rowDoSize-1; k++){
+    //            qWarning()<<"3";
+    //            modelUrzadzenia = model->item(k,2)->text();
+    //            qWarning()<<"Model urzadzenia to: "<<modelUrzadzenia;
+    //            qWarning()<<"element to: "<<element;
+    //            //tablicaModeli[a][licznikDrugiej] = modelUrzadzenia;
+    //            qWarning()<<"4";
+    //            //hashMap.(element,0);
+    //            if (element== modelUrzadzenia) //element.contains( modelUrzadzenia) // lub compare
+    //            {qWarning()<<"5";
+    //                licznikDrugiej++;
+    //                //qWarning()<<tablicaModeli[a][licznikDrugiej];
+    //                //qWarning()<<"1";
+    //                hashMap[(element)]=licznikDrugiej;
+    //                //hashMap(element,licznikDrugiej);
+    //                qWarning()<<"6";
+    //                qWarning()<<hashMap;
+    //            }
 
-    map <QString, int> hashMap;
-    int licznikDrugiej =0;
-    //QString tablicaModeli[ui->comboBox_4->count() ][100]; //= new QString[ui->comboBox_4->size()];
-    QString rozmiarComboBoxa = QString::number(ui->comboBox_4->count()-1);
-    qWarning()<<"Rozmiar tablicy to: "+rozmiarComboBoxa;
-    //int licznikDrugiej =0;
-    QString element;
-    QString modelUrzadzenia;
-    //Zapetlam mape
-    for (int g=0; g<=rozmiarComboBoxa; g++)
-    {
-        //hashMap["pierwzycos"] = 1;
-        hashMap[(ui->comboBox_4->itemText(g))]=0;
-    }
-    //End
-    QString rozmiarTabeli = QString::number(rowDoSize);
-    qWarning ()<<"Rozmiara combo: " + rozmiarComboBoxa;
-    qWarning ()<<"Rozmiara tabeli: " + rozmiarTabeli;
-    for (int a=0;a<=ui->comboBox_4->count()-1;a++)
-    {qWarning()<<"1";
-        element = ui->comboBox_4->itemText(a);
-        qWarning()<<"2";
-        for (int k=0; k<=rowDoSize-1; k++){
-            qWarning()<<"3";
-            modelUrzadzenia = model->item(k,2)->text();
-            qWarning()<<"Model urzadzenia to: "<<modelUrzadzenia;
-            qWarning()<<"element to: "<<element;
-            //tablicaModeli[a][licznikDrugiej] = modelUrzadzenia;
-            qWarning()<<"4";
-            //hashMap.(element,0);
-            if (element== modelUrzadzenia) //element.contains( modelUrzadzenia) // lub compare
-            {qWarning()<<"5";
-                licznikDrugiej++;
-                //qWarning()<<tablicaModeli[a][licznikDrugiej];
-                //qWarning()<<"1";
-                hashMap[(element)]=licznikDrugiej;
-                //hashMap(element,licznikDrugiej);
-                qWarning()<<"6";
-                qWarning()<<hashMap;
-            }
 
-
-        }
-        licznikDrugiej =0;
-    }
-    qWarning()<<"end";
-//HashMapa works
+    //        }
+    //        licznikDrugiej =0;
+    //    }
+    //    qWarning()<<"end";
+    //**********&&&&&&&&&&&&&&&&&77
+    //HashMapa works
     //Teraz kasuje listę w tabeli i wpisać tylko moel z producentem i ile razy wystepuje.
 
+    //Usuwam wpisy w tabeli
 
-    for (int j=0;j<=rowDoSize;j++)
-    {
-        model->removeRows(j,rowDoSize);
-    }
+    //*&&&&&&
+    //    for (int j=0;j<=rowDoSize;j++)
+    //    {
+    //        model->removeRows(j,rowDoSize);
+    //    }
+    //    for (int i = 1; i <= pobierzUrzId; i++) {
+    //        for (int d = 0; d <= 5; d++) {
+    //            pobierzUrz = mainDb->pobierzUrzadzenia(pobierzUrz, i, d); //(pobierzUrz, i, d
+    //            dodajItem = new QStandardItem(pobierzUrz);
+    //            //ui->comboBox_4->addItem(dodajItem->text());
+    //            for (int g=0;g<=(ui->comboBox_4->count)()-1;g++)
+    //                QString comboElement = ui->comboBox_4->itemText(g);
+    //            model->setItem(i - 1, d, dodajItem);
+    //        }
+    //    }
+    //*&&&&&&
+    // Zrbmy tak. czyszcze tabele
+    //Pobierqam z main db rekord z bazy.
+    // sprawdzam czy taki jest w combo
+    // jezeli nie ma robie wpis do tabeli
+    // jezeli jest w tablei szukam go i zwiekszam.
+    //    model->clear();
+    //    model->setRowCount(0);
+    //    //    model = new QStandardItemModel(1, 6, this); //było 14
+    //    //    ui->tableView->setModel(model);
+    //    model->setHeaderData(0, Qt::Horizontal, "L.P.");
+    //    model->setHeaderData(1, Qt::Horizontal, "Producent");           //nazwa
+    //    model->setHeaderData(2, Qt::Horizontal, "Model");               // Imie
+    //    model->setHeaderData(3, Qt::Horizontal, "Wszystkie");          // Imie
+    //    model->setHeaderData(4, Qt::Horizontal, "Magazyn");        // Imie
+    //    model->setHeaderData(5, Qt::Horizontal, "Klient");    // Imie
+    //    QString szukana;
+    //    for (int j=1;j<=pobierzUrzId;j++)
+    //    {
+    //        for (int d = 0; d <= 5; d++) {
+    //            pobierzUrz = mainDb->pobierzUrzadzenia(pobierzUrz, j, d); //(pobierzUrz, i, d
+    //            dodajItem = new QStandardItem(pobierzUrz);
+
+    //            //teraz petla z coboboxa
+    //            QString qDodajItem = dodajItem->text();
+    //            for (int w=0;w<=ui->comboBox_4->count()-1;w++)
+    //            {
+    //                szukana = ui->comboBox_4->itemText(w);
+    //                if (qDodajItem==szukana)
+    //                {
+    //                    cout<<"szukana taka sama jak dodajitem " + szukana.toStdString() <<endl;
+    //                    int iloscWTabeli = model->rowCount();
+
+    //                    for (int qw=0;qw<=iloscWTabeli-1;qw++)
+    //                    {
+    //                        QString itemWtablei = model->item(qw)->text();
+    //                        if(szukana==qDodajItem)
+    //                        {
+    //                            model->setItem(j-1,d,dodajItem);
+    //                        }
+    //                    }
+
+
+    //                }
+    //                else
+    //                {
+    //                    cout<<"szukana inna"<<endl;
+    //                }
+    //            }
+
+
+
+    //        }
+
+
+    //    }
 
 
 }

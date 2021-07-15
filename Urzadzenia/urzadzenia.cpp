@@ -386,7 +386,16 @@ void Urzadzenia::on_pushButton_clicked() // DODAJ urzadzena do Comboboxa
                 daneProducent = ui->comboBox_4->itemText(i);
                 daneModel = ui->comboBox_4->itemText(i + 1);
                 daneNrSeryjny = ui->comboBox_4->itemText(i + 2);
+                if (ui->checkBox->isChecked())
+                {
+                    cout<<"Checkbox Dodaj do mazgazuny zaznaczony"<<endl;
+                     mainDb->addUrzadzenia(daneProducent, daneModel, daneNrSeryjny, przypisany);
+                    mainDb->addUrzadzeniaUpdate(daneNrSeryjny,"MAGAZYN");
+                }
+                else
+                {
                 mainDb->addUrzadzenia(daneProducent, daneModel, daneNrSeryjny, przypisany);
+                }
             }
         }
     }
