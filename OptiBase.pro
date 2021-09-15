@@ -37,6 +37,7 @@ SOURCES += \
     Urzadzenia/urzadzeniadodajmodel.cpp \
     Urzadzenia/urzadzeniadodajnrseryjny.cpp \
     Urzadzenia/urzadzeniadodajproducenta.cpp \
+    Urzadzenia/urzadzeniadodajseryjnie.cpp \
     Urzadzenia/urzadzenialista.cpp \
     Urzadzenia/urzadzenialistaedytuj.cpp \
     Urzadzenia/urzadzenialistakontrahent.cpp \
@@ -69,6 +70,7 @@ HEADERS += \
     Urzadzenia/urzadzeniadodajmodel.h \
     Urzadzenia/urzadzeniadodajnrseryjny.h \
     Urzadzenia/urzadzeniadodajproducenta.h \
+    Urzadzenia/urzadzeniadodajseryjnie.h \
     Urzadzenia/urzadzenialista.h \
     Urzadzenia/urzadzenialistaedytuj.h \
     Urzadzenia/urzadzenialistakontrahent.h \
@@ -95,6 +97,7 @@ FORMS += \
     Urzadzenia/urzadzeniadodajmodel.ui \
     Urzadzenia/urzadzeniadodajnrseryjny.ui \
     Urzadzenia/urzadzeniadodajproducenta.ui \
+    Urzadzenia/urzadzeniadodajseryjnie.ui \
     Urzadzenia/urzadzenialista.ui \
     Urzadzenia/urzadzenialistaedytuj.ui \
     Urzadzenia/urzadzenialistakontrahent.ui \

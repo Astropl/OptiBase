@@ -37,7 +37,9 @@
 #include <QtWidgets>
 //#include <QPrinter>
 #include <QFileDialog>
-
+//**********************************
+#include <QPdfWriter>
+//**********************************
 int dzienRoku = 0;
 
 using namespace std;
