@@ -149,7 +149,8 @@ void Ustawienia::on_pushButton_clicked()
 
     bool udalosiezgrac =QFile::copy(source,sourceDest);
     //qWarning()<< "************************"<< "Udalo się czy nie ? "<< udalosiezgrac;
-    // TO DZIAŁA:: QFile::copy("C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/DataBase/2020.11.16.db","C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/DataBase/Backup/2020.11.16.db");
+    // TO DZIAŁA::
+    QFile::copy("C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/DataBase/2020.12.21.db","C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/DataBase/Backup/2020.12.21.db");
 
     cout << "Zapisano: " + aktHours2 << endl;
     cout << "Zapisano: " + aktHoursDB << endl;

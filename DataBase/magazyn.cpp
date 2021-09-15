@@ -117,7 +117,7 @@ void Magazyn::openSettings()
     ustaw->show();
 }
 void Magazyn::wczytajDane()
-{
+{cout<<"#1"<<endl;
     ui->comboBox->setVisible(false);
     ui->comboBox_2->setVisible(false);
     ui->checkBox->setChecked(false);
@@ -130,7 +130,7 @@ void Magazyn::wczytajDane()
     //    QStandardItem *dodajItem = new QStandardItem("");
     //    MainDb *mainDb = new MainDb(this);
     //    int pobierzUrzKontId = 0;
-
+    cout<<"#2"<<endl;
     QStringList listaModel = QStringList();
 
     MainDb *mainDb = new MainDb(this);
@@ -144,6 +144,7 @@ void Magazyn::wczytajDane()
     model->setHeaderData(3, Qt::Horizontal, "Ile sztuk");          // Imie
     model->setHeaderData(4, Qt::Horizontal, "Magazyn");        // Imie
     model->setHeaderData(5, Qt::Horizontal, "klient");    // Imie
+    cout<<"#3"<<endl;
     //    model->setHeaderData(6, Qt::Horizontal, "LP Kontrahenta");      //Nazwisko
     //    model->setHeaderData(7, Qt::Horizontal, "Nazwa");               //Kraj
     //    model->setHeaderData(8, Qt::Horizontal, "Imie");                //Region
@@ -161,27 +162,88 @@ void Magazyn::wczytajDane()
     //    model->setHeaderData(20, Qt::Horizontal, "Numer Seryjny z Przypisania");
 
     QStandardItem *dodajItem = new QStandardItem();
+    QStandardItem *itemSearching;
     QString pobierzNumerSeryjny = "";
     int pobierzUrzId = 0;
+    QString daneUrzadzen;
     //Lece do MainDB->pobierz Id
 
     //Wczytac wszytskie urzadzenia
+    cout<<"#3,1"<<endl;
     pobierzUrzId = mainDb->pobierzUrzadzeniaId(pobierzUrzId);
-    QString tablicaZsql [pobierzUrzId][6] ;
-    for (int i = 1; i <= pobierzUrzId; i++) {
-        for (int d = 0; d <= 5; d++) {
-            pobierzUrz = mainDb->pobierzUrzadzenia(pobierzUrz, i, d); //(pobierzUrz, i, d
-            dodajItem = new QStandardItem(pobierzUrz);
+    // Pobrałem ilosc urządzen
+    cout<<"#3,2"<<endl;
+    //cout <<"Ilosc urzadzeń to: " + pobierzUrzId   <<endl;
 
-            //model->setItem(i - 1, d, dodajItem);
+    for (int i=1;i<= pobierzUrzId;i++)
+    {
+        for (int d=0;d<=14;d++)
+        {
+            daneUrzadzen= mainDb->pobierzUrzadzenia(daneUrzadzen, i, d);
 
-            tablicaZsql[i-1][d]=dodajItem->text();
-            if (d==2)
+            // if dane urzadzenie = model zapisany w tabeli pobierz ilosc sztuk z klejene krokti i zwikesz ją i zapisz do tej samej komorki
+
+
+            if (i==1)
             {
-                ui->comboBox_4->addItem(dodajItem->text());
+                dodajItem =new QStandardItem(daneUrzadzen);
+                model->setItem(i-1,d,dodajItem);
             }
+            else
+            {
+                // ile rzedow?
+                int ileRzedow = model->rowCount();
+                for (int k=0;k<=ileRzedow-1;k++)
+                { dodajItem =new QStandardItem(daneUrzadzen);
+                    model->setItem(i-1,d,dodajItem);
+                    itemSearching = model->item(k,2);
+                    qDebug()<<  itemSearching->text();
+                    if (itemSearching!=dodajItem)// itemSearching!=dodajItem
+                    {
+                        qWarning ()<<"Dane rozne "<<  dodajItem->text();
+                        qWarning ()<<"Dane rozne "<<  itemSearching->text();
+                    }
+                    else
+                    {
+                        qWarning ()<<"Dane rakie same "<<  dodajItem->text();
+                        qWarning ()<<"Dane rakie same "<<  itemSearching->text();
+                    }
+                }
+            }
+
+            //            dodajItem =new QStandardItem(daneUrzadzen);
+            //            model->setItem(i-1,d,dodajItem);
         }
     }
+    cout<<"#4"<<endl;
+
+
+
+
+
+
+    // *........................
+    cout<<"****************"<<endl;
+    cout<<"W teorii koniec"<<endl;
+    cout<<"****************"<<endl;
+
+
+
+    //    QString tablicaZsql [pobierzUrzId][6] ;
+    //    for (int i = 1; i <= pobierzUrzId; i++) {
+    //        for (int d = 0; d <= 5; d++) {
+    //            pobierzUrz = mainDb->pobierzUrzadzenia(pobierzUrz, i, d); //(pobierzUrz, i, d
+    //            dodajItem = new QStandardItem(pobierzUrz);
+
+    //            //model->setItem(i - 1, d, dodajItem);
+
+    //            tablicaZsql[i-1][d]=dodajItem->text();
+    //            if (d==2)
+    //            {
+    //                ui->comboBox_4->addItem(dodajItem->text());
+    //            }
+    //        }
+    //    }
 
     //int roztemo = sizeOf(tablicaZsql[][]);
 
@@ -190,29 +252,29 @@ void Magazyn::wczytajDane()
 
 
 
-    int rowDoSize = model->rowCount();
-    for (int i = 0; i <= rowDoSize; i++) {
-        ui->tableView->setRowHeight(i, 20);
-    }
-    ui->tableView->horizontalHeader()->setSectionResizeMode(
-                QHeaderView::ResizeToContents); // Rozszerza kolumny do najdłuzszego itema w kolumnie.
-    ui->tableView->sortByColumn(0,
-                                Qt::SortOrder(0));
+    //    int rowDoSize = model->rowCount();
+    //    for (int i = 0; i <= rowDoSize; i++) {
+    //        ui->tableView->setRowHeight(i, 20);
+    //    }
+    //    ui->tableView->horizontalHeader()->setSectionResizeMode(
+    //                QHeaderView::ResizeToContents); // Rozszerza kolumny do najdłuzszego itema w kolumnie.
+    //    ui->tableView->sortByColumn(0,
+    //                                Qt::SortOrder(0));
 
-int pobierzUrzIdMagazyn = 0;
+    //int pobierzUrzIdMagazyn = 0;
 
-    for (int f=0;f<=ui->comboBox_4->count()-1;f++)
-    {
-        //zapytanie ile jest sztuk w main bd
+    //    for (int f=0;f<=ui->comboBox_4->count()-1;f++)
+    //    {
+    //        //zapytanie ile jest sztuk w main bd
 
-        //Lece do MainDB->pobierz Id
-QString nazwaUrzadzenia = ui->comboBox_4->itemText(f);
-        //Wczytac wszytskie urzadzenia
-        pobierzUrzIdMagazyn = mainDb->pobierzUrzadzeniaIdzMagazynu(pobierzUrzIdMagazyn, nazwaUrzadzenia);
-        qDebug()<<" Urzadzeni o nazwie: " << ui->comboBox_4->itemText(f) <<" jest "<<pobierzUrzIdMagazyn;
-    }
-    //mam ilosc urzadzen
-    // teraz wrzuc do tabeli. Jezeli podczas zaciagania znajde w tabeli to nie wrzucaj
+    //        //Lece do MainDB->pobierz Id
+    //QString nazwaUrzadzenia = ui->comboBox_4->itemText(f);
+    //        //Wczytac wszytskie urzadzenia
+    //        pobierzUrzIdMagazyn = mainDb->pobierzUrzadzeniaIdzMagazynu(pobierzUrzIdMagazyn, nazwaUrzadzenia);
+    //        qDebug()<<" Urzadzeni o nazwie: " << ui->comboBox_4->itemText(f) <<" jest "<<pobierzUrzIdMagazyn;
+    //    }
+    //    //mam ilosc urzadzen
+    //    // teraz wrzuc do tabeli. Jezeli podczas zaciagania znajde w tabeli to nie wrzucaj
 
 
 
@@ -282,50 +344,50 @@ QString nazwaUrzadzenia = ui->comboBox_4->itemText(f);
 
 
 
-    // teraz potrxebuje przelecie wsztskie modele i wyrzucić powtarzające się
+    //    // teraz potrxebuje przelecie wsztskie modele i wyrzucić powtarzające się
 
-    //*****************8
-    //Testuje wrzucanie do listy i kasowanie duplikatow/
-    int ostatniIndex = ui->comboBox_4->count()-1;
-    string viu1;
-    int Ti1;
-//map<Ti1, Ti1> mapaUrzadzen;
-//map <QString, int>::iterator itr;
-int licznik = 0;
+    //    //*****************8
+    //    //Testuje wrzucanie do listy i kasowanie duplikatow/
+    //    int ostatniIndex = ui->comboBox_4->count()-1;
+    //    string viu1;
+    //    int Ti1;
+    ////map<Ti1, Ti1> mapaUrzadzen;
+    ////map <QString, int>::iterator itr;
+    //int licznik = 0;
 
-    for (int k=1;k<=ostatniIndex;k++)
-    {
-        listaModel.push_back(ui->comboBox_4->itemText(k).toUtf8());
-       // int licznika = mapaUrzadzen[viu1];
+    //    for (int k=1;k<=ostatniIndex;k++)
+    //    {
+    //        listaModel.push_back(ui->comboBox_4->itemText(k).toUtf8());
+    //       // int licznika = mapaUrzadzen[viu1];
 
-        // mapaUrzadzen[ui->comboBox_4->itemText(k)]=licznik;
-    }
-    licznik =0;
-    sort(listaModel.begin(), listaModel.end());
-    listaModel.removeDuplicates();
-    ui->comboBox_4->clear();
-    for (int k = 0; k <= listaModel.count() - 1; k++) {
-        ui->comboBox_4->addItem(listaModel.at(k));
-        //mapaUrzadzen[ui->comboBox_4->itemText(k)]=0; // dodoaje pare klucz i wartosci 0
-    }
+    //        // mapaUrzadzen[ui->comboBox_4->itemText(k)]=licznik;
+    //    }
+    //    licznik =0;
+    //    sort(listaModel.begin(), listaModel.end());
+    //    listaModel.removeDuplicates();
+    //    ui->comboBox_4->clear();
+    //    for (int k = 0; k <= listaModel.count() - 1; k++) {
+    //        ui->comboBox_4->addItem(listaModel.at(k));
+    //        //mapaUrzadzen[ui->comboBox_4->itemText(k)]=0; // dodoaje pare klucz i wartosci 0
+    //    }
 
     //**************************88
-//sprawdzam i iteruje  po prach klucz
+    //sprawdzam i iteruje  po prach klucz
 
-//    for(map<QString, int, Compare>::iterator element = mapaUrzadzen.begin(); element != mapaUrzadzen.end(); element ++){
-//        cout << element->first << ": " << element->second << std::endl;
-//    }
+    //    for(map<QString, int, Compare>::iterator element = mapaUrzadzen.begin(); element != mapaUrzadzen.end(); element ++){
+    //        cout << element->first << ": " << element->second << std::endl;
+    //    }
 
-//    for (int q=0;q<=mapaUrzadzen.size();q++)
-//    {
+    //    for (int q=0;q<=mapaUrzadzen.size();q++)
+    //    {
 
-//        cout<<mapaUrzadzen.at(q)<<endl;
-//        cout<<mapaUrzadzen
-//    }
-//    for (itr=mapaUrzadzen.begin(); itr!=mapaUrzadzen.end(); itr++ ) {
-//       cout << itr->first.toStdString()<< " | " <<itr->second <<endl;
-//       //cout<<mapaUrzadzen.begin()< <<endl;
-//    }
+    //        cout<<mapaUrzadzen.at(q)<<endl;
+    //        cout<<mapaUrzadzen
+    //    }
+    //    for (itr=mapaUrzadzen.begin(); itr!=mapaUrzadzen.end(); itr++ ) {
+    //       cout << itr->first.toStdString()<< " | " <<itr->second <<endl;
+    //       //cout<<mapaUrzadzen.begin()< <<endl;
+    //    }
 
 
 

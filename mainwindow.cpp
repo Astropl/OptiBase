@@ -380,41 +380,41 @@ void MainWindow::ShowImportantDate()
     QDate DataToday=QDate::currentDate();
     QDate QDatazComba;
     QString SDatazComba;
-
-
+    QString stringDoDaty="";
+    QString doSetText;
+    QString doSetText1;
     int ileDni;// ileDni2;
     int tymczasowaIleDni=365;
     int tymczasoweK;
-    QString stringDoDaty="";
+
     int module;
-    QString doSetText;
-    QString doSetText1;
+
     // dodoaj do kalnedarza w main wazną datę
 
 
     int iloscWcomboBox = ui->comboBox_2->count();
     int tablicaIntow[iloscWcomboBox];
-    qWarning()<<" Ilosc w ComboBox: "<<iloscWcomboBox;
+   // qWarning()<<" Ilosc w ComboBox: "<<iloscWcomboBox;
 
     for (int k=iloscWcomboBox-1;k>=0;k--)
     {
         //modulo 0
         module = k%4;
-        qWarning ()<<"Itrm: "<<ui->comboBox_2->itemText(k);
-        qWarning()<<" modulo: "<<module;
+      //  qWarning ()<<"Itrm: "<<ui->comboBox_2->itemText(k);
+       // qWarning()<<" modulo: "<<module;
 
-//        if (module ==0)
-//        {
-//            ui->comboBox_2->removeItem(k);
-//        }
+        //        if (module ==0)
+        //        {
+        //            ui->comboBox_2->removeItem(k);
+        //        }
         if (module ==1)
         {
-            qWarning()<<" Data to: "<<ui->comboBox_2->itemText(k);
+           // qWarning()<<" Data to: "<<ui->comboBox_2->itemText(k);
             //TODO:: Tutuaj obliczamy date.....
 
             SDatazComba = ui->comboBox_2->itemText(k);
             QDatazComba = QDate::fromString(SDatazComba,"yyyy/MM/dd");
-            qWarning ()<<"Data z komopa: i z tabeli"<<DataToday<<" "<<QDatazComba;
+          //  qWarning ()<<"Data z komopa: i z tabeli"<<DataToday<<" "<<QDatazComba;
 
             //            if (QDatazComba<DataToday)
             //            {
@@ -423,36 +423,47 @@ void MainWindow::ShowImportantDate()
             //            }
 
             ileDni = DataToday.daysTo(QDatazComba);
-            qWarning ()<<"Ile dni do"<<ileDni;
+          //  qWarning ()<<"Ile dni do"<<ileDni;
 
             if (tymczasowaIleDni>ileDni)
             {
                 tymczasowaIleDni = ileDni;
                 tablicaIntow[k]= ileDni;
-                qDebug()<<sizeof(tablicaIntow);
-                qWarning ()<<"Najmniejsza ilosc dni to"<<tymczasowaIleDni;
+               // qDebug()<<sizeof(tablicaIntow);
+                //qWarning ()<<"Najmniejsza ilosc dni to"<<tymczasowaIleDni;
                 tymczasoweK = k;
-                qWarning ()<<"Najmniejsza ilosc dni to"<<ui->comboBox_2->itemText(k);
+               // qWarning ()<<"Najmniejsza ilosc dni to"<<ui->comboBox_2->itemText(k);
                 stringDoDaty = ui->comboBox_2->itemText(k+2);
             }
+
+
+
             doSetText = "Za " + QString::number(tymczasowaIleDni);
             doSetText1 = doSetText + " dni: ";
-
-
-            ui->label_9->setText(doSetText1 + stringDoDaty);
-ui->textBrowser->setText(doSetText1 + stringDoDaty);
-//ui->textBrowser->setEnabled(false);
-//ui->textBrowser->setFo
+cout<<"tymczasowaIleDni: " + tymczasowaIleDni<<endl;
+            //int ileDni1 = (ileDni);
+            if ( doSetText1=="Za 1 dni: ")
+            {
+                ui->label_9->setText("Jutro : " + stringDoDaty);
+                ui->textBrowser->setText("Jutro: " + stringDoDaty);
+            }
+            else //if (doSetText1!="Za 1 dni: ")
+            {
+                ui->label_9->setText(doSetText1 + stringDoDaty);
+                ui->textBrowser->setText(doSetText1 + stringDoDaty);
+                //ui->textBrowser->setEnabled(false);
+                //ui->textBrowser->setFo
+            }
         }
     }
     ui->comboBox_2->update();
     // Sprawdzam tablice intów
-int rozmiarTablicy = sizeof(tablicaIntow);
-qDebug()<<"rozmiar tablicy to: "<<rozmiarTablicy;
-    for (int r=0;r<=rozmiarTablicy-1 ;r++)
-    {
-        qDebug()<<" nr" << r << " to: "<< tablicaIntow[r] ;
-    }
+    //    int rozmiarTablicy = sizeof(tablicaIntow);
+    //    qDebug()<<"rozmiar tablicy to: "<<rozmiarTablicy;
+    //    for (int r=0;r<=rozmiarTablicy-1 ;r++)
+    //    {
+    //        qDebug()<<" nr" << r << " to: "<< tablicaIntow[r] ;
+    //    }
 }
 void MainWindow::Dzienroku()
 {
