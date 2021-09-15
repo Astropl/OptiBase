@@ -9,7 +9,7 @@
 using namespace std;
 
 QString producentUrz, modelUrz;
- QString przypisany = "";
+QString przypisany = "";
 
 
 UrzadzeniaDodajSeryjnie::UrzadzeniaDodajSeryjnie(QWidget *parent) :
@@ -151,12 +151,12 @@ void UrzadzeniaDodajSeryjnie::on_pushButton_3_clicked() // Zapisz
 }
 
 void UrzadzeniaDodajSeryjnie::on_pushButton_2_clicked() // Dodaj
-{MainDb *mainDb = new MainDb(this);
+{
+    MainDb *mainDb = new MainDb(this);
     ui->pushButton_3->setEnabled(true);
     changeIconColor("yellow");
 
     //Musze okreslic ile jest numerów seryjnych po przecinku. Chyba splitem
-
 
     QString sN; //call to serialNumbers
     QStringList strSN; //call to strSerialNumbers
@@ -169,10 +169,7 @@ void UrzadzeniaDodajSeryjnie::on_pushButton_2_clicked() // Dodaj
         cout<<strSN.at(i).toStdString()<<endl;
     }
 
-//    cout<<strSN.at(1).toStdString()<<endl;
-//    cout<<strSN.at(2).toStdString()<<endl;
     cout<<"Ilosc stringów: "<<strSN.size()<<endl;
-    //ui->textEdit->clear();
 
     // okresl producenta i model
 
