@@ -10,6 +10,7 @@
 #include "urzadzeniadodajmodel.h"
 #include "urzadzeniadodajnrseryjny.h"
 #include "urzadzeniadodajproducenta.h"
+#include "urzadzeniadodajseryjnie.h"
 #include <Info/info.h>
 #include <ctime>
 #include <fstream>
@@ -23,14 +24,18 @@ using namespace std;
 
 string stringLabela4 = ("Producent: , Model: , Nr. Seryjny: ");
 QString zaznaczono;
-fstream plikUrzadzenia;
-int iloscUrzadzen = 0;
 QString QStringPobierzProducenta = "";
 QString QStringPobierzModel = "";
-int checkFlagsVariableProducent = 0;
-int checkFlagsVariableModel = 0;
 int pobierzProducentaId = 0;
 int pobierzModelId = 0;
+
+fstream plikUrzadzenia;
+int iloscUrzadzen = 0;
+int checkFlagsVariableProducent = 0;
+int checkFlagsVariableModel = 0;
+
+
+
 Urzadzenia::Urzadzenia(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::Urzadzenia)
@@ -72,6 +77,7 @@ Urzadzenia::Urzadzenia(QWidget *parent)
 
     ui->pushButton->setEnabled(false);
     ui->BtnUrzaZapisz->setEnabled(false);
+    ui->comboBox_3->setVisible(false);
 }
 
 void Urzadzenia::wypelnijModel()
@@ -420,23 +426,15 @@ void Urzadzenia::on_comboBox_highlighted(const QString)
 {
     MainDb *mainDb = new MainDb(this);
     // Odswiiez producenta
-    // cout <<"1"<<endl;
-    //fstream checkFlags;
-    // QString file16 = "16.CheckFlagsInProducentUrzadzenia.txt";
-    // CheckFiles *checkFiles = new CheckFiles(this);
-    //cout <<"2"<<endl;
-    //checkFlagsVariableProducent = checkFiles->checkFlagsProducent(checkFlagsVariableProducent);
-    //cout <<"3"<<endl;
+
     checkFlagsVariableProducent = mainDb->checkFlagsProducent(checkFlagsVariableProducent);
     if (checkFlagsVariableProducent == 0) {
 
 
 
-        // cout<<"on_comboBox_highlighted producent. Pobieram checkFlagsVariableProducent: ";
-        //cout<< checkFlagsVariableProducent<<endl;
-        //  cout << "textHighlighted odwiezam producenta" << endl;
+
         QStringList listaProducent = QStringList();
-        //cout <<"4"<<endl;
+
         ui->comboBox->clear();
         //wczytajProducenta();
         wypelnijProducenta();
@@ -452,12 +450,6 @@ void Urzadzenia::on_comboBox_highlighted(const QString)
         checkFlagsVariableProducent =1;
         on_comboBox_highlightedExit(checkFlagsVariableProducent);
     }
-
-
-    //    checkFlags.open(file16.toStdString(), ios::out | ios::trunc);
-    //    checkFlags << "0" << endl;
-    //    checkFlags.close();
-    //cout <<"6 END"<<endl;
 }
 void Urzadzenia::wczytajProducenta()
 {
@@ -528,3 +520,11 @@ void Urzadzenia::openSettings()
     ustaw->show();
 }
 
+
+void Urzadzenia::on_pushButton_2_clicked() // seryjnie
+{
+UrzadzeniaDodajSeryjnie *urzDoSe = new UrzadzeniaDodajSeryjnie (this);
+
+urzDoSe ->show ();
+
+}

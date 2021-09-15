@@ -48,6 +48,8 @@ private slots:
 
     void on_chbLast10_stateChanged();
 
+    void on_checkBox_2_stateChanged();
+
 private:
     Ui::UrzadzeniaLista *ui;
     QTimer *timer;

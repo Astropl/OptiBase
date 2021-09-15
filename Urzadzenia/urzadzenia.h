@@ -56,6 +56,8 @@ void on_comboBox_2_highlightedExit(int checkFlagsVariableModel);
 
     //void on_comboBox_activated(const QString &arg1);
 
+    void on_pushButton_2_clicked();
+
 public:
     Ui::Urzadzenia *ui;
     QTimer *timer;
