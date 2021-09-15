@@ -10,6 +10,9 @@
 #include <QTimer>
 #include <ctime>
 #include <QDebug>
+#include <map>
+#include <unordered_map>
+
 
 using namespace std;
 //rowDoSize1 = 0;
@@ -183,7 +186,7 @@ void Magazyn::wczytajDane()
     //int roztemo = sizeOf(tablicaZsql[][]);
 
 
-
+    qWarning ()<<"4";
 
 
 
@@ -196,29 +199,46 @@ void Magazyn::wczytajDane()
     ui->tableView->sortByColumn(0,
                                 Qt::SortOrder(0));
 
+int pobierzUrzIdMagazyn = 0;
+
+    for (int f=0;f<=ui->comboBox_4->count()-1;f++)
+    {
+        //zapytanie ile jest sztuk w main bd
+
+        //Lece do MainDB->pobierz Id
+QString nazwaUrzadzenia = ui->comboBox_4->itemText(f);
+        //Wczytac wszytskie urzadzenia
+        pobierzUrzIdMagazyn = mainDb->pobierzUrzadzeniaIdzMagazynu(pobierzUrzIdMagazyn, nazwaUrzadzenia);
+        qDebug()<<" Urzadzeni o nazwie: " << ui->comboBox_4->itemText(f) <<" jest "<<pobierzUrzIdMagazyn;
+    }
+    //mam ilosc urzadzen
+    // teraz wrzuc do tabeli. Jezeli podczas zaciagania znajde w tabeli to nie wrzucaj
+
+
+
 
 
 
     // sprawdzam poproawnos tablicy
-    for (int f=0;f<=pobierzUrzId-1 ;f++ ) {
-       for (int w =0;w<=ui->comboBox_4->count()-1 ;w++ )
+    //    for (int f=0;f<=pobierzUrzId-1 ;f++ ) {
+    //       for (int w =0;w<=ui->comboBox_4->count()-1 ;w++ )
 
-            {
+    //            {
 
-                if (ui->comboBox_4->itemText(w+1)==tablicaZsql[f][w])
-                {
-                    qWarning ()<<"Dodaje :" + tablicaZsql[f][w];
-                }
-                else
-                {
-                    qWarning ()<< " Nie dodoaje bo sa juz "+ tablicaZsql[f][w];
-                }
+    //                if (ui->comboBox_4->itemText(w+1)==tablicaZsql[f][w])
+    //                {
+    //                    qWarning ()<<"Dodaje :" + tablicaZsql[f][w];
+    //                }
+    //                else
+    //                {
+    //                    qWarning ()<< " Nie dodoaje bo sa juz "+ tablicaZsql[f][w];
+    //                }
 
 
-            }
+    //            }
 
-            //cout<<(tablicaZsql[f][d]).toStdString()<<endl;
-        }
+    //            //cout<<(tablicaZsql[f][d]).toStdString()<<endl;
+    //        }
 
 
 
@@ -267,18 +287,46 @@ void Magazyn::wczytajDane()
     //*****************8
     //Testuje wrzucanie do listy i kasowanie duplikatow/
     int ostatniIndex = ui->comboBox_4->count()-1;
+    string viu1;
+    int Ti1;
+//map<Ti1, Ti1> mapaUrzadzen;
+//map <QString, int>::iterator itr;
+int licznik = 0;
 
     for (int k=1;k<=ostatniIndex;k++)
     {
         listaModel.push_back(ui->comboBox_4->itemText(k).toUtf8());
+       // int licznika = mapaUrzadzen[viu1];
+
+        // mapaUrzadzen[ui->comboBox_4->itemText(k)]=licznik;
     }
+    licznik =0;
     sort(listaModel.begin(), listaModel.end());
     listaModel.removeDuplicates();
     ui->comboBox_4->clear();
     for (int k = 0; k <= listaModel.count() - 1; k++) {
         ui->comboBox_4->addItem(listaModel.at(k));
+        //mapaUrzadzen[ui->comboBox_4->itemText(k)]=0; // dodoaje pare klucz i wartosci 0
     }
+
     //**************************88
+//sprawdzam i iteruje  po prach klucz
+
+//    for(map<QString, int, Compare>::iterator element = mapaUrzadzen.begin(); element != mapaUrzadzen.end(); element ++){
+//        cout << element->first << ": " << element->second << std::endl;
+//    }
+
+//    for (int q=0;q<=mapaUrzadzen.size();q++)
+//    {
+
+//        cout<<mapaUrzadzen.at(q)<<endl;
+//        cout<<mapaUrzadzen
+//    }
+//    for (itr=mapaUrzadzen.begin(); itr!=mapaUrzadzen.end(); itr++ ) {
+//       cout << itr->first.toStdString()<< " | " <<itr->second <<endl;
+//       //cout<<mapaUrzadzen.begin()< <<endl;
+//    }
+
 
 
 

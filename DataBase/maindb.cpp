@@ -179,6 +179,31 @@ int MainDb::pobierzUrzadzeniaId(int daneUrzadzeniaId)
     //cout << daneUrzadzeniaId<<endl;
     return rows;
 }
+int MainDb::pobierzUrzadzeniaIdzMagazynu(int daneUrzadzeniaId, QString nazwaUrzadzenia)
+{
+    QSqlQuery query;
+    //qWarning() << "Jestem w MainDB->pobierz Id.";
+    QString testName;
+    int rows = 0;
+    daneUrzadzeniaId = rows;
+    //TODO: pobrac z Bazy Modeli
+
+    if (query.exec("SELECT * FROM urzadzenia WHERE urzadzenia_model_id ='" + nazwaUrzadzenia+"'")) {
+        while (query.next()) {
+            //qWarning() << query.value(5).toString();
+            //if (query.value(5).toString()!="")
+            // {
+            rows++;
+            // }
+        }
+        // qWarning() << "row to: " << rows;
+    }
+    //qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
+    daneUrzadzeniaId = rows;
+    cout << "Rows jest"<< rows<<endl;
+    return rows;
+}
+
 QString MainDb::pobierzKontrahenta(QString daneKontrahent, int i, int d)
 {
    QSqlQuery query;
