@@ -447,6 +447,13 @@ cout<<"tymczasowaIleDni: " + tymczasowaIleDni<<endl;
                 ui->label_9->setText("Jutro : " + stringDoDaty);
                 ui->textBrowser->setText("Jutro: " + stringDoDaty);
             }
+            if ( doSetText1=="Za 0 dni: ")
+            {
+                ui->label_9->setText("Dzisiaj : " + stringDoDaty);
+                ui->textBrowser->setText("Dzisiaj: " + stringDoDaty);
+            }
+
+
             else //if (doSetText1!="Za 1 dni: ")
             {
                 ui->label_9->setText(doSetText1 + stringDoDaty);

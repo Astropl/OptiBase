@@ -912,7 +912,7 @@ void MainDb::DatabaseConnect()
     if (QSqlDatabase::isDriverAvailable(DRIVER)) {
         QSqlDatabase db = QSqlDatabase::addDatabase(DRIVER);
         db.setDatabaseName(
-                    "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/DataBase/2020.12.21.db");
+                    "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/DataBase/2021.09.23.db");
         qWarning(" Powstała baza");
 
         if (db.open()) {

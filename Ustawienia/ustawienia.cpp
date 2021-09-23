@@ -76,85 +76,73 @@ void Ustawienia::initMenuSettings ()
 }
 void Ustawienia::on_pushButton_clicked()
 {
-    string stringFile = "Backup/";
-    //qWarning() << "stringFile:" << stringFile.c_str();
-    string patchBasic = "C:/Defaults/Pliki/";
-    //qWarning() << "patchBasic:" << patchBasic.c_str();
-    string patchBasicDB = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/DataBase/";
-    //qWarning() << "patchBasicDB:" << patchBasicDB.c_str();
-    string nameOfDB = "2020.12.21.db";
-    QString QnameOfDB = "2020.12.21.db";
-    QString QnameOfDB1 = "2020.12.21a.db";
-    //qWarning() << "nameOfDB:" << nameOfDB.c_str();
+//    string stringFile = "Backup/";
+//    //qWarning() << "stringFile:" << stringFile.c_str();
+//    string patchBasic = "C:/Defaults/Pliki/";
+//    //qWarning() << "patchBasic:" << patchBasic.c_str();
+//    string patchBasicDB = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/DataBase/";
+//    //qWarning() << "patchBasicDB:" << patchBasicDB.c_str();
+//    string nameOfDB = "2020.12.21.db";
+//    QString QnameOfDB = "2020.12.21.db";
+//    QString QnameOfDB1 = "2020.12.21a.db";
+
 
     QString aktHours = pobierzDate(aktHour);
-     //new QString aktHours = aktHours;
-    //qWarning() << "aktHours:" << aktHours;
+
     ui->lblData->setText(aktHours);
     // Kopia danych plików
 
     string aktHours1 = aktHours.toStdString();
-    //qWarning() << "aktHours1:" << aktHours1.c_str();
-    string aktHours2 = patchBasic + stringFile + aktHours1 + "/";
-    //qWarning() << "aktHours2:" << aktHours2.c_str();
-    string patchBasicDBBackup = patchBasicDB + stringFile;
-    //qWarning() << "patchBasicDBBackup:" << patchBasicDBBackup.c_str();
-    string aktHoursDB = patchBasicDB + stringFile + aktHours1 + "/";
-   //qWarning() << "aktHoursDB:" << aktHoursDB.c_str();
 
-    _mkdir(aktHours2.c_str());
-   // qWarning() << "1. Stworyłem katalog: " << aktHours2.c_str();
-    _mkdir(patchBasicDBBackup.c_str());
-   // qWarning() << "2. Stworyłem katalog: " << patchBasicDBBackup.c_str();
+//    string patchBasicDBBackup = patchBasicDB + stringFile;
 
-    _mkdir(aktHoursDB.c_str());
-    //qWarning() << "3. Stworyłem katalog: " << aktHoursDB.c_str();
- _mkdir(aktHours2.c_str());
-    string patchExt = patchBasicDB + nameOfDB;
-    //qWarning() << "patchExt: " << patchExt.c_str();
-    string patchDest = aktHoursDB + nameOfDB;
-    string patchExt1 = patchBasicDB + nameOfDB + "1";
-   // qWarning() << "patchDest: " << patchDest.c_str();
-    QString source ("patchExt");
-    QFile source1 ("patchExt");
-    //QFile sourceDest ("patchDest");
-    QString sourceDest ("patchDest");
-   // QString Qsource = QString::toStdString(source);
-    QString dest ("patchExt1");
+//    string aktHoursDB = patchBasicDB + stringFile + aktHours1 + "/";
 
-    //if(source1.copy())
 
-    if (plik.exists("patchExt1"))
 
-    {
-        //qWarning("Plik wystepuje: usuwam");
-        //plik.remove("patchExt1");
-        //QFile::remove("patchExt1");
-    } else {
-        //        plik.copy("patchExt" , "patchExt1");
-        if (plik.rename("C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/DataBase/" + QnameOfDB, "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/DataBase/" + QnameOfDB1))
-        {//qDebug() << "success";}
-        }
-            else
-        {//qDebug() << "failed";
-            if (!source1.copy("patchExt1"))
-            {
-                //qWarning()<<"BłąD: "<<source1.error();
-            }
+//    //if(source1.copy())
 
-        }
-        //QFile::copy("patchExt" , "patchExt1");
-        //qWarning() << "Tworze backup z :" << patchExt.c_str() << "na " << patchExt1.c_str();
-    }
 
-    bool udalosiezgrac =QFile::copy(source,sourceDest);
-    //qWarning()<< "************************"<< "Udalo się czy nie ? "<< udalosiezgrac;
-    // TO DZIAŁA::
-    QFile::copy("C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/DataBase/2020.12.21.db","C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/DataBase/Backup/2020.12.21.db");
+    cout <<"Nowy katalog do testwó"<<endl;
 
-    cout << "Zapisano: " + aktHours2 << endl;
-    cout << "Zapisano: " + aktHoursDB << endl;
-    QMessageBox::information(this, "Ostrzeżenie", "Kopia Bazy Danych zrobiona.");
+
+    string gc1 = "C:/";
+    string gc2 = "backup21/";
+
+    string gc3 = "sprawdz/";
+    string gc4 = aktHours1 + "/";
+    string gc5 = "2021.09.23.db";
+
+    string pelnaSciezka = "C:/Users/pawel/Documents/Cplusplus/OptiBase/OptiBase/DataBase/";
+    string gc22 = "backup/";
+
+
+    string pelnaGc22 = pelnaSciezka+gc22;
+    string pelnaGc22Gc4 = pelnaGc22 + gc4;
+
+    string pelnaGc5 = pelnaSciezka + gc5;
+    string pelnaGc22Gc4Gc5 = pelnaGc22Gc4 + gc5;
+
+    _mkdir(pelnaGc22.c_str());
+
+     _mkdir(pelnaGc22Gc4.c_str());
+
+     QFile::copy(pelnaGc5.c_str(),pelnaGc22Gc4Gc5.c_str() );
+
+
+    string gc1Gc2 = gc1+gc2;
+    _mkdir(gc1Gc2.c_str());
+    string gc1Gc2Gc3 = gc1Gc2 + gc3;
+     _mkdir(gc1Gc2Gc3.c_str());
+    string gc1Gc2Gc3Gc4 = gc1Gc2Gc3+gc4;
+     _mkdir(gc1Gc2Gc3Gc4.c_str());
+     string gc1Gc5 = gc1 + gc5;
+     string gc1Gc2Gc3Gc4Gc5= gc1Gc2Gc3Gc4 + gc5;
+     QFile::copy(gc1Gc5.c_str(),gc1Gc2Gc3Gc4Gc5.c_str() );
+
+
+    //***************************************************************
+
 }
 
 void Ustawienia::on_pushButton_2_clicked()
