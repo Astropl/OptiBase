@@ -59,6 +59,7 @@ private slots:
 
 
     void on_btnMagazyn_clicked();
+    void checkBackupToDay ();
 
 private:
     Ui::MainWindow *ui;

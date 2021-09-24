@@ -27,6 +27,11 @@ private slots:
 
     void on_pushButton_5_clicked();
 
+    void on_checkBox_stateChanged();
+
+    void on_pushButton_6_clicked();
+    void initAutomatBackup();
+
 private:
     Ui::Ustawienia *ui;
 };

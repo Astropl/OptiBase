@@ -104,6 +104,9 @@ QString pobierzWazneDatyAddYear(QString data, QString futureData);
     QString pobierzWazneDatyZapis(QString qdata, QString temat , QString info );
 
     int pobierzUrzadzeniaIdzMagazynu(int daneUrzadzeniaId, QString nazwaUrzadzenia);
+    void dBSettings ();
+    QString addDBSettings (QString codziennyBackup, QString sciezkaBakupu);
+QString dBSettingsUstaw (QString ustawUstawienia);
 };
 //QSqlQuery query;
 #endif // MAINDB_H

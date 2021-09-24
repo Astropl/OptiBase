@@ -64,7 +64,7 @@ MainWindow::MainWindow(QWidget *parent)
     statsy();
     ui->scrollArea_3->setFixedSize(0, 0);
     initCalendarScroll();
-
+checkBackupToDay ();
 
 
 }
@@ -130,6 +130,31 @@ void MainWindow::myfunctiontimer()
 
     ui->labelDzien->setText(stringDzienTygodnia);
 }
+
+void MainWindow::checkBackupToDay ()
+{
+    //sorawdzenie czy robic co dziennie kopie bazy danych
+    //TODO: BackupUpdtae
+
+    MainDb *mainDb = new MainDb(this);
+
+//    ustawUstawienia = mainDb ->dBSettingsUstaw(ustawUstawienia);
+//    qDebug()<<"Ustaw ustawienia z MainaDB: "<< ustawUstawienia;
+
+//    if (ustawUstawienia =="0")
+//    {
+//        ui->checkBox->setChecked(false);
+
+//    }
+//    else if (ustawUstawienia =="1")
+//    {
+//        ui->checkBox->setChecked(true);
+//    }
+
+
+}
+
+
 void MainWindow::initWindow()
 {
     setWindowTitle("OptiBase v 1.0");

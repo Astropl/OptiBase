@@ -171,7 +171,7 @@ int MainDb::pobierzUrzadzeniaId(int daneUrzadzeniaId)
     }
     //qWarning() << "Wychodze z MainDB->pobierz Id z pobraną iloscia wpisów w bazie danych";
     //cout<<"rows: " +rows<<endl;
-     //cout<<"daneUrzadzeniaId: " +daneUrzadzeniaId<<endl;
+    //cout<<"daneUrzadzeniaId: " +daneUrzadzeniaId<<endl;
     daneUrzadzeniaId = rows;
     return daneUrzadzeniaId;
 }
@@ -179,7 +179,7 @@ int MainDb::pobierzUrzadzeniaIdzMagazynu(int daneUrzadzeniaId, QString nazwaUrza
 {
     QSqlQuery query;
     //qWarning() << "Jestem w MainDB->pobierz Id.";
-    QString testName;
+    //QString testName;
     int rows = 0;
     daneUrzadzeniaId = rows;
     //TODO: pobrac z Bazy Modeli
@@ -190,6 +190,7 @@ int MainDb::pobierzUrzadzeniaIdzMagazynu(int daneUrzadzeniaId, QString nazwaUrza
             //if (query.value(5).toString()!="")
             // {
             rows++;
+            daneUrzadzeniaId++;
             // }
         }
         // qWarning() << "row to: " << rows;
@@ -234,6 +235,7 @@ int MainDb::pobierzKontrahentaId(int daneKontrahentId)
         while (query.next()) {
             //qWarning() << query.value(1).toString();
             rows++;
+            daneKontrahentId++;
         }
         // qWarning() << "row to: " << rows;
     }
@@ -297,6 +299,7 @@ int MainDb::pobierzKontrahentaZNrSeryjnymId(int daneKontrahentId)
         while (query.next()) {
             //zliczam ilosc wierszy z seryj w urz = serej kontr
             rows++;
+            daneKontrahentId++;
         }
     }
 
@@ -736,6 +739,7 @@ int MainDb::pobierzMiastoiD(int daneModelId)
     if (query.exec("SELECT * FROM miasta")) {
         while (query.next()) {
             rows++;
+            daneModelId++;
         }
     }
     daneModelId = rows;
@@ -756,6 +760,7 @@ int MainDb::pobierzProducentaiD(int daneProducentId)
         while (query.next()) {
 
             rows++;
+            daneProducentId++;
         }
 
     }
@@ -801,6 +806,7 @@ int MainDb::pobierzUrzKontiD(int daneProducentId)
         while (query.next()) {
             //qWarning() << query.value(1).toString();
             rows++;
+            daneProducentId++;
         }
         //qWarning() << "row to: " << rows;
     }
@@ -843,6 +849,7 @@ int MainDb::pobierzWazneDatyiD(int iloscWpisow)
         while (query.next()) {
             //qWarning() << query.value(1).toString();
             rows++;
+            iloscWpisow++;
         }
         //qWarning() << "row to: " << rows;
     }
@@ -950,6 +957,7 @@ void MainDb::DatabasePopulate()
     dBInfoOTemacie();
     dBWazneDaty();
     dBCheckInit();
+    dBSettings();
 
     //QSqlQuery query;
 }
@@ -1248,6 +1256,56 @@ void MainDb::dBStatistisc()
                     "VALUES(1,0,0,0,0,0,1)"))
         qWarning() << "MainWindow::dBStatDays - ERROR: " << query.lastError().text();
 }
+void MainDb::dBSettings ()
+{
+    // Ustawianie
+    cout <<"Jestem w ustawieniach MainDB"<<endl;
+    QSqlQuery query;
+    //query.exec("PRAGMA foreign_keys = ON;"); // włączenia kluczy obcych
+    qWarning("Tworzenie tabeli ustawienia ");
+    query.exec("CREATE TABLE IF NOT EXISTS dBUstawienia  (id INTEGER PRIMARY KEY, codziennyBakup TEXT UNIQUE, sciezka TEXT UNIQUE )");
+
+
+    if (!query.isActive())
+        qWarning() << " Tworzenie Tabeli - ERROR: " << query.lastError().text();
+    if (!query.exec("INSERT INTO dBUstawienia ( id, codziennyBakup,sciezka ) VALUES(1, 1,'sfsf')"))
+        qWarning() << "MainWindow::dBStatRun - ERROR: " << query.lastError().text();
+//    if (!query.exec("UPDATE dBUstawienia SET codziennyBakup      ,sciezka ) VALUES(1,'sfsf')"))
+//           qWarning() << "MainWindow::dBStatRun - ERROR: " << query.lastError().text();
+
+
+
+}
+QString MainDb::addDBSettings (QString codziennyBackup, QString sciezkaBakupu)
+{QSqlQuery query;
+    if (!query.exec("UPDATE dBUstawienia set codziennyBakup ='" + codziennyBackup +"', sciezka ='" +sciezkaBakupu +"' WHERE id ='1'"))
+
+    {
+        qWarning() << "MainDB::Update Urzadzenia - ERROR: " << query.lastError().text();
+    } else {
+        qWarning() << "MainDB::Update Urzadzenia - Udane: " << query.lastError().text();
+    }
+
+    return 0;
+
+}
+
+QString MainDb::dBSettingsUstaw (QString ustawUstawienia)
+{
+    // odczytaj ustawieni z dbsettings i zwroc czy 1 czy 0
+    QSqlQuery query;
+    if (query.exec("SELECT * FROM dBUstawienia where id = '1'"))
+        while (query.next())
+        {
+            ustawUstawienia = query.value(1).toString();
+        }
+    return ustawUstawienia;
+
+
+
+
+}
+
 
 int MainDb::iloscUruchomienSave(int iloscUruchomien)
 {
@@ -1314,6 +1372,7 @@ int MainDb::isNumerSeryjnyTheSameId(int nrSeryjnyZLini)
         while (query.next()) {
             //qWarning() << query.value(1).toString();
             rows++;
+            nrSeryjnyZLini++;
         }
         //qWarning() << "row to: " << rows;
     }
@@ -1492,6 +1551,7 @@ int MainDb::pobierzIloscTematowiD(int iloscTematowId)
     if (query.exec("SELECT * FROM tematDowpisu")) {
         while (query.next()) {
             rows++;
+            iloscTematowId++;
         }
     }
     iloscTematowId = rows;
